@@ -390,6 +390,9 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  padding: 30px 0;
+  margin: 10px 0;
+  box-sizing: border-box;
 }
 
 .tech-orbit-container {
@@ -405,16 +408,16 @@
 }
 
 :root {
-  --radius-1: 75px;
-  --radius-2: 130px;
-  --radius-3: 185px;
+  --radius-1: 65px;
+  --radius-2: 115px;
+  --radius-3: 165px;
 }
 
 @media (min-width: 768px) {
   :root {
-    --radius-1: 90px;
-    --radius-2: 150px;
-    --radius-3: 210px;
+    --radius-1: 85px;
+    --radius-2: 140px;
+    --radius-3: 195px;
   }
 }
 
@@ -1061,14 +1064,16 @@
   line-height: 1.65;
 }
 
-.stack-row {
+.stack-row,
+.ticket-stack {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 20px;
+  margin: 18px 0 22px;
 }
 
-.stack-chip {
+.stack-chip,
+.stack-pill {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text-faint);
@@ -1079,9 +1084,16 @@
   transition: border-color 0.25s, color 0.25s;
 }
 
-.stack-chip:hover {
-  border-color: var(--border-hover);
-  color: var(--text);
+.ticket:hover .stack-pill,
+.ticket:hover .stack-chip {
+  border-color: var(--border-strong);
+  color: var(--text-muted);
+}
+
+.stack-chip:hover,
+.stack-pill:hover {
+  border-color: #8B5CF6 !important;
+  color: #FFFFFF !important;
 }
 
 .ticket-footer {
