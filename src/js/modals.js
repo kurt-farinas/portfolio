@@ -7,9 +7,10 @@ import { spawnToast } from './utils.js';
 const projectDetails = {
   hris: {
     title: "DepEd HRIS Approval System",
-    badge: "DEPED OJT SYSTEM PROJECT (342 HRS OJT)",
+    badge: "DEPED OJT SYSTEM PROJECT — 98/100 PERFORMANCE RATING (342 HRS LOGGED)",
     desc: "An end-to-end digital approval workflow created for the Department of Education (DepEd) San Jose City ICT Division. Replaced paper-based Form CS No. 6 leave and request procedures with real-time multi-role tracking.",
     highlights: [
+      "Earned a 98/100 Performance Rating across 342 logged OJT internship hours at DepEd San Jose Division Office.",
       "Implemented 3-Role Workflow: Applicant application submission → Admin verification → Approver digital sign-off.",
       "Built dynamic PDF Generator exporting official CS Form No. 6 documents with digital signatures.",
       "Owned 100% of frontend development using React 19, Inertia.js, and Tailwind CSS v4."
