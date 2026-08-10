@@ -12,18 +12,19 @@
   display: none;
 }
 
-/* ---------- NAV ---------- */
+/* ---------- NAV (CONSTANT & GLASS TRANSLUCENT) ---------- */
 nav {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 50;
-  background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom: none;
-  padding: 24px 0;
+  z-index: 100;
+  background: rgba(8, 8, 10, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 0;
+  transition: background 0.3s, border-color 0.3s, padding 0.3s, box-shadow 0.3s;
 }
 
 nav .wrap.nav-wrap {
