@@ -246,10 +246,7 @@ nav .wrap.nav-wrap {
 }
 
 .hero-title .line-2 {
-  background: linear-gradient(135deg, #E9D5FF 0%, #A78BFA 60%, #8B5CF6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 40px rgba(139, 92, 246, 0.25);
+  color: #A78BFA;
 }
 
 /* Bottom Controls */
