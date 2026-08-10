@@ -60,7 +60,7 @@
   <script type="module" src="./src/main.js"></script>
 </head>
 
-<body data-theme="violet">
+<body>
 
   <div class="bg-grid"></div>
   <div class="spotlight" id="spotlight"></div>
@@ -77,12 +77,7 @@
           <a href="#awards" onclick="closeMenu()">awards</a>
           <a href="#contact" onclick="closeMenu()">contact</a>
         </div>
-        <div class="theme-switcher" title="Change Theme Accent">
-          <div class="theme-dot violet active" onclick="setThemeAccent('violet')"></div>
-          <div class="theme-dot emerald" onclick="setThemeAccent('emerald')"></div>
-          <div class="theme-dot cyan" onclick="setThemeAccent('cyan')"></div>
-          <div class="theme-dot orange" onclick="setThemeAccent('orange')"></div>
-        </div>
+
 
         <button type="button" class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation"
           aria-expanded="false">
@@ -123,13 +118,9 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </a>
             <button type="button" class="btn btn-secondary" onclick="openResumeModal()">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-              <span>Preview CV</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <span>CV</span>
             </button>
-            <a href="resume.pdf" class="btn btn-secondary" download>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-              <span>Download CV</span>
-            </a>
             <button type="button" class="btn btn-secondary" id="emailBtn" onclick="copyEmail()">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
               <span>Email Me</span>
@@ -173,7 +164,7 @@
 
             <div class="showcase-header">
               <div class="showcase-avatar-group">
-                <div class="showcase-avatar" id="heroAvatar">
+                <div class="showcase-avatar" id="heroAvatar" style="width:160px;height:160px;">
                   <img src="profile.jpg" alt="Kurt Fariñas"
                     onerror="this.style.display='none';this.parentElement.innerHTML='KF'">
                 </div>
@@ -185,24 +176,8 @@
               <span class="live-indicator">ACTIVE</span>
             </div>
 
-            <div class="showcase-metrics">
-              <div class="metric-box">
-                <div class="metric-val"><span class="val-highlight">342h</span></div>
-                <div class="metric-lbl">OJT Hours Logged</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-val"><span class="val-highlight">98</span><span
-                    style="font-size:12px;color:var(--text-faint)">/100</span></div>
-                <div class="metric-lbl">OJT Rating</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-val"><span class="val-highlight">2</span></div>
-                <div class="metric-lbl">Production Apps</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-val"><span class="val-highlight">100%</span></div>
-                <div class="metric-lbl">Thesis Defended</div>
-              </div>
+            <div class="showcase-bio">
+              <p>BS Computer Science graduate from STI College San Jose. Owned frontend end-to-end on a live government HRIS system (342 hrs, 98/100 rating). Solo-built and defended a full gym management platform as thesis.</p>
             </div>
 
             <div class="showcase-stack-title">// PRIMARY CORE STACK</div>
@@ -236,25 +211,7 @@
         </div>
       </div>
 
-      <!-- STATS BANNER -->
-      <div class="hero-stats reveal" id="heroStats">
-        <div class="stat-card">
-          <div class="stat-number" data-target="342">0</div>
-          <div class="stat-label">OJT Hours Logged</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-target="3">0</div>
-          <div class="stat-label">Full UI Redesigns</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-target="2">0</div>
-          <div class="stat-label">Production Systems</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-target="5">0</div>
-          <div class="stat-label">Awards & Certs</div>
-        </div>
-      </div>
+
     </header>
 
     <section class="section" id="about">

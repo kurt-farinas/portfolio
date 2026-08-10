@@ -1,5 +1,6 @@
 /* ========================================
    ANIMATIONS & KEYFRAMES
+   Monochrome — No glow, subtle reveals only
    ======================================== */
 
 @keyframes pulse {
@@ -35,26 +36,6 @@
   }
 }
 
-@keyframes orbFloat {
-  0% {
-    transform: translate(0, 0) scale(1);
-  }
-  100% {
-    transform: translate(-25px, 25px) scale(1.2);
-  }
-}
-
-@keyframes ticketGlowPulse {
-  0%, 100% {
-    border-color: var(--border-glow);
-    box-shadow: 0 0 20px var(--violet-glow);
-  }
-  50% {
-    border-color: var(--violet-light);
-    box-shadow: 0 0 40px var(--violet-glow);
-  }
-}
-
 /* ---------- REVEAL ANIMATIONS ---------- */
 .hero h1.reveal {
   animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -76,71 +57,39 @@
   animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
 }
 
-.hero-stats.reveal {
-  animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
-}
-
 .terminal.reveal {
   animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both;
 }
 
-/* ---------- TICKET HIGHLIGHT ---------- */
-.ticket.highlight-pulse {
-  animation: ticketGlowPulse 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-}
-
-/* ---------- SCROLL GLOW SYSTEM ---------- */
+/* ---------- SCROLL HIGHLIGHT — monochrome border brightening ---------- */
 .scroll-glow-target {
-  transition: border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .section-title.in-view-glow {
-  text-shadow: 0 0 28px var(--violet-glow);
+  /* No text-shadow glow in monochrome */
 }
 
 .ticket.in-view-glow {
-  border-color: var(--border-glow);
-  box-shadow: 0 16px 50px -10px var(--violet-glow), inset 0 0 25px var(--violet-glow);
+  border-color: var(--border-strong);
 }
 
 .skill-group.in-view-glow {
-  border-color: var(--border-glow);
-  box-shadow: 0 10px 32px -8px var(--violet-glow);
+  border-color: var(--border-strong);
   transform: translateY(-2px);
-}
-
-.skill-group.in-view-glow::before {
-  opacity: 1;
-  box-shadow: 0 0 16px var(--violet-light);
 }
 
 .award-card.in-view-glow {
-  border-color: var(--border-glow);
-  box-shadow: 0 10px 30px -8px var(--violet-glow);
+  border-color: var(--border-strong);
   transform: translateY(-2px);
 }
 
-.award-card.in-view-glow .award-badge {
-  filter: drop-shadow(0 0 10px var(--violet-light));
-}
-
-.stat-card.in-view-glow {
-  border-color: var(--border-glow);
-  box-shadow: 0 0 28px var(--violet-glow);
-}
-
-.stat-card.in-view-glow .stat-number {
-  text-shadow: 0 0 14px var(--violet-glow);
-}
-
 .contact-box.in-view-glow {
-  border-color: var(--border-glow);
-  box-shadow: 0 24px 64px -12px var(--violet-glow);
+  border-color: var(--border-strong);
 }
 
 .fact-card.in-view-glow {
-  border-color: var(--border-glow);
-  box-shadow: 0 0 32px var(--violet-glow);
+  border-color: var(--border-strong);
 }
 
 /* ---------- REDUCED MOTION ---------- */
@@ -155,7 +104,6 @@
   .status-row,
   .cta-row,
   .terminal,
-  .hero-stats,
   .hero-showcase {
     opacity: 1;
     transform: none;

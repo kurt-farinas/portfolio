@@ -2,12 +2,9 @@
    EFFECTS  |  Spotlight, Parallax, Boot, Counters, Observers
    ======================================== */
 
-// Spotlight cursor tracking
+// Spotlight cursor tracking — disabled in monochrome mode
 export function initSpotlight() {
-  document.addEventListener('mousemove', (e) => {
-    document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
-    document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
-  });
+  // No-op: spotlight effect removed in monochrome redesign
 }
 
 // 3D Parallax tilt effect for hero showcase card
@@ -42,7 +39,7 @@ export function initBootSequence() {
   const bootLog = document.getElementById('bootLog');
   let delay = 0;
 
-  ['heroH1', 'heroSub', 'heroStatus', 'heroCta', 'heroShowcase', 'heroStats', 'terminal'].forEach(id => {
+  ['heroH1', 'heroSub', 'heroStatus', 'heroCta', 'heroShowcase', 'terminal'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add('reveal');
   });
@@ -60,39 +57,9 @@ export function initBootSequence() {
   }
 }
 
-// Animated number counters on scroll
+// Animated number counters — disabled (stats banner removed)
 export function initCounters() {
-  let statsAnimated = false;
-
-  function animateCounters() {
-    if (statsAnimated) return;
-    const statCards = document.querySelectorAll('.stat-number');
-    statCards.forEach(el => {
-      const target = parseInt(el.getAttribute('data-target') || '0', 10);
-      let count = 0;
-      const step = Math.max(1, Math.floor(target / 35));
-      const timer = setInterval(() => {
-        count += step;
-        if (count >= target) {
-          count = target;
-          clearInterval(timer);
-        }
-        el.textContent = count + (target === 342 ? '+' : '');
-      }, 30);
-    });
-    statsAnimated = true;
-  }
-
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCounters();
-      }
-    });
-  }, { threshold: 0.2 });
-
-  const statsEl = document.getElementById('heroStats');
-  if (statsEl) statsObserver.observe(statsEl);
+  // No-op: stats banner removed in monochrome redesign
 }
 
 // Section element reveal on scroll
@@ -125,7 +92,7 @@ export function initScrollGlow() {
     rootMargin: "-20px 0px -20px 0px"
   });
 
-  const glowTargets = document.querySelectorAll('.section-title, .ticket, .skill-group, .award-card, .stat-card, .contact-box, .fact-card, .timeline-item');
+  const glowTargets = document.querySelectorAll('.section-title, .ticket, .skill-group, .award-card, .contact-box, .fact-card, .timeline-item');
   glowTargets.forEach(el => {
     el.classList.add('scroll-glow-target');
     glowObserver.observe(el);
@@ -135,7 +102,7 @@ export function initScrollGlow() {
 // Scroll progress bar
 export function initProgressBar() {
   const progressBar = document.createElement('div');
-  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:var(--violet-light);z-index:200;transition:width 0.1s linear;width:0%;pointer-events:none;box-shadow:0 0 8px var(--violet-light);';
+  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:1px;background:var(--text-muted);z-index:200;transition:width 0.1s linear;width:0%;pointer-events:none;';
   document.body.appendChild(progressBar);
 
   window.addEventListener('scroll', () => {

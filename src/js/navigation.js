@@ -21,13 +21,9 @@ window.closeMenu = function() {
   btn.setAttribute('aria-expanded', 'false');
 };
 
-// Theme switcher
-window.setThemeAccent = function(themeName) {
-  document.body.setAttribute('data-theme', themeName);
-  document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
-  const activeDot = document.querySelector(`.theme-dot.${themeName}`);
-  if (activeDot) activeDot.classList.add('active');
-  spawnToast('THEME UPDATED', `Switched theme accent to ${themeName.toUpperCase()}`);
+// Theme switcher — disabled in monochrome mode
+window.setThemeAccent = function() {
+  // No-op: theme switching removed in monochrome redesign
 };
 
 // Skill cross-highlighting
