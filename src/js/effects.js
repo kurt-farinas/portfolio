@@ -1,10 +1,63 @@
 /* ========================================
-   EFFECTS  |  Spotlight, Parallax, Boot, Counters, Observers
+   EFFECTS  |  Preloader, Slide Transitions, Boot, Observers
+   Inspired by averymacasa.vercel.app
    ======================================== */
+
+// Preloader curtain split & progress animation (with fail-safe)
+export function initPreloader() {
+  const overlay = document.getElementById('preloaderOverlay');
+  const fill = document.getElementById('preloaderFill');
+  const percentText = document.getElementById('preloaderPercent');
+  const hero = document.getElementById('hero');
+
+  function unlockPage() {
+    document.body.style.overflow = '';
+    if (hero) hero.classList.add('entered');
+    if (overlay) {
+      overlay.classList.add('finished');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 500);
+    }
+  }
+
+  if (!overlay) {
+    unlockPage();
+    return;
+  }
+
+  // Lock scrolling temporarily during intro
+  document.body.style.overflow = 'hidden';
+
+  // Fail-safe: Force unlock after 1.2 seconds max no matter what
+  const failSafeTimer = setTimeout(() => {
+    unlockPage();
+  }, 1200);
+
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.floor(Math.random() * 25) + 15;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      clearTimeout(failSafeTimer);
+
+      if (fill) fill.style.width = '100%';
+      if (percentText) percentText.textContent = '100%';
+
+      setTimeout(() => {
+        unlockPage();
+      }, 200);
+    } else {
+      if (fill) fill.style.width = progress + '%';
+      if (percentText) percentText.textContent = progress + '%';
+    }
+  }, 35);
+}
 
 // Spotlight cursor tracking — disabled in monochrome mode
 export function initSpotlight() {
-  // No-op: spotlight effect removed in monochrome redesign
+  // No-op
 }
 
 // 3D Parallax tilt effect for hero showcase card
@@ -18,8 +71,8 @@ export function initParallax() {
     if (!rect.width || !rect.height) return;
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-    const rotateX = (-y / rect.height) * 16;
-    const rotateY = (x / rect.width) * 16;
+    const rotateX = (-y / rect.height) * 14;
+    const rotateY = (x / rect.width) * 14;
     showcaseCard.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
   });
 
@@ -39,11 +92,6 @@ export function initBootSequence() {
   const bootLog = document.getElementById('bootLog');
   let delay = 0;
 
-  ['heroH1', 'heroSub', 'heroStatus', 'heroCta', 'heroShowcase', 'terminal'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.add('reveal');
-  });
-
   if (bootLog) {
     bootLog.innerHTML = '';
     bootLines.forEach((line) => {
@@ -51,15 +99,15 @@ export function initBootSequence() {
       el.className = 'line';
       el.innerHTML = line;
       bootLog.appendChild(el);
-      delay += 180;
+      delay += 160;
       setTimeout(() => el.classList.add('show'), delay);
     });
   }
 }
 
-// Animated number counters — disabled (stats banner removed)
+// Animated number counters — disabled
 export function initCounters() {
-  // No-op: stats banner removed in monochrome redesign
+  // No-op
 }
 
 // Section element reveal on scroll
@@ -67,16 +115,20 @@ export function initScrollReveal() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
         entry.target.classList.add('show');
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.ticket, .timeline-item, .skill-group, .award-card').forEach(t => observer.observe(t));
+  document.querySelectorAll('.ticket, .timeline-item, .skill-group, .award-card, .reveal-on-scroll, .section-title, .fact-card').forEach(t => {
+    t.classList.add('reveal-on-scroll');
+    observer.observe(t);
+  });
 }
 
-// Scroll-triggered glow observer
+// Scroll-triggered border highlight observer
 export function initScrollGlow() {
   const glowObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -92,7 +144,7 @@ export function initScrollGlow() {
     rootMargin: "-20px 0px -20px 0px"
   });
 
-  const glowTargets = document.querySelectorAll('.section-title, .ticket, .skill-group, .award-card, .contact-box, .fact-card, .timeline-item');
+  const glowTargets = document.querySelectorAll('.ticket, .skill-group, .award-card, .contact-box, .fact-card, .timeline-item');
   glowTargets.forEach(el => {
     el.classList.add('scroll-glow-target');
     glowObserver.observe(el);
@@ -102,7 +154,7 @@ export function initScrollGlow() {
 // Scroll progress bar
 export function initProgressBar() {
   const progressBar = document.createElement('div');
-  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:1px;background:var(--text-muted);z-index:200;transition:width 0.1s linear;width:0%;pointer-events:none;';
+  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:var(--text);z-index:200;transition:width 0.1s linear;width:0%;pointer-events:none;';
   document.body.appendChild(progressBar);
 
   window.addEventListener('scroll', () => {

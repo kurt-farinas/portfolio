@@ -62,6 +62,27 @@
 
 <body>
 
+  <!-- INTRO PRELOADER CURTAIN WITH MONOGRAM DRAW (matching averymacasa.vercel.app) -->
+  <div class="preloader-overlay" id="preloaderOverlay">
+    <div class="preloader-curtain-left"></div>
+    <div class="preloader-curtain-right"></div>
+    <div class="preloader-content" id="preloaderContent">
+      <svg viewBox="0 0 260 120" class="preloader-svg" aria-label="KF monogram">
+        <!-- 'K' monogram stroke -->
+        <path d="M 30,110 L 30,15 M 30,62 L 95,15 M 30,62 L 95,110" />
+        <!-- 'F' monogram stroke -->
+        <path d="M 140,110 L 140,15 L 210,15 M 140,62 L 195,62" />
+      </svg>
+      <p class="preloader-name">Kurt Fariñas</p>
+      <div class="preloader-progress-wrap">
+        <div class="preloader-progress-bar">
+          <div class="preloader-progress-fill" id="preloaderFill"></div>
+        </div>
+        <p class="preloader-percentage" id="preloaderPercent">0%</p>
+      </div>
+    </div>
+  </div>
+
   <div class="bg-grid"></div>
   <div class="spotlight" id="spotlight"></div>
 
@@ -104,15 +125,15 @@
         <!-- LEFT COLUMN: Intro, CTAs & Interactive Shell -->
         <div class="hero-left">
           <div class="boot-log" id="bootLog"></div>
-          <h1 id="heroH1" class="reveal">Kurt Fariñas builds systems that <span class="accent">actually ship.</span></h1>
-          <p class="sub reveal" id="heroSub">BS Computer Science graduate. Owned frontend end-to-end on a live government system. Defended a solo-built thesis app for a real client. Now looking for a junior developer seat.</p>
+          <h1 id="heroH1" class="hero-slide-left">HI, I AM KURT<span class="accent">SOFTWARE DEVELOPER</span></h1>
+          <p class="sub hero-slide-left" id="heroSub">BS Computer Science graduate. Owned frontend end-to-end on a live government system. Defended a solo-built thesis app for a real client. Now looking for a junior developer seat.</p>
 
-          <div class="status-row reveal" id="heroStatus">
+          <div class="status-row hero-slide-left" id="heroStatus">
             <span class="chip">OPEN_TO_WORK</span>
             <span class="location-tag">📍 San Jose City, Nueva Ecija, PH</span>
           </div>
 
-          <div class="cta-row reveal" id="heroCta">
+          <div class="cta-row hero-slide-up" id="heroCta">
             <a href="#projects" class="btn btn-primary">
               <span>View Projects →</span>
             </a>
@@ -162,7 +183,7 @@
         </div>
 
         <!-- RIGHT COLUMN: 3D GLASS SHOWCASE CARD -->
-        <div class="hero-showcase" id="heroShowcase">
+        <div class="hero-showcase hero-slide-right" id="heroShowcase">
           <div class="showcase-card" id="showcaseCard">
             <div class="showcase-orb"></div>
 
