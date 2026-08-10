@@ -10,7 +10,7 @@ import { initModals } from './js/modals.js';
 import { initSpotlight, initParallax, initBootSequence, initCounters, initScrollReveal, initScrollGlow, initProgressBar } from './js/effects.js';
 import { initNavigation } from './js/navigation.js';
 import { initContactForm } from './js/contact.js';
-import { initChatWidget } from './js/chat.js';
+
 
 // Expose copyEmail globally for onclick handlers in HTML
 window.copyEmail = copyEmail;
@@ -28,7 +28,7 @@ function startApp() {
   initModals();
   initNavigation();
   initContactForm();
-  initChatWidget();
+
 
   // Scroll-driven features
   initCounters();

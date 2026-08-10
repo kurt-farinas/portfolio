@@ -775,57 +775,7 @@
 
   <div id="toastLayer"></div>
 
-  <!-- Kurt AI Floating Chat Widget -->
-  <div class="chat-widget-wrapper">
-    <button type="button" id="chatWidgetLauncher" class="chat-launcher" aria-label="Open Kurt AI Assistant">
-      <svg class="chat-launcher-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-      </svg>
-      <span class="chat-launcher-text">Kurt AI Assistant</span>
-      <span id="chatUnreadBadge" class="chat-unread-badge">BOT</span>
-    </button>
 
-    <div id="chatWidgetPanel" class="chat-panel">
-      <div class="chat-header">
-        <div class="chat-header-identity">
-          <div class="chat-avatar">KF</div>
-          <div>
-            <div class="chat-title">Kurt AI Assistant</div>
-            <div class="chat-status"><span class="status-dot"></span> ONLINE • System Knowledge Bot</div>
-          </div>
-        </div>
-        <button type="button" id="chatWidgetClose" class="chat-close-btn" aria-label="Close Assistant">✕</button>
-      </div>
-
-      <div class="chat-prompts">
-        <button type="button" class="chat-prompt-chip" onclick="sendQuickPrompt('Recruiter Summary')">Executive Summary</button>
-        <button type="button" class="chat-prompt-chip" onclick="sendQuickPrompt('Tell me about your DepEd OJT experience')">DepEd HRIS</button>
-        <button type="button" class="chat-prompt-chip" onclick="sendQuickPrompt('How does the Gym thesis system work?')">Gym Platform</button>
-        <button type="button" class="chat-prompt-chip" onclick="sendQuickPrompt('What is your primary tech stack?')">Primary Stack</button>
-        <button type="button" class="chat-prompt-chip" onclick="sendQuickPrompt('Are you open to Junior Developer roles?')">Work Availability</button>
-        <button type="button" class="chat-prompt-chip" onclick="sendQuickPrompt('Tell me about your academic awards')">Credentials</button>
-      </div>
-
-      <div id="chatMessages" class="chat-messages">
-        <div class="chat-msg msg-bot">
-          <div class="msg-avatar">KF</div>
-          <div class="msg-text">
-            Welcome. I am <strong>Kurt AI</strong>, an interactive knowledge assistant. You can inquire about Kurt's <strong>DepEd HRIS government project, Gym thesis platform, primary tech stack, academic credentials, or full-time availability.</strong>
-          </div>
-        </div>
-      </div>
-
-      <form id="chatWidgetForm" class="chat-input-form">
-        <input type="text" id="chatInput" placeholder="Ask about system architecture, OJT, stack..." autocomplete="off" spellcheck="false">
-        <button type="submit" class="chat-send-btn" aria-label="Send query">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
-      </form>
-    </div>
-  </div>
 
 </body>
 
