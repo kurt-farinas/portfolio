@@ -186,8 +186,8 @@ nav .wrap.nav-wrap {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   width: 100%;
   margin: auto 0;
 }
@@ -202,8 +202,9 @@ nav .wrap.nav-wrap {
   text-transform: uppercase;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  text-align: left;
   text-shadow: 0 4px 35px rgba(0, 0, 0, 0.7);
   user-select: none;
   width: 100%;
