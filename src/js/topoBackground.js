@@ -73,8 +73,20 @@ export function initTopoBackground() {
     mouseX += (targetMouseX - mouseX) * 0.08;
     mouseY += (targetMouseY - mouseY) * 0.08;
 
-    // Fill background
-    ctx.fillStyle = '#08080A';
+    // Fill background with subtle violet radial gradient bloom
+    const bgGlow = ctx.createRadialGradient(
+      width / 2 + mouseX * 2,
+      height * 0.35 + mouseY * 2,
+      50,
+      width / 2,
+      height / 2,
+      Math.max(width, height) * 0.75
+    );
+    bgGlow.addColorStop(0, '#100D1A');
+    bgGlow.addColorStop(0.45, '#0A0A0E');
+    bgGlow.addColorStop(1, '#060608');
+
+    ctx.fillStyle = bgGlow;
     ctx.fillRect(0, 0, width, height);
 
     // Render topographic contour lines
@@ -112,8 +124,10 @@ export function initTopoBackground() {
       ctx.lineWidth = 3.0;
       ctx.stroke();
 
-      // Specular ridge stroke
-      ctx.strokeStyle = `rgba(230, 225, 235, ${alphaVal})`;
+      // Subtle violet-silver specular ridge stroke
+      ctx.strokeStyle = i % 3 === 0 
+        ? `rgba(167, 139, 250, ${alphaVal * 0.75})` 
+        : `rgba(230, 225, 235, ${alphaVal})`;
       ctx.lineWidth = 1.4;
       ctx.stroke();
     }

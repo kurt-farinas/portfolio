@@ -47,9 +47,23 @@ window.highlightSkill = function(skillName) {
 };
 
 export function initNavigation() {
+  const nav = document.querySelector('nav');
+
+  function handleNavScroll() {
+    if (!nav) return;
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+
+  // Initial check & scroll listener
+  handleNavScroll();
+  window.addEventListener('scroll', handleNavScroll, { passive: true });
+
   // Close mobile menu when clicking outside
   document.addEventListener('click', (e) => {
-    const nav = document.querySelector('nav');
     if (nav && !nav.contains(e.target)) window.closeMenu();
   });
 
@@ -70,5 +84,5 @@ export function initNavigation() {
         link.classList.add('active-glow');
       }
     });
-  });
+  }, { passive: true });
 }

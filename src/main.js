@@ -12,6 +12,7 @@ import { initNavigation } from './js/navigation.js';
 import { initContactForm } from './js/contact.js';
 import { initTopoBackground } from './js/topoBackground.js';
 import { initMagneticEffects } from './js/magneticEffects.js';
+import { initCustomCursor } from './js/customCursor.js';
 
 // Expose copyEmail globally for onclick handlers in HTML
 window.copyEmail = copyEmail;
@@ -19,6 +20,7 @@ window.copyEmail = copyEmail;
 function startApp() {
   // Preloader & entrance animations
   initPreloader();
+  initCustomCursor();
   initTopoBackground();
   initMagneticEffects();
 

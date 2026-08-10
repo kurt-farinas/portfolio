@@ -12,19 +12,28 @@
   display: none;
 }
 
-/* ---------- NAV (CONSTANT & GLASS TRANSLUCENT) ---------- */
+/* ---------- NAV (DYNAMIC TRANSPARENT TO GLASS ON SCROLL) ---------- */
 nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(8, 8, 10, 0.72);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  padding: 24px 0;
+  transition: background 0.35s ease, border-color 0.35s ease, padding 0.35s ease, backdrop-filter 0.35s ease, box-shadow 0.35s ease;
+}
+
+nav.scrolled {
+  background: rgba(8, 8, 10, 0.78);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding: 16px 0;
-  transition: background 0.3s, border-color 0.3s, padding 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
 }
 
 nav .wrap.nav-wrap {
@@ -39,10 +48,26 @@ nav .wrap.nav-wrap {
 .logo {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
   border: none;
   padding: 0;
   background: transparent;
+  text-decoration: none;
+  color: var(--text-muted);
+}
+
+.logo-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8E8E9F;
+  transition: color 0.3s ease;
+}
+
+.logo:hover .logo-text {
+  color: #FFFFFF;
 }
 
 .logo .dot-box {
