@@ -619,6 +619,18 @@ nav .wrap.nav-wrap {
   letter-spacing: -0.02em;
 }
 
+.section-title-block {
+  margin-bottom: 40px;
+}
+
+.profile-header-sub {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: #8E8E9F;
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
 .profile-bio p {
   font-family: var(--font-body);
   font-size: 16px;
