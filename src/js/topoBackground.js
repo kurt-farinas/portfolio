@@ -1,13 +1,13 @@
 /* ========================================
-   TOPO BACKGROUND  |  3D Organic Wave Relief
-   Renders dark topographical relief curves
+   TOPO BACKGROUND  |  3D Organic Wave Relief (High Performance)
+   Pauses automatically when scrolled out of view
    ======================================== */
 
 export function initTopoBackground() {
   const canvas = document.getElementById('topoCanvas');
   if (!canvas) return;
 
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: false });
   let width = 0;
   let height = 0;
   let animationFrameId = null;
@@ -15,85 +15,90 @@ export function initTopoBackground() {
   let mouseY = 0;
   let targetMouseX = 0;
   let targetMouseY = 0;
+  let isVisible = true;
 
   function resize() {
-    const rect = canvas.parentElement ? canvas.parentElement.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
+    const parent = canvas.parentElement;
+    const rect = parent ? parent.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
     width = rect.width || window.innerWidth;
     height = rect.height || window.innerHeight;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // Cap DPR at 1.5 for performance
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
     ctx.scale(dpr, dpr);
   }
 
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
   resize();
 
   window.addEventListener('mousemove', (e) => {
-    targetMouseX = (e.clientX / window.innerWidth - 0.5) * 30;
-    targetMouseY = (e.clientY / window.innerHeight - 0.5) * 30;
-  });
+    if (!isVisible) return;
+    targetMouseX = (e.clientX / window.innerWidth - 0.5) * 20;
+    targetMouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+  }, { passive: true });
 
-  // Parameters for generating topographic contour curves
-  const numLines = 55;
+  // Pause rendering when hero is scrolled out of viewport
+  const observer = new IntersectionObserver((entries) => {
+    const entry = entries[0];
+    isVisible = entry.isIntersecting;
+    if (isVisible && !animationFrameId) {
+      lastFrameTime = performance.now();
+      animationFrameId = requestAnimationFrame(draw);
+    } else if (!isVisible && animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+  }, { threshold: 0.05 });
+
+  const heroSection = document.getElementById('hero') || canvas;
+  observer.observe(heroSection);
+
+  // Optimised parameters for smooth 60fps rendering
+  const numLines = 36;
+  const segments = 48;
   let time = 0;
+  let lastFrameTime = performance.now();
 
-  function draw() {
-    time += 0.003;
-    mouseX += (targetMouseX - mouseX) * 0.05;
-    mouseY += (targetMouseY - mouseY) * 0.05;
+  function draw(currentTime) {
+    if (!isVisible) {
+      animationFrameId = null;
+      return;
+    }
 
-    ctx.clearRect(0, 0, width, height);
+    // Limit frame rate update frequency if needed (60fps max)
+    const delta = (currentTime - lastFrameTime) / 1000;
+    lastFrameTime = currentTime;
+    time += Math.min(delta, 0.1) * 0.4;
 
-    // Deep dark gradient base
-    const bgGradient = ctx.createRadialGradient(
-      width / 2 + mouseX * 2,
-      height / 2 + mouseY * 2,
-      100,
-      width / 2,
-      height / 2,
-      Math.max(width, height) * 0.85
-    );
-    bgGradient.addColorStop(0, '#131316');
-    bgGradient.addColorStop(0.5, '#0B0B0D');
-    bgGradient.addColorStop(1, '#050506');
+    mouseX += (targetMouseX - mouseX) * 0.08;
+    mouseY += (targetMouseY - mouseY) * 0.08;
 
-    ctx.fillStyle = bgGradient;
+    // Fill background
+    ctx.fillStyle = '#08080A';
     ctx.fillRect(0, 0, width, height);
 
     // Render topographic contour lines
-    const lineSpacing = height / (numLines * 0.65);
-    const startY = -height * 0.2;
+    const lineSpacing = height / (numLines * 0.62);
+    const startY = -height * 0.15;
+    const stepX = (width + 160) / segments;
 
     for (let i = 0; i < numLines; i++) {
       const baseY = startY + i * lineSpacing;
-      
-      // Calculate depth multiplier (center lines pop more)
       const distFromCenter = Math.abs(i - numLines / 2) / (numLines / 2);
-      const alphaVal = Math.max(0.04, (1 - distFromCenter * 0.75) * 0.28);
-      const shadowAlpha = alphaVal * 1.5;
+      const alphaVal = Math.max(0.04, (1 - distFromCenter * 0.7) * 0.26);
 
       ctx.beginPath();
 
-      const segments = 80;
-      const stepX = (width + 200) / segments;
-
       for (let j = 0; j <= segments; j++) {
-        const x = -100 + j * stepX;
-        
-        // Multi-frequency sine waves creating organic 3D terrain ridges
-        const nx = (x / width) * 4.5;
-        const ny = (baseY / height) * 3.5;
-        
-        const wave1 = Math.sin(nx * 1.8 + ny * 2.2 + time * 0.8) * 45;
-        const wave2 = Math.cos(nx * 3.2 - ny * 1.5 + time * 0.5) * 30;
-        const wave3 = Math.sin(nx * 0.8 + ny * 4.0 + time * 1.2 + i * 0.12) * 60;
-        const wave4 = Math.cos((x * 0.003) + (baseY * 0.004) + time) * 25;
-        
-        // Mouse depth influence
-        const mouseEffect = Math.sin((x / width - 0.5) * Math.PI) * mouseY * (1 - distFromCenter);
+        const x = -80 + j * stepX;
+        const nx = (x / width) * 4.2;
+        const ny = (baseY / height) * 3.2;
 
-        const y = baseY + wave1 + wave2 + wave3 + wave4 + mouseEffect;
+        const wave1 = Math.sin(nx * 1.8 + ny * 2.2 + time * 1.2) * 38;
+        const wave2 = Math.cos(nx * 3.0 - ny * 1.4 + time * 0.8) * 24;
+        const wave3 = Math.sin(nx * 0.8 + ny * 3.8 + time * 1.6 + i * 0.1) * 45;
+
+        const y = baseY + wave1 + wave2 + wave3;
 
         if (j === 0) {
           ctx.moveTo(x, y);
@@ -102,38 +107,25 @@ export function initTopoBackground() {
         }
       }
 
-      // 1. Draw Deep Shadow under the ridge (creates 3D carved depth effect)
-      ctx.save();
-      ctx.translate(1.5, 3.5);
-      ctx.strokeStyle = `rgba(0, 0, 0, ${shadowAlpha * 0.95})`;
-      ctx.lineWidth = 3.5;
+      // Shadow stroke for depth
+      ctx.strokeStyle = `rgba(0, 0, 0, ${alphaVal * 1.4})`;
+      ctx.lineWidth = 3.0;
       ctx.stroke();
-      ctx.restore();
 
-      // 2. Draw Main Ridge Specular Line (creates light reflection on top edge)
-      ctx.strokeStyle = `rgba(225, 220, 230, ${alphaVal})`;
-      ctx.lineWidth = 1.6;
+      // Specular ridge stroke
+      ctx.strokeStyle = `rgba(230, 225, 235, ${alphaVal})`;
+      ctx.lineWidth = 1.4;
       ctx.stroke();
     }
-
-    // Subtle edge vignette overlay
-    const vignette = ctx.createRadialGradient(
-      width / 2, height / 2, Math.min(width, height) * 0.4,
-      width / 2, height / 2, Math.max(width, height) * 0.8
-    );
-    vignette.addColorStop(0, 'rgba(0,0,0,0)');
-    vignette.addColorStop(1, 'rgba(5,5,6,0.7)');
-
-    ctx.fillStyle = vignette;
-    ctx.fillRect(0, 0, width, height);
 
     animationFrameId = requestAnimationFrame(draw);
   }
 
-  draw();
+  animationFrameId = requestAnimationFrame(draw);
 
   return function cleanup() {
     if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    observer.disconnect();
     window.removeEventListener('resize', resize);
   };
 }

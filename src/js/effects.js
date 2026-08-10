@@ -133,16 +133,26 @@ export function initScrollGlow() {
   });
 }
 
-// Scroll progress bar
+// Scroll progress bar (throttled for high performance)
 export function initProgressBar() {
   const progressBar = document.createElement('div');
-  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:var(--text);z-index:200;transition:width 0.1s linear;width:0%;pointer-events:none;';
+  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:var(--text);z-index:200;transition:transform 0.1s linear;width:100%;transform-origin:0 0;transform:scaleX(0);pointer-events:none;will-change:transform;';
   document.body.appendChild(progressBar);
 
-  window.addEventListener('scroll', () => {
+  let ticking = false;
+
+  function updateProgress() {
     const scrolled = window.scrollY;
     const total = document.documentElement.scrollHeight - window.innerHeight;
-    const percent = total > 0 ? (scrolled / total * 100).toFixed(1) : 0;
-    progressBar.style.width = percent + '%';
-  });
+    const ratio = total > 0 ? Math.min(1, Math.max(0, scrolled / total)) : 0;
+    progressBar.style.transform = `scaleX(${ratio})`;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+  }, { passive: true });
 }

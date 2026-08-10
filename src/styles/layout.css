@@ -151,6 +151,7 @@ nav .wrap.nav-wrap {
   overflow: hidden;
   background: #08080A;
   box-sizing: border-box;
+  contain: layout style paint;
 }
 
 .topo-canvas {
@@ -161,6 +162,8 @@ nav .wrap.nav-wrap {
   height: 100%;
   z-index: 1;
   pointer-events: none;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .hero-wrap {
