@@ -11,6 +11,7 @@ import { initPreloader, initSpotlight, initParallax, initBootSequence, initCount
 import { initNavigation } from './js/navigation.js';
 import { initContactForm } from './js/contact.js';
 import { initTopoBackground } from './js/topoBackground.js';
+import { initMagneticEffects } from './js/magneticEffects.js';
 
 // Expose copyEmail globally for onclick handlers in HTML
 window.copyEmail = copyEmail;
@@ -19,6 +20,7 @@ function startApp() {
   // Preloader & entrance animations
   initPreloader();
   initTopoBackground();
+  initMagneticEffects();
 
   // Visual effects
   initSpotlight();
