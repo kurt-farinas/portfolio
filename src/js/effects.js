@@ -3,7 +3,7 @@
    Inspired by averymacasa.vercel.app
    ======================================== */
 
-// Preloader curtain split & progress animation (cinematic ~2.2s timing)
+// Preloader curtain split & progress animation (cinematic timing)
 export function initPreloader() {
   const overlay = document.getElementById('preloaderOverlay');
   const fill = document.getElementById('preloaderFill');
@@ -17,7 +17,7 @@ export function initPreloader() {
       overlay.classList.add('finished');
       setTimeout(() => {
         overlay.style.display = 'none';
-      }, 1500);
+      }, 2200);
     }
   }
 
@@ -29,14 +29,14 @@ export function initPreloader() {
   // Lock scrolling during intro preloader
   document.body.style.overflow = 'hidden';
 
-  // Fail-safe: Force unlock after 3.5 seconds max
+  // Fail-safe: Force unlock after 4.5 seconds max
   const failSafeTimer = setTimeout(() => {
     unlockPage();
-  }, 3500);
+  }, 4500);
 
   let progress = 0;
   const interval = setInterval(() => {
-    progress += Math.floor(Math.random() * 5) + 3;
+    progress += Math.floor(Math.random() * 3) + 2;
     if (progress >= 100) {
       progress = 100;
       clearInterval(interval);
@@ -45,15 +45,15 @@ export function initPreloader() {
       if (fill) fill.style.width = '100%';
       if (percentText) percentText.textContent = '100%';
 
-      // Hold at 100% briefly before splitting curtains
+      // Hold at 100% for a smooth, elegant beat before splitting curtains
       setTimeout(() => {
         unlockPage();
-      }, 450);
+      }, 700);
     } else {
       if (fill) fill.style.width = progress + '%';
       if (percentText) percentText.textContent = progress + '%';
     }
-  }, 45);
+  }, 35);
 }
 
 // Spotlight cursor tracking — disabled in monochrome mode
