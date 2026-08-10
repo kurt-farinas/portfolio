@@ -17,7 +17,7 @@ export function initPreloader() {
       overlay.classList.add('finished');
       setTimeout(() => {
         overlay.style.display = 'none';
-      }, 900);
+      }, 1500);
     }
   }
 
@@ -82,28 +82,9 @@ export function initParallax() {
   });
 }
 
-// Boot sequence animation
+// Boot sequence animation — disabled
 export function initBootSequence() {
-  const bootLines = [
-    "> initializing kurt.dev",
-    "> loading profile: Kurt Fariñas  |  BS Computer Science",
-    "> checking status... <span class=\"ok\">OPEN_TO_WORK</span>",
-    "> ready."
-  ];
-  const bootLog = document.getElementById('bootLog');
-  let delay = 0;
-
-  if (bootLog) {
-    bootLog.innerHTML = '';
-    bootLines.forEach((line) => {
-      const el = document.createElement('span');
-      el.className = 'line';
-      el.innerHTML = line;
-      bootLog.appendChild(el);
-      delay += 160;
-      setTimeout(() => el.classList.add('show'), delay);
-    });
-  }
+  // No-op: boot log removed to focus on hero presentation
 }
 
 // Animated number counters — disabled

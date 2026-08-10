@@ -124,11 +124,11 @@ nav .wrap {
 }
 
 .hero h1 {
-  font-family: var(--font-anton);
-  font-size: clamp(42px, 7.5vw, 95px);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 0.92;
+  font-family: var(--font-display);
+  font-size: clamp(38px, 6vw, 76px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.96;
   max-width: 880px;
   opacity: 1;
   color: var(--text);
@@ -136,13 +136,12 @@ nav .wrap {
 }
 
 .hero h1 .accent {
-  font-family: var(--font-anton);
-  color: var(--text-faint);
-  background: none;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: unset;
-  transition: color 0.4s;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-muted);
   display: block;
+  transition: color 0.4s;
 }
 
 .hero:hover h1 .accent {
