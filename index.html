@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kurt Fariñas  |  Junior Developer & System Builder</title>
+  <title>Kurt Fariñas | Junior Developer & System Builder</title>
   <meta name="description"
     content="Portfolio of Kurt Fariñas  |  BS Computer Science graduate, frontend owner of DepEd HRIS approval system, and creator of Boiyet's Gym Management System. Open to junior frontend and full-stack developer roles.">
 
@@ -84,19 +84,31 @@
   </div>
 
   <nav>
-    <div class="wrap">
-      <div class="logo"><span class="dot"></span>kurt.dev</div>
+    <div class="wrap nav-wrap">
+      <div class="logo">
+        <span class="dot-box"><span class="dot"></span></span>
+      </div>
       <div class="nav-right">
         <div class="nav-links" id="navLinks">
-          <a href="#about" onclick="closeMenu()">about</a>
-          <a href="#timeline" onclick="closeMenu()">timeline</a>
-          <a href="#projects" onclick="closeMenu()">projects</a>
-          <a href="#skills" onclick="closeMenu()">stack</a>
-          <a href="#awards" onclick="closeMenu()">awards</a>
-          <a href="#contact" onclick="closeMenu()">contact</a>
+          <a href="#about" onclick="closeMenu()">ABOUT</a>
+          <a href="#timeline" onclick="closeMenu()">EXPERIENCE</a>
+          <a href="#projects" onclick="closeMenu()">PROJECTS</a>
+          <a href="#contact" onclick="closeMenu()">CONTACT</a>
         </div>
-        <a href="#contact" class="btn btn-primary btn-sm" style="font-size:10px;padding:6px 14px;">Hire Me</a>
-
+        <button type="button" class="theme-btn" aria-label="Toggle Theme">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+        <a href="#contact" class="btn-hire-me">HIRE ME</a>
 
         <button type="button" class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation"
           aria-expanded="false">
@@ -106,108 +118,67 @@
     </div>
     <!-- Mobile dropdown -->
     <div class="mobile-menu" id="mobileMenu">
-      <a href="#about" onclick="closeMenu()">about</a>
-      <a href="#timeline" onclick="closeMenu()">timeline</a>
-      <a href="#projects" onclick="closeMenu()">projects</a>
-      <a href="#skills" onclick="closeMenu()">stack</a>
-      <a href="#awards" onclick="closeMenu()">awards</a>
-      <a href="#contact" onclick="closeMenu()">contact</a>
-      <a href="resume.pdf" download onclick="closeMenu()">resume ↓</a>
+      <a href="#about" onclick="closeMenu()">ABOUT</a>
+      <a href="#timeline" onclick="closeMenu()">EXPERIENCE</a>
+      <a href="#projects" onclick="closeMenu()">PROJECTS</a>
+      <a href="#contact" onclick="closeMenu()">CONTACT</a>
+      <a href="resume.pdf" download onclick="closeMenu()">RESUME ↓</a>
     </div>
   </nav>
 
   <main>
-    <header class="hero wrap" id="hero">
-      <div class="hero-grid">
-        <!-- LEFT COLUMN: Intro, CTAs & Interactive Shell -->
-        <div class="hero-left">
-          <h1 id="heroH1" class="hero-slide-left">HI, I AM KURT<span class="accent">SOFTWARE DEVELOPER</span></h1>
-          <p class="sub hero-slide-left" id="heroSub">BS Computer Science graduate. Owned frontend end-to-end on a live government system. Defended a solo-built thesis web app for a real client. Now looking for a junior developer seat.</p>
+    <header class="hero hero-avery" id="hero">
+      <canvas id="topoCanvas" class="topo-canvas"></canvas>
 
-          <div class="status-row hero-slide-left" id="heroStatus">
-            <span class="chip">OPEN_TO_WORK</span>
-            <span class="location-tag">San Jose City, Nueva Ecija, PH</span>
-          </div>
-
-          <div class="cta-row hero-slide-up" id="heroCta">
-            <a href="#projects" class="btn btn-primary">
-              <span>View Projects →</span>
-            </a>
-            <button type="button" class="btn btn-secondary" onclick="openResumeModal()">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              <span>CV</span>
-            </button>
-            <a href="https://github.com/kurt-farinas" target="_blank" rel="noopener" class="btn btn-secondary" style="padding:12px;" aria-label="GitHub Profile">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
-            </a>
-            <a href="https://www.linkedin.com/in/kurt-vincent-fari%C3%B1as-315ab1367" target="_blank" rel="noopener" class="btn btn-secondary" style="padding:12px;" aria-label="LinkedIn Profile">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"></path></svg>
-            </a>
-            <button type="button" class="btn btn-secondary" style="padding:12px;" onclick="copyEmail()" aria-label="Email Me">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-            </button>
-          </div>
+      <div class="wrap hero-wrap">
+        <div class="hero-center-content">
+          <h1 id="heroH1" class="hero-title hero-slide-up">
+            <span class="title-line line-1">HI, I AM KURT</span>
+            <span class="title-line line-2">SOFTWARE DEVELOPER</span>
+          </h1>
         </div>
 
-        <!-- RIGHT COLUMN: 3D GLASS SHOWCASE CARD -->
-        <div class="hero-showcase hero-slide-right" id="heroShowcase">
-          <div class="showcase-card" id="showcaseCard">
-            <div class="showcase-header">
-              <div class="showcase-avatar-group">
-                <div class="showcase-avatar" id="heroAvatar" style="width:160px;height:160px;">
-                  <img src="profile.jpg" alt="Kurt Fariñas"
-                    onerror="this.style.display='none';this.parentElement.innerHTML='KF'">
-                </div>
-                <div class="showcase-identity">
-                  <div class="name">Kurt Fariñas</div>
-                  <div class="role">System Builder & Dev</div>
-                </div>
-              </div>
-              <span class="live-indicator">ACTIVE</span>
-            </div>
+        <div class="hero-bottom-controls hero-slide-up">
+          <a href="#projects" class="btn-view-projects">
+            <span>VIEW PROJECTS</span>
+            <span class="arrow">→</span>
+          </a>
 
-            <div class="showcase-bio">
-              <p>BS Computer Science graduate from STI College San Jose. Owned frontend end-to-end on a live government HRIS system (342 hrs, <b>98/100 rating</b>). Solo-built and defended a responsive gym management web app as thesis.</p>
-            </div>
-
-            <div style="margin-bottom:14px;">
-              <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--text);border:1px solid var(--border-strong);padding:5px 12px;border-radius:20px;display:inline-block;background:rgba(255,255,255,0.04);">
-                OJT Performance Rating: <b>98 / 100</b> (342 Hrs)
-              </span>
-            </div>
-
-            <div class="showcase-stack-title">// PRIMARY CORE STACK</div>
-            <div class="showcase-stack-grid">
-              <div class="tech-pill">
-                <span>PHP / Laravel</span>
-                <span class="tooltip">DepEd HRIS & Backend APIs</span>
-              </div>
-              <div class="tech-pill">
-                <span>React / Inertia</span>
-                <span class="tooltip">Modern SPA UI Architecture</span>
-              </div>
-              <div class="tech-pill">
-                <span>Tailwind CSS</span>
-                <span class="tooltip">Custom Responsive Design Systems</span>
-              </div>
-              <div class="tech-pill">
-                <span>MySQL / Relational</span>
-                <span class="tooltip">Database Schema & Query Opts</span>
-              </div>
-              <div class="tech-pill">
-                <span>Git / GitHub</span>
-                <span class="tooltip">Version Control & Workflows</span>
-              </div>
-              <div class="tech-pill">
-                <span>SysAdmin / Linux</span>
-                <span class="tooltip">Self-hosted Services & Tunneling</span>
-              </div>
-            </div>
+          <div class="hero-social-pill">
+            <a href="https://github.com/kurt-farinas" target="_blank" rel="noopener" aria-label="GitHub Profile">
+              <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z">
+                </path>
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/kurt-vincent-fari%C3%B1as-315ab1367" target="_blank" rel="noopener"
+              aria-label="LinkedIn Profile">
+              <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75-1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </a>
+            <button type="button" onclick="copyEmail()" aria-label="Email Me">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </button>
+            <button type="button" onclick="openResumeModal()" aria-label="View Resume CV">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
-
-
     </header>
 
 
@@ -219,9 +190,14 @@
         <div class="section-title">Built for real-world complexity, not just tutorials.</div>
         <div class="about-grid">
           <div class="about-text">
-            <p>I graduated from <strong>STI College San Jose</strong> with a BS in Computer Science. I spent a full OJT cycle owning frontend development end-to-end on a live government system, and defended a solo-built gym management platform as my thesis.</p>
-            <p>I like the parts of software that most people skip past: approval states, edge cases in legacy environments, and making something that a 50-year-old office worker who's never used a web app can operate without a manual.</p>
-            <p>Engineering focus: <strong>Clean UI architecture</strong>, robust full-stack workflows, and building intuitive user interfaces for real-world software.</p>
+            <p>I graduated from <strong>STI College San Jose</strong> with a BS in Computer Science. I spent a full OJT
+              cycle owning frontend development end-to-end on a live government system, and defended a solo-built gym
+              management platform as my thesis.</p>
+            <p>I like the parts of software that most people skip past: approval states, edge cases in legacy
+              environments, and making something that a 50-year-old office worker who's never used a web app can operate
+              without a manual.</p>
+            <p>Engineering focus: <strong>Clean UI architecture</strong>, robust full-stack workflows, and building
+              intuitive user interfaces for real-world software.</p>
             <div class="stack-row" style="margin-top:20px;">
               <span class="stack-chip">Software Dev</span>
               <span class="stack-chip">Frontend Owner</span>
@@ -233,10 +209,13 @@
           <div class="fact-card">
             <div class="fact-list">
               <div class="fact"><span class="label">Status</span><span class="value-highlight">OPEN_TO_WORK</span></div>
-              <div class="fact"><span class="label">Degree</span><span class="value">BS Computer Science (Graduated)</span></div>
-              <div class="fact"><span class="label">Leadership</span><span class="value-highlight">Alumni President (2025–2026)</span></div>
+              <div class="fact"><span class="label">Degree</span><span class="value">BS Computer Science
+                  (Graduated)</span></div>
+              <div class="fact"><span class="label">Leadership</span><span class="value-highlight">Alumni President
+                  (2025–2026)</span></div>
               <div class="fact"><span class="label">Focus</span><span class="value">Full-stack</span></div>
-              <div class="fact"><span class="label">Primary Stack</span><span class="value">React, Laravel, Tailwind</span></div>
+              <div class="fact"><span class="label">Primary Stack</span><span class="value">React, Laravel,
+                  Tailwind</span></div>
               <div class="fact"><span class="label">Location</span><span class="value">Nueva Ecija, PH</span></div>
               <div class="fact"><span class="label">OJT Rating</span><span class="value">98 / 100</span></div>
             </div>
@@ -265,42 +244,60 @@
 
             <!-- Track 1 (Inner) -->
             <div class="orbit-track orbit-track-1">
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(1.00 * var(--radius-1)), calc(0.00 * var(--radius-1)));">
-                <div class="counter-spin-1"><span class="orbit-pill" onclick="highlightSkill('React')">React 19</span></div>
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(1.00 * var(--radius-1)), calc(0.00 * var(--radius-1)));">
+                <div class="counter-spin-1"><span class="orbit-pill" onclick="highlightSkill('React')">React 19</span>
+                </div>
               </div>
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(-1.00 * var(--radius-1)), calc(0.00 * var(--radius-1)));">
-                <div class="counter-spin-1"><span class="orbit-pill" onclick="highlightSkill('Inertia')">Inertia.js</span></div>
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(-1.00 * var(--radius-1)), calc(0.00 * var(--radius-1)));">
+                <div class="counter-spin-1"><span class="orbit-pill"
+                    onclick="highlightSkill('Inertia')">Inertia.js</span></div>
               </div>
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(0.00 * var(--radius-1)), calc(1.00 * var(--radius-1)));">
-                <div class="counter-spin-1"><span class="orbit-pill" onclick="highlightSkill('Tailwind')">Tailwind CSS</span></div>
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(0.00 * var(--radius-1)), calc(1.00 * var(--radius-1)));">
+                <div class="counter-spin-1"><span class="orbit-pill" onclick="highlightSkill('Tailwind')">Tailwind
+                    CSS</span></div>
               </div>
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(0.00 * var(--radius-1)), calc(-1.00 * var(--radius-1)));">
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(0.00 * var(--radius-1)), calc(-1.00 * var(--radius-1)));">
                 <div class="counter-spin-1"><span class="orbit-pill" onclick="highlightSkill('PHP')">PHP 8+</span></div>
               </div>
             </div>
 
             <!-- Track 2 (Middle) -->
             <div class="orbit-track orbit-track-2">
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(0.707 * var(--radius-2)), calc(0.707 * var(--radius-2)));">
-                <div class="counter-spin-2"><span class="orbit-pill" onclick="highlightSkill('Laravel')">Laravel 12</span></div>
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(0.707 * var(--radius-2)), calc(0.707 * var(--radius-2)));">
+                <div class="counter-spin-2"><span class="orbit-pill" onclick="highlightSkill('Laravel')">Laravel
+                    12</span></div>
               </div>
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(-0.707 * var(--radius-2)), calc(-0.707 * var(--radius-2)));">
-                <div class="counter-spin-2"><span class="orbit-pill" onclick="highlightSkill('MySQL')">MySQL</span></div>
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(-0.707 * var(--radius-2)), calc(-0.707 * var(--radius-2)));">
+                <div class="counter-spin-2"><span class="orbit-pill" onclick="highlightSkill('MySQL')">MySQL</span>
+                </div>
               </div>
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(-0.707 * var(--radius-2)), calc(0.707 * var(--radius-2)));">
-                <div class="counter-spin-2"><span class="orbit-pill" onclick="highlightSkill('JavaScript')">JavaScript</span></div>
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(-0.707 * var(--radius-2)), calc(0.707 * var(--radius-2)));">
+                <div class="counter-spin-2"><span class="orbit-pill"
+                    onclick="highlightSkill('JavaScript')">JavaScript</span></div>
               </div>
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(0.707 * var(--radius-2)), calc(-0.707 * var(--radius-2)));">
-                <div class="counter-spin-2"><span class="orbit-pill" onclick="highlightSkill('Git')">Git / GitHub</span></div>
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(0.707 * var(--radius-2)), calc(-0.707 * var(--radius-2)));">
+                <div class="counter-spin-2"><span class="orbit-pill" onclick="highlightSkill('Git')">Git / GitHub</span>
+                </div>
               </div>
             </div>
 
             <!-- Track 3 (Outer) -->
             <div class="orbit-track orbit-track-3">
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(1.00 * var(--radius-3)), calc(0.00 * var(--radius-3)));">
-                <div class="counter-spin-1"><span class="orbit-pill" onclick="highlightSkill('Java')">Oracle Java</span></div>
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(1.00 * var(--radius-3)), calc(0.00 * var(--radius-3)));">
+                <div class="counter-spin-1"><span class="orbit-pill" onclick="highlightSkill('Java')">Oracle Java</span>
+                </div>
               </div>
-              <div class="orbit-item" style="transform:translate(-50%,-50%) translate(calc(-1.00 * var(--radius-3)), calc(0.00 * var(--radius-3)));">
+              <div class="orbit-item"
+                style="transform:translate(-50%,-50%) translate(calc(-1.00 * var(--radius-3)), calc(0.00 * var(--radius-3)));">
                 <div class="counter-spin-1"><span class="orbit-pill">Cisco Security</span></div>
               </div>
             </div>
@@ -321,8 +318,9 @@
             <div class="timeline-icon">1</div>
             <div class="timeline-content">
               <div class="timeline-date">JULY 2026</div>
-              <div class="timeline-title">Graduated  |  BS Computer Science</div>
-              <div class="timeline-desc">Graduated with a Bachelor of Science in Computer Science from STI College San Jose. Elected Alumni President for Batch 2025–2026.</div>
+              <div class="timeline-title">Graduated | BS Computer Science</div>
+              <div class="timeline-desc">Graduated with a Bachelor of Science in Computer Science from STI College San
+                Jose. Elected Alumni President for Batch 2025–2026.</div>
               <span class="timeline-badge">ALUMNI PRESIDENT (2025–2026) & OPEN_TO_WORK</span>
             </div>
           </div>
@@ -332,7 +330,8 @@
             <div class="timeline-content">
               <div class="timeline-date">FEB – MARCH 2026 (342 HOURS)</div>
               <div class="timeline-title">DepEd San Jose Division Office OJT</div>
-              <div class="timeline-desc">Owned 100% of frontend development for the DepEd HRIS Approval System. Digitalized leave requests for ICT staff & teachers. Earned 98/100 performance rating.</div>
+              <div class="timeline-desc">Owned 100% of frontend development for the DepEd HRIS Approval System.
+                Digitalized leave requests for ICT staff & teachers. Earned 98/100 performance rating.</div>
               <span class="timeline-badge">98/100 PERFORMANCE RATING</span>
             </div>
           </div>
@@ -342,7 +341,8 @@
             <div class="timeline-content">
               <div class="timeline-date">NOVEMBER 2025</div>
               <div class="timeline-title">Boiyet's Gym Management Thesis Defense</div>
-              <div class="timeline-desc">Solo-built and defended a commercial gym management platform featuring QR attendance scanning, revenue analytics, and member fitness tracking.</div>
+              <div class="timeline-desc">Solo-built and defended a commercial gym management platform featuring QR
+                attendance scanning, revenue analytics, and member fitness tracking.</div>
               <span class="timeline-badge">THESIS DEFENDED</span>
             </div>
           </div>
@@ -352,7 +352,8 @@
             <div class="timeline-content">
               <div class="timeline-date">SEPTEMBER 2025</div>
               <div class="timeline-title">Cisco Cybersecurity Certification</div>
-              <div class="timeline-desc">Earned official Introduction to Cybersecurity certification from Cisco Networking Academy, applying secure authentication principles to web applications.</div>
+              <div class="timeline-desc">Earned official Introduction to Cybersecurity certification from Cisco
+                Networking Academy, applying secure authentication principles to web applications.</div>
               <span class="timeline-badge">CERTIFIED</span>
             </div>
           </div>
@@ -361,8 +362,9 @@
             <div class="timeline-icon">5</div>
             <div class="timeline-content">
               <div class="timeline-date">MARCH 2024 & MARCH 2025</div>
-              <div class="timeline-title">2x Tagisan ng Talino  |  ThinkQuest Awards</div>
-              <div class="timeline-desc">Competed in STI College San Jose's annual Tagisan ng Talino academic competition, securing 3rd place in 2024 and crowning Champion (1st Place) in 2025.</div>
+              <div class="timeline-title">2x Tagisan ng Talino | ThinkQuest Awards</div>
+              <div class="timeline-desc">Competed in STI College San Jose's annual Tagisan ng Talino academic
+                competition, securing 3rd place in 2024 and crowning Champion (1st Place) in 2025.</div>
               <span class="timeline-badge">COMPETITION CHAMPION</span>
             </div>
           </div>
@@ -371,8 +373,9 @@
             <div class="timeline-icon">6</div>
             <div class="timeline-content">
               <div class="timeline-date">2022 – 2026</div>
-              <div class="timeline-title">STI College San Jose  |  BS Computer Science</div>
-              <div class="timeline-desc">Enrolled in BSCS program; mastered OOP, Database Systems, Web Development, and Java Fundamentals (Oracle Academy certified).</div>
+              <div class="timeline-title">STI College San Jose | BS Computer Science</div>
+              <div class="timeline-desc">Enrolled in BSCS program; mastered OOP, Database Systems, Web Development, and
+                Java Fundamentals (Oracle Academy certified).</div>
               <span class="timeline-badge">ACADEMIC FOUNDATION</span>
             </div>
           </div>
@@ -389,7 +392,8 @@
           <article class="ticket" id="ticket-hris" data-skills="react,inertia,tailwind,laravel,javascript">
             <div class="ticket-head">
               <span class="ticket-id">TICKET #HRIS-2026-01</span>
-              <span class="stamp" style="color:var(--text);border-color:var(--border-strong);">98/100 OJT RATING (342 HRS)</span>
+              <span class="stamp" style="color:var(--text);border-color:var(--border-strong);">98/100 OJT RATING (342
+                HRS)</span>
             </div>
             <div class="ticket-body">
               <div class="ticket-top">
@@ -397,10 +401,12 @@
                 <span class="role-tag">FRONTEND OWNER</span>
               </div>
               <p class="ticket-desc">A three-role approval workflow (Applicant → Admin → Approver) built for DepEd San
-                Jose City's ICT Department, replacing a paper-based CS Form No. 6 process. Includes PDF export and digital
+                Jose City's ICT Department, replacing a paper-based CS Form No. 6 process. Includes PDF export and
+                digital
                 signature capture for division office workflows.</p>
-              <p style="font-size:12px;color:var(--text-muted);margin-top:-8px;margin-bottom:12px;">⚠️ Built during OJT for DepEd
-                San Jose City ICT Division  |  Internal system (not actively in production).</p>
+              <p style="font-size:12px;color:var(--text-muted);margin-top:-8px;margin-bottom:12px;">⚠️ Built during OJT
+                for DepEd
+                San Jose City ICT Division | Internal system (not actively in production).</p>
               <!-- Project Screenshots  |  3 Roles -->
               <div class="screenshot-carousel" data-project="hris">
                 <div class="carousel-tabs">
@@ -639,7 +645,7 @@
                 stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
             </svg>
             <div class="award-text">
-              <h4>Alumni President  |  Batch 2025–2026</h4>
+              <h4>Alumni President | Batch 2025–2026</h4>
               <p>STI College San Jose Alumni Association · 2025 – 2026</p>
             </div>
           </div>
@@ -669,7 +675,7 @@
                 stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
             </svg>
             <div class="award-text">
-              <h4>ThinkQuest Champion  |  Tagisan ng Talino</h4>
+              <h4>ThinkQuest Champion | Tagisan ng Talino</h4>
               <p>STI College San Jose, School Level · Mar 2025</p>
             </div>
           </div>
@@ -679,7 +685,7 @@
                 stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
             </svg>
             <div class="award-text">
-              <h4>ThinkQuest 3rd Place  |  Tagisan ng Talino</h4>
+              <h4>ThinkQuest 3rd Place | Tagisan ng Talino</h4>
               <p>STI College San Jose, School Level · Mar 2024</p>
             </div>
           </div>
@@ -689,7 +695,7 @@
                 stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
             </svg>
             <div class="award-text">
-              <h4>Java Fundamentals  |  1st & 2nd Term</h4>
+              <h4>Java Fundamentals | 1st & 2nd Term</h4>
               <p>Oracle Academy · 2023</p>
             </div>
           </div>
@@ -701,7 +707,7 @@
       <div class="wrap">
         <div class="contact-box">
           <h2>Let's build something.</h2>
-          <p>Open to junior developer roles  |  frontend, full-stack, or wherever a team needs someone who ships
+          <p>Open to junior developer roles | frontend, full-stack, or wherever a team needs someone who ships
             production-ready code.</p>
 
           <!-- Contact Form -->
@@ -742,23 +748,43 @@
 
           <div class="contact-links">
             <button type="button" class="btn btn-secondary" onclick="copyEmail()" title="Click to copy email address">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
               <span>kurtfarinas2022@gmail.com</span>
             </button>
             <a href="mailto:kurtfarinas2022@gmail.com" class="btn btn-secondary">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
               <span>Open Email</span>
             </a>
-            <a href="https://www.linkedin.com/in/kurt-vincent-fari%C3%B1as-315ab1367" class="btn btn-secondary" target="_blank" rel="noopener">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <a href="https://www.linkedin.com/in/kurt-vincent-fari%C3%B1as-315ab1367" class="btn btn-secondary"
+              target="_blank" rel="noopener">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
               <span>LinkedIn</span>
             </a>
             <a href="https://github.com/kurt-farinas" class="btn btn-secondary" target="_blank" rel="noopener">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
               <span>GitHub</span>
             </a>
             <a href="resume.pdf" class="btn btn-secondary" download>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
               <span>Download CV</span>
             </a>
           </div>
@@ -817,7 +843,7 @@
       <div class="resume-modal-header">
         <div>
           <span class="modal-badge">CURRICULUM VITAE PREVIEW</span>
-          <h3 class="modal-title" style="margin-bottom:0;font-size:22px;">Kurt Fariñas  |  Resume</h3>
+          <h3 class="modal-title" style="margin-bottom:0;font-size:22px;">Kurt Fariñas | Resume</h3>
         </div>
         <div class="resume-modal-actions">
           <a href="resume.pdf" download class="btn btn-primary btn-sm">Download PDF</a>
@@ -833,7 +859,8 @@
   <!-- Screenshot Lightbox -->
   <div id="screenshotModal" class="screenshot-modal-overlay" onclick="closeScreenshotModal()">
     <div class="screenshot-modal-content" onclick="event.stopPropagation()">
-      <button type="button" class="screenshot-modal-close" onclick="closeScreenshotModal()" aria-label="Close image preview">&#x2715;</button>
+      <button type="button" class="screenshot-modal-close" onclick="closeScreenshotModal()"
+        aria-label="Close image preview">&#x2715;</button>
       <img id="screenshotModalImg" class="screenshot-modal-img" src="" alt="">
       <p id="screenshotModalCaption" class="screenshot-modal-caption"></p>
     </div>

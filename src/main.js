@@ -10,6 +10,7 @@ import { initModals } from './js/modals.js';
 import { initPreloader, initSpotlight, initParallax, initBootSequence, initCounters, initScrollReveal, initScrollGlow, initProgressBar } from './js/effects.js';
 import { initNavigation } from './js/navigation.js';
 import { initContactForm } from './js/contact.js';
+import { initTopoBackground } from './js/topoBackground.js';
 
 // Expose copyEmail globally for onclick handlers in HTML
 window.copyEmail = copyEmail;
@@ -17,6 +18,7 @@ window.copyEmail = copyEmail;
 function startApp() {
   // Preloader & entrance animations
   initPreloader();
+  initTopoBackground();
 
   // Visual effects
   initSpotlight();
