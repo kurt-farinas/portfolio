@@ -142,6 +142,9 @@
 
       <div class="wrap hero-wrap">
         <div class="hero-center-content">
+          <div class="hero-status-tag status-open-to-work">
+            OPEN TO WORK
+          </div>
           <h1 id="heroH1" class="hero-title hero-slide-up">
             <span class="title-line line-1">HI, I AM KURT</span>
             <span class="title-line line-2">SOFTWARE DEVELOPER</span>
@@ -225,7 +228,7 @@
             <!-- Credentials Fact Card -->
             <div class="fact-card profile-fact-card">
               <div class="fact-list">
-                <div class="fact"><span class="label">Status</span><span class="value">OPEN_TO_WORK</span>
+                <div class="fact"><span class="label">Status</span><span class="value status-open-to-work">OPEN_TO_WORK</span>
                 </div>
                 <div class="fact"><span class="label">Degree</span><span class="value">BS Computer Science
                     (Graduated)</span></div>
@@ -253,7 +256,7 @@
                   <span class="spec-label">FRONTEND ARCHITECTURE</span>
                 </div>
                 <div class="spec-row-body">
-                  <div class="spec-tech-line">HTML5 · CSS3 / Modern Layouts · Vanilla JS (ES6+) · Vite</div>
+                  <div class="spec-tech-line">HTML · CSS / Modern Layouts · Vanilla JS · Vite</div>
                   <div class="spec-proof-tag">100% HRIS UI Ownership</div>
                 </div>
               </div>
@@ -265,7 +268,7 @@
                   <span class="spec-label">BACKEND & DATABASE</span>
                 </div>
                 <div class="spec-row-body">
-                  <div class="spec-tech-line">PHP 8+ · MySQL · RESTful APIs · Session Auth</div>
+                  <div class="spec-tech-line">PHP · MySQL · RESTful APIs · Session Auth</div>
                   <div class="spec-proof-tag">Solo Defended Gym Platform</div>
                 </div>
               </div>
@@ -317,7 +320,7 @@
               <div class="timeline-title">Graduated | BS Computer Science</div>
               <div class="timeline-desc">Graduated with a Bachelor of Science in Computer Science from STI College San
                 Jose. Elected Alumni President for Batch 2025–2026.</div>
-              <span class="timeline-badge">ALUMNI PRESIDENT (2025–2026) & OPEN_TO_WORK</span>
+              <span class="timeline-badge">ALUMNI PRESIDENT (2025–2026) &amp; <span class="status-open-to-work">OPEN_TO_WORK</span></span>
             </div>
           </div>
 
@@ -402,10 +405,10 @@
                 <div class="ticket-title">DepEd HRIS Approval System</div>
                 <span class="role-tag">FRONTEND OWNER</span>
               </div>
-              <p class="ticket-desc">A three-role approval workflow (Applicant → Admin → Approver) built for DepEd San
-                Jose City's ICT Department, replacing a paper-based CS Form No. 6 process. Includes PDF export and
-                digital
-                signature capture for division office workflows.</p>
+              <div class="project-status-badge">
+                <span class="status-dot-amber"></span> Built &amp; Delivered — pending institutional rollout
+              </div>
+              <p class="ticket-desc">DepEd San Jose's leave approval process ran entirely on paper across 30+ ICT staff and teachers, with no audit trail and multi-day turnaround. I owned 100% of the frontend for a system that digitized the full Applicant → Admin → Approver workflow, including PDF export and digital signature capture, replacing the CS Form No. 6 paper process for the division office.</p>
 
               <!-- Project Screenshots  |  3 Roles -->
               <div class="screenshot-carousel" data-project="hris">
@@ -440,11 +443,19 @@
               </div>
 
               <div class="ticket-stack">
-                <span class="stack-pill">React 19</span>
+                <span class="stack-pill">React</span>
                 <span class="stack-pill">Inertia.js</span>
                 <span class="stack-pill">Tailwind CSS</span>
                 <span class="stack-pill">Laravel</span>
                 <span class="stack-pill">MySQL</span>
+              </div>
+
+              <div class="ticket-footer-actions">
+                <button type="button" class="btn-card-action" onclick="openProjectModal('hris')">View Architecture &amp; Specs →</button>
+                <span class="code-link-stub">
+                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
+                  Code available on request
+                </span>
               </div>
             </div>
           </article>
@@ -460,9 +471,10 @@
                 <div class="ticket-title">Boiyet's Gym Management System</div>
                 <span class="role-tag">SOLO DEVELOPER</span>
               </div>
-              <p class="ticket-desc">A full-stack commercial web application built for a real gym client in San Jose
-                City. Features 3 distinct user roles, contactless QR code attendance scanning, automated membership
-                tracking, revenue reporting, and custom workout plans.</p>
+              <div class="project-status-badge">
+                <span class="status-dot-green"></span> Live Demo Available — Built &amp; Defended Thesis Platform
+              </div>
+              <p class="ticket-desc">I solo-built and defended a full-stack platform for a real gym client with no prior digital system — attendance and membership were tracked manually. The system includes three distinct roles (Admin, Trainer, Client), contactless QR attendance scanning, automated membership tracking, and revenue reporting with PDF export.</p>
 
               <!-- Project Screenshots  |  3 Roles -->
               <div class="screenshot-carousel" data-project="gym">
@@ -501,6 +513,20 @@
                 <span class="stack-pill">JavaScript</span>
                 <span class="stack-pill">Bootstrap</span>
                 <span class="stack-pill">QR Web API</span>
+              </div>
+
+              <div class="ticket-footer-actions">
+                <button type="button" class="btn-card-action" onclick="openProjectModal('gym')">View Thesis Case Study &amp; Specs →</button>
+                <div style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                  <a href="https://boiyetsfitnessgym-managementsystem.site.je/index.php" target="_blank" rel="noopener" class="code-link-btn" style="background:var(--accent);color:#08080A;border-color:var(--accent);">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    Live Demo ↗
+                  </a>
+                  <a href="https://github.com/kurt-farinas/gym-management-system" target="_blank" rel="noopener" class="code-link-btn">
+                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
+                    View Code
+                  </a>
+                </div>
               </div>
             </div>
           </article>
@@ -542,13 +568,13 @@
           <div class="skill-group">
             <h4>Frameworks</h4>
             <div class="skill-tags">
-              <span onclick="highlightSkill('react')" class="has-prof">React 19<em class="prof-dot prof-pro"
+              <span onclick="highlightSkill('react')" class="has-prof">React<em class="prof-dot prof-pro"
                   title="Production level"></em></span>
               <span onclick="highlightSkill('inertia')" class="has-prof">Inertia.js<em class="prof-dot prof-pro"
                   title="Production level"></em></span>
-              <span onclick="highlightSkill('laravel')" class="has-prof">Laravel 12<em class="prof-dot prof-pro"
+              <span onclick="highlightSkill('laravel')" class="has-prof">Laravel<em class="prof-dot prof-pro"
                   title="Production level"></em></span>
-              <span onclick="highlightSkill('tailwind')" class="has-prof">Tailwind CSS v4<em class="prof-dot prof-pro"
+              <span onclick="highlightSkill('tailwind')" class="has-prof">Tailwind CSS<em class="prof-dot prof-pro"
                   title="Production level"></em></span>
             </div>
           </div>
@@ -663,7 +689,7 @@
         </div>
         <div class="section-title-block" style="text-align:center;">
           <h2 class="profile-title">Let's Build Something</h2>
-          <p class="profile-header-sub">Open to junior developer roles | frontend, full-stack, or system development.
+          <p class="profile-header-sub"><span class="status-open-to-work">Open to junior developer roles</span> | frontend, full-stack, or system development.
           </p>
         </div>
 

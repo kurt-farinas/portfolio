@@ -8,26 +8,27 @@ const projectDetails = {
   hris: {
     title: "DepEd HRIS Approval System",
     badge: "DEPED OJT SYSTEM PROJECT — 98/100 PERFORMANCE RATING (342 HRS LOGGED)",
-    desc: "An end-to-end digital approval workflow created for the Department of Education (DepEd) San Jose City ICT Division. Replaced paper-based Form CS No. 6 leave and request procedures with real-time multi-role tracking.",
+    desc: "DepEd San Jose's leave approval process ran entirely on paper across 30+ ICT staff and teachers, with no audit trail and multi-day turnaround. I owned 100% of the frontend for a system that digitized the full Applicant → Admin → Approver workflow, including PDF export and digital signature capture, replacing the CS Form No. 6 paper process for the division office.",
     highlights: [
       "Earned a 98/100 Performance Rating across 342 logged OJT internship hours at DepEd San Jose Division Office.",
       "Implemented 3-Role Workflow: Applicant application submission → Admin verification → Approver digital sign-off.",
       "Built dynamic PDF Generator exporting official CS Form No. 6 documents with digital signatures.",
-      "Owned 100% of frontend development using React 19, Inertia.js, and Tailwind CSS v4."
+      "Owned 100% of frontend development using React, Inertia.js, and Tailwind CSS."
     ],
-    stack: ["React 19", "Inertia.js", "Tailwind CSS v4", "Laravel 12", "PDF Engine"]
+    stack: ["React", "Inertia.js", "Tailwind CSS", "Laravel", "PDF Engine"]
   },
   gym: {
     title: "Boiyet's Fitness Gym Management System",
     badge: "DEFENDED THESIS PROJECT & REAL CLIENT PLATFORM",
-    desc: "A comprehensive management and attendance ecosystem built from scratch for a local commercial fitness center. Digitalized member registration, daily check-ins, and financial reporting.",
+    desc: "I solo-built and defended a full-stack platform for a real gym client with no prior digital system — attendance and membership were tracked manually. The system includes three distinct roles (Admin, Trainer, Client), contactless QR attendance scanning, automated membership tracking, and revenue reporting with PDF export.",
+    demoUrl: "https://boiyetsfitnessgym-managementsystem.site.je/index.php",
     highlights: [
       "QR Code Attendance Scanner: Replaced manual paper logbooks with instant camera QR check-ins.",
       "Member Portal: Automated membership expiration alerts, workout plans, and payment records.",
       "Revenue Analytics Dashboard: Gives gym management visual breakdown of daily/monthly earnings.",
       "Solo Full-Stack Architecture: Built independently using custom PHP, MySQL database schema, and AJAX."
     ],
-    stack: ["PHP", "MySQL", "AJAX", "QR Camera Scanner", "JavaScript", "CSS3 Grid/Flexbox"]
+    stack: ["PHP", "MySQL", "AJAX", "QR Camera Scanner", "JavaScript", "CSS Grid/Flexbox"]
   }
 };
 
@@ -57,7 +58,11 @@ window.openProjectModal = function(projectId) {
   hlList.innerHTML = data.highlights.map(h => `<li>${h}</li>`).join('');
 
   const stackRow = document.getElementById('modalStack');
-  stackRow.innerHTML = data.stack.map(s => `<span class="stack-chip">${s}</span>`).join('');
+  let stackHtml = data.stack.map(s => `<span class="stack-chip">${s}</span>`).join('');
+  if (data.demoUrl) {
+    stackHtml += `<div style="width:100%;margin-top:16px;"><a href="${data.demoUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">🚀 Launch Live System Demo ↗</a></div>`;
+  }
+  stackRow.innerHTML = stackHtml;
 
   document.getElementById('projectModal').classList.add('active');
 };
