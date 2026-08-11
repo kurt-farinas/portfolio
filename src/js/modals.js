@@ -60,7 +60,10 @@ window.openProjectModal = function(projectId) {
   const stackRow = document.getElementById('modalStack');
   let stackHtml = data.stack.map(s => `<span class="stack-chip">${s}</span>`).join('');
   if (data.demoUrl) {
-    stackHtml += `<div style="width:100%;margin-top:16px;"><a href="${data.demoUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">🚀 Launch Live System Demo ↗</a></div>`;
+    stackHtml += `<div style="width:100%;margin-top:16px;">
+      <a href="${data.demoUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">Launch Live Showcase Demo ↗</a>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:6px;margin-bottom:0;">Note: Interactive showcase environment hosted for demonstration purposes.</p>
+    </div>`;
   }
   stackRow.innerHTML = stackHtml;
 

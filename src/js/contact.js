@@ -12,12 +12,12 @@ export function initContactForm() {
     e.preventDefault();
 
     const submitBtn = document.getElementById('contactSubmitBtn');
-    const originalText = submitBtn ? submitBtn.innerHTML : 'Send Message 🚀';
+    const originalText = submitBtn ? submitBtn.innerHTML : 'Send Message →';
 
     // Set loading state
     if (submitBtn) {
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>Sending... ⏳</span>';
+      submitBtn.innerHTML = '<span>Sending...</span>';
     }
 
     const formData = new FormData(form);
