@@ -7,7 +7,7 @@ import { copyEmail, initAchievements, initKonamiCode } from './js/utils.js';
 import { initTerminal } from './js/terminal.js';
 import { initCarousel } from './js/carousel.js';
 import { initModals } from './js/modals.js';
-import { initPreloader, initSpotlight, initParallax, initBootSequence, initCounters, initScrollReveal, initScrollGlow, initProgressBar } from './js/effects.js';
+import { initPreloader, initSpotlight, initParallax, initBootSequence, initCounters, initScrollReveal, initScrollGlow, initProgressBar, initTimelineProgress } from './js/effects.js';
 import { initNavigation } from './js/navigation.js';
 import { initContactForm } from './js/contact.js';
 import { initTopoBackground } from './js/topoBackground.js';
@@ -41,6 +41,7 @@ function startApp() {
   initCounters();
   initScrollReveal();
   initScrollGlow();
+  initTimelineProgress();
 
   // Easter eggs & achievements
   initAchievements();

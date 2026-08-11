@@ -98,9 +98,9 @@ export function initScrollReveal() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.15, rootMargin: "0px 0px -60px 0px" });
 
-  document.querySelectorAll('.ticket, .timeline-item, .skill-group, .award-card, .reveal-on-scroll, .section-title, .fact-card').forEach(t => {
+  document.querySelectorAll('.ticket, .skill-group, .award-card, .reveal-on-scroll, .section-title, .fact-card').forEach(t => {
     t.classList.add('reveal-on-scroll');
     observer.observe(t);
   });
@@ -118,11 +118,11 @@ export function initScrollGlow() {
       }
     });
   }, {
-    threshold: 0.2,
-    rootMargin: "-20px 0px -20px 0px"
+    threshold: 0.3,
+    rootMargin: "-100px 0px -100px 0px"
   });
 
-  const glowTargets = document.querySelectorAll('.ticket, .skill-group, .award-card, .contact-box, .fact-card, .timeline-item');
+  const glowTargets = document.querySelectorAll('.ticket, .skill-group, .award-card, .contact-box, .fact-card');
   glowTargets.forEach(el => {
     el.classList.add('scroll-glow-target');
     glowObserver.observe(el);
@@ -151,4 +151,61 @@ export function initProgressBar() {
       ticking = true;
     }
   }, { passive: true });
+}
+
+// Timeline vertical scroll-progress line filler & circle-touch reveal
+export function initTimelineProgress() {
+  const container = document.querySelector('.timeline-container');
+  const progressLine = document.getElementById('timeline-progress-line');
+  if (!container || !progressLine) return;
+
+  const items = container.querySelectorAll('.timeline-item');
+  let ticking = false;
+
+  function updateTimelineLine() {
+    const rect = container.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const containerHeight = rect.height;
+
+    // Line expands down as section scrolls up past the 55% screen mark
+    const triggerOffset = windowHeight * 0.55;
+    const scrolledDistance = triggerOffset - rect.top;
+
+    let percentage = (scrolledDistance / containerHeight) * 100;
+    percentage = Math.max(0, Math.min(100, percentage));
+
+    progressLine.style.height = `${percentage}%`;
+
+    // Exact pixel position of line tip relative to timeline container
+    const lineTipPx = (percentage / 100) * containerHeight;
+
+    // Check each circle (timeline-icon) position vs line tip
+    items.forEach(item => {
+      const icon = item.querySelector('.timeline-icon');
+      const circleTop = item.offsetTop + (icon ? icon.offsetTop : 0);
+
+      // Only reveal content if line tip has reached or passed the circle
+      if (lineTipPx >= circleTop - 2) {
+        item.classList.add('is-visible');
+        item.classList.add('show');
+        item.classList.add('in-view-glow');
+      } else {
+        item.classList.remove('is-visible');
+        item.classList.remove('show');
+        item.classList.remove('in-view-glow');
+      }
+    });
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateTimelineLine);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', updateTimelineLine);
+  updateTimelineLine();
 }
