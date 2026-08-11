@@ -46,10 +46,50 @@ const workflowMessages = {
   ]
 };
 
+let lastFocusedElement = null;
+
+function trapFocus(modal) {
+  const focusables = modal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+  if (!focusables.length) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+
+  first.focus();
+
+  modal._focusTrapHandler = function(e) {
+    if (e.key !== 'Tab') return;
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  };
+
+  modal.addEventListener('keydown', modal._focusTrapHandler);
+}
+
+function releaseFocus(modal) {
+  if (modal._focusTrapHandler) {
+    modal.removeEventListener('keydown', modal._focusTrapHandler);
+    delete modal._focusTrapHandler;
+  }
+  if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+    lastFocusedElement.focus();
+    lastFocusedElement = null;
+  }
+}
+
 // Exposed globally for onclick handlers in HTML
 window.openProjectModal = function(projectId) {
   const data = projectDetails[projectId];
   if (!data) return;
+  lastFocusedElement = document.activeElement;
   document.getElementById('modalBadge').textContent = data.badge;
   document.getElementById('modalTitle').textContent = data.title;
   document.getElementById('modalDesc').textContent = data.desc;
@@ -67,12 +107,20 @@ window.openProjectModal = function(projectId) {
   }
   stackRow.innerHTML = stackHtml;
 
-  document.getElementById('projectModal').classList.add('active');
+  const modal = document.getElementById('projectModal');
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  trapFocus(modal);
 };
 
 window.closeProjectModal = function(e) {
   if (e && e.target !== e.currentTarget && !e.target.classList.contains('modal-close')) return;
-  document.getElementById('projectModal').classList.remove('active');
+  const modal = document.getElementById('projectModal');
+  if (modal.classList.contains('active')) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    releaseFocus(modal);
+  }
 };
 
 window.setWorkflowStep = function(projectId, stepIdx) {
@@ -90,18 +138,21 @@ window.setWorkflowStep = function(projectId, stepIdx) {
 window.openResumeModal = function() {
   const modal = document.getElementById('resumeModal');
   if (modal) {
+    lastFocusedElement = document.activeElement;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     spawnToast('CV PREVIEW', 'Loaded Kurt Fariñas Resume PDF viewer');
+    trapFocus(modal);
   }
 };
 
 window.closeResumeModal = function(e) {
   if (e && e.target !== e.currentTarget && !e.target.classList.contains('modal-close')) return;
   const modal = document.getElementById('resumeModal');
-  if (modal) {
+  if (modal && modal.classList.contains('active')) {
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    releaseFocus(modal);
   }
 };
 
@@ -109,9 +160,13 @@ export function initModals() {
   // Close modals on Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      document.getElementById('projectModal')?.classList.remove('active');
+      window.closeProjectModal();
       window.closeResumeModal();
+      if (typeof window.closeScreenshotModal === 'function') {
+        window.closeScreenshotModal();
+      }
     }
   });
 }
+
 

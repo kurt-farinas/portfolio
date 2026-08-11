@@ -21,11 +21,18 @@ const carouselData = {
   }
 };
 
+let screenshotLastFocused = null;
+
 function openScreenshotModal(src, caption) {
+  screenshotLastFocused = document.activeElement;
   document.getElementById('screenshotModalImg').src = src;
   document.getElementById('screenshotModalCaption').textContent = caption;
-  document.getElementById('screenshotModal').classList.add('active');
+  const modal = document.getElementById('screenshotModal');
+  modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+
+  const closeBtn = modal.querySelector('.screenshot-modal-close');
+  if (closeBtn) closeBtn.focus();
 }
 
 // Exposed globally for onclick handlers in HTML
@@ -67,8 +74,15 @@ window.openCurrentCarouselScreenshot = function(projectId) {
 };
 
 window.closeScreenshotModal = function() {
-  document.getElementById('screenshotModal').classList.remove('active');
-  document.body.style.overflow = '';
+  const modal = document.getElementById('screenshotModal');
+  if (modal && modal.classList.contains('active')) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (screenshotLastFocused && typeof screenshotLastFocused.focus === 'function') {
+      screenshotLastFocused.focus();
+      screenshotLastFocused = null;
+    }
+  }
 };
 
 export function initCarousel() {
@@ -79,3 +93,4 @@ export function initCarousel() {
     }
   });
 }
+

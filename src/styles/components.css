@@ -2687,6 +2687,61 @@
   user-select: none;
 }
 
+/* ========================================
+   ACCESSIBILITY & MOBILE TOUCH TARGETS
+   ======================================== */
+
+/* Focus indicators for keyboard accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex="0"]:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--violet-light, #A78BFA) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 12px var(--violet-glow, rgba(139, 124, 246, 0.4)) !important;
+}
+
+/* Skill filter keyboard interaction */
+.skill-tags span[role="button"] {
+  cursor: pointer;
+  user-select: none;
+}
+.skill-tags span[role="button"]:focus-visible {
+  border-color: var(--violet-light);
+  background: rgba(139, 124, 246, 0.25);
+}
+
+/* Mobile Touch Target Optimizations (min 44px hit area) */
+.carousel-dot {
+  position: relative;
+}
+.carousel-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 44px;
+  min-height: 44px;
+}
+
+@media (max-width: 760px) {
+  .carousel-arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+  }
+  .theme-btn,
+  .btn-card-action {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+
 
 
 
