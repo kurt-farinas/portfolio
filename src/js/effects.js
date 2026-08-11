@@ -3,11 +3,12 @@
    Inspired by averymacasa.vercel.app
    ======================================== */
 
-// Preloader curtain split & progress animation (cinematic timing)
+// Preloader curtain split & typewriter intro animation
 export function initPreloader() {
   const overlay = document.getElementById('preloaderOverlay');
   const fill = document.getElementById('preloaderFill');
   const percentText = document.getElementById('preloaderPercent');
+  const preloaderName = document.getElementById('preloaderName');
   const hero = document.getElementById('hero');
 
   function unlockPage() {
@@ -17,7 +18,7 @@ export function initPreloader() {
       overlay.classList.add('finished');
       setTimeout(() => {
         overlay.style.display = 'none';
-      }, 2200);
+      }, 2400);
     }
   }
 
@@ -29,14 +30,33 @@ export function initPreloader() {
   // Lock scrolling during intro preloader
   document.body.style.overflow = 'hidden';
 
-  // Fail-safe: Force unlock after 4.5 seconds max
+  // Typewriter effect for "Kurt Fariñas"
+  const fullName = "Kurt Fariñas";
+  let charIndex = 0;
+
+  setTimeout(() => {
+    if (!preloaderName) return;
+    preloaderName.style.opacity = '1';
+
+    const typeInterval = setInterval(() => {
+      if (charIndex <= fullName.length) {
+        preloaderName.innerHTML = fullName.substring(0, charIndex) + '<span class="type-cursor">_</span>';
+        charIndex++;
+      } else {
+        clearInterval(typeInterval);
+        preloaderName.innerHTML = fullName + '<span class="type-cursor blink">_</span>';
+      }
+    }, 110);
+  }, 1100);
+
+  // Fail-safe: Force unlock after 5.5 seconds max
   const failSafeTimer = setTimeout(() => {
     unlockPage();
-  }, 4500);
+  }, 5500);
 
   let progress = 0;
   const interval = setInterval(() => {
-    progress += Math.floor(Math.random() * 3) + 2;
+    progress += Math.floor(Math.random() * 2) + 1;
     if (progress >= 100) {
       progress = 100;
       clearInterval(interval);
@@ -48,12 +68,12 @@ export function initPreloader() {
       // Hold at 100% for a smooth, elegant beat before splitting curtains
       setTimeout(() => {
         unlockPage();
-      }, 700);
+      }, 800);
     } else {
       if (fill) fill.style.width = progress + '%';
       if (percentText) percentText.textContent = progress + '%';
     }
-  }, 35);
+  }, 32);
 }
 
 // Spotlight cursor tracking — disabled in monochrome mode
