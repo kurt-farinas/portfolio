@@ -246,7 +246,7 @@ nav .wrap.nav-wrap {
 }
 
 .hero-title .line-2 {
-  color: #A78BFA;
+  color: #D4D4D8;
 }
 
 /* Bottom Controls */
@@ -680,7 +680,7 @@ nav .wrap.nav-wrap {
 }
 
 .profile-tag:hover {
-  border-color: #8B5CF6;
+  border-color: rgba(255, 255, 255, 0.4);
   color: #FFFFFF;
 }
 
