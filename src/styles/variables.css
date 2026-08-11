@@ -30,3 +30,33 @@
   --hover-blue: #60A5FA;
   --hover-white: #FFFFFF;
 }
+
+[data-theme="light"] {
+  --bg: #FAF9F6;
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-solid: #FFFFFF;
+  --surface-2: rgba(243, 244, 246, 0.9);
+  --border: rgba(0, 0, 0, 0.09);
+  --border-strong: rgba(0, 0, 0, 0.2);
+  --border-hover: rgba(0, 0, 0, 0.35);
+  --accent-silver: #3F3F46;
+  --accent-silver-light: #27272A;
+  --accent-silver-glow: rgba(0, 0, 0, 0.08);
+  --accent: #8B7CF6;
+  --accent-hover: #7C3AED;
+  --text: #09090B;
+  --text-muted: #4B5563;
+  --text-faint: #6B7280;
+
+  --hover-green: #059669;
+  --hover-blue: #2563EB;
+  --hover-white: #000000;
+}
+
+/* Global Theme Smooth Transition */
+body, nav, .section, .bento-card, .timeline-content, .terminal, .fact-card, .cmd-chip, .btn, .modal-content, .spec-row, .hero-social-pill, .theme-btn, .mobile-menu, .terminal-titlebar, .terminal-shortcuts, .profile-eyebrow, .profile-header-divider, .hero-section, .simple-footer {
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}

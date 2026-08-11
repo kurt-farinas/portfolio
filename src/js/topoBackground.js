@@ -59,6 +59,31 @@ export function initTopoBackground() {
   let time = 0;
   let lastFrameTime = performance.now();
 
+  // Theme-aware color palettes
+  function getThemeColors() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      return {
+        bgInner: '#F5F3EF',
+        bgMid: '#FAF9F6',
+        bgOuter: '#FCFBF9',
+        shadowAlphaMultiplier: 0.3,
+        shadowColor: '0, 0, 0',
+        ridgeColor1: '80, 70, 100',
+        ridgeColor2: '100, 90, 120',
+      };
+    }
+    return {
+      bgInner: '#0D0D11',
+      bgMid: '#08080A',
+      bgOuter: '#060608',
+      shadowAlphaMultiplier: 1.4,
+      shadowColor: '0, 0, 0',
+      ridgeColor1: '215, 210, 225',
+      ridgeColor2: '230, 225, 235',
+    };
+  }
+
   function draw(currentTime) {
     if (!isVisible) {
       animationFrameId = null;
@@ -73,7 +98,9 @@ export function initTopoBackground() {
     mouseX += (targetMouseX - mouseX) * 0.08;
     mouseY += (targetMouseY - mouseY) * 0.08;
 
-    // Fill background with subtle dark monochrome radial gradient bloom
+    const colors = getThemeColors();
+
+    // Fill background with subtle radial gradient bloom
     const bgGlow = ctx.createRadialGradient(
       width / 2 + mouseX * 2,
       height * 0.35 + mouseY * 2,
@@ -82,9 +109,9 @@ export function initTopoBackground() {
       height / 2,
       Math.max(width, height) * 0.75
     );
-    bgGlow.addColorStop(0, '#0D0D11');
-    bgGlow.addColorStop(0.45, '#08080A');
-    bgGlow.addColorStop(1, '#060608');
+    bgGlow.addColorStop(0, colors.bgInner);
+    bgGlow.addColorStop(0.45, colors.bgMid);
+    bgGlow.addColorStop(1, colors.bgOuter);
 
     ctx.fillStyle = bgGlow;
     ctx.fillRect(0, 0, width, height);
@@ -120,14 +147,14 @@ export function initTopoBackground() {
       }
 
       // Shadow stroke for depth
-      ctx.strokeStyle = `rgba(0, 0, 0, ${alphaVal * 1.4})`;
+      ctx.strokeStyle = `rgba(${colors.shadowColor}, ${alphaVal * colors.shadowAlphaMultiplier})`;
       ctx.lineWidth = 3.0;
       ctx.stroke();
 
-      // Subtle silver specular ridge stroke
+      // Subtle specular ridge stroke
       ctx.strokeStyle = i % 3 === 0 
-        ? `rgba(215, 210, 225, ${alphaVal * 0.75})` 
-        : `rgba(230, 225, 235, ${alphaVal})`;
+        ? `rgba(${colors.ridgeColor1}, ${alphaVal * 0.75})` 
+        : `rgba(${colors.ridgeColor2}, ${alphaVal})`;
       ctx.lineWidth = 1.4;
       ctx.stroke();
     }

@@ -1854,17 +1854,28 @@
 
 .modal-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: transparent;
-  border: none;
-  color: var(--text-faint);
-  font-size: 20px;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 16px;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: all 0.25s ease;
+  z-index: 10;
 }
 
-.modal-close:hover { color: var(--text); }
+.modal-close:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface-solid);
+}
 
 .modal-close:focus-visible {
   outline: 2px solid var(--text);
@@ -2085,14 +2096,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
   gap: 5px;
   background: none;
-  border: none;
+  border: 1px solid var(--border);
   cursor: pointer;
-  padding: 6px;
+  padding: 0;
   margin-left: 8px;
-  border-radius: 6px;
-  transition: background 0.2s;
+  border-radius: 8px;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .hamburger:hover { background: var(--border); }
@@ -2338,4 +2353,199 @@
 ::selection {
   background: rgba(255, 255, 255, 0.2);
   color: #FFFFFF;
+}
+
+/* ========================================
+   LIGHT MODE OVERRIDES — Components
+   ======================================== */
+
+/* Selection */
+[data-theme="light"] ::selection {
+  background: rgba(139, 124, 246, 0.25);
+  color: #09090B;
+}
+
+/* Terminal */
+[data-theme="light"] .terminal-shortcuts {
+  background: var(--surface-2);
+}
+
+[data-theme="light"] .tech-pill .tooltip {
+  background: var(--surface-solid);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Carousel arrows */
+[data-theme="light"] .carousel-arrow {
+  background: var(--surface-solid);
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .carousel-arrow:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Bento card hover shadow */
+[data-theme="light"] .bento-card:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Gallery card overlay */
+[data-theme="light"] .gallery-card-overlay {
+  background: linear-gradient(180deg, transparent 30%, rgba(255,255,255,0.92) 100%);
+}
+
+/* Modal backdrops */
+[data-theme="light"] .project-modal-overlay {
+  background: rgba(250, 249, 246, 0.88);
+}
+
+[data-theme="light"] .project-modal-content {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .screenshot-modal-overlay {
+  background: rgba(250, 249, 246, 0.95);
+}
+
+[data-theme="light"] .screenshot-modal-content {
+  background: var(--surface-solid);
+}
+
+/* Resume modal */
+[data-theme="light"] .resume-modal-overlay {
+  background: rgba(250, 249, 246, 0.85);
+}
+
+[data-theme="light"] .resume-modal-body {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+}
+
+/* Toast */
+[data-theme="light"] .toast-card {
+  background: var(--surface-solid);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Chatbot widget */
+[data-theme="light"] .chatbot-widget {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .chatbot-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+[data-theme="light"] .chatbot-input-area {
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+}
+
+/* Timeline glow ring adapts automatically via CSS vars — just soften the box-shadow */
+[data-theme="light"] .timeline-item.in-view-glow .timeline-icon,
+[data-theme="light"] .timeline-item.is-visible .timeline-icon {
+  box-shadow: 0 0 12px rgba(139, 124, 246, 0.35);
+}
+
+/* Custom cursor disabled in light mode (white cursor invisible on white bg) */
+[data-theme="light"] * {
+  cursor: auto !important;
+}
+[data-theme="light"] a, 
+[data-theme="light"] button, 
+[data-theme="light"] [role="button"], 
+[data-theme="light"] .btn, 
+[data-theme="light"] .ticket, 
+[data-theme="light"] .cmd-chip,
+[data-theme="light"] .carousel-arrow,
+[data-theme="light"] .theme-btn {
+  cursor: pointer !important;
+}
+
+/* Spec matrix proof tag */
+[data-theme="light"] .spec-proof-tag {
+  background: rgba(139, 124, 246, 0.1);
+  border: 1px solid rgba(139, 124, 246, 0.25);
+}
+
+/* Toast notifications */
+[data-theme="light"] .toast {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Mobile menu backdrop */
+[data-theme="light"] .mobile-menu {
+  background: rgba(250, 249, 246, 0.97);
+}
+
+/* Screenshot caption pill */
+[data-theme="light"] .screenshot-modal-caption {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+/* Chatbot FAB */
+[data-theme="light"] .chatbot-fab {
+  background: var(--accent);
+  box-shadow: 0 4px 16px rgba(139, 124, 246, 0.3);
+}
+
+/* ========================================
+   MOBILE RESPONSIVENESS & TOUCH ACCESSIBILITY
+   ======================================== */
+@media (max-width: 600px) {
+  #toastLayer {
+    top: auto;
+    bottom: 20px;
+    right: 16px;
+    left: 16px;
+    align-items: center;
+  }
+
+  .toast {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    transform: translateY(60px);
+  }
+
+  .toast.show {
+    transform: translateY(0);
+  }
+
+  .modal-overlay {
+    padding: 12px;
+  }
+
+  .modal-card {
+    padding: 22px 16px;
+    max-height: 90vh;
+  }
+
+  .resume-modal-card {
+    padding: 16px;
+    height: 90vh;
+  }
+
+  .resume-modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .spec-row:hover {
+    transform: none;
+  }
 }
