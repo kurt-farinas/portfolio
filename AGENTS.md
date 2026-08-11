@@ -1,4 +1,4 @@
-# AGENTS.md — Portfolio (kosaki20.github.io/portfolio)
+# AGENTS.md — Portfolio (kurt-farinas.github.io/portfolio)
 
 ## Stack
 - Vanilla HTML, CSS, JS. No framework, no build step, no bundler.

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kosaki20.github.io/portfolio2/sitemap.xml
+Sitemap: https://kurt-farinas.github.io/portfolio/sitemap.xml
