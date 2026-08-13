@@ -17,12 +17,7 @@ export function initPreloader() {
       overlay.classList.add('finished');
       setTimeout(() => {
         overlay.style.display = 'none';
-      }, 1000);
-    }
-    try {
-      sessionStorage.setItem('portfolio-preloaded', 'true');
-    } catch {
-      // Ignore storage exceptions
+      }, 1600);
     }
   }
 
@@ -37,31 +32,17 @@ export function initPreloader() {
     return;
   }
 
-  // Fast path for returning visits in the same session
-  const alreadyPreloaded = (() => {
-    try {
-      return sessionStorage.getItem('portfolio-preloaded') === 'true';
-    } catch {
-      return false;
-    }
-  })();
-
-  if (alreadyPreloaded) {
-    unlockPage();
-    return;
-  }
-
-  // Lock scrolling during initial preloader
+  // Lock scrolling during intro preloader
   document.body.style.overflow = 'hidden';
 
-  // Smooth requestAnimationFrame progress bar update (~1 second)
+  // Smooth requestAnimationFrame progress bar update (~2.6 seconds)
   const startTime = performance.now();
-  const totalDuration = 950;
+  const totalDuration = 2600;
 
   // Fallback safety timeout if rAF is paused/backgrounded
   const safetyTimer = setTimeout(() => {
     unlockPage();
-  }, 2200);
+  }, 4200);
 
   function updateProgress(now) {
     const elapsed = now - startTime;
@@ -76,7 +57,7 @@ export function initPreloader() {
       clearTimeout(safetyTimer);
       setTimeout(() => {
         unlockPage();
-      }, 180);
+      }, 350);
     }
   }
 

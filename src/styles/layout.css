@@ -275,6 +275,10 @@ nav .wrap.nav-wrap {
   user-select: none;
   width: 100%;
   max-width: 100%;
+  opacity: 1;
+  transform: none;
+  animation: none;
+  transition: none;
 }
 
 .hero-title .title-line {

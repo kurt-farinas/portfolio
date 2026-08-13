@@ -35,9 +35,8 @@ describe('Effects & Preloader Accessibility', () => {
     expect(document.body.style.overflow).toBe('');
   });
 
-  it('skips preloader on subsequent visit in same session (AAA)', () => {
+  it('locks overflow and initializes progress during standard intro (AAA)', () => {
     // 1. Arrange
-    sessionStorage.setItem('portfolio-preloaded', 'true');
     window.matchMedia = vi.fn().mockImplementation(() => ({ matches: false }));
 
     // 2. Act
@@ -45,6 +44,7 @@ describe('Effects & Preloader Accessibility', () => {
 
     // 3. Assert
     const overlay = document.getElementById('preloaderOverlay');
-    expect(overlay.classList.contains('finished')).toBe(true);
+    expect(document.body.style.overflow).toBe('hidden');
+    expect(overlay.classList.contains('finished')).toBe(false);
   });
 });
