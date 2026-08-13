@@ -652,17 +652,62 @@ nav .wrap.nav-wrap {
   padding: 0 20px;
 }
 
-.profile-grid {
-  display: grid;
-  grid-template-columns: 1fr 1px 1.1fr;
-  gap: 48px;
-  align-items: stretch;
+/* ---------- PROFILE / WHO I AM STREAMLINED CARD ---------- */
+.profile-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 38px 42px;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.3s ease;
+  max-width: 980px;
+  margin: 0 auto;
 }
 
-.profile-left {
+.profile-card:hover {
+  border-color: var(--border-strong);
+}
+
+.profile-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.profile-stat-box {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 4px;
+}
+
+.stat-number {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(28px, 3.4vw, 38px);
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.stat-number.status-open-to-work {
+  color: #34D399;
+}
+
+.stat-unit {
+  font-size: 0.6em;
+  color: #71717A;
+  font-weight: 500;
+}
+
+.stat-desc {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #8E8E9F;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .profile-title {
@@ -738,27 +783,6 @@ nav .wrap.nav-wrap {
   color: #FFFFFF;
 }
 
-.profile-fact-card {
-  background: rgba(18, 18, 22, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 18px 22px;
-  margin-top: auto;
-}
-
-.profile-vertical-divider {
-  width: 1px;
-  height: 100%;
-  min-height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.profile-right {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .profile-subtitle {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -811,13 +835,13 @@ nav .wrap.nav-wrap {
 }
 
 /* ---------- RESPONSIVE ---------- */
-@media (max-width: 992px) {
-  .profile-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 28px 22px;
   }
-  .profile-vertical-divider {
-    display: none;
+  .profile-stats-row {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 }
 
@@ -1137,13 +1161,17 @@ nav .wrap.nav-wrap {
   color: var(--accent);
 }
 
-[data-theme="light"] .profile-fact-card {
+[data-theme="light"] .profile-card {
   background: var(--surface);
   border: 1px solid var(--border);
 }
 
-[data-theme="light"] .profile-vertical-divider {
-  background: var(--border-strong);
+[data-theme="light"] .profile-stats-row {
+  border-top: 1px solid var(--border);
+}
+
+[data-theme="light"] .stat-number {
+  color: var(--text);
 }
 
 [data-theme="light"] .profile-subtitle {

@@ -9,8 +9,8 @@ export const projectDetails = {
     ticketId: "TICKET #CSF6-2026-01",
     stamp: "98/100 OJT RATING (342 HRS)",
     roleTag: "FRONTEND OWNER",
-    statusBadge: '<span class="status-dot-amber"></span> Built &amp; Delivered — pending institutional rollout',
-    badge: "DEPED OJT SYSTEM PROJECT — 98/100 PERFORMANCE RATING (342 HRS LOGGED)",
+    statusBadge: '<span class="status-dot-amber"></span> Built &amp; Delivered (Pending Institutional Rollout)',
+    badge: "DEPED OJT SYSTEM PROJECT | 98/100 PERFORMANCE RATING (342 HRS LOGGED)",
     desc: "DepEd San Jose's leave approval process ran entirely on paper across 30+ ICT staff and teachers, with no audit trail and multi-day turnaround. I owned 100% of the frontend for a system that digitized the full Applicant → Admin → Approver workflow, replacing the manual CS Form No. 6 paper process for the division office with print-optimized PDF output and secure e-signature upload tied to the approval chain (designed to scale toward a future HRIS).",
     codeStub: "Code available on request",
     highlights: [
@@ -32,9 +32,9 @@ export const projectDetails = {
     ticketId: "TICKET #GYM-2025-02",
     stamp: "SOLO-BUILT & DEFENDED THESIS",
     roleTag: "SOLO DEVELOPER",
-    statusBadge: '<span class="status-dot-green"></span> Live Showcase Version — Built &amp; Defended Thesis Platform',
+    statusBadge: '<span class="status-dot-green"></span> Live Showcase Version • Built &amp; Defended Thesis Platform',
     badge: "DEFENDED THESIS PROJECT & REAL CLIENT PLATFORM",
-    desc: "I solo-built and defended a full-stack platform for a real gym client with no prior digital system — attendance and membership were tracked manually. The system includes three distinct roles (Admin, Trainer, Client), contactless QR attendance scanning, automated membership tracking, and revenue reporting with exportable HTML/Excel reports. Revenue, expenses, and net profit are visualized through interactive Chart.js dashboards (line and doughnut charts), alongside client-facing weight, BMI, and strength progress charts.",
+    desc: "I solo-built and defended a full-stack platform for a real gym client with no prior digital system where attendance and membership were previously tracked manually. The system includes three distinct roles (Admin, Trainer, Client), contactless QR attendance scanning, automated membership tracking, and revenue reporting with exportable HTML/Excel reports. Revenue, expenses, and net profit are visualized through interactive Chart.js dashboards (line and doughnut charts), alongside client-facing weight, BMI, and strength progress charts.",
     demoUrl: "https://boiyetsfitnessgym-managementsystem.site.je/index.php",
     codeUrl: "https://github.com/kurt-farinas/gym-management-system",
     highlights: [
