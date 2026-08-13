@@ -9,6 +9,7 @@ const projectDetails = {
     title: "CS Form No. 6 Digitalization System",
     badge: "DEPED OJT SYSTEM PROJECT — 98/100 PERFORMANCE RATING (342 HRS LOGGED)",
     desc: "DepEd San Jose's leave approval process ran entirely on paper across 30+ ICT staff and teachers, with no audit trail and multi-day turnaround. I owned 100% of the frontend for a system that digitized the full Applicant → Admin → Approver workflow, replacing the manual CS Form No. 6 paper process for the division office with print-optimized PDF output and secure e-signature upload tied to the approval chain (designed to scale toward a future HRIS).",
+    codeStub: "Code available on request",
     highlights: [
       "Earned a 98/100 Performance Rating across 342 logged OJT internship hours at DepEd San Jose Division Office.",
       "Implemented 3-Role Workflow: Applicant application submission → Admin verification → Approver digital sign-off.",
@@ -22,6 +23,7 @@ const projectDetails = {
     badge: "DEFENDED THESIS PROJECT & REAL CLIENT PLATFORM",
     desc: "I solo-built and defended a full-stack platform for a real gym client with no prior digital system — attendance and membership were tracked manually. The system includes three distinct roles (Admin, Trainer, Client), contactless QR attendance scanning, automated membership tracking, and revenue reporting with exportable HTML/Excel reports. Revenue, expenses, and net profit are visualized through interactive Chart.js dashboards (line and doughnut charts), alongside client-facing weight, BMI, and strength progress charts.",
     demoUrl: "https://boiyetsfitnessgym-managementsystem.site.je/index.php",
+    codeUrl: "https://github.com/kurt-farinas/gym-management-system",
     highlights: [
       "QR Code Attendance Scanner: Replaced manual paper logbooks with instant camera QR check-ins.",
       "Interactive Chart.js Analytics: Dashboards with revenue trends (line), revenue by category (doughnut), expense trends (line), expense breakdown (doughnut), net profit, and client weight/BMI/strength progress.",
@@ -99,11 +101,21 @@ window.openProjectModal = function(projectId) {
 
   const stackRow = document.getElementById('modalStack');
   let stackHtml = data.stack.map(s => `<span class="stack-chip">${s}</span>`).join('');
-  if (data.demoUrl) {
-    stackHtml += `<div style="width:100%;margin-top:16px;">
-      <a href="${data.demoUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">Launch Live Showcase Demo ↗</a>
-      <p style="font-size:11px;color:var(--text-muted);margin-top:6px;margin-bottom:0;">Note: Interactive showcase environment hosted for demonstration purposes.</p>
-    </div>`;
+  if (data.demoUrl || data.codeUrl || data.codeStub) {
+    stackHtml += `<div style="width:100%;margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">`;
+    if (data.demoUrl) {
+      stackHtml += `<a href="${data.demoUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">Launch Live Showcase Demo ↗</a>`;
+    }
+    if (data.codeUrl) {
+      stackHtml += `<a href="${data.codeUrl}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">View GitHub Repository ↗</a>`;
+    }
+    if (data.codeStub) {
+      stackHtml += `<span style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-faint);">${data.codeStub}</span>`;
+    }
+    stackHtml += `</div>`;
+    if (data.demoUrl) {
+      stackHtml += `<p style="font-size:11px;color:var(--text-muted);margin-top:6px;margin-bottom:0;">Note: Interactive showcase environment hosted for demonstration purposes.</p>`;
+    }
   }
   stackRow.innerHTML = stackHtml;
 
