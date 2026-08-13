@@ -21,16 +21,11 @@ window.closeMenu = function() {
   btn.setAttribute('aria-expanded', 'false');
 };
 
-// Dark / Light Theme Switcher with fullscreen overlay transition
-let themeAnimating = false;
-
 export function initThemeToggle() {
   const btn = document.getElementById('themeToggleBtn');
   const root = document.documentElement;
-  const overlay = document.getElementById('themeOverlay');
-  const label = document.getElementById('themeOverlayLabel');
 
-  // Restore saved theme silently (no animation on load)
+  // Restore saved theme
   const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
   setThemeImmediate(savedTheme);
 
@@ -43,47 +38,11 @@ export function initThemeToggle() {
     localStorage.setItem('portfolio-theme', theme);
   }
 
-  function animateThemeSwitch(currentTheme, nextTheme) {
-    if (themeAnimating || !overlay || !label) return;
-    themeAnimating = true;
-
-    // Phase 1 (OUT): Overlay expands with CURRENT theme color to "close" the page
-    overlay.className = 'theme-overlay is-animating';
-    overlay.classList.add(currentTheme === 'light' ? 'theme-overlay--light' : 'theme-overlay--dark');
-    label.textContent = '';
-
-    void overlay.offsetWidth;
-    overlay.classList.add('is-expanding');
-
-    // After the overlay fully covers: swap theme underneath and change overlay to target
-    setTimeout(() => {
-      setThemeImmediate(nextTheme);
-
-      // Swap overlay color and show target label
-      overlay.classList.remove('theme-overlay--light', 'theme-overlay--dark');
-      overlay.classList.add(nextTheme === 'light' ? 'theme-overlay--light' : 'theme-overlay--dark');
-      label.textContent = nextTheme === 'light' ? 'Light Mode' : 'Dark Mode';
-
-      // Phase 2 (IN): Hold briefly to let user read the label, then contract to reveal
-      setTimeout(() => {
-        overlay.classList.remove('is-expanding');
-        void overlay.offsetWidth;
-        overlay.classList.add('is-contracting');
-
-        // Phase 3: Cleanup
-        setTimeout(() => {
-          overlay.className = 'theme-overlay';
-          themeAnimating = false;
-        }, 550);
-      }, 500);
-    }, 550);
-  }
-
   if (btn) {
     btn.addEventListener('click', () => {
       const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
       const next = current === 'light' ? 'dark' : 'light';
-      animateThemeSwitch(current, next);
+      setThemeImmediate(next);
     });
   }
 }
