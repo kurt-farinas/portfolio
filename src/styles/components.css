@@ -982,15 +982,8 @@
   position: relative;
   padding-left: 74px;
   margin-bottom: 36px;
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.timeline-item.is-visible,
-.timeline-item.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .timeline-icon {
@@ -1002,7 +995,7 @@
   border-radius: 50%;
   background: var(--surface-solid);
   border: 1px solid var(--border-strong);
-  color: var(--text-faint);
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1010,9 +1003,9 @@
   font-size: 12px;
   font-weight: 700;
   z-index: 2;
-  opacity: 0.4;
-  transform: scale(0.9);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  transform: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .timeline-item:hover .timeline-icon {
@@ -1817,8 +1810,6 @@
   inset: 0;
   z-index: 200;
   background: rgba(0, 0, 0, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1942,8 +1933,6 @@
   inset: 0;
   z-index: 10000;
   background: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2044,9 +2033,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(14, 14, 14, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: #0E0E12;
   border: 1px solid var(--border-strong);
   border-radius: 10px;
   padding: 14px 18px;
@@ -2133,9 +2120,7 @@
 .mobile-menu {
   display: none;
   flex-direction: column;
-  background: rgba(10, 10, 10, 0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: #0A0A0D;
   border-top: 1px solid var(--border);
   padding: 16px 24px 20px;
   gap: 4px;
@@ -2173,18 +2158,12 @@
 
 /* ---------- CONTACT FORM ---------- */
 .contact-form {
-  max-width: 620px;
-  margin: 0 auto 32px;
+  max-width: 600px;
+  margin: 0 auto;
   text-align: left;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px 26px;
-  transition: border-color 0.3s;
-}
-
-.contact-form:focus-within {
-  border-color: var(--border-strong);
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
 .form-grid {
@@ -2194,7 +2173,7 @@
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .form-group label {
@@ -2738,6 +2717,16 @@ textarea:focus-visible,
     min-height: 44px;
     display: inline-flex;
     align-items: center;
+  }
+  .ticket-footer-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .ticket-footer-actions > * {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
   }
 }
 

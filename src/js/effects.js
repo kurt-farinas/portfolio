@@ -88,45 +88,14 @@ export function initCounters() {
   // No-op
 }
 
-// Section element reveal on scroll
+// Section element reveal on scroll — disabled
 export function initScrollReveal() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        entry.target.classList.add('show');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: "0px 0px -60px 0px" });
-
-  document.querySelectorAll('.ticket, .skill-group, .award-card, .reveal-on-scroll, .section-title, .fact-card').forEach(t => {
-    t.classList.add('reveal-on-scroll');
-    observer.observe(t);
-  });
+  // No-op: scroll fade-in disabled for instant rendering
 }
 
-// Scroll-triggered border highlight observer
+// Scroll-triggered border highlight observer — disabled
 export function initScrollGlow() {
-  const glowObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view-glow');
-        entry.target.classList.add('show');
-      } else {
-        entry.target.classList.remove('in-view-glow');
-      }
-    });
-  }, {
-    threshold: 0.3,
-    rootMargin: "-100px 0px -100px 0px"
-  });
-
-  const glowTargets = document.querySelectorAll('.ticket, .skill-group, .award-card, .contact-box, .fact-card');
-  glowTargets.forEach(el => {
-    el.classList.add('scroll-glow-target');
-    glowObserver.observe(el);
-  });
+  // No-op: glow observer disabled
 }
 
 // Scroll progress bar (throttled for high performance)

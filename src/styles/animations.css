@@ -91,29 +91,30 @@
   position: relative;
   z-index: 10;
   height: 100%;
-  width: 100%;
-  max-width: 380px;
+  width: max-content;
+  max-width: 90vw;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  transform: translateY(-16px);
   transition: opacity 0.6s ease;
   will-change: opacity;
   box-sizing: border-box;
 }
 
 .preloader-svg {
-  width: 100%;
-  max-width: 380px;
+  width: 250px;
+  max-width: 80vw;
   display: block;
 }
 
 .preloader-svg path {
   fill: none;
-  stroke: #e8e4df;
-  stroke-width: 3;
+  stroke: #ECEAE6;
+  stroke-width: 7;
   stroke-linecap: round;
   stroke-linejoin: round;
   pathLength: 1;
@@ -131,84 +132,109 @@
   animation: stroke-draw 1.8s cubic-bezier(0.65, 0, 0.35, 1) 1.1s forwards;
 }
 
-.preloader-name-container {
-  margin-top: 24px;
+.preloader-boot-log {
+  margin-top: 20px;
+  padding-left: 12px;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  overflow: hidden;
-  height: 24px;
+  flex-direction: column;
+  gap: 6px;
   width: 100%;
-}
-
-.preloader-name {
+  box-sizing: border-box;
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.35em;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+}
+
+.boot-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(4px);
+  animation: bootLineAppear 0.3s ease forwards;
+}
+
+.boot-row-1 {
+  animation-delay: 0.8s;
+}
+
+.boot-row-2 {
+  animation-delay: 1.4s;
+}
+
+.boot-row-3 {
+  animation-delay: 2.0s;
+}
+
+@keyframes bootLineAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.boot-prompt {
+  color: #71717A;
+  font-weight: 600;
+}
+
+.boot-key {
+  color: #8E8E98;
+}
+
+.boot-val {
   color: #ECEAE6;
-  white-space: nowrap;
-  display: block;
-  width: 0;
-  overflow: hidden;
-  border-right: 2px solid #ECEAE6;
-  text-align: left;
-  animation: 
-    typewriterReveal 1.6s steps(12, end) 1.2s forwards,
-    cursorGlowBlink 0.75s step-end 2.8s infinite;
-  will-change: width, border-color;
-  transform: translateZ(0);
+  font-weight: 500;
 }
 
-@keyframes typewriterReveal {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-@keyframes cursorGlowBlink {
-  from, to {
-    border-color: #ECEAE6;
-    box-shadow: 2px 0 8px rgba(255, 255, 255, 0.5);
-  }
-  50% {
-    border-color: transparent;
-    box-shadow: none;
-  }
+.boot-ready {
+  color: #34D399;
+  font-weight: 600;
+  letter-spacing: 0.06em;
 }
 
 .preloader-progress-wrap {
-  position: absolute;
-  bottom: 48px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  text-align: center;
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  margin-top: 24px;
+  padding-left: 12px;
+  width: 100%;
+  max-width: 236px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .preloader-progress-bar {
-  width: 100%;
+  flex: 1;
   height: 2px;
-  background: var(--border);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
   overflow: hidden;
 }
 
 .preloader-progress-fill {
   height: 100%;
-  background: var(--text-muted);
+  background: #ECEAE6;
   width: 0%;
-  transition: width 0.25s ease-out;
+  transition: width 0.15s ease-out;
 }
 
 .preloader-percentage {
-  margin-top: 10px;
+  margin: 0;
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.3em;
-  color: var(--text-faint);
-  opacity: 0;
-  animation: fade-up 0.5s ease 1.4s forwards;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #71717A;
+  font-weight: 500;
+  min-width: 32px;
+  text-align: right;
+  opacity: 1;
+  animation: none;
 }
 
 /* ---------- HERO SLIDE-IN ENTRANCE TRANSITIONS ---------- */
@@ -254,17 +280,15 @@
   }
 }
 
-/* ---------- GENERAL SCROLL REVEAL ---------- */
+/* ---------- GENERAL SCROLL REVEAL (DISABLED) ---------- */
 .reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
 .reveal-on-scroll.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 /* ---------- STICKY HERO ELEVATION ---------- */
