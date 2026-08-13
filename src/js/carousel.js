@@ -1,29 +1,8 @@
-/* ========================================
-   CAROUSEL  |  Screenshot Carousels
-   ======================================== */
-
-const carouselData = {
-  hris: {
-    current: 0,
-    slides: [
-      { src: 'hris-admin.png', label: 'Admin Dashboard' },
-      { src: 'hris-approver.png', label: 'Approver Interface' },
-      { src: 'hris-applicant.png', label: 'Applicant Form' }
-    ]
-  },
-  gym: {
-    current: 0,
-    slides: [
-      { src: 'gym-admin.png', label: 'Admin Dashboard' },
-      { src: 'gym-trainer.png', label: 'Trainer Panel' },
-      { src: 'gym-client.png', label: 'Client Portal' }
-    ]
-  }
-};
+import { projectDetails } from './projectData.js';
 
 let screenshotLastFocused = null;
 
-function openScreenshotModal(src, caption) {
+window.openScreenshotModal = function(src, caption) {
   screenshotLastFocused = document.activeElement;
   document.getElementById('screenshotModalImg').src = src;
   document.getElementById('screenshotModalCaption').textContent = caption;
@@ -33,14 +12,16 @@ function openScreenshotModal(src, caption) {
 
   const closeBtn = modal.querySelector('.screenshot-modal-close');
   if (closeBtn) closeBtn.focus();
-}
+};
+
+const carouselCurrent = { hris: 0, gym: 0 };
 
 // Exposed globally for onclick handlers in HTML
 window.setCarouselSlide = function(projectId, idx) {
-  const data = carouselData[projectId];
-  if (!data) return;
-  data.current = idx;
-  const slide = data.slides[idx];
+  const project = projectDetails[projectId];
+  if (!project || !project.slides || !project.slides.length) return;
+  carouselCurrent[projectId] = idx;
+  const slide = project.slides[idx];
 
   const img = document.getElementById(`${projectId}-carousel-img`);
   if (img) {
@@ -58,18 +39,23 @@ window.setCarouselSlide = function(projectId, idx) {
 };
 
 window.prevCarouselSlide = function(projectId) {
-  const data = carouselData[projectId];
-  window.setCarouselSlide(projectId, (data.current - 1 + data.slides.length) % data.slides.length);
+  const project = projectDetails[projectId];
+  if (!project || !project.slides) return;
+  const len = project.slides.length;
+  window.setCarouselSlide(projectId, ((carouselCurrent[projectId] || 0) - 1 + len) % len);
 };
 
 window.nextCarouselSlide = function(projectId) {
-  const data = carouselData[projectId];
-  window.setCarouselSlide(projectId, (data.current + 1) % data.slides.length);
+  const project = projectDetails[projectId];
+  if (!project || !project.slides) return;
+  const len = project.slides.length;
+  window.setCarouselSlide(projectId, ((carouselCurrent[projectId] || 0) + 1) % len);
 };
 
 window.openCurrentCarouselScreenshot = function(projectId) {
-  const data = carouselData[projectId];
-  const slide = data.slides[data.current];
+  const project = projectDetails[projectId];
+  if (!project || !project.slides) return;
+  const slide = project.slides[carouselCurrent[projectId] || 0];
   openScreenshotModal(slide.src, slide.label + '  |  ' + (projectId === 'hris' ? 'CS Form No. 6 System' : "Boiyet's Gym"));
 };
 

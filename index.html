@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://kurt-farinas.github.io blob:; connect-src 'self' https://api.web3forms.com https://fonts.googleapis.com https://fonts.gstatic.com; form-action 'self' https://api.web3forms.com mailto:; base-uri 'self'; object-src 'none';">
   <title>Kurt Fariñas | Junior Full-Stack Developer</title>
   <meta name="description"
     content="Portfolio of Kurt Fariñas  |  BS Computer Science graduate, frontend owner of CS Form No. 6 Digitalization System, and creator of Boiyet's Gym Management System. Open to Junior Full-Stack Developer roles.">
@@ -397,54 +398,19 @@
         </div>
 
         <div class="tickets">
+          <!-- CARD 1: CS Form No. 6 Digitalization System -->
           <article class="ticket" id="ticket-hris" data-skills="react,inertia,tailwind,laravel,javascript">
-            <div class="ticket-head">
-              <span class="ticket-id">TICKET #CSF6-2026-01</span>
-              <span class="stamp" style="color:var(--text);border-color:var(--border-strong);">98/100 OJT RATING (342
-                HRS)</span>
+            <div class="project-screenshot" role="button" tabindex="0"
+              onclick="openProjectModal('hris')"
+              onkeydown="if(event.key==='Enter')openProjectModal('hris')">
+              <img src="hris-admin.png" onerror="this.onerror=null;this.src='hris-mockup.png'"
+                alt="CS Form No. 6 Digitalization System - Admin Dashboard" loading="lazy" decoding="async">
+              <div class="project-screenshot-overlay">View Full Details ↗</div>
             </div>
             <div class="ticket-body">
               <div class="ticket-top">
                 <div class="ticket-title">CS Form No. 6 Digitalization System</div>
-                <span class="role-tag">FRONTEND OWNER</span>
               </div>
-              <div class="project-status-badge">
-                <span class="status-dot-amber"></span> Built &amp; Delivered — pending institutional rollout
-              </div>
-              <p class="ticket-desc">DepEd San Jose's leave approval process ran entirely on paper across 30+ staff, with no audit trail. I owned 100% of the frontend for the system that replaced it.</p>
-
-              <!-- Project Screenshots  |  3 Roles -->
-              <div class="screenshot-carousel" data-project="hris">
-                <div class="carousel-tabs">
-                  <button class="carousel-tab active" onclick="setCarouselSlide('hris', 0)">Admin</button>
-                  <button class="carousel-tab" onclick="setCarouselSlide('hris', 1)">Approver</button>
-                  <button class="carousel-tab" onclick="setCarouselSlide('hris', 2)">Applicant</button>
-                </div>
-                <div class="carousel-frame">
-                  <div class="project-screenshot" role="button" tabindex="0"
-                    onclick="openCurrentCarouselScreenshot('hris')"
-                    onkeydown="if(event.key==='Enter')openCurrentCarouselScreenshot('hris')">
-                    <img id="hris-carousel-img" src="hris-admin.png"
-                      onerror="this.onerror=null;this.src='hris-mockup.png'" alt="CS Form No. 6 Admin Dashboard"
-                      loading="lazy" decoding="async">
-                    <div class="project-screenshot-overlay">View Full Screenshot ↗</div>
-                  </div>
-                  <button class="carousel-arrow carousel-prev"
-                    onclick="event.stopPropagation();prevCarouselSlide('hris')" aria-label="Previous">&#8249;</button>
-                  <button class="carousel-arrow carousel-next"
-                    onclick="event.stopPropagation();nextCarouselSlide('hris')" aria-label="Next">&#8250;</button>
-                </div>
-                <div class="carousel-footer">
-                  <span class="carousel-label" id="hris-carousel-label">Admin Dashboard</span>
-                  <div class="carousel-dots">
-                    <button class="carousel-dot active" onclick="setCarouselSlide('hris', 0)"
-                      aria-label="Admin"></button>
-                    <button class="carousel-dot" onclick="setCarouselSlide('hris', 1)" aria-label="Approver"></button>
-                    <button class="carousel-dot" onclick="setCarouselSlide('hris', 2)" aria-label="Applicant"></button>
-                  </div>
-                </div>
-              </div>
-
               <div class="ticket-stack">
                 <span class="stack-pill">React</span>
                 <span class="stack-pill">Inertia.js</span>
@@ -452,64 +418,25 @@
                 <span class="stack-pill">Laravel</span>
                 <span class="stack-pill">MySQL</span>
               </div>
-
               <div class="ticket-footer-actions">
-                <button type="button" class="btn-card-action" onclick="openProjectModal('hris')">View Full Project →</button>
-                <span class="code-link-stub">
-                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
-                  Code available on request
-                </span>
+                <button type="button" class="btn-card-action" onclick="openProjectModal('hris')">View Full Details →</button>
               </div>
             </div>
           </article>
 
+          <!-- CARD 2: Boiyet's Gym Management System -->
           <article class="ticket" id="ticket-gym" data-skills="php,mysql,tailwind,javascript,sysadmin">
-            <div class="ticket-head">
-              <span class="ticket-id">TICKET #GYM-2025-02</span>
-              <span class="stamp" style="color:var(--text);border-color:var(--border-strong);">SOLO-BUILT & DEFENDED
-                THESIS</span>
+            <div class="project-screenshot" role="button" tabindex="0"
+              onclick="openProjectModal('gym')"
+              onkeydown="if(event.key==='Enter')openProjectModal('gym')">
+              <img src="gym-admin.png" onerror="this.onerror=null;this.src='gym-mockup.png'"
+                alt="Boiyet's Gym Management System - Admin Dashboard" loading="lazy" decoding="async">
+              <div class="project-screenshot-overlay">View Full Details ↗</div>
             </div>
             <div class="ticket-body">
               <div class="ticket-top">
                 <div class="ticket-title">Boiyet's Gym Management System</div>
-                <span class="role-tag">SOLO DEVELOPER</span>
               </div>
-              <div class="project-status-badge">
-                <span class="status-dot-green"></span> Live Showcase Version — Built &amp; Defended Thesis Platform
-              </div>
-              <p class="ticket-desc">Boiyet's Fitness Gym tracked attendance and membership manually. I solo-built and defended the full-stack platform that replaced it.</p>
-
-              <!-- Project Screenshots  |  3 Roles -->
-              <div class="screenshot-carousel" data-project="gym">
-                <div class="carousel-tabs">
-                  <button class="carousel-tab active" onclick="setCarouselSlide('gym', 0)">Admin</button>
-                  <button class="carousel-tab" onclick="setCarouselSlide('gym', 1)">Client Portal</button>
-                  <button class="carousel-tab" onclick="setCarouselSlide('gym', 2)">Trainer Portal</button>
-                </div>
-                <div class="carousel-frame">
-                  <div class="project-screenshot" role="button" tabindex="0"
-                    onclick="openCurrentCarouselScreenshot('gym')"
-                    onkeydown="if(event.key==='Enter')openCurrentCarouselScreenshot('gym')">
-                    <img id="gym-carousel-img" src="gym-admin.png" onerror="this.onerror=null;this.src='gym-mockup.png'"
-                      alt="Boiyet's Gym Admin Dashboard" loading="lazy" decoding="async">
-                    <div class="project-screenshot-overlay">View Full Screenshot ↗</div>
-                  </div>
-                  <button class="carousel-arrow carousel-prev"
-                    onclick="event.stopPropagation();prevCarouselSlide('gym')" aria-label="Previous">&#8249;</button>
-                  <button class="carousel-arrow carousel-next"
-                    onclick="event.stopPropagation();nextCarouselSlide('gym')" aria-label="Next">&#8250;</button>
-                </div>
-                <div class="carousel-footer">
-                  <span class="carousel-label" id="gym-carousel-label">Admin Analytics & Financials</span>
-                  <div class="carousel-dots">
-                    <button class="carousel-dot active" onclick="setCarouselSlide('gym', 0)"
-                      aria-label="Admin"></button>
-                    <button class="carousel-dot" onclick="setCarouselSlide('gym', 1)" aria-label="Client"></button>
-                    <button class="carousel-dot" onclick="setCarouselSlide('gym', 2)" aria-label="Trainer"></button>
-                  </div>
-                </div>
-              </div>
-
               <div class="ticket-stack">
                 <span class="stack-pill">PHP</span>
                 <span class="stack-pill">MySQL</span>
@@ -518,19 +445,12 @@
                 <span class="stack-pill">Chart.js</span>
                 <span class="stack-pill">QR</span>
               </div>
-
               <div class="ticket-footer-actions">
-                <button type="button" class="btn-card-action" onclick="openProjectModal('gym')">View Full Project →</button>
-                <div style="display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;">
-                  <a href="https://boiyetsfitnessgym-managementsystem.site.je/index.php" target="_blank" rel="noopener" class="code-link-btn btn-showcase-demo">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                    Live Showcase Demo ↗
-                  </a>
-                  <a href="https://github.com/kurt-farinas/gym-management-system" target="_blank" rel="noopener" class="code-link-btn">
-                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
-                    View Code
-                  </a>
-                </div>
+                <button type="button" class="btn-card-action" onclick="openProjectModal('gym')">View Full Details →</button>
+                <a href="https://boiyetsfitnessgym-managementsystem.site.je/index.php" target="_blank" rel="noopener" class="code-link-btn btn-showcase-demo">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                  Live Demo ↗
+                </a>
               </div>
             </div>
           </article>
@@ -800,15 +720,51 @@
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
-      <span class="modal-badge" id="modalBadge">PROJECT ARCHITECTURE</span>
-      <h3 class="modal-title" id="modalTitle">System Title</h3>
+
+      <div class="modal-meta-row">
+        <span class="modal-badge" id="modalBadge">PROJECT ARCHITECTURE</span>
+        <span class="stamp modal-stamp-badge" id="modalStamp"></span>
+      </div>
+
+      <div class="modal-heading-row">
+        <h3 class="modal-title" id="modalTitle">System Title</h3>
+        <span class="role-tag" id="modalRoleTag"></span>
+      </div>
+
+      <div class="project-status-badge modal-status-wrap" id="modalStatusBadge"></div>
+
+      <!-- Interactive Carousel inside Modal -->
+      <div class="screenshot-carousel" id="modalCarousel" data-project="">
+        <div class="carousel-tabs" id="modalCarouselTabs"></div>
+        <div class="carousel-frame">
+          <div class="project-screenshot" role="button" tabindex="0"
+            onclick="openModalCurrentScreenshot()"
+            onkeydown="if(event.key==='Enter')openModalCurrentScreenshot()">
+            <img id="modalCarouselImg" src="" alt="Project Screenshot" loading="lazy" decoding="async">
+            <div class="project-screenshot-overlay">View Full Screenshot ↗</div>
+          </div>
+          <button type="button" class="carousel-arrow carousel-prev"
+            onclick="event.stopPropagation();prevModalCarouselSlide()" aria-label="Previous">&#8249;</button>
+          <button type="button" class="carousel-arrow carousel-next"
+            onclick="event.stopPropagation();nextModalCarouselSlide()" aria-label="Next">&#8250;</button>
+        </div>
+        <div class="carousel-footer">
+          <span class="carousel-label" id="modalCarouselLabel"></span>
+          <div class="carousel-dots" id="modalCarouselDots"></div>
+        </div>
+      </div>
+
+      <div class="modal-section-title">Overview &amp; Architecture</div>
       <p class="modal-desc" id="modalDesc">Detailed description...</p>
 
       <div class="modal-section-title">Key Engineering Highlights</div>
       <ul class="modal-list" id="modalHighlights"></ul>
 
-      <div class="modal-section-title">Tech Stack & Tools</div>
+      <div class="modal-section-title">Tech Stack &amp; Tools</div>
       <div class="stack-row" id="modalStack"></div>
+
+      <div class="modal-section-title">Project Links &amp; Resources</div>
+      <div id="modalLinks" class="modal-links-row"></div>
     </div>
   </div>
 

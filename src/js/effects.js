@@ -17,7 +17,12 @@ export function initPreloader() {
       overlay.classList.add('finished');
       setTimeout(() => {
         overlay.style.display = 'none';
-      }, 2400);
+      }, 1000);
+    }
+    try {
+      sessionStorage.setItem('portfolio-preloaded', 'true');
+    } catch {
+      // Ignore storage exceptions
     }
   }
 
@@ -26,12 +31,37 @@ export function initPreloader() {
     return;
   }
 
-  // Lock scrolling during intro preloader
+  // Respect prefers-reduced-motion
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    unlockPage();
+    return;
+  }
+
+  // Fast path for returning visits in the same session
+  const alreadyPreloaded = (() => {
+    try {
+      return sessionStorage.getItem('portfolio-preloaded') === 'true';
+    } catch {
+      return false;
+    }
+  })();
+
+  if (alreadyPreloaded) {
+    unlockPage();
+    return;
+  }
+
+  // Lock scrolling during initial preloader
   document.body.style.overflow = 'hidden';
 
-  // Smooth requestAnimationFrame progress bar update
+  // Smooth requestAnimationFrame progress bar update (~1 second)
   const startTime = performance.now();
-  const totalDuration = 3400; // 3.4 seconds smooth total load time
+  const totalDuration = 950;
+
+  // Fallback safety timeout if rAF is paused/backgrounded
+  const safetyTimer = setTimeout(() => {
+    unlockPage();
+  }, 2200);
 
   function updateProgress(now) {
     const elapsed = now - startTime;
@@ -43,18 +73,14 @@ export function initPreloader() {
     if (elapsed < totalDuration) {
       requestAnimationFrame(updateProgress);
     } else {
+      clearTimeout(safetyTimer);
       setTimeout(() => {
         unlockPage();
-      }, 800);
+      }, 180);
     }
   }
 
   requestAnimationFrame(updateProgress);
-}
-
-// Spotlight cursor tracking — disabled in monochrome mode
-export function initSpotlight() {
-  // No-op
 }
 
 // 3D Parallax tilt effect for hero showcase card
@@ -76,26 +102,6 @@ export function initParallax() {
   showcaseContainer.addEventListener('mouseleave', () => {
     showcaseCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
   });
-}
-
-// Boot sequence animation — disabled
-export function initBootSequence() {
-  // No-op: boot log removed to focus on hero presentation
-}
-
-// Animated number counters — disabled
-export function initCounters() {
-  // No-op
-}
-
-// Section element reveal on scroll — disabled
-export function initScrollReveal() {
-  // No-op: scroll fade-in disabled for instant rendering
-}
-
-// Scroll-triggered border highlight observer — disabled
-export function initScrollGlow() {
-  // No-op: glow observer disabled
 }
 
 // Scroll progress bar (throttled for high performance)

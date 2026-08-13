@@ -3,50 +3,10 @@
    ======================================== */
 
 import { spawnToast } from './utils.js';
+import { projectDetails, workflowMessages } from './projectData.js';
 
-const projectDetails = {
-  hris: {
-    title: "CS Form No. 6 Digitalization System",
-    badge: "DEPED OJT SYSTEM PROJECT — 98/100 PERFORMANCE RATING (342 HRS LOGGED)",
-    desc: "DepEd San Jose's leave approval process ran entirely on paper across 30+ ICT staff and teachers, with no audit trail and multi-day turnaround. I owned 100% of the frontend for a system that digitized the full Applicant → Admin → Approver workflow, replacing the manual CS Form No. 6 paper process for the division office with print-optimized PDF output and secure e-signature upload tied to the approval chain (designed to scale toward a future HRIS).",
-    codeStub: "Code available on request",
-    highlights: [
-      "Earned a 98/100 Performance Rating across 342 logged OJT internship hours at DepEd San Jose Division Office.",
-      "Implemented 3-Role Workflow: Applicant application submission → Admin verification → Approver digital sign-off.",
-      "Print-Optimized PDF Engine: Formatted official CS Form No. 6 documents via browser-native print stylesheets with verified e-signature image stamping.",
-      "Owned 100% of frontend development using React, Inertia.js, and Tailwind CSS."
-    ],
-    stack: ["React", "Inertia.js", "Tailwind CSS", "Laravel", "MySQL"]
-  },
-  gym: {
-    title: "Boiyet's Fitness Gym Management System",
-    badge: "DEFENDED THESIS PROJECT & REAL CLIENT PLATFORM",
-    desc: "I solo-built and defended a full-stack platform for a real gym client with no prior digital system — attendance and membership were tracked manually. The system includes three distinct roles (Admin, Trainer, Client), contactless QR attendance scanning, automated membership tracking, and revenue reporting with exportable HTML/Excel reports. Revenue, expenses, and net profit are visualized through interactive Chart.js dashboards (line and doughnut charts), alongside client-facing weight, BMI, and strength progress charts.",
-    demoUrl: "https://boiyetsfitnessgym-managementsystem.site.je/index.php",
-    codeUrl: "https://github.com/kurt-farinas/gym-management-system",
-    highlights: [
-      "QR Code Attendance Scanner: Replaced manual paper logbooks with instant camera QR check-ins.",
-      "Interactive Chart.js Analytics: Dashboards with revenue trends (line), revenue by category (doughnut), expense trends (line), expense breakdown (doughnut), net profit, and client weight/BMI/strength progress.",
-      "POS Receipts & Financial Reports: PDF receipt generation for POS transactions alongside downloadable HTML and Excel (.xls) revenue exports.",
-      "Solo Full-Stack Architecture: Built independently using custom PHP, MySQL database schema, Tailwind CSS, and AJAX."
-    ],
-    stack: ["PHP", "MySQL", "JavaScript", "Tailwind CSS", "Chart.js", "QR"]
-  }
-};
-
-const workflowMessages = {
-  hris: [
-    "Step 1: Applicant fills out CS Form No. 6 leave application and attaches uploaded e-signature image.",
-    "Step 2: Admin reviews application details in division office management portal.",
-    "Step 3: Approver grants final digital sign-off and system generates print-optimized CS Form No. 6 document with stamped signatures."
-  ],
-  gym: [
-    "Step 1: Member scans personal QR code at gym entrance camera terminal.",
-    "Step 2: Asynchronous AJAX request verifies membership status and expiration in MySQL.",
-    "Step 3: Visual/audio green light access granted and timestamped attendance record created.",
-    "Step 4: Real-time update sent to owner revenue, workout tracking, and active visitor dashboard."
-  ]
-};
+let currentModalProject = null;
+let currentModalSlideIdx = 0;
 
 let lastFocusedElement = null;
 
@@ -87,37 +47,107 @@ function releaseFocus(modal) {
   }
 }
 
+window.setModalCarouselSlide = function(idx) {
+  if (!currentModalProject) return;
+  const data = projectDetails[currentModalProject];
+  if (!data || !data.slides || !data.slides[idx]) return;
+  currentModalSlideIdx = idx;
+  const slide = data.slides[idx];
+
+  const img = document.getElementById('modalCarouselImg');
+  if (img) {
+    img.src = slide.src;
+    img.onerror = () => { img.onerror = null; img.src = `${currentModalProject}-mockup.png`; };
+    img.alt = slide.label;
+  }
+
+  const label = document.getElementById('modalCarouselLabel');
+  if (label) label.textContent = slide.label;
+
+  const tabs = document.querySelectorAll('#modalCarouselTabs .carousel-tab');
+  tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
+
+  const dots = document.querySelectorAll('#modalCarouselDots .carousel-dot');
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+};
+
+window.prevModalCarouselSlide = function() {
+  if (!currentModalProject) return;
+  const data = projectDetails[currentModalProject];
+  if (!data || !data.slides) return;
+  window.setModalCarouselSlide((currentModalSlideIdx - 1 + data.slides.length) % data.slides.length);
+};
+
+window.nextModalCarouselSlide = function() {
+  if (!currentModalProject) return;
+  const data = projectDetails[currentModalProject];
+  if (!data || !data.slides) return;
+  window.setModalCarouselSlide((currentModalSlideIdx + 1) % data.slides.length);
+};
+
+window.openModalCurrentScreenshot = function() {
+  if (!currentModalProject) return;
+  const data = projectDetails[currentModalProject];
+  if (!data || !data.slides) return;
+  const slide = data.slides[currentModalSlideIdx];
+  if (typeof window.openScreenshotModal === 'function') {
+    window.openScreenshotModal(slide.src, slide.label + '  |  ' + data.title);
+  }
+};
+
 // Exposed globally for onclick handlers in HTML
 window.openProjectModal = function(projectId) {
   const data = projectDetails[projectId];
   if (!data) return;
+  currentModalProject = projectId;
+  currentModalSlideIdx = 0;
   lastFocusedElement = document.activeElement;
+
   document.getElementById('modalBadge').textContent = data.badge;
+  document.getElementById('modalStamp').textContent = data.stamp;
   document.getElementById('modalTitle').textContent = data.title;
+  document.getElementById('modalRoleTag').textContent = data.roleTag;
+  document.getElementById('modalStatusBadge').innerHTML = data.statusBadge;
   document.getElementById('modalDesc').textContent = data.desc;
+
+  // Build Modal Carousel tabs and dots
+  const tabsContainer = document.getElementById('modalCarouselTabs');
+  const dotsContainer = document.getElementById('modalCarouselDots');
+  tabsContainer.innerHTML = data.slides.map((s, i) => 
+    `<button type="button" class="carousel-tab ${i === 0 ? 'active' : ''}" onclick="setModalCarouselSlide(${i})">${s.tab}</button>`
+  ).join('');
+  dotsContainer.innerHTML = data.slides.map((s, i) => 
+    `<button type="button" class="carousel-dot ${i === 0 ? 'active' : ''}" onclick="setModalCarouselSlide(${i})" aria-label="${s.tab}"></button>`
+  ).join('');
+  window.setModalCarouselSlide(0);
 
   const hlList = document.getElementById('modalHighlights');
   hlList.innerHTML = data.highlights.map(h => `<li>${h}</li>`).join('');
 
   const stackRow = document.getElementById('modalStack');
-  let stackHtml = data.stack.map(s => `<span class="stack-chip">${s}</span>`).join('');
-  if (data.demoUrl || data.codeUrl || data.codeStub) {
-    stackHtml += `<div style="width:100%;margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">`;
-    if (data.demoUrl) {
-      stackHtml += `<a href="${data.demoUrl}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">Launch Live Showcase Demo ↗</a>`;
-    }
-    if (data.codeUrl) {
-      stackHtml += `<a href="${data.codeUrl}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none;">View GitHub Repository ↗</a>`;
-    }
-    if (data.codeStub) {
-      stackHtml += `<span style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-faint);">${data.codeStub}</span>`;
-    }
-    stackHtml += `</div>`;
-    if (data.demoUrl) {
-      stackHtml += `<p style="font-size:11px;color:var(--text-muted);margin-top:6px;margin-bottom:0;">Note: Interactive showcase environment hosted for demonstration purposes.</p>`;
-    }
+  stackRow.innerHTML = data.stack.map(s => `<span class="stack-chip">${s}</span>`).join('');
+
+  const linksRow = document.getElementById('modalLinks');
+  let linksHtml = '';
+  if (data.demoUrl) {
+    linksHtml += `<a href="${data.demoUrl}" target="_blank" rel="noopener" class="code-link-btn btn-showcase-demo">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+      Live Showcase Demo ↗
+    </a>`;
   }
-  stackRow.innerHTML = stackHtml;
+  if (data.codeUrl) {
+    linksHtml += `<a href="${data.codeUrl}" target="_blank" rel="noopener" class="code-link-btn">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
+      View Code
+    </a>`;
+  }
+  if (data.codeStub) {
+    linksHtml += `<span class="code-link-stub">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
+      ${data.codeStub}
+    </span>`;
+  }
+  linksRow.innerHTML = linksHtml;
 
   const modal = document.getElementById('projectModal');
   modal.classList.add('active');
