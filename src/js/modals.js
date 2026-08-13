@@ -8,7 +8,7 @@ const projectDetails = {
   hris: {
     title: "CS Form No. 6 Digitalization System",
     badge: "DEPED OJT SYSTEM PROJECT — 98/100 PERFORMANCE RATING (342 HRS LOGGED)",
-    desc: "DepEd San Jose's leave approval process ran entirely on paper across 30+ ICT staff and teachers, with no audit trail and multi-day turnaround. I owned 100% of the frontend for a system that digitized the full Applicant → Admin → Approver workflow, replacing the manual CS Form No. 6 paper process for the division office with print-optimized PDF output and secure e-signature upload tied to the approval workflow (designed to scale toward a future HRIS).",
+    desc: "DepEd San Jose's leave approval process ran entirely on paper across 30+ ICT staff and teachers, with no audit trail and multi-day turnaround. I owned 100% of the frontend for a system that digitized the full Applicant → Admin → Approver workflow, replacing the manual CS Form No. 6 paper process for the division office with print-optimized PDF output and secure e-signature upload tied to the approval chain (designed to scale toward a future HRIS).",
     highlights: [
       "Earned a 98/100 Performance Rating across 342 logged OJT internship hours at DepEd San Jose Division Office.",
       "Implemented 3-Role Workflow: Applicant application submission → Admin verification → Approver digital sign-off.",
