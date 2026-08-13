@@ -652,62 +652,138 @@ nav .wrap.nav-wrap {
   padding: 0 20px;
 }
 
-/* ---------- PROFILE / WHO I AM STREAMLINED CARD ---------- */
-.profile-card {
+/* ---------- ABOUT / PROFILE CARD ---------- */
+.about-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 38px 42px;
-  box-shadow: var(--shadow-card);
+  border-radius: 12px;
+  overflow: hidden;
   transition: border-color 0.3s ease;
-  max-width: 980px;
-  margin: 0 auto;
 }
 
-.profile-card:hover {
+.about-card:hover {
   border-color: var(--border-strong);
 }
 
-.profile-stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 32px;
-  padding-top: 28px;
-  border-top: 1px solid var(--border);
+.about-card-body {
+  padding: 36px 36px 28px;
 }
 
-.profile-stat-box {
+.about-text p {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 16px;
+}
+
+.about-text p strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.drop-cap {
+  font-family: 'Space Grotesk', serif;
+  float: left;
+  font-size: 52px;
+  line-height: 0.85;
+  padding-top: 4px;
+  padding-right: 12px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.about-split {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.about-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 22px;
+}
+
+.about-fact-item {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
 }
 
-.stat-number {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(28px, 3.4vw, 38px);
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+.about-fact-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
-.stat-number.status-open-to-work {
-  color: #34D399;
+.about-fact-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.stat-unit {
-  font-size: 0.6em;
-  color: #71717A;
+.about-fact-val {
+  font-family: var(--font-body);
+  font-size: 13.5px;
   font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
 }
 
-.stat-desc {
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.about-card-footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+}
+
+.about-stat {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid var(--border);
+}
+
+.about-stat:last-child {
+  border-right: none;
+}
+
+.about-stat-num {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.about-stat-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: #8E8E9F;
-  letter-spacing: 0.05em;
+  color: var(--text-faint);
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .profile-title {
@@ -835,13 +911,27 @@ nav .wrap.nav-wrap {
 }
 
 /* ---------- RESPONSIVE ---------- */
-@media (max-width: 768px) {
-  .profile-card {
-    padding: 28px 22px;
-  }
-  .profile-stats-row {
+@media (max-width: 900px) {
+  .about-split {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-card-body {
+    padding: 24px 20px 20px;
+  }
+  .about-card-footer {
+    grid-template-columns: 1fr;
+  }
+  .about-stat {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+  }
+  .about-stat:last-child {
+    border-bottom: none;
   }
 }
 
@@ -1161,16 +1251,30 @@ nav .wrap.nav-wrap {
   color: var(--accent);
 }
 
-[data-theme="light"] .profile-card {
+[data-theme="light"] .about-card {
   background: var(--surface);
   border: 1px solid var(--border);
 }
 
-[data-theme="light"] .profile-stats-row {
+[data-theme="light"] .about-sidebar {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+[data-theme="light"] .about-fact-item {
+  border-color: var(--border);
+}
+
+[data-theme="light"] .about-card-footer {
+  background: var(--surface-2);
   border-top: 1px solid var(--border);
 }
 
-[data-theme="light"] .stat-number {
+[data-theme="light"] .about-stat {
+  border-color: var(--border);
+}
+
+[data-theme="light"] .about-stat-num {
   color: var(--text);
 }
 
