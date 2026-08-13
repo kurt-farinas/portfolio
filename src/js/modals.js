@@ -20,7 +20,7 @@ const projectDetails = {
   gym: {
     title: "Boiyet's Fitness Gym Management System",
     badge: "DEFENDED THESIS PROJECT & REAL CLIENT PLATFORM",
-    desc: "I solo-built and defended a full-stack platform for a real gym client with no prior digital system — attendance and membership were tracked manually. The system includes three distinct roles (Admin, Trainer, Client), contactless QR attendance scanning, automated membership tracking, POS receipt generation in PDF, and downloadable HTML/Excel revenue reports. Features interactive Chart.js analytics dashboards for revenue & expense trends (line), category breakdowns (doughnut), net profit tracking, and client weight/BMI/strength progress charts.",
+    desc: "I solo-built and defended a full-stack platform for a real gym client with no prior digital system — attendance and membership were tracked manually. The system includes three distinct roles (Admin, Trainer, Client), contactless QR attendance scanning, automated membership tracking, and revenue reporting with exportable HTML/Excel reports. Revenue, expenses, and net profit are visualized through interactive Chart.js dashboards (line and doughnut charts), alongside client-facing weight, BMI, and strength progress charts.",
     demoUrl: "https://boiyetsfitnessgym-managementsystem.site.je/index.php",
     highlights: [
       "QR Code Attendance Scanner: Replaced manual paper logbooks with instant camera QR check-ins.",

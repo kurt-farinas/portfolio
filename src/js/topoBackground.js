@@ -69,8 +69,8 @@ export function initTopoBackground() {
         bgOuter: '#FCFBF9',
         shadowAlphaMultiplier: 0.3,
         shadowColor: '0, 0, 0',
-        ridgeColor1: '80, 70, 100',
-        ridgeColor2: '100, 90, 120',
+        ridgeColor1: '70, 70, 75',
+        ridgeColor2: '110, 110, 115',
       };
     }
     return {
@@ -79,8 +79,8 @@ export function initTopoBackground() {
       bgOuter: '#060608',
       shadowAlphaMultiplier: 1.4,
       shadowColor: '0, 0, 0',
-      ridgeColor1: '215, 210, 225',
-      ridgeColor2: '230, 225, 235',
+      ridgeColor1: '215, 215, 220',
+      ridgeColor2: '230, 230, 235',
     };
   }
 

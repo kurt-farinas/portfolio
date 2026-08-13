@@ -291,11 +291,10 @@
   transform: none;
 }
 
-/* ---------- STICKY HERO ELEVATION ---------- */
+/* ---------- SECTION ELEVATION ---------- */
 .section {
   position: relative;
   z-index: 10;
-  box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.85);
   background: var(--bg);
   transition: background 0.3s ease;
 }
