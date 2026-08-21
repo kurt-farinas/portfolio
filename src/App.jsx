@@ -38,28 +38,6 @@ function AppContent() {
     }
   }, [location]);
 
-  // Konami code easter egg listener
-  useEffect(() => {
-    const konami = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-    let konamiPos = 0;
-
-    const handleKeyDown = (e) => {
-      const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-      if (key === konami[konamiPos]) {
-        konamiPos++;
-        if (konamiPos === konami.length) {
-          konamiPos = 0;
-          spawnToast('SECRET FOUND', 'Developer terminal activated: kurtfarinas2022@gmail.com');
-        }
-      } else {
-        konamiPos = (key === konami[0]) ? 1 : 0;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [spawnToast]);
-
   return (
     <div className="app-shell">
       <Preloader />
