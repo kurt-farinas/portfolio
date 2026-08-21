@@ -32,11 +32,10 @@ export const projectDetails = {
     ticketId: "TICKET #GYM-2025-02",
     stamp: "SOLO-BUILT & DEFENDED THESIS",
     roleTag: "SOLO DEVELOPER",
-    statusBadge: '<span class="status-dot-green"></span> Live Showcase Version • Built &amp; Defended Thesis Platform',
+    statusBadge: '<span class="status-dot-green"></span> Built &amp; Defended Thesis Platform',
     badge: "DEFENDED THESIS PROJECT & REAL CLIENT PLATFORM",
     desc: "I solo-built and defended a full-stack platform for a real gym client with no prior digital system where attendance and membership were previously tracked manually. The system includes three distinct roles (Admin, Trainer, Client), contactless QR attendance scanning, automated membership tracking, and revenue reporting with exportable HTML/Excel reports. Revenue, expenses, and net profit are visualized through interactive Chart.js dashboards (line and doughnut charts), alongside client-facing weight, BMI, and strength progress charts.",
-    demoUrl: "https://boiyetsfitnessgym-managementsystem.site.je/index.php",
-    codeUrl: "https://github.com/kurt-farinas/gym-management-system",
+    codeUrl: "https://github.com/kurt-farinas/gym-management-systemv2",
     highlights: [
       "QR Code Attendance Scanner: Replaced manual paper logbooks with instant camera QR check-ins.",
       "Interactive Chart.js Analytics: Dashboards with revenue trends (line), revenue by category (doughnut), expense trends (line), expense breakdown (doughnut), net profit, and client weight/BMI/strength progress.",
