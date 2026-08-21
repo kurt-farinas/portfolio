@@ -15,3 +15,9 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+# Test Browser Profiles & Screenshots
+.chrome-*/
+.edge-*/
+*-live.png
+live-*.png
