@@ -22,20 +22,30 @@ export function initTopoBackground() {
     const rect = parent ? parent.getBoundingClientRect() : { width: window.innerWidth, height: window.innerHeight };
     width = rect.width || window.innerWidth;
     height = rect.height || window.innerHeight;
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // Cap DPR at 1.5 for performance
+    const dpr = 1.0; // 1.0 DPR for max 60fps canvas throughput
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
-    ctx.scale(dpr, dpr);
   }
 
   window.addEventListener('resize', resize, { passive: true });
   resize();
 
+  let cursorX = -1000;
+  let cursorY = -1000;
+
   window.addEventListener('mousemove', (e) => {
     if (!isVisible) return;
-    targetMouseX = (e.clientX / window.innerWidth - 0.5) * 20;
-    targetMouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+    const rect = canvas.getBoundingClientRect();
+    cursorX = e.clientX - rect.left;
+    cursorY = e.clientY - rect.top;
+    targetMouseX = (e.clientX / window.innerWidth - 0.5) * 16;
+    targetMouseY = (e.clientY / window.innerHeight - 0.5) * 16;
   }, { passive: true });
+
+  window.addEventListener('mouseleave', () => {
+    cursorX = -1000;
+    cursorY = -1000;
+  });
 
   // Pause rendering when hero is scrolled out of viewport
   const observer = new IntersectionObserver((entries) => {
@@ -54,8 +64,8 @@ export function initTopoBackground() {
   observer.observe(heroSection);
 
   // Optimised parameters for smooth 60fps rendering
-  const numLines = 36;
-  const segments = 48;
+  const numLines = 22;
+  const segments = 36;
   let time = 0;
   let lastFrameTime = performance.now();
 
@@ -67,20 +77,16 @@ export function initTopoBackground() {
         bgInner: '#F5F3EF',
         bgMid: '#FAF9F6',
         bgOuter: '#FCFBF9',
-        shadowAlphaMultiplier: 0.3,
-        shadowColor: '0, 0, 0',
-        ridgeColor1: '70, 70, 75',
-        ridgeColor2: '110, 110, 115',
+        ridgeColor1: '80, 80, 85',
+        ridgeColor2: '120, 120, 125',
       };
     }
     return {
       bgInner: '#0D0D11',
       bgMid: '#08080A',
       bgOuter: '#060608',
-      shadowAlphaMultiplier: 1.4,
-      shadowColor: '0, 0, 0',
-      ridgeColor1: '215, 215, 220',
-      ridgeColor2: '230, 230, 235',
+      ridgeColor1: '200, 200, 210',
+      ridgeColor2: '230, 230, 240',
     };
   }
 
@@ -90,10 +96,9 @@ export function initTopoBackground() {
       return;
     }
 
-    // Limit frame rate update frequency if needed (60fps max)
     const delta = (currentTime - lastFrameTime) / 1000;
     lastFrameTime = currentTime;
-    time += Math.min(delta, 0.1) * 0.4;
+    time += Math.min(delta, 0.1) * 0.35;
 
     mouseX += (targetMouseX - mouseX) * 0.08;
     mouseY += (targetMouseY - mouseY) * 0.08;
@@ -117,27 +122,38 @@ export function initTopoBackground() {
     ctx.fillRect(0, 0, width, height);
 
     // Render topographic contour lines
-    const lineSpacing = height / (numLines * 0.62);
-    const startY = -height * 0.15;
+    const lineSpacing = height / (numLines * 0.65);
+    const startY = -height * 0.12;
     const stepX = (width + 160) / segments;
 
     for (let i = 0; i < numLines; i++) {
       const baseY = startY + i * lineSpacing;
       const distFromCenter = Math.abs(i - numLines / 2) / (numLines / 2);
-      const alphaVal = Math.max(0.04, (1 - distFromCenter * 0.7) * 0.26);
+      const alphaVal = Math.max(0.04, (1 - distFromCenter * 0.65) * 0.28);
 
       ctx.beginPath();
 
       for (let j = 0; j <= segments; j++) {
         const x = -80 + j * stepX;
-        const nx = (x / width) * 4.2;
-        const ny = (baseY / height) * 3.2;
+        const nx = (x / width) * 4.0;
+        const ny = (baseY / height) * 3.0;
 
-        const wave1 = Math.sin(nx * 1.8 + ny * 2.2 + time * 1.2) * 38;
-        const wave2 = Math.cos(nx * 3.0 - ny * 1.4 + time * 0.8) * 24;
-        const wave3 = Math.sin(nx * 0.8 + ny * 3.8 + time * 1.6 + i * 0.1) * 45;
+        const wave1 = Math.sin(nx * 1.8 + ny * 2.2 + time * 1.2) * 36;
+        const wave2 = Math.cos(nx * 3.0 - ny * 1.4 + time * 0.8) * 22;
+        const wave3 = Math.sin(nx * 0.8 + ny * 3.8 + time * 1.6 + i * 0.1) * 40;
 
-        const y = baseY + wave1 + wave2 + wave3;
+        // Dynamic proximity ripple under cursor
+        const dx = x - cursorX;
+        const dy = baseY - cursorY;
+        const distSq = dx * dx + dy * dy;
+        let ripple = 0;
+        if (distSq < 48400) { // 220px radius
+          const dist = Math.sqrt(distSq);
+          const factor = 1 - dist / 220;
+          ripple = Math.sin(dist * 0.06 - time * 3.5) * (factor * factor) * 18;
+        }
+
+        const y = baseY + wave1 + wave2 + wave3 + ripple;
 
         if (j === 0) {
           ctx.moveTo(x, y);
@@ -146,16 +162,11 @@ export function initTopoBackground() {
         }
       }
 
-      // Shadow stroke for depth
-      ctx.strokeStyle = `rgba(${colors.shadowColor}, ${alphaVal * colors.shadowAlphaMultiplier})`;
-      ctx.lineWidth = 3.0;
-      ctx.stroke();
-
-      // Subtle specular ridge stroke
-      ctx.strokeStyle = i % 3 === 0 
-        ? `rgba(${colors.ridgeColor1}, ${alphaVal * 0.75})` 
+      // Single optimized specular ridge stroke
+      ctx.strokeStyle = i % 2 === 0 
+        ? `rgba(${colors.ridgeColor1}, ${alphaVal * 0.8})` 
         : `rgba(${colors.ridgeColor2}, ${alphaVal})`;
-      ctx.lineWidth = 1.4;
+      ctx.lineWidth = 1.3;
       ctx.stroke();
     }
 

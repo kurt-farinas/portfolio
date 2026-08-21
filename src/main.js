@@ -12,11 +12,19 @@ import { initContactForm } from './js/contact.js';
 import { initTopoBackground } from './js/topoBackground.js';
 import { initMagneticEffects } from './js/magneticEffects.js';
 import { initCustomCursor } from './js/customCursor.js';
+import { initSoundSystem } from './js/sound.js';
+import { initCommandPalette } from './js/commandPalette.js';
+import { initSimulators } from './js/simulator.js';
 
 // Expose copyEmail globally for onclick handlers in HTML
 window.copyEmail = copyEmail;
 
 function startApp() {
+  // Sound & keyboard tools
+  initSoundSystem();
+  initCommandPalette();
+  initSimulators();
+
   // Preloader & entrance animations
   initPreloader();
   initCustomCursor();

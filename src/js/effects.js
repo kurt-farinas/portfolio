@@ -35,14 +35,14 @@ export function initPreloader() {
   // Lock scrolling during intro preloader
   document.body.style.overflow = 'hidden';
 
-  // Smooth requestAnimationFrame progress bar update (~2.6 seconds)
+  // Smooth requestAnimationFrame progress bar update (~2.4s)
   const startTime = performance.now();
-  const totalDuration = 2600;
+  const totalDuration = 2400;
 
-  // Fallback safety timeout if rAF is paused/backgrounded
+  // Fallback safety timeout
   const safetyTimer = setTimeout(() => {
     unlockPage();
-  }, 4200);
+  }, 4000);
 
   function updateProgress(now) {
     const elapsed = now - startTime;

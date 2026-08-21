@@ -64,8 +64,7 @@
 </head>
 
 <body>
-
-  <!-- INTRO PRELOADER CURTAIN WITH MONOGRAM DRAW (matching averymacasa.vercel.app) -->
+  <!-- INTRO PRELOADER CURTAIN WITH MONOGRAM DRAW -->
   <div class="preloader-overlay" id="preloaderOverlay">
     <div class="preloader-curtain-left"></div>
     <div class="preloader-curtain-right"></div>
@@ -81,7 +80,7 @@
           <span class="boot-prompt">&gt;</span> <span class="boot-key">user:</span> <span class="boot-val">kurt.farinas</span>
         </div>
         <div class="boot-row boot-row-2">
-          <span class="boot-prompt">&gt;</span> <span class="boot-key">role:</span> <span class="boot-val">fullstack_dev</span>
+          <span class="boot-prompt">&gt;</span> <span class="boot-key">role:</span> <span class="boot-val">junior_fullstack_dev</span>
         </div>
         <div class="boot-row boot-row-3">
           <span class="boot-prompt">&gt;</span> <span class="boot-key">sys:</span> <span class="boot-val boot-ready">ready</span>
@@ -109,6 +108,25 @@
           <a href="#projects" onclick="closeMenu()">PROJECTS</a>
           <a href="#contact" onclick="closeMenu()">CONTACT</a>
         </div>
+        <button type="button" class="btn-cmd-palette" id="cmdPaletteBtn" onclick="openCommandPalette()" aria-label="Open Command Palette" title="Command Palette (Ctrl+K)">
+          <span class="cmd-icon-key">⌘</span>
+          <span class="cmd-icon-letter">K</span>
+        </button>
+        <button type="button" class="sound-toggle-btn" id="soundToggleBtn" onclick="toggleSound()" aria-label="Toggle Sound Effects" title="Sound: OFF (Click to unmute)">
+          <svg class="sound-icon sound-icon-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <svg class="sound-icon sound-icon-on" style="display:none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+        <button type="button" class="btn-fast-track" id="fastTrackToggle" onclick="toggleFastTrack()" aria-label="Toggle Highlights Mode" title="Filter Key Highlights">
+          <svg class="fast-track-bolt" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span class="fast-track-text">HIGHLIGHTS</span>
+        </button>
         <button type="button" class="theme-btn" id="themeToggleBtn" aria-label="Toggle Theme">
           <!-- Sun icon (visible in dark mode) -->
           <svg class="theme-icon theme-icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -137,6 +155,10 @@
     </div>
     <!-- Mobile dropdown -->
     <div class="mobile-menu" id="mobileMenu">
+      <button type="button" class="btn-fast-track mobile-fast-track" onclick="toggleFastTrack(); closeMenu();">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span>HIGHLIGHTS MODE</span>
+      </button>
       <a href="#about" onclick="closeMenu()">ABOUT</a>
       <a href="#timeline" onclick="closeMenu()">EXPERIENCE</a>
       <a href="#projects" onclick="closeMenu()">PROJECTS</a>
@@ -151,10 +173,15 @@
 
       <div class="wrap hero-wrap">
         <div class="hero-center-content">
+          <div class="hero-status-pill">
+            <span class="status-dot"></span>
+            <span>AVAILABLE FOR WORK · SAN JOSE CITY, PH</span>
+          </div>
           <h1 id="heroH1" class="hero-title">
             <span class="title-line line-1">HI, I AM KURT</span>
             <span class="title-line line-2">JUNIOR FULL-STACK DEVELOPER</span>
           </h1>
+          <p class="hero-subtitle">Building responsive web applications, multi-role approval systems, and clean relational backends with React, Inertia.js, Laravel, and MySQL.</p>
         </div>
 
         <div class="hero-bottom-controls hero-slide-up">
@@ -212,7 +239,7 @@
 
         <div class="section-title-block">
           <h2 class="profile-title">Who I Am</h2>
-          <p class="profile-header-sub">Building production-grade interfaces &amp; full-stack workflows.</p>
+          <p class="profile-header-sub">Full-stack developer focused on responsive interfaces and workflow systems.</p>
         </div>
 
         <!-- Consistent Solid Profile Card with Balanced Layout -->
@@ -221,8 +248,8 @@
             <!-- Left Column: Narrative Bio & Key Tags -->
             <div class="about-main">
               <div class="about-text">
-                <p><span class="drop-cap">A</span> BS Computer Science graduate from <strong>STI College San Jose</strong> with a sharp focus on clean UI architecture and real-world system building, from live government leave approval workflows (CS Form No. 6) to responsive commercial management platforms.</p>
-                <p>I like the parts of software that most people skip past: approval states, edge cases in legacy environments, and making intuitive interfaces that anyone can operate without a manual.</p>
+                <p>BS Computer Science graduate from <strong>STI College San Jose</strong> with practical experience in frontend architecture and full-stack development. Built and delivered systems including a live government leave approval workflow (CS Form No. 6) and a commercial gym management platform with contactless QR check-ins.</p>
+                <p>Focused on workflow-driven applications, clean database design, and practical user experiences for multi-role systems.</p>
               </div>
 
               <div class="about-tags">
@@ -234,23 +261,23 @@
               </div>
             </div>
 
-            <!-- Right Column: Engineering Principles & Focus -->
+            <!-- Right Column: Development Principles & Focus -->
             <div class="about-sidebar">
-              <div class="about-sidebar-heading">// ENGINEERING FOCUS</div>
+              <div class="about-sidebar-heading">// DEVELOPMENT FOCUS</div>
 
               <div class="about-principle-item">
-                <div class="about-principle-title">01 / Workflow-Driven UI</div>
-                <div class="about-principle-desc">Designing interfaces around real operational procedures: multi-step approvals, printable documents, and role permissions.</div>
+                <div class="about-principle-title">01 / Workflow Systems</div>
+                <div class="about-principle-desc">Designing interfaces around operational procedures: multi-step approvals, printable documents, and role permissions.</div>
               </div>
 
               <div class="about-principle-item">
-                <div class="about-principle-title">02 / Defensive State &amp; Edge Cases</div>
-                <div class="about-principle-desc">Prioritizing error states, input validation, network fallbacks, and legacy database constraints without breaking UI.</div>
+                <div class="about-principle-title">02 / Defensive State Handling</div>
+                <div class="about-principle-desc">Handling error states, input validation, network fallbacks, and database constraints reliably.</div>
               </div>
 
               <div class="about-principle-item">
-                <div class="about-principle-title">03 / Full-Stack Practicality</div>
-                <div class="about-principle-desc">Connecting clean relational schemas and secure RESTful endpoints directly to fast, responsive interfaces.</div>
+                <div class="about-principle-title">03 / Practical Full-Stack</div>
+                <div class="about-principle-desc">Connecting clean relational schemas and secure endpoints directly to fast, responsive frontends.</div>
               </div>
             </div>
           </div>
@@ -281,7 +308,7 @@
         </div>
         <div class="section-title-block">
           <h2 class="profile-title">Career &amp; Education</h2>
-          <p class="profile-header-sub">The journey from student to system builder.</p>
+          <p class="profile-header-sub">Academic milestones and project development experience.</p>
         </div>
 
         <div class="timeline-container">
@@ -297,7 +324,7 @@
             </div>
           </div>
 
-          <div class="timeline-item">
+          <div class="timeline-item timeline-item-featured">
             <div class="timeline-icon">2</div>
             <div class="timeline-content">
               <div class="timeline-date">FEB – MARCH 2026 (342 HOURS)</div>
@@ -308,7 +335,7 @@
             </div>
           </div>
 
-          <div class="timeline-item">
+          <div class="timeline-item timeline-item-featured">
             <div class="timeline-icon">3</div>
             <div class="timeline-content">
               <div class="timeline-date">NOVEMBER 2025</div>
@@ -346,8 +373,7 @@
             <div class="timeline-content">
               <div class="timeline-date">2022 – 2026</div>
               <div class="timeline-title">STI College San Jose | BS Computer Science</div>
-              <div class="timeline-desc">Enrolled in BSCS program; mastered OOP, Database Systems, Web Development, and
-                Java Fundamentals (Oracle Academy certified).</div>
+              <div class="timeline-desc">Enrolled in BSCS program; completed coursework in OOP, Database Systems, Web Development, and Java Fundamentals (Oracle Academy certified).</div>
               <span class="timeline-badge">ACADEMIC FOUNDATION</span>
             </div>
           </div>
@@ -363,12 +389,23 @@
         </div>
         <div class="section-title-block">
           <h2 class="profile-title">Featured Projects</h2>
-          <p class="profile-header-sub">Production-grade systems built for real-world workflows.</p>
+          <p class="profile-header-sub">Production systems built for real-world operations.</p>
+        </div>
+
+        <div id="skillFilterBanner" class="skill-filter-banner" style="display: none;">
+          <span class="skill-filter-text">Filtered by: <strong id="skillFilterName"></strong></span>
+          <button type="button" class="btn-clear-filter" onclick="clearSkillFilter()">Reset Filter ×</button>
         </div>
 
         <div class="tickets">
           <!-- CARD 1: CS Form No. 6 Digitalization System -->
           <article class="ticket" id="ticket-hris" data-skills="react,inertia,tailwind,laravel,javascript">
+            <div class="ticket-header-meta">
+              <span class="ticket-badge-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <span>98/100 OJT Rating · 342 Hrs</span>
+              </span>
+            </div>
             <div class="project-screenshot" role="button" tabindex="0"
               onclick="openProjectModal('hris')"
               onkeydown="if(event.key==='Enter')openProjectModal('hris')">
@@ -379,6 +416,13 @@
             <div class="ticket-body">
               <div class="ticket-top">
                 <div class="ticket-title">CS Form No. 6 Digitalization System</div>
+                <div class="ticket-telemetry-ribbon">
+                  <span>Frontend Ownership</span>
+                  <span>3-Tier RBAC</span>
+                  <span>Print PDF Engine</span>
+                  <span>98/100 Rating</span>
+                </div>
+                <p class="ticket-summary">Digitized paper-based Form 6 leave approvals for 30+ division office staff with 3-role permissions and automated PDF generation.</p>
               </div>
               <div class="ticket-stack">
                 <span class="stack-pill">React</span>
@@ -389,12 +433,22 @@
               </div>
               <div class="ticket-footer-actions">
                 <button type="button" class="btn-card-action" onclick="openProjectModal('hris')">View Full Details →</button>
+                <span class="code-link-stub">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                  Code on Request
+                </span>
               </div>
             </div>
           </article>
 
           <!-- CARD 2: Boiyet's Gym Management System -->
           <article class="ticket" id="ticket-gym" data-skills="php,mysql,tailwind,javascript,sysadmin">
+            <div class="ticket-header-meta">
+              <span class="ticket-badge-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7"></path><path d="M14 14.66V17c0 .55.45 1 1 1h2"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+                <span>Solo Defended Thesis</span>
+              </span>
+            </div>
             <div class="project-screenshot" role="button" tabindex="0"
               onclick="openProjectModal('gym')"
               onkeydown="if(event.key==='Enter')openProjectModal('gym')">
@@ -405,6 +459,13 @@
             <div class="ticket-body">
               <div class="ticket-top">
                 <div class="ticket-title">Boiyet's Gym Management System</div>
+                <div class="ticket-telemetry-ribbon">
+                  <span>Solo Full-Stack</span>
+                  <span>QR Camera Scanner</span>
+                  <span>Chart.js Analytics</span>
+                  <span>POS &amp; Excel Reports</span>
+                </div>
+                <p class="ticket-summary">Solo-built member management and revenue platform with contactless QR camera check-ins and Chart.js analytics dashboards.</p>
               </div>
               <div class="ticket-stack">
                 <span class="stack-pill">PHP</span>
@@ -435,7 +496,7 @@
         </div>
         <div class="section-title-block">
           <h2 class="profile-title">Tools &amp; Technologies</h2>
-          <p class="profile-header-sub">Tools &amp; technologies I engineer with. (Click any skill to filter)</p>
+          <p class="profile-header-sub">Tools &amp; technologies I build with. (Click any skill to filter)</p>
         </div>
         <div class="skill-legend">
           <span class="prof-badge prof-pro">Production</span>
@@ -496,10 +557,7 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- RECOGNITION & AWARDS SECTION -->
+       <!-- RECOGNITION & AWARDS SECTION -->
     <section class="section awards-section" id="awards">
       <div class="wrap profile-wrap">
         <div class="profile-header-divider">
@@ -507,7 +565,7 @@
         </div>
         <div class="section-title-block">
           <h2 class="profile-title">Honors &amp; Recognition</h2>
-          <p class="profile-header-sub">Received, not just claimed.</p>
+          <p class="profile-header-sub">Academic and technical achievements.</p>
         </div>
         <div class="awards-grid">
           <div class="award-card">
@@ -540,7 +598,7 @@
               <p>Cisco Networking Academy · Sept 2025</p>
             </div>
           </div>
-          <div class="award-card">
+          <div class="award-card award-card-champion">
             <svg class="award-badge" width="22" height="22" viewBox="0 0 24 24" fill="none">
               <path d="M12 2L14.5 8.5L21 9.5L16 14L17.5 20.5L12 17L6.5 20.5L8 14L3 9.5L9.5 8.5L12 2Z"
                 stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
@@ -581,12 +639,31 @@
           <span class="profile-eyebrow">CONTACT</span>
         </div>
         <div class="section-title-block" style="text-align:center;">
-          <h2 class="profile-title">Let's Build Something</h2>
+          <h2 class="profile-title">Get in Touch</h2>
           <p class="profile-header-sub"><span class="status-open-to-work">Open to Junior Full-Stack Developer roles</span>.
           </p>
         </div>
 
         <div class="contact-box">
+          <!-- Quick Contact Toolbar -->
+          <div class="quick-contact-bar">
+            <button type="button" class="quick-contact-btn" onclick="copyEmail()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+              <span>Copy Email</span>
+            </button>
+            <button type="button" class="quick-contact-btn" onclick="openResumeModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <span>Resume PDF</span>
+            </button>
+            <a href="https://www.linkedin.com/in/kurt-vincent-fari%C3%B1as-315ab1367" target="_blank" rel="noopener" class="quick-contact-btn">
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75-1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"></path></svg>
+              <span>LinkedIn ↗</span>
+            </a>
+            <a href="https://github.com/kurt-farinas" target="_blank" rel="noopener" class="quick-contact-btn">
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.44 22 12.017 22 6.484 17.522 2 12 2z"></path></svg>
+              <span>GitHub ↗</span>
+            </a>
+          </div>
 
           <!-- Contact Form -->
           <form id="contactForm" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
@@ -614,7 +691,7 @@
             <div class="form-group">
               <label for="contactMessage">Message</label>
               <textarea id="contactMessage" name="message" rows="4" required
-                placeholder="Tell me about your team, tech stack, or system requirements..."></textarea>
+                placeholder="Your message or project details..."></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary form-submit-btn" id="contactSubmitBtn">
@@ -691,7 +768,7 @@
       </button>
 
       <div class="modal-meta-row">
-        <span class="modal-badge" id="modalBadge">PROJECT ARCHITECTURE</span>
+        <span class="modal-badge" id="modalBadge">SYSTEM ARCHITECTURE</span>
         <span class="stamp modal-stamp-badge" id="modalStamp"></span>
       </div>
 
@@ -702,31 +779,56 @@
 
       <div class="project-status-badge modal-status-wrap" id="modalStatusBadge"></div>
 
-      <!-- Interactive Carousel inside Modal -->
-      <div class="screenshot-carousel" id="modalCarousel" data-project="">
-        <div class="carousel-tabs" id="modalCarouselTabs"></div>
-        <div class="carousel-frame">
-          <div class="project-screenshot" role="button" tabindex="0"
-            onclick="openModalCurrentScreenshot()"
-            onkeydown="if(event.key==='Enter')openModalCurrentScreenshot()">
-            <img id="modalCarouselImg" src="" alt="Project Screenshot" loading="lazy" decoding="async">
-            <div class="project-screenshot-overlay">View Full Screenshot ↗</div>
+      <!-- Modal View Mode Switcher -->
+      <div class="modal-view-switcher">
+        <button type="button" class="modal-view-btn active" id="modalViewScreensBtn" onclick="switchModalView('screens')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+          <span>Interface Screenshots</span>
+        </button>
+        <button type="button" class="modal-view-btn" id="modalViewArchBtn" onclick="switchModalView('arch')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          <span>Interactive Sandbox &amp; Architecture</span>
+        </button>
+      </div>
+
+      <!-- VIEW 1: Screenshots Carousel -->
+      <div id="modalViewScreens">
+        <div class="screenshot-carousel" id="modalCarousel" data-project="">
+          <div class="carousel-tabs" id="modalCarouselTabs"></div>
+          <div class="carousel-frame">
+            <div class="project-screenshot" role="button" tabindex="0"
+              onclick="openModalCurrentScreenshot()"
+              onkeydown="if(event.key==='Enter')openModalCurrentScreenshot()">
+              <img id="modalCarouselImg" src="" alt="Project Screenshot" loading="lazy" decoding="async">
+              <div class="project-screenshot-overlay">View Full Screenshot ↗</div>
+            </div>
+            <button type="button" class="carousel-arrow carousel-prev"
+              onclick="event.stopPropagation();prevModalCarouselSlide()" aria-label="Previous">&#8249;</button>
+            <button type="button" class="carousel-arrow carousel-next"
+              onclick="event.stopPropagation();nextModalCarouselSlide()" aria-label="Next">&#8250;</button>
           </div>
-          <button type="button" class="carousel-arrow carousel-prev"
-            onclick="event.stopPropagation();prevModalCarouselSlide()" aria-label="Previous">&#8249;</button>
-          <button type="button" class="carousel-arrow carousel-next"
-            onclick="event.stopPropagation();nextModalCarouselSlide()" aria-label="Next">&#8250;</button>
+          <div class="carousel-footer">
+            <span class="carousel-label" id="modalCarouselLabel"></span>
+            <div class="carousel-dots" id="modalCarouselDots"></div>
+          </div>
         </div>
-        <div class="carousel-footer">
-          <span class="carousel-label" id="modalCarouselLabel"></span>
-          <div class="carousel-dots" id="modalCarouselDots"></div>
+      </div>
+
+      <!-- VIEW 2: Architecture Pipeline & Code Drawer -->
+      <div id="modalViewArch" style="display: none;">
+        <div class="modal-arch-container">
+          <div id="modalSimulatorWrap" class="modal-simulator-wrap"></div>
+          <div class="modal-arch-subtitle">// WORKFLOW STATE PROGRESSION</div>
+          <div class="modal-pipeline-grid" id="modalPipelineGrid"></div>
+          <div class="modal-arch-subtitle" style="margin-top: 20px;">// SYSTEM ARCHITECTURE CODE PATTERN</div>
+          <div class="modal-code-box" id="modalCodeBox"></div>
         </div>
       </div>
 
       <div class="modal-section-title">Overview &amp; Architecture</div>
       <p class="modal-desc" id="modalDesc">Detailed description...</p>
 
-      <div class="modal-section-title">Key Engineering Highlights</div>
+      <div class="modal-section-title">Key Development Highlights</div>
       <ul class="modal-list" id="modalHighlights"></ul>
 
       <div class="modal-section-title">Tech Stack &amp; Tools</div>
@@ -776,9 +878,54 @@
     </div>
   </div>
 
+  <!-- RECRUITER HIGHLIGHTS EXECUTIVE BAR -->
+  <aside class="fast-track-hud" id="fastTrackHud" aria-label="Highlights Quick Actions">
+    <div class="hud-wrap">
+      <div class="hud-left">
+        <span class="hud-live-dot"></span>
+        <div class="hud-text-group">
+          <span class="hud-badge">KEY HIGHLIGHTS</span>
+          <span class="hud-sub">342 OJT Hours · 98/100 Rating · Defended Thesis</span>
+        </div>
+      </div>
+      <div class="hud-right">
+        <button type="button" class="hud-action-btn" onclick="openResumeModal()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          <span>Resume PDF</span>
+        </button>
+        <button type="button" class="hud-action-btn" onclick="copyEmail()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+          <span>Copy Email</span>
+        </button>
+        <button type="button" class="hud-close-btn" onclick="toggleFastTrack(false)" aria-label="Exit Highlights Mode">Exit ×</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RAYCAST / LINEAR STYLE COMMAND PALETTE (Ctrl+K / ⌘K) -->
+  <dialog class="cmd-palette-dialog" id="cmdPalette" aria-label="Command Palette">
+    <div class="cmd-palette-card">
+      <div class="cmd-palette-search-row">
+        <svg class="cmd-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="cmdPaletteInput" class="cmd-palette-input" placeholder="Type a command or search (e.g. projects, resume, theme)..." autocomplete="off" spellcheck="false" aria-autocomplete="list">
+        <button type="button" class="cmd-esc-badge" onclick="closeCommandPalette()" aria-label="Close command palette">ESC</button>
+      </div>
+      <div class="cmd-palette-list" id="cmdPaletteList" role="listbox"></div>
+      <div class="cmd-palette-empty" id="cmdPaletteEmpty" style="display: none;">
+        <span>No matching commands found.</span>
+      </div>
+      <div class="cmd-palette-footer">
+        <div class="cmd-footer-keys">
+          <span><kbd class="keycap">↑</kbd><kbd class="keycap">↓</kbd> navigate</span>
+          <span><kbd class="keycap">↵</kbd> select</span>
+          <span><kbd class="keycap">esc</kbd> close</span>
+        </div>
+        <span class="cmd-footer-brand">kurt.dev · v2.4</span>
+      </div>
+    </div>
+  </dialog>
+
   <div id="toastLayer"></div>
-
-
 
 </body>
 

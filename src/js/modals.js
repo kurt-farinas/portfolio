@@ -1,9 +1,7 @@
-/* ========================================
-   MODALS  |  Project Details + Workflow Steps
-   ======================================== */
-
 import { spawnToast } from './utils.js';
 import { projectDetails, workflowMessages } from './projectData.js';
+import { playUiSound } from './sound.js';
+import { renderHrisSimulator, renderGymSimulator } from './simulator.js';
 
 let currentModalProject = null;
 let currentModalSlideIdx = 0;
@@ -127,6 +125,45 @@ window.openProjectModal = function(projectId) {
   const stackRow = document.getElementById('modalStack');
   stackRow.innerHTML = data.stack.map(s => `<span class="stack-chip">${s}</span>`).join('');
 
+  // Reset to screenshot view by default
+  window.switchModalView('screens');
+
+  // Populate Interactive Workflow Simulator
+  const simWrap = document.getElementById('modalSimulatorWrap');
+  if (simWrap) {
+    if (projectId === 'hris') renderHrisSimulator(simWrap);
+    else if (projectId === 'gym') renderGymSimulator(simWrap);
+  }
+
+  // Populate Architecture Pipeline & Code Snippet
+  const pipelineGrid = document.getElementById('modalPipelineGrid');
+  if (pipelineGrid && data.architecturePipeline) {
+    pipelineGrid.innerHTML = data.architecturePipeline.map(p => `
+      <div class="modal-pipeline-card">
+        <div class="pipeline-step-badge">${p.step}</div>
+        <div class="pipeline-card-body">
+          <div class="pipeline-card-title">${p.title}</div>
+          <div class="pipeline-card-desc">${p.desc}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const codeBox = document.getElementById('modalCodeBox');
+  if (codeBox && data.codeSnippet) {
+    const escapedCode = data.codeSnippet.code
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    codeBox.innerHTML = `
+      <div class="modal-code-header">
+        <span class="modal-code-title">// ${data.codeSnippet.title}</span>
+        <button type="button" class="btn-copy-code" onclick="copySnippetCode('${projectId}')">Copy Snippet</button>
+      </div>
+      <pre class="modal-code-pre"><code>${escapedCode}</code></pre>
+    `;
+  }
+
   const linksRow = document.getElementById('modalLinks');
   let linksHtml = '';
   if (data.demoUrl) {
@@ -152,7 +189,41 @@ window.openProjectModal = function(projectId) {
   const modal = document.getElementById('projectModal');
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+  playUiSound('tab');
   trapFocus(modal);
+};
+
+window.switchModalView = function(viewMode) {
+  const screensView = document.getElementById('modalViewScreens');
+  const archView = document.getElementById('modalViewArch');
+  const screensBtn = document.getElementById('modalViewScreensBtn');
+  const archBtn = document.getElementById('modalViewArchBtn');
+
+  playUiSound('tab');
+
+  if (viewMode === 'arch') {
+    if (screensView) screensView.style.display = 'none';
+    if (archView) archView.style.display = 'block';
+    if (screensBtn) screensBtn.classList.remove('active');
+    if (archBtn) archBtn.classList.add('active');
+  } else {
+    if (screensView) screensView.style.display = 'block';
+    if (archView) archView.style.display = 'none';
+    if (screensBtn) screensBtn.classList.add('active');
+    if (archBtn) archBtn.classList.remove('active');
+  }
+};
+
+window.copySnippetCode = function(projectId) {
+  const data = projectDetails[projectId];
+  if (data && data.codeSnippet) {
+    navigator.clipboard.writeText(data.codeSnippet.code)
+      .then(() => {
+        playUiSound('success');
+        spawnToast('SNIPPET COPIED', 'Architecture pattern copied to clipboard');
+      })
+      .catch(() => spawnToast('COPY ERROR', 'Could not copy snippet'));
+  }
 };
 
 window.closeProjectModal = function(e) {
@@ -161,6 +232,7 @@ window.closeProjectModal = function(e) {
   if (modal.classList.contains('active')) {
     modal.classList.remove('active');
     document.body.style.overflow = '';
+    playUiSound('click');
     releaseFocus(modal);
   }
 };
