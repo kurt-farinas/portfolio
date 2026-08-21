@@ -158,13 +158,19 @@ export default function ProjectModal() {
               <div className="carousel-footer">
                 <span className="carousel-label">{currentSlide.label}</span>
                 {slides.length > 1 && (
-                  <div className="carousel-dots">
-                    {slides.map((_, idx) => (
-                      <span
+                  <div className="carousel-slide-chips" role="tablist" aria-label="Screenshot slide selection">
+                    {slides.map((s, idx) => (
+                      <button
                         key={idx}
-                        className={`carousel-dot ${idx === activeSlideIndex ? 'active' : ''}`}
+                        type="button"
+                        className={`carousel-slide-chip ${idx === activeSlideIndex ? 'active' : ''}`}
                         onClick={() => setActiveSlideIndex(idx)}
-                      />
+                        aria-label={`Slide 0${idx + 1}: ${s.tab || s.label}`}
+                        aria-selected={idx === activeSlideIndex}
+                      >
+                        <span className="chip-counter">0{idx + 1}/0{slides.length}</span>
+                        <span className="chip-label-text">{s.tab || s.label}</span>
+                      </button>
                     ))}
                   </div>
                 )}

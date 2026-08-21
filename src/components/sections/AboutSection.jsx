@@ -22,6 +22,35 @@ export default function AboutSection() {
         </div>
 
         <div className="about-card">
+          {/* Executive Telemetry Blueprint Ledger */}
+          <div className="about-ledger-header">
+            <span className="ledger-title">// TECHNICAL VERIFICATION LEDGER</span>
+            <span className="ledger-stamp">STATUS: VERIFIED</span>
+          </div>
+
+          <div className="about-ledger-grid">
+            <div className="ledger-cell">
+              <span className="ledger-label">ACADEMIC FOUNDATION</span>
+              <span className="ledger-val">BS Computer Science</span>
+              <span className="ledger-sub">STI College San Jose · Graduated 2025</span>
+            </div>
+            <div className="ledger-cell">
+              <span className="ledger-label">GOVERNMENT OJT RECORD</span>
+              <span className="ledger-val">342 Hours · 98/100 Rating</span>
+              <span className="ledger-sub">SDO San Jose City (DepEd) · Frontend Owner</span>
+            </div>
+            <div className="ledger-cell">
+              <span className="ledger-label">CORE DOMAINS</span>
+              <span className="ledger-val">Relational &amp; Workflow Systems</span>
+              <span className="ledger-sub">Laravel 12 · Inertia.js · React · MySQL · Pest</span>
+            </div>
+            <div className="ledger-cell">
+              <span className="ledger-label">SECURITY &amp; TESTING</span>
+              <span className="ledger-val">119 Passing Tests · RBAC (88/92)</span>
+              <span className="ledger-sub">Security Audit Driven Rebuild</span>
+            </div>
+          </div>
+
           <div className="about-card-body about-split">
             {/* Left Column: Narrative Bio & Key Tags */}
             <div className="about-main">
