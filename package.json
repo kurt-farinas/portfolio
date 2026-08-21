@@ -15,6 +15,7 @@
     "vitest": "^4.1.10"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "@vitejs/plugin-react": "^4.3.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
