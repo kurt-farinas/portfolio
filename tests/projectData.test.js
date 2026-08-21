@@ -30,12 +30,13 @@ describe('React Project Data Integrity', () => {
     expect(gym.slides).toHaveLength(3);
   });
 
-  it('verifies 3 curated honors and awards', () => {
-    expect(awardsData).toHaveLength(3);
+  it('verifies 4 curated honors and certifications from resume', () => {
+    expect(awardsData).toHaveLength(4);
     const titles = awardsData.map(a => a.title);
     expect(titles).toContain('ThinkQuest Champion | Tagisan ng Talino');
-    expect(titles).toContain('Java Fundamentals | 1st & 2nd Term');
-    expect(titles).toContain('Alumni President | Batch 2025–2026');
+    expect(titles).toContain('DepEd SIPP OJT Certificate of Completion');
+    expect(titles).toContain('Introduction to Cybersecurity');
+    expect(titles).toContain('Java Fundamentals | Terms 1 & 2');
   });
 
   it('verifies 5 Outside the IDE tiles with genre tags for gaming', () => {

@@ -32,7 +32,7 @@ export default function AboutSection() {
             <div className="ledger-cell">
               <span className="ledger-label">ACADEMIC FOUNDATION</span>
               <span className="ledger-val">BS Computer Science</span>
-              <span className="ledger-sub">STI College San Jose · Graduated 2025</span>
+              <span className="ledger-sub">STI College San Jose · Presidential List</span>
             </div>
             <div className="ledger-cell">
               <span className="ledger-label">GOVERNMENT OJT RECORD</span>
@@ -56,10 +56,10 @@ export default function AboutSection() {
             <div className="about-main">
               <div className="about-text">
                 <p>
-                  BS Computer Science graduate from <strong>STI College San Jose</strong> with practical experience in frontend architecture and full-stack development. Built and delivered systems including a live government leave approval workflow (CS Form No. 6) and a commercial gym management platform with contactless QR check-ins.
+                  Junior full-stack developer and BS Computer Science graduate from <strong>STI College San Jose</strong> (Presidential List 2022). Owned frontend development on a three-role approval workflow system (CS Form No. 6) during OJT at DepEd Schools Division Office (342 hours, 98/100 rating), and built a full-stack gym management platform end to end, from custom database schema to POS and analytics dashboards.
                 </p>
                 <p>
-                  Focused on workflow-driven applications, clean database design, and practical user experiences for multi-role systems.
+                  Focused on workflow-driven applications, clean database design, and practical user experiences for multi-role systems, with a long-term interest in AI systems engineering.
                 </p>
               </div>
 

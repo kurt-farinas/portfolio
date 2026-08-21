@@ -35,66 +35,9 @@ export default function SkillsSection() {
         </div>
 
         <div className="skills-grid">
-          {/* Group 1: Languages */}
+          {/* Group 1: Languages & Frontend */}
           <div className="skill-group">
-            <h4>Languages</h4>
-            <div className="skill-tags">
-              <span
-                role="button"
-                tabIndex={0}
-                aria-label="Filter projects by JavaScript"
-                onClick={() => filterBySkill('javascript')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('javascript'); }}
-                className={`has-prof ${isSkillActive('javascript') ? 'active-skill-pill' : ''}`}
-              >
-                JavaScript<em className="prof-dot prof-pro" title="Production level"></em>
-              </span>
-              <span
-                role="button"
-                tabIndex={0}
-                aria-label="Filter projects by PHP"
-                onClick={() => filterBySkill('php')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('php'); }}
-                className={`has-prof ${isSkillActive('php') ? 'active-skill-pill' : ''}`}
-              >
-                PHP<em className="prof-dot prof-pro" title="Production level"></em>
-              </span>
-              <span
-                role="button"
-                tabIndex={0}
-                aria-label="Filter projects by HTML/CSS"
-                onClick={() => filterBySkill('html')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('html'); }}
-                className={`has-prof ${isSkillActive('html') ? 'active-skill-pill' : ''}`}
-              >
-                HTML / CSS<em className="prof-dot prof-pro" title="Production level"></em>
-              </span>
-              <span
-                role="button"
-                tabIndex={0}
-                aria-label="Filter projects by SQL"
-                onClick={() => filterBySkill('sql')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('sql'); }}
-                className={`has-prof ${isSkillActive('sql') ? 'active-skill-pill' : ''}`}
-              >
-                SQL<em className="prof-dot prof-mid" title="Proficient"></em>
-              </span>
-              <span
-                role="button"
-                tabIndex={0}
-                aria-label="Filter projects by Java"
-                onClick={() => filterBySkill('java')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('java'); }}
-                className={`has-prof ${isSkillActive('java') ? 'active-skill-pill' : ''}`}
-              >
-                Java<em className="prof-dot prof-mid" title="Oracle Academy certified"></em>
-              </span>
-            </div>
-          </div>
-
-          {/* Group 2: Frameworks */}
-          <div className="skill-group">
-            <h4>Frameworks</h4>
+            <h4>Frontend</h4>
             <div className="skill-tags">
               <span
                 role="button"
@@ -119,16 +62,6 @@ export default function SkillsSection() {
               <span
                 role="button"
                 tabIndex={0}
-                aria-label="Filter projects by Laravel"
-                onClick={() => filterBySkill('laravel')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('laravel'); }}
-                className={`has-prof ${isSkillActive('laravel') ? 'active-skill-pill' : ''}`}
-              >
-                Laravel<em className="prof-dot prof-pro" title="Production level"></em>
-              </span>
-              <span
-                role="button"
-                tabIndex={0}
                 aria-label="Filter projects by Tailwind CSS"
                 onClick={() => filterBySkill('tailwind')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('tailwind'); }}
@@ -139,19 +72,85 @@ export default function SkillsSection() {
               <span
                 role="button"
                 tabIndex={0}
-                aria-label="Filter projects by Pest"
-                onClick={() => filterBySkill('pest')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('pest'); }}
-                className={`has-prof ${isSkillActive('pest') ? 'active-skill-pill' : ''}`}
+                aria-label="Filter projects by JavaScript"
+                onClick={() => filterBySkill('javascript')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('javascript'); }}
+                className={`has-prof ${isSkillActive('javascript') ? 'active-skill-pill' : ''}`}
               >
-                Pest<em className="prof-dot prof-pro" title="119 Passing Tests"></em>
+                JavaScript<em className="prof-dot prof-pro" title="Production level"></em>
+              </span>
+              <span className="has-prof">
+                TypeScript<em className="prof-dot prof-mid" title="Proficient"></em>
+              </span>
+              <span
+                role="button"
+                tabIndex={0}
+                aria-label="Filter projects by HTML/CSS"
+                onClick={() => filterBySkill('html')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('html'); }}
+                className={`has-prof ${isSkillActive('html') ? 'active-skill-pill' : ''}`}
+              >
+                HTML / CSS<em className="prof-dot prof-pro" title="Production level"></em>
               </span>
             </div>
           </div>
 
-          {/* Group 3: Tools & APIs */}
+          {/* Group 2: Backend */}
           <div className="skill-group">
-            <h4>Tools &amp; APIs</h4>
+            <h4>Backend</h4>
+            <div className="skill-tags">
+              <span
+                role="button"
+                tabIndex={0}
+                aria-label="Filter projects by PHP"
+                onClick={() => filterBySkill('php')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('php'); }}
+                className={`has-prof ${isSkillActive('php') ? 'active-skill-pill' : ''}`}
+              >
+                PHP<em className="prof-dot prof-pro" title="Production level"></em>
+              </span>
+              <span
+                role="button"
+                tabIndex={0}
+                aria-label="Filter projects by Laravel"
+                onClick={() => filterBySkill('laravel')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('laravel'); }}
+                className={`has-prof ${isSkillActive('laravel') ? 'active-skill-pill' : ''}`}
+              >
+                Laravel<em className="prof-dot prof-pro" title="Production level"></em>
+              </span>
+              <span
+                role="button"
+                tabIndex={0}
+                aria-label="Filter projects by MySQL"
+                onClick={() => filterBySkill('mysql')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('mysql'); }}
+                className={`has-prof ${isSkillActive('mysql') ? 'active-skill-pill' : ''}`}
+              >
+                MySQL / Schema Design<em className="prof-dot prof-pro" title="Production level"></em>
+              </span>
+              <span className="has-prof">
+                Eloquent ORM<em className="prof-dot prof-pro" title="Production level"></em>
+              </span>
+              <span className="has-prof">
+                RESTful Patterns<em className="prof-dot prof-pro" title="Production level"></em>
+              </span>
+              <span
+                role="button"
+                tabIndex={0}
+                aria-label="Filter projects by Java"
+                onClick={() => filterBySkill('java')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('java'); }}
+                className={`has-prof ${isSkillActive('java') ? 'active-skill-pill' : ''}`}
+              >
+                Java<em className="prof-dot prof-mid" title="Oracle Academy certified"></em>
+              </span>
+            </div>
+          </div>
+
+          {/* Group 3: Tools, Testing & Practices */}
+          <div className="skill-group">
+            <h4>Tools, Testing &amp; Practices</h4>
             <div className="skill-tags">
               <span
                 role="button"
@@ -166,12 +165,15 @@ export default function SkillsSection() {
               <span
                 role="button"
                 tabIndex={0}
-                aria-label="Filter projects by MySQL"
-                onClick={() => filterBySkill('mysql')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('mysql'); }}
-                className={`has-prof ${isSkillActive('mysql') ? 'active-skill-pill' : ''}`}
+                aria-label="Filter projects by Pest"
+                onClick={() => filterBySkill('pest')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('pest'); }}
+                className={`has-prof ${isSkillActive('pest') ? 'active-skill-pill' : ''}`}
               >
-                MySQL<em className="prof-dot prof-pro" title="Production level"></em>
+                PHPUnit &amp; Pest (AAA)<em className="prof-dot prof-pro" title="119 Passing Tests"></em>
+              </span>
+              <span className="has-prof">
+                Chart.js Analytics<em className="prof-dot prof-pro" title="Production level"></em>
               </span>
               <span
                 role="button"
@@ -186,22 +188,12 @@ export default function SkillsSection() {
               <span
                 role="button"
                 tabIndex={0}
-                aria-label="Filter projects by Gemini API"
-                onClick={() => filterBySkill('gemini')}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('gemini'); }}
-                className={`has-prof ${isSkillActive('gemini') ? 'active-skill-pill' : ''}`}
-              >
-                Gemini API<em className="prof-dot prof-mid" title="Integrated into Form 6 workflow"></em>
-              </span>
-              <span
-                role="button"
-                tabIndex={0}
                 aria-label="Filter projects by Linux"
                 onClick={() => filterBySkill('linux')}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('linux'); }}
                 className={`has-prof ${isSkillActive('linux') ? 'active-skill-pill' : ''}`}
               >
-                Linux / SysAdmin<em className="prof-dot prof-mid" title="Self-hosted services"></em>
+                Linux / CLI<em className="prof-dot prof-mid" title="Production deployment"></em>
               </span>
             </div>
           </div>
@@ -210,10 +202,9 @@ export default function SkillsSection() {
           <div className="skill-group">
             <h4>In Progress / Expanding</h4>
             <div className="skill-tags">
-              <span className="has-prof">TypeScript<em className="prof-dot prof-learn" title="Learning"></em></span>
               <span className="has-prof">Next.js<em className="prof-dot prof-learn" title="Learning"></em></span>
-              <span className="has-prof">Node.js<em className="prof-dot prof-learn" title="Learning"></em></span>
               <span className="has-prof">Docker<em className="prof-dot prof-learn" title="Learning"></em></span>
+              <span className="has-prof">AI Systems Engineering<em className="prof-dot prof-learn" title="Expanding"></em></span>
             </div>
           </div>
         </div>

@@ -118,51 +118,51 @@ async function handleQrScan(memberToken) {
 export const timelineData = [
   {
     id: 1,
-    date: "JULY 2026",
-    title: "Graduated | BS Computer Science",
-    desc: "Graduated with a Bachelor of Science in Computer Science from STI College San Jose.",
-    badge: "OPEN_TO_WORK",
+    date: "2022 – 2026",
+    title: "BS Computer Science | STI College San Jose",
+    desc: "Bachelor of Science in Computer Science. Honored on the Presidential List (2022) with academic coursework in software engineering, database architecture, and OOP.",
+    badge: "PRESIDENTIAL LIST (2022)",
     badgeType: "status-open-to-work",
-    isFeatured: false
+    isFeatured: true
   },
   {
     id: 2,
-    date: "FEB – MARCH 2026 (342 HOURS)",
-    title: "DepEd San Jose Division Office OJT",
-    desc: "Owned 100% of frontend development for the DepEd CS Form No. 6 Digitalization System. Digitalized leave requests for ICT staff & teachers. Earned 98/100 performance rating.",
-    badge: "98/100 PERFORMANCE RATING",
+    date: "FEB – MAR 2026 (342 HOURS)",
+    title: "Software Developer Intern (OJT) | DepEd San Jose",
+    desc: "Owned frontend development for the CS Form No. 6 Digitalization System (React, Inertia.js, Tailwind, Laravel). Replaced manual paper routing with 3-role RBAC, e-signatures, and print PDFs. Wrote 19 PHPUnit tests (AAA pattern) and earned 98/100 rating across appraisals.",
+    badge: "98/100 OJT RATING",
     isFeatured: true
   },
   {
     id: 3,
     date: "NOVEMBER 2025",
-    title: "Boiyet's Gym Management Thesis Defense",
-    desc: "Solo-built and defended a commercial gym management platform featuring QR attendance scanning, revenue analytics, and member fitness tracking.",
+    title: "Gym Management System | Thesis Defense (Defended)",
+    desc: "Built and defended a commercial gym management platform (PHP, MySQL) with Admin, Trainer, and Client portals, POS with low-stock alerts, and contactless QR attendance with duplicate-scan protection.",
     badge: "THESIS DEFENDED",
     isFeatured: true
   },
   {
     id: 4,
     date: "SEPTEMBER 2025",
-    title: "Cisco Cybersecurity Certification",
-    desc: "Earned official Introduction to Cybersecurity certification from Cisco Networking Academy, applying secure authentication principles to web applications.",
-    badge: "CERTIFIED",
+    title: "Cisco Networking Academy | Cybersecurity Certification",
+    desc: "Earned official Introduction to Cybersecurity certification, applying defense-in-depth, secure session handling, and authentication best practices.",
+    badge: "CISCO CERTIFIED",
     isFeatured: false
   },
   {
     id: 5,
-    date: "MARCH 2024 & MARCH 2025",
-    title: "2x Tagisan ng Talino | ThinkQuest Awards",
-    desc: "Competed in STI College San Jose's annual Tagisan ng Talino academic competition, securing 3rd place in 2024 and crowning Champion (1st Place) in 2025.",
-    badge: "COMPETITION CHAMPION",
-    isFeatured: false
+    date: "MARCH 2025",
+    title: "ThinkQuest Champion | Tagisan ng Talino",
+    desc: "Crowned 1st Place Champion at STI College San Jose's School-Level Tagisan ng Talino ThinkQuest academic computing competition.",
+    badge: "1ST PLACE CHAMPION",
+    isFeatured: true
   },
   {
     id: 6,
-    date: "2022 – 2026",
-    title: "STI College San Jose | BS Computer Science",
-    desc: "Enrolled in BSCS program; completed coursework in OOP, Database Systems, Web Development, and Java Fundamentals (Oracle Academy certified).",
-    badge: "ACADEMIC FOUNDATION",
+    date: "2023",
+    title: "Oracle Academy | Java Fundamentals (Terms 1 & 2)",
+    desc: "Earned certification in Java Fundamentals across Terms 1 & 2 covering object-oriented architecture, data structures, and algorithmic logic.",
+    badge: "ORACLE CERTIFIED",
     isFeatured: false
   }
 ];
@@ -171,19 +171,25 @@ export const awardsData = [
   {
     id: "thinkquest-champ",
     title: "ThinkQuest Champion | Tagisan ng Talino",
-    issuer: "STI College San Jose, School Level · Mar 2025",
+    issuer: "STI College San Jose · School Level · Mar 2025",
     isChampion: true
   },
   {
-    id: "java-oracle",
-    title: "Java Fundamentals | 1st & 2nd Term",
-    issuer: "Oracle Academy · 2023",
+    id: "deped-sipp",
+    title: "DepEd SIPP OJT Certificate of Completion",
+    issuer: "DepEd Schools Division Office of San Jose City · Feb – Mar 2026",
+    isChampion: true
+  },
+  {
+    id: "cisco-cyber",
+    title: "Introduction to Cybersecurity",
+    issuer: "Cisco Networking Academy · Sep 2025",
     isChampion: false
   },
   {
-    id: "alumni-pres",
-    title: "Alumni President | Batch 2025–2026",
-    issuer: "STI College San Jose Alumni Association · 2025 – 2026",
+    id: "java-oracle",
+    title: "Java Fundamentals | Terms 1 & 2",
+    issuer: "Oracle Academy · 2023",
     isChampion: false
   }
 ];
