@@ -2361,10 +2361,12 @@
   background: var(--surface-solid);
 }
 
+.resume-embed-wrapper object,
 .resume-embed-wrapper iframe {
   width: 100%;
   height: 100%;
   border: none;
+  display: block;
 }
 
 .stack-chip:hover,
