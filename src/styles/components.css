@@ -2389,47 +2389,17 @@
   flex-wrap: wrap;
 }
 
-/* ---------- HARDWARE ACCELERATED ZERO-LATENCY CUSTOM CURSOR ---------- */
-@media (pointer: fine) {
-  html, body {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' fill='none' stroke='%23E2E0DC' stroke-width='1.5' stroke-opacity='0.75'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23FFFFFF'/%3E%3C/svg%3E") 10 10, default;
-  }
-
-  a, button, input[type="submit"], input[type="button"], select, [role="button"], .btn, .ticket, .award-card, .fact-card, .cmd-chip, .orbit-pill, .carousel-tab, .carousel-arrow, .workflow-step, .btn-view-projects, .btn-hire-me, .theme-btn {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='rgba(255,255,255,0.12)' stroke='%23FFFFFF' stroke-width='2'/%3E%3Ccircle cx='14' cy='14' r='3.5' fill='%23FFFFFF'/%3E%3C/svg%3E") 14 14, pointer !important;
-  }
-
-  [data-theme="light"],
-  [data-theme="light"] body {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' fill='none' stroke='%2318181B' stroke-width='1.5' stroke-opacity='0.75'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%2309090B'/%3E%3C/svg%3E") 10 10, default !important;
-  }
-
-  [data-theme="light"] a,
-  [data-theme="light"] button,
-  [data-theme="light"] input[type="submit"],
-  [data-theme="light"] input[type="button"],
-  [data-theme="light"] select,
-  [data-theme="light"] [role="button"],
-  [data-theme="light"] .btn,
-  [data-theme="light"] .ticket,
-  [data-theme="light"] .award-card,
-  [data-theme="light"] .fact-card,
-  [data-theme="light"] .cmd-chip,
-  [data-theme="light"] .orbit-pill,
-  [data-theme="light"] .carousel-tab,
-  [data-theme="light"] .carousel-arrow,
-  [data-theme="light"] .workflow-step,
-  [data-theme="light"] .btn-view-projects,
-  [data-theme="light"] .btn-hire-me,
-  [data-theme="light"] .theme-btn {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12' fill='rgba(0,0,0,0.08)' stroke='%2309090B' stroke-width='2'/%3E%3Ccircle cx='14' cy='14' r='3.5' fill='%2309090B'/%3E%3C/svg%3E") 14 14, pointer !important;
-  }
+/* ---------- NATIVE SYSTEM CURSOR ERGONOMICS ---------- */
+html, body {
+  cursor: default;
 }
 
-@media (pointer: coarse), (hover: none) {
-  html, body, a, button, input, select, textarea, [role="button"], .btn, .ticket, .theme-btn {
-    cursor: auto !important;
-  }
+a, button, input[type="submit"], input[type="button"], select, [role="button"], .btn, .ticket, .award-card, .fact-card, .cmd-chip, .orbit-pill, .carousel-tab, .carousel-arrow, .workflow-step, .btn-view-projects, .btn-hire-me, .theme-btn {
+  cursor: pointer;
+}
+
+input[type="text"], input[type="email"], textarea {
+  cursor: text;
 }
 
 /* Monochrome selection highlight */
