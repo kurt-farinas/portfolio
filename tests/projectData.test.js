@@ -1,53 +1,47 @@
 import { describe, it, expect } from 'vitest';
-import { projectDetails, workflowMessages } from '../src/js/projectData.js';
+import { projectDetails, timelineData, awardsData, beyondTilesData } from '../src/data/projectData.js';
 
-describe('Project Data Integrity', () => {
-  it('contains valid definitions for HRIS and Gym projects', () => {
-    // 1. Arrange & Act
+describe('React Project Data Integrity', () => {
+  it('contains valid definitions for HRIS and Gym Rebuild projects', () => {
     const projects = Object.keys(projectDetails);
-
-    // 2. Assert
     expect(projects).toContain('hris');
     expect(projects).toContain('gym');
   });
 
-  it('verifies CS Form No. 6 (HRIS) metadata and slides', () => {
-    // 1. Arrange
+  it('verifies CS Form No. 6 (HRIS) metadata', () => {
     const hris = projectDetails.hris;
-
-    // 2. Assert
     expect(hris.title).toBe('CS Form No. 6 Digitalization System');
     expect(hris.roleTag).toBe('Frontend Ownership');
-    expect(hris.ticketId).toBe('DepEd OJT Project');
-    expect(hris.highlights).toBeInstanceOf(Array);
     expect(hris.highlights.length).toBeGreaterThanOrEqual(3);
     expect(hris.stack).toContain('React');
-    expect(hris.stack).toContain('Laravel');
+    expect(hris.stack).toContain('Inertia.js');
     expect(hris.slides).toHaveLength(3);
-    expect(hris.slides[0].src).toBe('hris-admin.png');
   });
 
-  it('verifies Boiyet Gym project metadata and links', () => {
-    // 1. Arrange
+  it('verifies Boiyet Gym project Laravel 12 & Pest Rebuild details', () => {
     const gym = projectDetails.gym;
-
-    // 2. Assert
     expect(gym.title).toContain("Boiyet's");
     expect(gym.roleTag).toBe('Solo Full-Stack Developer');
-    expect(gym.codeUrl).toContain('github.com');
-    expect(gym.stack).toContain('PHP');
-    expect(gym.stack).toContain('Chart.js');
+    expect(gym.stack).toContain('Laravel 12');
+    expect(gym.stack).toContain('Inertia.js');
+    expect(gym.stack).toContain('React');
+    expect(gym.stack).toContain('Pest');
+    expect(gym.badge).toContain('119 Passing Tests');
     expect(gym.slides).toHaveLength(3);
-    expect(gym.slides[0].src).toBe('gym-admin.png');
   });
 
-  it('verifies workflow messages for interactive project modals', () => {
-    // 1. Arrange & Act
-    const hrisSteps = workflowMessages.hris;
-    const gymSteps = workflowMessages.gym;
+  it('verifies 3 curated honors and awards', () => {
+    expect(awardsData).toHaveLength(3);
+    const titles = awardsData.map(a => a.title);
+    expect(titles).toContain('ThinkQuest Champion | Tagisan ng Talino');
+    expect(titles).toContain('Java Fundamentals | 1st & 2nd Term');
+    expect(titles).toContain('Alumni President | Batch 2025–2026');
+  });
 
-    // 2. Assert
-    expect(hrisSteps.length).toBe(3);
-    expect(gymSteps.length).toBe(4);
+  it('verifies 5 Outside the IDE tiles with genre tags for gaming', () => {
+    const tiles = Object.keys(beyondTilesData);
+    expect(tiles).toHaveLength(5);
+    expect(beyondTilesData.gaming.tags).toContain('Tactical Team Play');
+    expect(beyondTilesData.gaming.tags).toContain('Sandbox Building');
   });
 });
