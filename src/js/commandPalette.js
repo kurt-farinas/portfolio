@@ -67,6 +67,18 @@ const PALETTE_COMMANDS = [
     }
   },
   {
+    id: 'jump-beyond',
+    group: 'Navigation',
+    title: 'Jump to Outside the IDE',
+    subtitle: 'Gym, perfume collection, gaming, battlestation & coffee',
+    icon: 'coffee',
+    shortcut: 'O',
+    handler: () => {
+      const el = document.getElementById('beyond');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  },
+  {
     id: 'jump-contact',
     group: 'Navigation',
     title: 'Jump to Contact Form',
@@ -137,17 +149,6 @@ const PALETTE_COMMANDS = [
     }
   },
   {
-    id: 'action-highlights',
-    group: 'Quick Actions',
-    title: 'Toggle Highlights Mode',
-    subtitle: 'Highlight core proof points & show quick executive HUD',
-    icon: 'zap',
-    shortcut: 'H',
-    handler: () => {
-      if (typeof window.toggleFastTrack === 'function') window.toggleFastTrack();
-    }
-  },
-  {
     id: 'action-sound',
     group: 'Quick Actions',
     title: 'Toggle UI Sound Effects',
@@ -187,6 +188,8 @@ function getCommandIcon(type) {
       return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>';
     case 'volume':
       return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>';
+    case 'coffee':
+      return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>';
     default:
       return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>';
   }

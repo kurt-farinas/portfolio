@@ -59,7 +59,9 @@ export function initThemeToggle() {
       Math.max(y, window.innerHeight - y)
     );
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = (typeof window !== 'undefined' && window.matchMedia)
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false;
     if (!document.startViewTransition || prefersReducedMotion) {
       setThemeImmediate(next);
       return;
@@ -123,7 +125,9 @@ window.setThemeAccent = function(themeName) {
       spawnToast('THEME UPDATED', `Switched to ${themeName.toUpperCase()} mode`);
     };
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = (typeof window !== 'undefined' && window.matchMedia)
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false;
     if (!document.startViewTransition || prefersReducedMotion) {
       applyTheme();
       return;
@@ -145,28 +149,6 @@ window.setThemeAccent = function(themeName) {
         }
       );
     });
-  }
-};
-
-// Recruiter Fast-Track (15-Second Executive Mode)
-window.toggleFastTrack = function(forceState) {
-  const body = document.body;
-  const btn = document.getElementById('fastTrackToggle');
-  const hud = document.getElementById('fastTrackHud');
-
-  const isCurrentlyActive = body.classList.contains('recruiter-fast-track');
-  const nextState = typeof forceState === 'boolean' ? forceState : !isCurrentlyActive;
-
-  body.classList.toggle('recruiter-fast-track', nextState);
-  if (btn) btn.classList.toggle('active', nextState);
-  if (hud) hud.classList.toggle('active', nextState);
-
-  if (nextState) {
-    spawnToast('HIGHLIGHTS ACTIVE', 'Focusing on verified experience and core systems');
-    const aboutSec = document.getElementById('about');
-    if (aboutSec) aboutSec.scrollIntoView({ behavior: 'smooth' });
-  } else {
-    spawnToast('SHOWING ALL', 'Returned to full portfolio view');
   }
 };
 

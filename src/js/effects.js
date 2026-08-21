@@ -165,3 +165,93 @@ export function initTimelineProgress() {
   window.addEventListener('resize', updateTimelineLine);
   updateTimelineLine();
 }
+
+// Hero Scroll-Driven Split Text & Parallax Fade Animation
+export function initHeroScrollAnimation() {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+
+  const line1 = hero.querySelector('.line-1');
+  const line2 = hero.querySelector('.line-2');
+  const subtitle = hero.querySelector('.hero-subtitle');
+  const statusPill = hero.querySelector('.hero-status-pill');
+  const bottomControls = hero.querySelector('.hero-bottom-controls');
+  const topoCanvas = document.getElementById('topoCanvas');
+
+  let ticking = false;
+
+  function updateHeroParallax() {
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const vh = window.innerHeight || 800;
+    // Animation smoothly completes over the first 75% of viewport scroll
+    const maxScroll = vh * 0.75;
+    const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (line1) { line1.style.transform = ''; line1.style.opacity = ''; line1.style.filter = ''; }
+      if (line2) { line2.style.transform = ''; line2.style.opacity = ''; line2.style.filter = ''; }
+      if (subtitle) { subtitle.style.transform = ''; subtitle.style.opacity = ''; subtitle.style.filter = ''; }
+      if (statusPill) { statusPill.style.transform = ''; statusPill.style.opacity = ''; statusPill.style.filter = ''; }
+      if (bottomControls) { bottomControls.style.opacity = ''; bottomControls.style.transform = ''; bottomControls.style.filter = ''; }
+      if (topoCanvas) { topoCanvas.style.opacity = ''; topoCanvas.style.transform = ''; }
+      ticking = false;
+      return;
+    }
+
+    // Distance: line-1 moves left, line-2 moves right
+    const maxShift = Math.min(window.innerWidth * 0.35, 340);
+    const textOpacity = Math.max(0, 1 - progress * 1.3);
+    const textBlur = Math.min(8, progress * 6);
+
+    if (line1) {
+      line1.style.transform = `translate3d(-${(progress * maxShift).toFixed(1)}px, 0, 0)`;
+      line1.style.opacity = textOpacity.toFixed(3);
+      line1.style.filter = textBlur > 0.1 ? `blur(${textBlur.toFixed(1)}px)` : 'none';
+    }
+    if (line2) {
+      line2.style.transform = `translate3d(${(progress * maxShift).toFixed(1)}px, 0, 0)`;
+      line2.style.opacity = textOpacity.toFixed(3);
+      line2.style.filter = textBlur > 0.1 ? `blur(${textBlur.toFixed(1)}px)` : 'none';
+    }
+    if (subtitle) {
+      const subBlur = Math.min(6, progress * 4.5);
+      subtitle.style.opacity = Math.max(0, 1 - progress * 1.4).toFixed(3);
+      subtitle.style.transform = `translate3d(0, -${(progress * 35).toFixed(1)}px, 0)`;
+      subtitle.style.filter = subBlur > 0.1 ? `blur(${subBlur.toFixed(1)}px)` : 'none';
+    }
+    if (statusPill) {
+      const pillBlur = Math.min(6, progress * 4);
+      statusPill.style.opacity = Math.max(0, 1 - progress * 1.5).toFixed(3);
+      statusPill.style.transform = `translate3d(-${(progress * 60).toFixed(1)}px, -${(progress * 30).toFixed(1)}px, 0)`;
+      statusPill.style.filter = pillBlur > 0.1 ? `blur(${pillBlur.toFixed(1)}px)` : 'none';
+    }
+    if (bottomControls) {
+      const ctrlBlur = Math.min(6, progress * 4);
+      bottomControls.style.opacity = Math.max(0, 1 - progress * 1.6).toFixed(3);
+      bottomControls.style.transform = `translate3d(0, ${(progress * 35).toFixed(1)}px, 0)`;
+      bottomControls.style.filter = ctrlBlur > 0.1 ? `blur(${ctrlBlur.toFixed(1)}px)` : 'none';
+    }
+    if (topoCanvas) {
+      topoCanvas.style.opacity = Math.max(0.08, 1 - progress * 0.85).toFixed(3);
+      topoCanvas.style.transform = `translateZ(0) scale(${(1 - progress * 0.05).toFixed(3)})`;
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateHeroParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateHeroParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateHeroParallax();
+}

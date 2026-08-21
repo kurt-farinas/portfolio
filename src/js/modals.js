@@ -1,7 +1,6 @@
 import { spawnToast } from './utils.js';
 import { projectDetails, workflowMessages } from './projectData.js';
 import { playUiSound } from './sound.js';
-import { renderHrisSimulator, renderGymSimulator } from './simulator.js';
 
 let currentModalProject = null;
 let currentModalSlideIdx = 0;
@@ -127,13 +126,6 @@ window.openProjectModal = function(projectId) {
 
   // Reset to screenshot view by default
   window.switchModalView('screens');
-
-  // Populate Interactive Workflow Simulator
-  const simWrap = document.getElementById('modalSimulatorWrap');
-  if (simWrap) {
-    if (projectId === 'hris') renderHrisSimulator(simWrap);
-    else if (projectId === 'gym') renderGymSimulator(simWrap);
-  }
 
   // Populate Architecture Pipeline & Code Snippet
   const pipelineGrid = document.getElementById('modalPipelineGrid');

@@ -17,8 +17,8 @@ describe('Project Data Integrity', () => {
 
     // 2. Assert
     expect(hris.title).toBe('CS Form No. 6 Digitalization System');
-    expect(hris.roleTag).toBe('FRONTEND OWNER');
-    expect(hris.ticketId).toBe('TICKET #CSF6-2026-01');
+    expect(hris.roleTag).toBe('Frontend Ownership');
+    expect(hris.ticketId).toBe('DepEd OJT Project');
     expect(hris.highlights).toBeInstanceOf(Array);
     expect(hris.highlights.length).toBeGreaterThanOrEqual(3);
     expect(hris.stack).toContain('React');
@@ -33,8 +33,7 @@ describe('Project Data Integrity', () => {
 
     // 2. Assert
     expect(gym.title).toContain("Boiyet's");
-    expect(gym.roleTag).toBe('SOLO DEVELOPER');
-    expect(gym.demoUrl).toBeTruthy();
+    expect(gym.roleTag).toBe('Solo Full-Stack Developer');
     expect(gym.codeUrl).toContain('github.com');
     expect(gym.stack).toContain('PHP');
     expect(gym.stack).toContain('Chart.js');

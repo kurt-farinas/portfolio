@@ -277,8 +277,8 @@
 .hero.entered .hero-slide-left,
 .hero.entered .hero-slide-right,
 .hero.entered .hero-slide-up {
-  transform: translate3d(0, 0, 0) !important;
-  opacity: 1 !important;
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
 }
 
 /* Fallback entrance to guarantee visibility */

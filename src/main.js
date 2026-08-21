@@ -6,7 +6,7 @@
 import { copyEmail, initAchievements, initKonamiCode } from './js/utils.js';
 import { initCarousel } from './js/carousel.js';
 import { initModals } from './js/modals.js';
-import { initPreloader, initParallax, initProgressBar, initTimelineProgress } from './js/effects.js';
+import { initPreloader, initParallax, initProgressBar, initTimelineProgress, initHeroScrollAnimation } from './js/effects.js';
 import { initNavigation } from './js/navigation.js';
 import { initContactForm } from './js/contact.js';
 import { initTopoBackground } from './js/topoBackground.js';
@@ -14,7 +14,6 @@ import { initMagneticEffects } from './js/magneticEffects.js';
 import { initCustomCursor } from './js/customCursor.js';
 import { initSoundSystem } from './js/sound.js';
 import { initCommandPalette } from './js/commandPalette.js';
-import { initSimulators } from './js/simulator.js';
 
 // Expose copyEmail globally for onclick handlers in HTML
 window.copyEmail = copyEmail;
@@ -23,7 +22,6 @@ function startApp() {
   // Sound & keyboard tools
   initSoundSystem();
   initCommandPalette();
-  initSimulators();
 
   // Preloader & entrance animations
   initPreloader();
@@ -34,6 +32,7 @@ function startApp() {
   // Visual effects
   initParallax();
   initProgressBar();
+  initHeroScrollAnimation();
 
   // Interactive features
   initCarousel();

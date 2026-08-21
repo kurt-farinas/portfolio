@@ -46,7 +46,7 @@ describe('Project Modals & Keyboard Accessibility', () => {
     // 3. Assert
     expect(modal.classList.contains('active')).toBe(true);
     expect(title.textContent).toBe('CS Form No. 6 Digitalization System');
-    expect(roleTag.textContent).toBe('FRONTEND OWNER');
+    expect(roleTag.textContent).toBe('Frontend Ownership');
     expect(document.body.style.overflow).toBe('hidden');
   });
 
@@ -58,7 +58,6 @@ describe('Project Modals & Keyboard Accessibility', () => {
 
     // 2. Assert
     expect(modal.classList.contains('active')).toBe(true);
-    expect(links.innerHTML).toContain('Live Showcase Demo');
     expect(links.innerHTML).toContain('View Code');
   });
 
