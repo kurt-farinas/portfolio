@@ -93,6 +93,7 @@ const ApprovalStateMachine = {
       { label: "Laravel 12", sub: "Controllers + RBAC" },
       { label: "MySQL", sub: "29 Tables" }
     ],
+    demoUrl: "https://gym-management-systemv2.vercel.app/",
     codeUrl: "https://github.com/kurt-farinas/gym-management-systemv2",
     highlights: [
       "Security-Driven Full-Stack Rebuild: Rearchitected on Laravel 12 with Inertia.js and React, covering 29 domain tables and 88 of 92 routes with strict role-based access.",
@@ -134,9 +135,7 @@ async function handleQrScan(memberToken) {
 }`
     },
     slides: [
-      { src: 'gym-admin.png', label: 'Admin Analytics & Financials (Chart.js)', tab: 'Admin' },
-      { src: 'gym-trainer.png', label: 'Trainer Panel & POS Records', tab: 'Trainer' },
-      { src: 'gym-client.png', label: 'Client Portal & QR Passes', tab: 'Client' }
+      { src: '/boiyets-landing.png', label: "Boiyet's Gym Management System", tab: 'Landing Page' }
     ]
   }
 };

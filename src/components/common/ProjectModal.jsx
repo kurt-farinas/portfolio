@@ -277,6 +277,17 @@ export default function ProjectModal() {
 
         <div className="modal-section-title">Project Links &amp; Resources</div>
         <div className="modal-links-row">
+          {project.demoUrl && (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="code-link-btn btn-showcase-demo"
+            >
+              <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              <span>Live Showcase Demo ↗</span>
+            </a>
+          )}
           {project.codeUrl ? (
             <a
               href={project.codeUrl}

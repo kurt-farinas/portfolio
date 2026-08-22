@@ -74,13 +74,13 @@ export default function ProjectsSection() {
               }}
             >
               <img
-                src="/gym-admin.png"
-                alt="Boiyet's Gym Management System - Admin Dashboard"
+                src={gym.slides[0].src}
+                alt={gym.slides[0].label}
                 loading="lazy"
                 decoding="async"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = '/gym-mockup.png';
+                  e.currentTarget.style.display = 'none';
                 }}
               />
               <div className="project-screenshot-overlay">View Full Details ↗</div>
