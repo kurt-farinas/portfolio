@@ -27,7 +27,8 @@ describe('React Project Data Integrity', () => {
     expect(gym.stack).toContain('React');
     expect(gym.stack).toContain('Pest');
     expect(gym.badge).toContain('119 Passing Tests');
-    expect(gym.slides).toHaveLength(3);
+    expect(gym.slides).toHaveLength(1);
+    expect(gym.slides[0].src).toBe('/boiyets-landing.png');
   });
 
   it('verifies 4 curated honors and certifications from resume', () => {
