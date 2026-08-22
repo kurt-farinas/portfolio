@@ -64,7 +64,7 @@ export default function TimelineSection() {
       <div className="wrap profile-wrap">
         <div className="profile-header-divider">
           <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 02.00</span> — CAREER &amp; EDUCATION
+            <span className="eyebrow-index">// 02.00</span> · CAREER &amp; EDUCATION
           </span>
         </div>
 

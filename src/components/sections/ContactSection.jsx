@@ -71,7 +71,7 @@ export default function ContactSection() {
       <div className="wrap profile-wrap">
         <div className="profile-header-divider">
           <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 07.00</span> — CONTACT
+            <span className="eyebrow-index">// 07.00</span> · CONTACT
           </span>
         </div>
 

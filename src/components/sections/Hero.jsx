@@ -4,6 +4,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useModal } from '../../context/ModalContext';
+import WaveBackground from '../common/WaveBackground';
 
 export default function Hero() {
   const { openResumeModal, copyEmail } = useModal();
@@ -34,6 +35,7 @@ export default function Hero() {
 
   return (
     <header className="hero hero-avery entered" id="hero">
+      <WaveBackground />
       <div className="wrap hero-wrap">
         <div className="hero-center-content">
           <h1 id="heroH1" className="hero-title">
@@ -47,16 +49,6 @@ export default function Hero() {
         </div>
 
         <div className="hero-bottom-controls hero-slide-up">
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-view-resume"
-          >
-            <span>VIEW RESUME</span>
-            <span className="arrow">↗</span>
-          </a>
-
           <div className="hero-social-pill">
             <a
               href="https://github.com/kurt-farinas"

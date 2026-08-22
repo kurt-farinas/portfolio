@@ -11,7 +11,7 @@ export default function AwardsSection() {
       <div className="wrap profile-wrap">
         <div className="profile-header-divider">
           <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 05.00</span> — HONORS &amp; CERTIFICATIONS
+            <span className="eyebrow-index">// 05.00</span> · HONORS &amp; CERTIFICATIONS
           </span>
         </div>
 

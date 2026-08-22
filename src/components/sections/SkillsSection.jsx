@@ -19,7 +19,7 @@ export default function SkillsSection() {
       <div className="wrap profile-wrap">
         <div className="profile-header-divider">
           <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 03.00</span> — TECH STACK &amp; TOOLS
+            <span className="eyebrow-index">// 03.00</span> · TECH STACK &amp; TOOLS
           </span>
         </div>
 

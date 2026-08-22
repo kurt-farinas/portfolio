@@ -15,7 +15,7 @@ export default function BeyondTeaser() {
       <div className="wrap profile-wrap">
         <div className="profile-header-divider">
           <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 06.00</span> — OUTSIDE THE IDE
+            <span className="eyebrow-index">// 06.00</span> · OUTSIDE THE IDE
           </span>
         </div>
 

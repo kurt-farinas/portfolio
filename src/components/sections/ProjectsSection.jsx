@@ -23,7 +23,7 @@ export default function ProjectsSection() {
       <div className="wrap profile-wrap">
         <div className="profile-header-divider">
           <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 01.00</span> — FEATURED PLATFORMS
+            <span className="eyebrow-index">// 01.00</span> · FEATURED PLATFORMS
           </span>
         </div>
 
@@ -92,7 +92,16 @@ export default function ProjectsSection() {
 
             <div className="ticket-body">
               <div className="ticket-top">
-                <div className="ticket-title">{gym.title}</div>
+                <div
+                  className="ticket-title"
+                  role="button"
+                  tabIndex={0}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => openProjectModal('gym')}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openProjectModal('gym'); }}
+                >
+                  {gym.title}
+                </div>
                 <div className="ticket-telemetry-ribbon">
                   {gym.telemetry.slice(0, 2).map((t, idx) => (
                     <span key={idx}>{t}</span>
@@ -182,7 +191,16 @@ export default function ProjectsSection() {
 
             <div className="ticket-body">
               <div className="ticket-top">
-                <div className="ticket-title">{hris.title}</div>
+                <div
+                  className="ticket-title"
+                  role="button"
+                  tabIndex={0}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => openProjectModal('hris')}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openProjectModal('hris'); }}
+                >
+                  {hris.title}
+                </div>
                 <div className="ticket-telemetry-ribbon">
                   {hris.telemetry.slice(0, 2).map((t, idx) => (
                     <span key={idx}>{t}</span>

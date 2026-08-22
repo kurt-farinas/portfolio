@@ -37,7 +37,7 @@ export default function ProjectModal() {
 
   return (
     <div
-      className="modal-overlay"
+      className="modal-overlay active"
       id="projectModal"
       role="dialog"
       aria-modal="true"

@@ -15,7 +15,7 @@ export default function ResumeModal() {
 
   return (
     <div
-      className="modal-overlay"
+      className="modal-overlay active"
       id="resumeModal"
       role="dialog"
       aria-modal="true"
@@ -27,7 +27,7 @@ export default function ResumeModal() {
           <div>
             <span className="modal-badge">// OFFICIAL CURRICULUM VITAE</span>
             <h3 className="modal-title" style={{ marginBottom: 0, fontSize: '20px' }}>
-              Kurt Fariñas — Resume
+              Kurt Fariñas · Resume
             </h3>
           </div>
 

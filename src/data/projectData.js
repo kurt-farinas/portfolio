@@ -13,12 +13,12 @@ export const projectDetails = {
     badge: "DepEd OJT · Frontend Owner",
     desc: "DepEd San Jose's leave approval process ran on paper across 30+ division office staff and teachers with no audit trail and multi-day turnaround. I owned 100% of frontend development for a web system that digitized the full Applicant → Admin → Approver workflow, replacing manual CS Form No. 6 routing with print-ready PDF output and signature uploads tied directly to the approval chain.",
     cardSummary: "Delivered a three-role leave workflow for 30+ staff, replacing manual paper routing with automated PDF output.",
-    codeStub: "Private repository — organizational confidentiality. Technical walkthrough available on request.",
+    codeStub: "Private repository: organizational confidentiality. Technical walkthrough available on request.",
     caseStudy: {
-      problem: "DepEd San Jose's leave approval process ran entirely on paper — CS Form No. 6 documents were printed, hand-signed, physically routed between 30+ staff, with no audit trail and multi-day turnaround.",
+      problem: "DepEd San Jose's leave approval process ran entirely on paper. CS Form No. 6 documents were printed, hand-signed, and physically routed between 30+ staff, with no audit trail and multi-day turnaround.",
       decision: "Built a 3-role web workflow (Applicant → Admin → Approver) using React + Inertia.js on a Laravel backend, replacing physical routing with digital state transitions and e-signature stamping.",
       implementation: "Owned 100% of frontend development: form validation, multi-step approval UI, role-gated views, and a print-optimized PDF engine using browser-native print stylesheets with verified e-signature image stamping.",
-      tradeoffs: "Used browser-native print CSS for PDF generation instead of a server-side library (wkhtmltopdf/DomPDF) — simpler deployment, but output depends on client browser rendering. Acceptable for internal division office use.",
+      tradeoffs: "Used browser-native print CSS for PDF generation instead of a server-side library (wkhtmltopdf/DomPDF) for simpler deployment. Output depends on client browser rendering, which is acceptable for internal division office use.",
       result: "System delivered and deployed to DepEd San Jose Division Office. Earned 98/100 OJT performance rating across 342 logged internship hours. Backend developed by Denver Ballesteros."
     },
     architectureFlow: [
@@ -82,7 +82,7 @@ const ApprovalStateMachine = {
     desc: "Solo-built and later rebuilt member management and revenue platform after a self-conducted security audit surfaced real vulnerabilities in the original PHP build (public file storage, missing upload validation). Rearchitected on Laravel 12 with Inertia.js and React, covering 29 domain tables and 88 of 92 routes with role-based access, backed by 119 passing Pest tests.",
     caseStudy: {
       problem: "The original PHP thesis build had critical security issues I discovered post-defense: publicly accessible file storage, missing upload validation, no CSRF protection, and raw SQL queries vulnerable to injection.",
-      decision: "Full rebuild on Laravel 12 with Inertia.js and React rather than patching. The original architecture made incremental fixes impractical — routing, auth, and data access were tightly coupled with no separation of concerns.",
+      decision: "Full rebuild on Laravel 12 with Inertia.js and React rather than patching. The original architecture made incremental fixes impractical because routing, auth, and data access were tightly coupled with no separation of concerns.",
       implementation: "Designed 29 normalized domain tables from scratch. Implemented 88 of 92 routes with RBAC gates (Admin, Trainer, Client). Built contactless QR attendance with 3-second debounce, POS with receipt generation, Chart.js analytics dashboards, and Excel/PDF report exports.",
       tradeoffs: "Full rebuild cost ~3 months vs. patching in weeks. Justified because the original had no tests, no middleware, and adding security retroactively would have required rewriting most controllers anyway. Also gained 119 Pest tests covering auth, gates, registration, and attendance flows.",
       result: "All original thesis features preserved with proper security (CSRF, validated uploads, private storage, parameterized queries). 119 passing Pest tests. Public repository available for code inspection."
@@ -252,7 +252,7 @@ export const beyondTilesData = {
     badge: "Collector",
     photoSlot: "perfume",
     photoCaption: "Photo frame · perfumes.jpg",
-    desc: "Fascinated by fragrance architecture—how top, mid, and base notes evolve throughout the day like structured systems.",
+    desc: "Fascinated by fragrance architecture: how top, mid, and base notes evolve throughout the day like structured systems.",
     tags: ["Fresh Citrus", "Woody Amber", "Clean Musk", "Warm Vanilla"]
   },
   gaming: {

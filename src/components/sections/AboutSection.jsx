@@ -10,7 +10,7 @@ export default function AboutSection() {
       <div className="wrap profile-wrap">
         <div className="profile-header-divider">
           <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 04.00</span> — WHO I AM
+            <span className="eyebrow-index">// 04.00</span> · WHO I AM
           </span>
         </div>
 
