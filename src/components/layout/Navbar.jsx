@@ -70,10 +70,10 @@ export default function Navbar() {
           <div className="nav-links" id="navLinks">
             <button
               type="button"
-              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'about' ? 'active-glow' : ''}`}
-              onClick={() => handleNavClick('about')}
+              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'projects' ? 'active-glow' : ''}`}
+              onClick={() => handleNavClick('projects')}
             >
-              ABOUT
+              PROJECTS
             </button>
             <button
               type="button"
@@ -84,10 +84,10 @@ export default function Navbar() {
             </button>
             <button
               type="button"
-              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'projects' ? 'active-glow' : ''}`}
-              onClick={() => handleNavClick('projects')}
+              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'about' ? 'active-glow' : ''}`}
+              onClick={() => handleNavClick('about')}
             >
-              PROJECTS
+              ABOUT
             </button>
             <button
               type="button"
@@ -150,9 +150,9 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`} id="mobileMenu">
-        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('about')}>ABOUT</button>
-        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('timeline')}>EXPERIENCE</button>
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('projects')}>PROJECTS</button>
+        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('timeline')}>EXPERIENCE</button>
+        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('about')}>ABOUT</button>
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('contact')}>CONTACT</button>
         <a href="/resume.pdf" download onClick={() => setMobileMenuOpen(false)}>RESUME ↓</a>
       </div>
