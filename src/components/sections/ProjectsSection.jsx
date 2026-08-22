@@ -23,13 +23,13 @@ export default function ProjectsSection() {
       <div className="wrap profile-wrap">
         <div className="profile-header-divider">
           <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 03.00</span> — FEATURED PLATFORMS
+            <span className="eyebrow-index">// 01.00</span> — FEATURED PLATFORMS
           </span>
         </div>
 
         <div className="section-title-block">
           <h2 className="profile-title">Featured Projects</h2>
-          <p className="profile-header-sub">Production systems built for real-world operations.</p>
+          <p className="profile-header-sub">Operational systems built for real workflows.</p>
         </div>
 
         {activeSkillFilter && (

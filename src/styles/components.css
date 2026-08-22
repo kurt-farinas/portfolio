@@ -4279,6 +4279,15 @@ kbd.keycap {
   background: var(--surface);
 }
 
+.about-proof-grid {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 24px;
+}
+
+.about-proof-grid .ledger-cell:last-child {
+  border-right: none;
+}
+
 .ledger-cell {
   padding: 16px 20px;
   display: flex;
@@ -4315,6 +4324,12 @@ kbd.keycap {
 @media (max-width: 900px) {
   .about-ledger-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .about-proof-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .about-proof-grid .ledger-cell:nth-child(3) {
+    border-right: none;
   }
   .ledger-cell:nth-child(2) {
     border-right: none;
@@ -4448,5 +4463,4 @@ kbd.keycap {
   transform: translate(2px, -2px);
   color: var(--text);
 }
-
 

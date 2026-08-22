@@ -16,7 +16,7 @@ export default function AwardsSection() {
         </div>
 
         <div className="section-title-block">
-          <h2 className="profile-title">Honors &amp; Recognition</h2>
+          <h2 className="profile-title">Honors &amp; Certifications</h2>
           <p className="profile-header-sub">Academic honors and technical certifications.</p>
         </div>
 

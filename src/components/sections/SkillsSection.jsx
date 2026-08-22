@@ -19,13 +19,13 @@ export default function SkillsSection() {
       <div className="wrap profile-wrap">
         <div className="profile-header-divider">
           <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 04.00</span> — TECH STACK &amp; TOOLS
+            <span className="eyebrow-index">// 03.00</span> — TECH STACK &amp; TOOLS
           </span>
         </div>
 
         <div className="section-title-block">
           <h2 className="profile-title">Tools &amp; Technologies</h2>
-          <p className="profile-header-sub">Tools &amp; technologies I build with. (Click any skill to filter)</p>
+          <p className="profile-header-sub">Tools and technologies used across my projects. Select a skill to view related work.</p>
         </div>
 
         <div className="skill-legend">
