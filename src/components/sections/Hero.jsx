@@ -10,45 +10,135 @@ export default function Hero() {
   const { openResumeModal, copyEmail } = useModal();
   const line1Ref = useRef(null);
   const line2Ref = useRef(null);
+  const subtitleRef = useRef(null);
+  const controlsRef = useRef(null);
+  const heroWrapRef = useRef(null);
+  const bgWrapperRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY;
-      if (scrolled > 600) return;
+    let ticking = false;
 
-      const factor = scrolled * 0.12;
-      const opacity = Math.max(0, 1 - (scrolled / 450));
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.scrollY;
+          const maxScroll = 440;
+          const progress = Math.min(1, Math.max(0, scrolled / maxScroll));
+          // Smoothstep Hermite interpolation for natural cinematic easing
+          const ease = progress * progress * (3 - 2 * progress);
 
-      if (line1Ref.current) {
-        line1Ref.current.style.transform = `translateX(-${factor}px)`;
-        line1Ref.current.style.opacity = opacity;
-      }
-      if (line2Ref.current) {
-        line2Ref.current.style.transform = `translateX(${factor}px)`;
-        line2Ref.current.style.opacity = opacity;
+          // 1. Overall Hero Wrapper pointer events
+          if (heroWrapRef.current) {
+            heroWrapRef.current.style.pointerEvents = progress > 0.85 ? 'none' : 'auto';
+          }
+
+          // 2. Headline with optical depth blur & subtle letter drift
+          const titleOpacity = Math.max(0, 1 - Math.pow(progress, 1.1) * 1.15);
+          const titleBlur = ease * 7;
+          const titleLift = -(scrolled * 0.22);
+          const titleScale = 1 - ease * 0.05;
+          const splitFactor = ease * 26;
+
+          if (line1Ref.current) {
+            line1Ref.current.style.transform = `translateX(-${splitFactor}px) translateY(${titleLift}px) scale(${titleScale})`;
+            line1Ref.current.style.opacity = titleOpacity;
+            line1Ref.current.style.filter = titleBlur > 0.1 ? `blur(${titleBlur}px)` : 'none';
+          }
+          if (line2Ref.current) {
+            line2Ref.current.style.transform = `translateX(${splitFactor}px) translateY(${titleLift}px) scale(${titleScale})`;
+            line2Ref.current.style.opacity = titleOpacity;
+            line2Ref.current.style.filter = titleBlur > 0.1 ? `blur(${titleBlur}px)` : 'none';
+          }
+
+          // 3. Subtitle with optical dissipation
+          if (subtitleRef.current) {
+            const subOpacity = Math.max(0, 1 - ease * 1.35);
+            const subBlur = ease * 8;
+            const subLift = -(scrolled * 0.15);
+            subtitleRef.current.style.opacity = subOpacity;
+            subtitleRef.current.style.transform = `translateY(${subLift}px)`;
+            subtitleRef.current.style.filter = subBlur > 0.1 ? `blur(${subBlur}px)` : 'none';
+          }
+
+          // 4. Social Controls Pill with soft settling sink & scale
+          if (controlsRef.current) {
+            const ctrlOpacity = Math.max(0, 1 - ease * 1.25);
+            const ctrlBlur = ease * 5;
+            const ctrlSink = scrolled * 0.10;
+            const ctrlScale = 1 - ease * 0.08;
+            controlsRef.current.style.opacity = ctrlOpacity;
+            controlsRef.current.style.transform = `translateY(${ctrlSink}px) scale(${ctrlScale})`;
+            controlsRef.current.style.filter = ctrlBlur > 0.1 ? `blur(${ctrlBlur}px)` : 'none';
+          }
+
+          // 5. Harmonic Wave Canvas Background with depth expansion & ambient soft focus
+          if (bgWrapperRef.current) {
+            const bgOpacity = Math.max(0, 1 - progress * 0.95);
+            const bgBlur = ease * 9;
+            const bgScale = 1 + ease * 0.07;
+            bgWrapperRef.current.style.opacity = bgOpacity;
+            bgWrapperRef.current.style.transform = `scale(${bgScale})`;
+            bgWrapperRef.current.style.filter = bgBlur > 0.1 ? `blur(${bgBlur}px)` : 'none';
+          }
+
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <header className="hero hero-avery entered" id="hero">
-      <WaveBackground />
-      <div className="wrap hero-wrap">
+      <div
+        ref={bgWrapperRef}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: 'none',
+          willChange: 'opacity, transform, filter',
+          transformOrigin: 'center center'
+        }}
+      >
+        <WaveBackground />
+      </div>
+      <div ref={heroWrapRef} className="wrap hero-wrap">
         <div className="hero-center-content">
           <h1 id="heroH1" className="hero-title">
-            <span ref={line1Ref} className="title-line line-1">HI, I AM KURT</span>
-            <span ref={line2Ref} className="title-line line-2">JUNIOR FULL-STACK DEVELOPER</span>
+            <span
+              ref={line1Ref}
+              className="title-line line-1"
+              style={{ willChange: 'opacity, transform, filter', display: 'inline-block' }}
+            >
+              HI, I AM KURT
+            </span>
+            <span
+              ref={line2Ref}
+              className="title-line line-2"
+              style={{ willChange: 'opacity, transform, filter', display: 'inline-block' }}
+            >
+              JUNIOR FULL-STACK DEVELOPER
+            </span>
           </h1>
 
-          <p className="hero-subtitle">
+          <p
+            ref={subtitleRef}
+            className="hero-subtitle"
+            style={{ willChange: 'opacity, transform, filter' }}
+          >
             Building responsive web applications, multi-role approval systems, and clean relational backends with React, Inertia.js, Laravel, and MySQL.
           </p>
         </div>
 
-        <div className="hero-bottom-controls hero-slide-up">
+        <div
+          ref={controlsRef}
+          className="hero-bottom-controls hero-slide-up"
+          style={{ willChange: 'opacity, transform, filter' }}
+        >
           <div className="hero-social-pill">
             <a
               href="https://github.com/kurt-farinas"

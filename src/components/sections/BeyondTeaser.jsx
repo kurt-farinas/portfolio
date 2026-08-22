@@ -11,14 +11,8 @@ export default function BeyondTeaser() {
   const gym = beyondTilesData.gym;
 
   return (
-    <section className="section beyond-section" id="beyond">
+    <section className="section beyond-teaser-section" id="beyond">
       <div className="wrap profile-wrap">
-        <div className="profile-header-divider">
-          <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 06.00</span> · OUTSIDE THE IDE
-          </span>
-        </div>
-
         <div className="section-title-block">
           <h2 className="profile-title">Outside the IDE</h2>
           <p className="profile-header-sub">
@@ -43,7 +37,7 @@ export default function BeyondTeaser() {
 
             {/* Interactive Telemetry Sub-Channel Chips */}
             <div className="beyond-telemetry-panel">
-              <div className="beyond-telemetry-heading">// EXPLORE DOMAINS BEYOND CODE:</div>
+              <div className="beyond-telemetry-heading">EXPLORE DOMAINS BEYOND CODE:</div>
               <div className="beyond-telemetry-chips">
                 <Link to="/outside-the-ide" className="telemetry-chip-link" title="Explore Gym & Physical Training">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

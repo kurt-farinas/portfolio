@@ -21,14 +21,8 @@ export default function OutsideTheIdePage() {
           {/* Back Navigation Bar */}
           <div className="outside-page-nav-bar" style={{ marginBottom: '24px' }}>
             <Link to="/" className="btn-back-home font-mono">
-              ← // RETURN TO MAIN PORTFOLIO
+              ← RETURN TO MAIN PORTFOLIO
             </Link>
-          </div>
-
-          <div className="profile-header-divider">
-            <span className="profile-eyebrow">
-              <span className="eyebrow-index">// 06.00</span> · OUTSIDE THE IDE
-            </span>
           </div>
 
           <div className="section-title-block">

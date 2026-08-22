@@ -23,7 +23,8 @@ export default function TimelineSection() {
       const windowHeight = window.innerHeight;
       const containerHeight = rect.height;
 
-      const triggerOffset = windowHeight * 0.55;
+      // Calculate scroll progress through the timeline container
+      const triggerOffset = windowHeight * 0.5;
       const scrolledDistance = triggerOffset - rect.top;
 
       let percentage = (scrolledDistance / containerHeight) * 100;
@@ -34,9 +35,11 @@ export default function TimelineSection() {
 
       items.forEach((item) => {
         const icon = item.querySelector('.timeline-icon');
-        const circleTop = item.offsetTop + (icon ? icon.offsetTop : 0);
+        // Circle's actual vertical center relative to the timeline container
+        const circleCenter = item.offsetTop + (icon ? icon.offsetTop + icon.offsetHeight / 2 : 14);
 
-        if (lineTipPx >= circleTop - 2) {
+        // Only turn white/active when the descending line tip physically reaches the circle center
+        if (percentage > 0 && lineTipPx >= circleCenter) {
           item.classList.add('is-visible', 'show', 'in-view-glow');
         } else {
           item.classList.remove('is-visible', 'show', 'in-view-glow');
@@ -62,12 +65,6 @@ export default function TimelineSection() {
   return (
     <section className="section timeline-section" id="timeline">
       <div className="wrap profile-wrap">
-        <div className="profile-header-divider">
-          <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 02.00</span> · CAREER &amp; EDUCATION
-          </span>
-        </div>
-
         <div className="section-title-block">
           <h2 className="profile-title">Career &amp; Education</h2>
           <p className="profile-header-sub">

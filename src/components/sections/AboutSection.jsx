@@ -8,12 +8,6 @@ export default function AboutSection() {
   return (
     <section className="section profile-section" id="about">
       <div className="wrap profile-wrap">
-        <div className="profile-header-divider">
-          <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 04.00</span> · WHO I AM
-          </span>
-        </div>
-
         <div className="section-title-block">
           <h2 className="profile-title">Who I Am</h2>
           <p className="profile-header-sub">Junior full-stack developer focused on workflow-driven web applications.</p>

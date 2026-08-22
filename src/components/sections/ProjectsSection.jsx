@@ -21,12 +21,6 @@ export default function ProjectsSection() {
   return (
     <section className="section projects-section" id="projects">
       <div className="wrap profile-wrap">
-        <div className="profile-header-divider">
-          <span className="profile-eyebrow">
-            <span className="eyebrow-index">// 01.00</span> · FEATURED PLATFORMS
-          </span>
-        </div>
-
         <div className="section-title-block">
           <h2 className="profile-title">Featured Projects</h2>
           <p className="profile-header-sub">Operational systems built for real workflows.</p>

@@ -188,7 +188,7 @@ export default function ProjectModal() {
         {modalViewMode === 'arch' && (
           <div id="modalViewArch">
             <div className="modal-arch-container">
-              <div className="modal-arch-subtitle">// WORKFLOW STATE PROGRESSION</div>
+              <div className="modal-arch-subtitle">WORKFLOW STATE PROGRESSION</div>
               <div className="modal-pipeline-grid">
                 {project.architecturePipeline?.map((step, idx) => (
                   <div key={idx} className="pipeline-step-box">
@@ -202,7 +202,7 @@ export default function ProjectModal() {
               {project.codeSnippet && (
                 <>
                   <div className="modal-arch-subtitle" style={{ marginTop: '20px' }}>
-                    // SYSTEM ARCHITECTURE CODE PATTERN
+                    SYSTEM ARCHITECTURE CODE PATTERN
                   </div>
                   <div className="modal-code-box">
                     <div className="code-box-header">

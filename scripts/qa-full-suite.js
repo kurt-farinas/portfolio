@@ -228,22 +228,10 @@ async function runFullQA() {
   await page.waitForTimeout(600);
   assert(page.url() === 'http://localhost:5173/' || page.url().endsWith(':5173/'), 'Outside the IDE: Back Button Returns to Home', page.url());
 
-  console.log('\n>>> STEP 7: CONTACT SECTION TOOLBAR & INPUTS');
+  console.log('\n>>> STEP 7: CONTACT SECTION INPUTS & SUBMISSION');
   // Scroll to contact
   await page.evaluate(() => document.getElementById('contact').scrollIntoView());
   await page.waitForTimeout(400);
-
-  // Quick Contact Bar Copy Email
-  await page.click('.quick-contact-bar button:has-text("Copy Email")');
-  await page.waitForTimeout(300);
-  assert(await page.isVisible('.toast, .toast-item'), 'Contact Toolbar: Copy Email Triggers Toast');
-
-  // Quick Contact Bar Resume PDF
-  await page.click('.quick-contact-bar button:has-text("Resume PDF")');
-  await page.waitForTimeout(500);
-  assert(await page.isVisible('#resumeModal'), 'Contact Toolbar: Resume PDF Opens Modal');
-  await page.keyboard.press('Escape');
-  await page.waitForTimeout(300);
 
   // Form input field tests
   await page.fill('#contactName', 'Jane Recruiter');

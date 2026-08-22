@@ -143,7 +143,7 @@ async function handleQrScan(memberToken) {
 export const timelineData = [
   {
     id: 1,
-    date: "2022 – 2026",
+    date: "2022 - 2026",
     title: "BS Computer Science | STI College San Jose",
     desc: "Bachelor of Science in Computer Science. Honored on the Presidential List (2022) with academic coursework in software engineering, database architecture, and OOP.",
     badge: "PRESIDENTIAL LIST (2022)",
@@ -152,7 +152,7 @@ export const timelineData = [
   },
   {
     id: 2,
-    date: "FEB – MAR 2026 (342 HOURS)",
+    date: "FEB - MAR 2026 (342 HOURS)",
     title: "Software Developer Intern (OJT) | DepEd San Jose",
     desc: "Owned frontend development for the CS Form No. 6 Digitalization System (React, Inertia.js, Tailwind, Laravel). Replaced manual paper routing with 3-role RBAC, e-signatures, and print PDFs. Wrote 19 PHPUnit tests (AAA pattern) and earned 98/100 rating across appraisals.",
     badge: "98/100 OJT RATING",
@@ -202,7 +202,7 @@ export const awardsData = [
   {
     id: "deped-sipp",
     title: "DepEd SIPP OJT Certificate of Completion",
-    issuer: "DepEd Schools Division Office of San Jose City · Feb – Mar 2026",
+    issuer: "DepEd Schools Division Office of San Jose City · Feb - Mar 2026",
     isChampion: true
   },
   {
@@ -223,7 +223,7 @@ export const beyondTilesData = {
   gym: {
     id: "gym",
     title: "Gym & Physical Training",
-    eyebrow: "// 01 · THE OFFLINE GRIND",
+    eyebrow: "01 · THE OFFLINE GRIND",
     badge: "Fitness & Health",
     photoSlot: "gym",
     photoCaption: "Photo frame · gym.jpg",
@@ -233,7 +233,7 @@ export const beyondTilesData = {
   desk: {
     id: "desk",
     title: "Peripherals & Hardware",
-    eyebrow: "// 02 · DESK ARSENAL",
+    eyebrow: "02 · DESK ARSENAL",
     badge: "Battlestation Gear",
     photoSlot: "desk",
     photoCaption: "Photo frame · desk_setup.jpg",
@@ -248,7 +248,7 @@ export const beyondTilesData = {
   perfume: {
     id: "perfume",
     title: "Perfume Collection",
-    eyebrow: "// 03 · OLFACTORY",
+    eyebrow: "03 · OLFACTORY",
     badge: "Collector",
     photoSlot: "perfume",
     photoCaption: "Photo frame · perfumes.jpg",
@@ -258,7 +258,7 @@ export const beyondTilesData = {
   gaming: {
     id: "gaming",
     title: "Tactical & Sandbox",
-    eyebrow: "// 04 · RESPAWN ZONE",
+    eyebrow: "04 · RESPAWN ZONE",
     badge: "Gaming",
     photoSlot: "gaming",
     photoCaption: "Photo frame · gaming.jpg",
@@ -269,7 +269,7 @@ export const beyondTilesData = {
   coffee: {
     id: "coffee",
     title: "Pure Black Coffee",
-    eyebrow: "// 05 · DAILY FUEL",
+    eyebrow: "05 · DAILY FUEL",
     badge: "Ritual",
     photoSlot: "coffee",
     photoCaption: "Photo frame · black_coffee.jpg",

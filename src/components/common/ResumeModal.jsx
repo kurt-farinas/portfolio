@@ -25,7 +25,7 @@ export default function ResumeModal() {
       <div ref={dialogRef} className="modal-card resume-modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="resume-modal-header">
           <div>
-            <span className="modal-badge">// OFFICIAL CURRICULUM VITAE</span>
+            <span className="modal-badge">OFFICIAL CURRICULUM VITAE</span>
             <h3 className="modal-title" style={{ marginBottom: 0, fontSize: '20px' }}>
               Kurt Fariñas · Resume
             </h3>

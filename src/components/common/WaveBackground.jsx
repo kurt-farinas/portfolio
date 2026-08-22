@@ -74,7 +74,7 @@ export default function WaveBackground() {
 
     observer.observe(canvas.parentElement || canvas);
 
-    const numLines = 26;
+    const numLines = 10;
     const segments = 45;
     let time = 0;
     let lastTime = performance.now();
@@ -87,18 +87,15 @@ export default function WaveBackground() {
 
       const delta = Math.min((currentTime - lastTime) / 1000, 0.1);
       lastTime = currentTime;
-      time += delta * 0.45;
+      time += delta * 0.38;
 
-      currentMouseX += (targetMouseX - currentMouseX) * 0.06;
-      currentMouseY += (targetMouseY - currentMouseY) * 0.06;
+      currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.05;
 
       ctx.clearRect(0, 0, width, height);
 
       const isLight = document.documentElement.getAttribute('data-theme') === 'light' || theme === 'light';
 
-      // Colors for the live waves
-      // Dark theme: Glowing white / silver ridges with varying alpha
-      // Light theme: Crisp graphite / slate contour lines
       const baseRgb = isLight ? '30, 35, 45' : '255, 255, 255';
       const accentRgb = isLight ? '70, 80, 100' : '220, 230, 255';
 
@@ -113,20 +110,20 @@ export default function WaveBackground() {
       );
 
       if (isLight) {
-        radialGlow.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-        radialGlow.addColorStop(0.5, 'rgba(245, 247, 250, 0.4)');
+        radialGlow.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+        radialGlow.addColorStop(0.5, 'rgba(245, 247, 250, 0.3)');
         radialGlow.addColorStop(1, 'rgba(235, 238, 243, 0)');
       } else {
-        radialGlow.addColorStop(0, 'rgba(255, 255, 255, 0.035)');
-        radialGlow.addColorStop(0.5, 'rgba(255, 255, 255, 0.012)');
+        radialGlow.addColorStop(0, 'rgba(255, 255, 255, 0.025)');
+        radialGlow.addColorStop(0.5, 'rgba(255, 255, 255, 0.008)');
         radialGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
       }
 
       ctx.fillStyle = radialGlow;
       ctx.fillRect(0, 0, width, height);
 
-      const lineSpacing = height / (numLines * 0.62);
-      const startY = -height * 0.1;
+      const lineSpacing = height / (numLines * 0.75);
+      const startY = height * 0.08;
       const stepX = (width + 200) / segments;
 
       for (let i = 0; i < numLines; i++) {
@@ -134,8 +131,8 @@ export default function WaveBackground() {
         const normalizedIndex = i / numLines;
         
         // Arch distribution: higher opacity in the center field
-        const centerProximity = 1 - Math.abs(normalizedIndex - 0.48) * 1.8;
-        const baseAlpha = Math.max(0.04, centerProximity * (isLight ? 0.22 : 0.32));
+        const centerProximity = 1 - Math.abs(normalizedIndex - 0.5) * 1.6;
+        const baseAlpha = Math.max(0.03, centerProximity * (isLight ? 0.16 : 0.20));
 
         ctx.beginPath();
 

@@ -50,9 +50,9 @@ a {
 }
 
 .wrap {
-  max-width: 1400px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 28px;
   box-sizing: border-box;
 }
 

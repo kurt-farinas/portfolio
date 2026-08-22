@@ -17,20 +17,14 @@ export default function Footer() {
     <footer className="simple-footer">
       <div className="wrap profile-wrap simple-footer-wrap">
         <div className="footer-left-info">
-          <div className="footer-brand-block">
-            <Link to="/" className="logo footer-logo" aria-label="Kurt Fariñas Home" onClick={scrollToTop}>
-              <span className="dot-box"><span className="dot"></span></span>
-              <span className="logo-text">kurt.dev</span>
-            </Link>
-            <span className="footer-availability">Open to junior full-stack and frontend roles</span>
-          </div>
+          <Link to="/" className="logo footer-logo" aria-label="Kurt Fariñas Home" onClick={scrollToTop}>
+            <span className="dot-box"><span className="dot"></span></span>
+            <span className="logo-text">kurt.dev</span>
+          </Link>
           <span className="footer-copy-text">© 2026 Kurt Fariñas</span>
         </div>
 
         <div className="footer-simple-links">
-          <Link to="/outside-the-ide" className="footer-route-link font-mono" title="Outside the IDE">
-            Outside the IDE →
-          </Link>
           <a
             href="https://github.com/kurt-farinas"
             target="_blank"
