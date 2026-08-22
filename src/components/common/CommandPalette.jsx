@@ -179,12 +179,20 @@ export default function CommandPalette() {
 
   const filteredCommands = useMemo(() => {
     if (!query.trim()) return commands;
-    const q = query.toLowerCase();
-    return commands.filter(c =>
+    const q = query.toLowerCase().trim();
+    const matches = commands.filter(c =>
       c.title.toLowerCase().includes(q) ||
       c.subtitle.toLowerCase().includes(q) ||
       c.group.toLowerCase().includes(q)
     );
+
+    return matches.sort((a, b) => {
+      const aTitle = a.title.toLowerCase().includes(q);
+      const bTitle = b.title.toLowerCase().includes(q);
+      if (aTitle && !bTitle) return -1;
+      if (!aTitle && bTitle) return 1;
+      return 0;
+    });
   }, [commands, query]);
 
   useEffect(() => {
@@ -255,6 +263,7 @@ export default function CommandPalette() {
             placeholder="Type a command or search (e.g. projects, resume, theme)..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
             autoComplete="off"
             spellCheck="false"
           />

@@ -17,6 +17,7 @@ import ProjectModal from './components/common/ProjectModal';
 import ResumeModal from './components/common/ResumeModal';
 import ScreenshotLightbox from './components/common/ScreenshotLightbox';
 import CommandPalette from './components/common/CommandPalette';
+import ToastContainer from './components/common/ToastContainer';
 import { Analytics } from '@vercel/analytics/react';
 
 import HomePage from './pages/HomePage';
@@ -54,6 +55,7 @@ function AppContent() {
       <ResumeModal />
       <ScreenshotLightbox />
       <CommandPalette />
+      <ToastContainer />
       <Analytics />
     </div>
   );
