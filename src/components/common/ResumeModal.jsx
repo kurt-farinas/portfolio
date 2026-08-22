@@ -82,20 +82,12 @@ export default function ResumeModal() {
             height="100%"
             className="resume-object-embed"
           >
-            <iframe
-              id="resumeIframe"
-              src="/resume.pdf#toolbar=1"
-              title="Kurt Fariñas Resume PDF"
-              width="100%"
-              height="100%"
-            >
-              <div className="resume-fallback-panel">
-                <p>PDF preview is not supported on this browser window.</p>
-                <a href="/resume.pdf" download="Kurt_Farinas_Resume.pdf" className="btn btn-primary">
-                  Download Kurt Fariñas Resume PDF
-                </a>
-              </div>
-            </iframe>
+            <div className="resume-fallback-panel">
+              <p>PDF preview is not supported on this browser window.</p>
+              <a href="/resume.pdf" download="Kurt_Farinas_Resume.pdf" className="btn btn-primary">
+                Download Kurt Fariñas Resume PDF
+              </a>
+            </div>
           </object>
         </div>
       </div>

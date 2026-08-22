@@ -5,12 +5,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
-import { useSound } from '../../context/SoundContext';
 import { useModal } from '../../context/ModalContext';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
-  const { soundEnabled, toggleSound } = useSound();
   const { spawnToast } = useModal();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -99,32 +97,6 @@ export default function Navbar() {
               CONTACT
             </button>
           </div>
-
-          {/* Sound Toggle Button */}
-          <button
-            type="button"
-            className={`sound-toggle-btn ${soundEnabled ? 'sound-active' : ''}`}
-            id="soundToggleBtn"
-            onClick={() => {
-              toggleSound();
-              spawnToast(soundEnabled ? 'AUDIO MUTED' : 'AUDIO ENABLED', soundEnabled ? 'UI sounds turned off' : 'Tactile UI micro-sounds active');
-            }}
-            aria-label={soundEnabled ? 'Mute UI sounds' : 'Enable UI sounds'}
-            title={soundEnabled ? 'Sound: ON (Click to mute)' : 'Sound: OFF (Click to unmute)'}
-          >
-            {soundEnabled ? (
-              <svg className="sound-icon sound-icon-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              </svg>
-            ) : (
-              <svg className="sound-icon sound-icon-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <line x1="23" y1="9" x2="17" y2="15"></line>
-                <line x1="17" y1="9" x2="23" y2="15"></line>
-              </svg>
-            )}
-          </button>
 
           {/* Theme Toggle Button */}
           <button
