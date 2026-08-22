@@ -41,11 +41,6 @@ export default function Hero() {
     <header className="hero hero-avery entered" id="hero">
       <div className="wrap hero-wrap">
         <div className="hero-center-content">
-          <div className="hero-status-pill">
-            <span className="status-dot"></span>
-            <span>AVAILABLE FOR WORK · SAN JOSE CITY, PH</span>
-          </div>
-
           <h1 id="heroH1" className="hero-title">
             <span ref={line1Ref} className="title-line line-1">HI, I AM KURT</span>
             <span ref={line2Ref} className="title-line line-2">JUNIOR FULL-STACK DEVELOPER</span>
