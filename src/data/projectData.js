@@ -10,9 +10,9 @@ export const projectDetails = {
     stamp: "98/100 OJT Rating (342 Hrs)",
     roleTag: "Frontend Ownership",
     statusBadge: '<span class="status-dot-amber"></span> Delivered to Division Office',
-    badge: "DepEd San Jose Division Office · 342 Hours Logged",
+    badge: "DepEd OJT · Frontend Owner",
     desc: "DepEd San Jose's leave approval process ran on paper across 30+ division office staff and teachers with no audit trail and multi-day turnaround. I owned 100% of frontend development for a web system that digitized the full Applicant → Admin → Approver workflow, replacing manual CS Form No. 6 routing with print-ready PDF output and signature uploads tied directly to the approval chain.",
-    cardSummary: "Digitized paper-based Form 6 leave approvals for 30+ division office staff with 3-role permissions and automated PDF generation.",
+    cardSummary: "Delivered a three-role leave workflow for 30+ staff, replacing manual paper routing with automated PDF output.",
     codeStub: "Private repository — organizational confidentiality. Technical walkthrough available on request.",
     caseStudy: {
       problem: "DepEd San Jose's leave approval process ran entirely on paper — CS Form No. 6 documents were printed, hand-signed, physically routed between 30+ staff, with no audit trail and multi-day turnaround.",
@@ -77,8 +77,8 @@ const ApprovalStateMachine = {
     stamp: "119 Passing Tests · Laravel 12 Rebuild",
     roleTag: "Solo Full-Stack Developer",
     statusBadge: '<span class="status-dot-green"></span> Production-Tested Rebuild',
-    badge: "Solo Full-Stack · Security-Driven Rebuild · 119 Passing Tests · QR Attendance",
-    cardSummary: "Solo-built and later rebuilt member management and revenue platform after a self-conducted security audit surfaced real vulnerabilities in the original PHP build (public file storage, missing upload validation). Rearchitected on Laravel 12 with Inertia.js and React, covering 29 domain tables and 88 of 92 routes with role-based access, backed by 119 passing Pest tests.",
+    badge: "Solo Full-Stack · 119 Passing Tests",
+    cardSummary: "Rebuilt the thesis platform after a security audit, preserving core workflows with role-based access and 119 passing Pest tests.",
     desc: "Solo-built and later rebuilt member management and revenue platform after a self-conducted security audit surfaced real vulnerabilities in the original PHP build (public file storage, missing upload validation). Rearchitected on Laravel 12 with Inertia.js and React, covering 29 domain tables and 88 of 92 routes with role-based access, backed by 119 passing Pest tests.",
     caseStudy: {
       problem: "The original PHP thesis build had critical security issues I discovered post-defense: publicly accessible file storage, missing upload validation, no CSRF protection, and raw SQL queries vulnerable to injection.",

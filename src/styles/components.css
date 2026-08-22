@@ -4464,3 +4464,219 @@ kbd.keycap {
   color: var(--text);
 }
 
+/* ========================================
+   EDITORIAL PORTFOLIO REFINEMENTS
+   ======================================== */
+.profile-eyebrow {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  font-size: 11px;
+}
+
+.section-title-block {
+  margin-bottom: 46px;
+}
+
+.profile-title {
+  font-size: clamp(38px, 4.6vw, 56px);
+  margin-bottom: 12px;
+}
+
+.profile-header-sub {
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.tickets {
+  gap: 32px;
+}
+
+.ticket {
+  border-color: color-mix(in srgb, var(--border) 78%, transparent);
+  border-radius: 16px;
+}
+
+.ticket-header-meta {
+  padding: 18px 24px 0;
+}
+
+.ticket-badge-pill {
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  padding: 5px 10px;
+}
+
+.ticket .project-screenshot,
+.ticket .project-screenshot img {
+  max-height: none;
+  height: 240px;
+}
+
+.ticket-body {
+  padding: 24px;
+}
+
+.ticket-title {
+  font-size: 23px;
+  line-height: 1.2;
+}
+
+.ticket-summary {
+  font-size: 15.5px;
+  line-height: 1.65;
+  margin: 14px 0 18px;
+}
+
+.ticket-telemetry-ribbon {
+  gap: 8px;
+  margin: 12px 0 0;
+}
+
+.ticket-telemetry-ribbon span {
+  font-size: 11px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.timeline-content,
+.timeline-item.timeline-item-featured .timeline-content {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 4px 0 30px;
+  cursor: default;
+}
+
+.timeline-content:hover {
+  border-color: transparent;
+  transform: none;
+}
+
+.timeline-date {
+  font-size: 12px;
+}
+
+.timeline-title {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.timeline-desc {
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+.timeline-badge {
+  font-size: 11px;
+  padding: 4px 9px;
+}
+
+.skill-group {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.skill-group::before {
+  display: none;
+}
+
+.skill-group:hover {
+  border-color: transparent;
+  transform: none;
+}
+
+.skill-group h4 {
+  font-size: 11px;
+  margin-bottom: 14px;
+}
+
+.skill-tags span {
+  font-size: 14px;
+  padding: 8px 13px;
+}
+
+.award-card {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  padding: 20px 0;
+}
+
+.award-card:hover {
+  border-color: var(--border-strong);
+  transform: none;
+}
+
+.award-text h4 {
+  font-size: 17px;
+}
+
+.award-text p {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ledger-cell {
+  padding: 20px 22px;
+  gap: 6px;
+}
+
+.ledger-label {
+  font-size: 0.72rem;
+}
+
+.ledger-val {
+  font-size: 1.05rem;
+}
+
+.ledger-sub {
+  font-size: 0.83rem;
+}
+
+@media (max-width: 768px) {
+  .section-title-block {
+    margin-bottom: 32px;
+  }
+
+  .profile-title {
+    font-size: 34px;
+  }
+
+  .profile-header-sub {
+    font-size: 15px;
+  }
+
+  .ticket .project-screenshot,
+  .ticket .project-screenshot img {
+    height: 220px;
+  }
+
+  .ticket-body {
+    padding: 22px 20px;
+  }
+
+  .ticket-title {
+    font-size: 21px;
+  }
+
+  .ticket-summary,
+  .timeline-desc {
+    font-size: 15px;
+  }
+
+  .timeline-title {
+    font-size: 19px;
+  }
+
+  .award-text h4 {
+    font-size: 16px;
+  }
+}

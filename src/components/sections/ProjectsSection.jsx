@@ -94,7 +94,7 @@ export default function ProjectsSection() {
               <div className="ticket-top">
                 <div className="ticket-title">{gym.title}</div>
                 <div className="ticket-telemetry-ribbon">
-                  {gym.telemetry.map((t, idx) => (
+                  {gym.telemetry.slice(0, 2).map((t, idx) => (
                     <span key={idx}>{t}</span>
                   ))}
                 </div>
@@ -184,7 +184,7 @@ export default function ProjectsSection() {
               <div className="ticket-top">
                 <div className="ticket-title">{hris.title}</div>
                 <div className="ticket-telemetry-ribbon">
-                  {hris.telemetry.map((t, idx) => (
+                  {hris.telemetry.slice(0, 2).map((t, idx) => (
                     <span key={idx}>{t}</span>
                   ))}
                 </div>
