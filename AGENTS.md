@@ -1,9 +1,11 @@
 # AGENTS.md — Portfolio (kurt-farinas.github.io/portfolio)
 
 ## Stack
-- Vanilla HTML, CSS, JS. No framework, no build step, no bundler.
-- Hosted on GitHub Pages — deploys directly from the repo, so every change must work as plain static files.
-- Dark theme, violet accent (#8B7CF6). Space Grotesk (headings) + JetBrains Mono (code/terminal elements).
+- React 19 + Vite 6, with React Router and Vitest.
+- Source entry point: `src/main.jsx` → `src/App.jsx`.
+- Hosted on Vercel as a static Vite build. Use `npm run dev`, `npm test -- --run`, and `npm run build`.
+- CSS is split by responsibility under `src/styles/` and imported by `src/styles/index.css`.
+- Dark/light theme, monochrome palette, Space Grotesk/Inter/JetBrains Mono typography.
 
 ## Features to preserve (do not remove or degrade without asking)
 - Interactive terminal widget with command chips (whoami, cv, timeline, skills, projects, awards, sudo hire-kurt, clear)
@@ -13,7 +15,7 @@
 - Achievement toast notifications
 
 ## Hard rules
-- Never introduce a build step (webpack, vite, npm scripts) without asking — this site is intentionally buildless so GitHub Pages can serve it directly.
+- Keep the existing Vite build and do not replace the React source with legacy vanilla files under `src/js/`.
 - Never break or change the resume.pdf link path.
 - Never modify canonical, og:*, or twitter:* meta tags without flagging it explicitly — these control how the site appears when shared and how it's indexed, which matters directly for job applications.
 - Never remove or shrink content that establishes credibility (OJT rating, hours logged, project ownership scope) — this is a job-hunting asset, not a demo site.

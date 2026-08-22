@@ -2932,6 +2932,10 @@ textarea:focus-visible,
 }
 
 @media (max-width: 760px) {
+  .awards-grid {
+    grid-template-columns: 1fr;
+  }
+
   .carousel-arrow {
     width: 44px;
     height: 44px;

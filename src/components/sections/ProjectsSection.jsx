@@ -71,6 +71,10 @@ export default function ProjectsSection() {
               onClick={() => openProjectModal('gym')}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') openProjectModal('gym');
+                if (e.key === ' ') {
+                  e.preventDefault();
+                  openProjectModal('gym');
+                }
               }}
             >
               <img
@@ -112,6 +116,15 @@ export default function ProjectsSection() {
                   View Full Details →
                 </button>
                 <a
+                  href={gym.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="code-link-btn btn-showcase-demo"
+                >
+                  <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                  <span>Live Demo ↗</span>
+                </a>
+                <a
                   href={gym.codeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -148,6 +161,10 @@ export default function ProjectsSection() {
               onClick={() => openProjectModal('hris')}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') openProjectModal('hris');
+                if (e.key === ' ') {
+                  e.preventDefault();
+                  openProjectModal('hris');
+                }
               }}
             >
               <img

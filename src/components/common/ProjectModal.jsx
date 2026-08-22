@@ -5,6 +5,7 @@
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
 import { projectDetails } from '../../data/projectData';
+import useDialogFocus from './useDialogFocus';
 
 export default function ProjectModal() {
   const {
@@ -16,6 +17,7 @@ export default function ProjectModal() {
     setActiveSlideIndex,
     openLightbox
   } = useModal();
+  const dialogRef = useDialogFocus(Boolean(selectedProjectId));
 
   if (!selectedProjectId) return null;
 
@@ -42,7 +44,7 @@ export default function ProjectModal() {
       aria-labelledby="modalTitle"
       onClick={closeProjectModal}
     >
-      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+      <div ref={dialogRef} className="modal-card" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           className="modal-close"
@@ -118,7 +120,10 @@ export default function ProjectModal() {
                   tabIndex={0}
                   onClick={() => openLightbox(currentSlide.src, `${currentSlide.label} | ${project.title}`)}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') openLightbox(currentSlide.src, `${currentSlide.label} | ${project.title}`);
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      openLightbox(currentSlide.src, `${currentSlide.label} | ${project.title}`);
+                    }
                   }}
                 >
                   <img

@@ -360,6 +360,37 @@ nav .wrap.nav-wrap {
   transform: translateX(4px);
 }
 
+.btn-view-resume {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #08080A;
+  background: #E2E0DC;
+  border: 1px solid #E2E0DC;
+  padding: 12px 24px;
+  border-radius: 30px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-view-resume:hover {
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn-view-resume .arrow {
+  transition: transform 0.3s ease;
+}
+
+.btn-view-resume:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
 .hero-social-pill {
   display: inline-flex;
   align-items: center;
@@ -1108,6 +1139,13 @@ nav .wrap.nav-wrap {
 
   .timeline-icon {
     left: 2px;
+  }
+}
+
+@media (max-width: 400px) {
+  .profile-wrap {
+    padding-right: 16px;
+    padding-left: 16px;
   }
 }
 

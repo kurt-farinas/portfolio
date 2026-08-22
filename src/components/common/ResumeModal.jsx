@@ -5,9 +5,11 @@
 
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
+import useDialogFocus from './useDialogFocus';
 
 export default function ResumeModal() {
   const { resumeModalOpen, closeResumeModal } = useModal();
+  const dialogRef = useDialogFocus(resumeModalOpen);
 
   if (!resumeModalOpen) return null;
 
@@ -20,7 +22,7 @@ export default function ResumeModal() {
       aria-label="Kurt Fariñas Resume PDF Preview"
       onClick={closeResumeModal}
     >
-      <div className="modal-card resume-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div ref={dialogRef} className="modal-card resume-modal-card" onClick={(e) => e.stopPropagation()}>
         <div className="resume-modal-header">
           <div>
             <span className="modal-badge">// OFFICIAL CURRICULUM VITAE</span>

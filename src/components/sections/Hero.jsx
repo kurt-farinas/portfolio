@@ -57,6 +57,16 @@ export default function Hero() {
             <span className="arrow">→</span>
           </a>
 
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-view-resume"
+          >
+            <span>VIEW RESUME</span>
+            <span className="arrow">↗</span>
+          </a>
+
           <button
             type="button"
             className="btn-copy-email-pill"
@@ -98,7 +108,7 @@ export default function Hero() {
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
               </svg>
             </button>
-            <button type="button" onClick={openResumeModal} aria-label="View Resume CV">
+            <button type="button" onClick={openResumeModal} aria-label="Preview Resume PDF" title="Preview Resume PDF">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                 <polyline points="14 2 14 8 20 8"></polyline>

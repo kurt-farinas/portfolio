@@ -4,9 +4,11 @@
 
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
+import useDialogFocus from './useDialogFocus';
 
 export default function ScreenshotLightbox() {
   const { lightbox, closeLightbox } = useModal();
+  const dialogRef = useDialogFocus(lightbox.isOpen);
 
   if (!lightbox.isOpen) return null;
 
@@ -19,7 +21,7 @@ export default function ScreenshotLightbox() {
       aria-label="Screenshot Lightbox Preview"
       onClick={closeLightbox}
     >
-      <div className="screenshot-modal-content" onClick={(e) => e.stopPropagation()}>
+      <div ref={dialogRef} className="screenshot-modal-content" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           className="screenshot-modal-close"

@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useModal } from '../../context/ModalContext';
 import { useTheme } from '../../context/ThemeContext';
-import { useSound } from '../../context/SoundContext';
+import useDialogFocus from './useDialogFocus';
 
 export default function CommandPalette() {
   const {
@@ -18,7 +18,6 @@ export default function CommandPalette() {
   } = useModal();
 
   const { theme, toggleTheme } = useTheme();
-  const { soundEnabled, toggleSound } = useSound();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,6 +25,7 @@ export default function CommandPalette() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
   const listRef = useRef(null);
+  const dialogRef = useDialogFocus(commandPaletteOpen);
 
   const commands = useMemo(() => [
     {
@@ -175,16 +175,7 @@ export default function CommandPalette() {
       shortcut: 'T',
       handler: (e) => toggleTheme(e)
     },
-    {
-      id: 'action-sound',
-      group: 'Actions & Utilities',
-      title: soundEnabled ? 'Mute UI Sound Effects' : 'Enable UI Sound Effects',
-      subtitle: `Tactile procedural micro-audio is currently ${soundEnabled ? 'ON' : 'OFF'}`,
-      icon: 'volume-2',
-      shortcut: 'U',
-      handler: () => toggleSound()
-    }
-  ], [location.pathname, navigate, openProjectModal, openResumeModal, copyEmail, theme, toggleTheme, soundEnabled, toggleSound]);
+  ], [location.pathname, navigate, openProjectModal, openResumeModal, copyEmail, theme, toggleTheme]);
 
   const filteredCommands = useMemo(() => {
     if (!query.trim()) return commands;
@@ -233,6 +224,9 @@ export default function CommandPalette() {
   return (
     <div
       className="cmd-palette-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Command palette"
       onClick={closeCommandPalette}
       style={{
         position: 'fixed',
@@ -247,6 +241,7 @@ export default function CommandPalette() {
       }}
     >
       <div
+        ref={dialogRef}
         className="cmd-palette-card"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={handleKeyDown}
