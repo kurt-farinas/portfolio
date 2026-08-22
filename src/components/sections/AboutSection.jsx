@@ -22,10 +22,9 @@ export default function AboutSection() {
         </div>
 
         <div className="about-card">
-          {/* Executive Telemetry Blueprint Ledger */}
+          {/* At a Glance — Key credentials */}
           <div className="about-ledger-header">
-            <span className="ledger-title">// TECHNICAL VERIFICATION LEDGER</span>
-            <span className="ledger-stamp">STATUS: VERIFIED</span>
+            <span className="ledger-title">At a Glance</span>
           </div>
 
           <div className="about-ledger-grid">
@@ -74,7 +73,7 @@ export default function AboutSection() {
 
             {/* Right Column: Development Principles & Focus */}
             <div className="about-sidebar">
-              <div className="about-sidebar-heading">// DEVELOPMENT FOCUS</div>
+              <div className="about-sidebar-heading">Development Focus</div>
 
               <div className="about-principle-item">
                 <div className="about-principle-title">01 / Workflow Systems</div>

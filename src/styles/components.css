@@ -1979,6 +1979,139 @@
   margin-bottom: 16px;
 }
 
+/* ── Case Study Grid ── */
+.case-study-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.case-study-item {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+}
+
+.case-study-item:last-child {
+  border-bottom: none;
+}
+
+.case-study-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.case-study-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-faint);
+  margin: 0;
+}
+
+.case-study-result {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.case-study-result .case-study-label {
+  color: var(--hover-green);
+}
+
+[data-theme="light"] .case-study-result {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+@media (max-width: 600px) {
+  .case-study-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .case-study-label {
+    min-width: unset;
+  }
+}
+
+/* ── Architecture Flow Diagram ── */
+.arch-flow-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 20px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.arch-flow-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 18px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  min-width: 90px;
+  text-align: center;
+  transition: border-color 0.2s ease;
+}
+
+.arch-flow-node:hover {
+  border-color: var(--border-hover);
+}
+
+.arch-flow-label {
+  font-family: var(--font-heading, var(--font-display));
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.arch-flow-sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.arch-flow-arrow {
+  font-size: 18px;
+  color: var(--text-faint);
+  padding: 0 8px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+@media (max-width: 500px) {
+  .arch-flow-diagram {
+    flex-direction: column;
+    gap: 0;
+  }
+  .arch-flow-arrow {
+    transform: rotate(90deg);
+    padding: 4px 0;
+  }
+  .arch-flow-node {
+    min-width: 140px;
+  }
+}
+
 .modal-list {
   list-style: none;
   padding: 0;

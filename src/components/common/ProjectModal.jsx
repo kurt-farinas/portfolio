@@ -212,8 +212,54 @@ export default function ProjectModal() {
           </div>
         )}
 
-        <div className="modal-section-title">Overview &amp; Architecture</div>
-        <p className="modal-desc">{project.desc}</p>
+        {/* Engineering Case Study: Problem → Decision → Implementation → Trade-offs → Result */}
+        {project.caseStudy && (
+          <>
+            <div className="modal-section-title">Engineering Case Study</div>
+            <div className="case-study-grid">
+              <div className="case-study-item">
+                <span className="case-study-label">Problem</span>
+                <p className="case-study-text">{project.caseStudy.problem}</p>
+              </div>
+              <div className="case-study-item">
+                <span className="case-study-label">Decision</span>
+                <p className="case-study-text">{project.caseStudy.decision}</p>
+              </div>
+              <div className="case-study-item">
+                <span className="case-study-label">Implementation</span>
+                <p className="case-study-text">{project.caseStudy.implementation}</p>
+              </div>
+              <div className="case-study-item">
+                <span className="case-study-label">Trade-offs</span>
+                <p className="case-study-text">{project.caseStudy.tradeoffs}</p>
+              </div>
+              <div className="case-study-item case-study-result">
+                <span className="case-study-label">Result</span>
+                <p className="case-study-text">{project.caseStudy.result}</p>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Architecture Flow Diagram */}
+        {project.architectureFlow && (
+          <>
+            <div className="modal-section-title">System Architecture</div>
+            <div className="arch-flow-diagram">
+              {project.architectureFlow.map((node, idx) => (
+                <React.Fragment key={idx}>
+                  <div className="arch-flow-node">
+                    <span className="arch-flow-label">{node.label}</span>
+                    <span className="arch-flow-sub">{node.sub}</span>
+                  </div>
+                  {idx < project.architectureFlow.length - 1 && (
+                    <span className="arch-flow-arrow" aria-hidden="true">→</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </>
+        )}
 
         <div className="modal-section-title">Key Development Highlights</div>
         <ul className="modal-list">

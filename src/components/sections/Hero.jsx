@@ -3,7 +3,6 @@
    ======================================== */
 
 import React, { useEffect, useRef } from 'react';
-import TopoCanvas from './TopoCanvas';
 import { useModal } from '../../context/ModalContext';
 
 export default function Hero() {
@@ -40,8 +39,6 @@ export default function Hero() {
 
   return (
     <header className="hero hero-avery entered" id="hero">
-      <TopoCanvas />
-
       <div className="wrap hero-wrap">
         <div className="hero-center-content">
           <div className="hero-status-pill">

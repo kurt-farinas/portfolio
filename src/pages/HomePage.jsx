@@ -16,10 +16,10 @@ export default function HomePage() {
   return (
     <main id="mainContent">
       <Hero />
-      <AboutSection />
-      <TimelineSection />
       <ProjectsSection />
+      <TimelineSection />
       <SkillsSection />
+      <AboutSection />
       <AwardsSection />
       <BeyondTeaser />
       <ContactSection />

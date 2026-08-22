@@ -44,79 +44,7 @@ export default function ProjectsSection() {
         )}
 
         <div className="tickets">
-          {/* CARD 1: CS Form No. 6 Digitalization System */}
-          <article
-            className={`ticket ${isSkillMatching(hris.filterSkills) ? 'highlight-pulse' : ''}`}
-            id="ticket-hris"
-            data-skills={hris.filterSkills.join(',')}
-          >
-            <div className="ticket-header-meta">
-              <span className="ticket-badge-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                <span>98/100 OJT Rating · 342 Hrs</span>
-              </span>
-            </div>
-
-            <div
-              className="project-screenshot"
-              role="button"
-              tabIndex={0}
-              onClick={() => openProjectModal('hris')}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') openProjectModal('hris');
-              }}
-            >
-              <img
-                src="/hris-admin.png"
-                alt="CS Form No. 6 Digitalization System - Admin Dashboard"
-                loading="lazy"
-                decoding="async"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = '/hris-mockup.png';
-                }}
-              />
-              <div className="project-screenshot-overlay">View Full Details ↗</div>
-            </div>
-
-            <div className="ticket-body">
-              <div className="ticket-top">
-                <div className="ticket-title">{hris.title}</div>
-                <div className="ticket-telemetry-ribbon">
-                  {hris.telemetry.map((t, idx) => (
-                    <span key={idx}>{t}</span>
-                  ))}
-                </div>
-                <p className="ticket-summary">{hris.cardSummary}</p>
-              </div>
-
-              <div className="ticket-stack">
-                {hris.stack.map((s, idx) => (
-                  <span key={idx} className="stack-pill">{s}</span>
-                ))}
-              </div>
-
-              <div className="ticket-footer-actions">
-                <button
-                  type="button"
-                  className="btn-card-action"
-                  onClick={() => openProjectModal('hris')}
-                >
-                  View Full Details →
-                </button>
-                <span className="code-link-stub">
-                  <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                  </svg>
-                  <span>Code on Request</span>
-                </span>
-              </div>
-            </div>
-          </article>
-
-          {/* CARD 2: Boiyet's Gym Management System (Phase 3 Rebuild Details) */}
+          {/* CARD 1: Boiyet's Gym Management System — Strongest technical evidence */}
           <article
             className={`ticket ${isSkillMatching(gym.filterSkills) ? 'highlight-pulse' : ''}`}
             id="ticket-gym"
@@ -194,6 +122,78 @@ export default function ProjectsSection() {
                   </svg>
                   <span>View Code</span>
                 </a>
+              </div>
+            </div>
+          </article>
+
+          {/* CARD 2: CS Form No. 6 Digitalization System */}
+          <article
+            className={`ticket ${isSkillMatching(hris.filterSkills) ? 'highlight-pulse' : ''}`}
+            id="ticket-hris"
+            data-skills={hris.filterSkills.join(',')}
+          >
+            <div className="ticket-header-meta">
+              <span className="ticket-badge-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                <span>98/100 OJT Rating · 342 Hrs</span>
+              </span>
+            </div>
+
+            <div
+              className="project-screenshot"
+              role="button"
+              tabIndex={0}
+              onClick={() => openProjectModal('hris')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') openProjectModal('hris');
+              }}
+            >
+              <img
+                src="/hris-admin.png"
+                alt="CS Form No. 6 Digitalization System - Admin Dashboard"
+                loading="lazy"
+                decoding="async"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/hris-mockup.png';
+                }}
+              />
+              <div className="project-screenshot-overlay">View Full Details ↗</div>
+            </div>
+
+            <div className="ticket-body">
+              <div className="ticket-top">
+                <div className="ticket-title">{hris.title}</div>
+                <div className="ticket-telemetry-ribbon">
+                  {hris.telemetry.map((t, idx) => (
+                    <span key={idx}>{t}</span>
+                  ))}
+                </div>
+                <p className="ticket-summary">{hris.cardSummary}</p>
+              </div>
+
+              <div className="ticket-stack">
+                {hris.stack.map((s, idx) => (
+                  <span key={idx} className="stack-pill">{s}</span>
+                ))}
+              </div>
+
+              <div className="ticket-footer-actions">
+                <button
+                  type="button"
+                  className="btn-card-action"
+                  onClick={() => openProjectModal('hris')}
+                >
+                  View Full Details →
+                </button>
+                <span className="code-link-stub">
+                  <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                  <span>{hris.codeStub}</span>
+                </span>
               </div>
             </div>
           </article>
