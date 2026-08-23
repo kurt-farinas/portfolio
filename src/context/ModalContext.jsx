@@ -29,16 +29,9 @@ export function ModalProvider({ children }) {
   // Skill filter
   const [activeSkillFilter, setActiveSkillFilter] = useState(null);
 
-  // Toasts
-  const [toasts, setToasts] = useState([]);
-
-  const spawnToast = useCallback((title, body) => {
-    const id = Date.now() + Math.random().toString(36).substring(2, 7);
-    setToasts(prev => [...prev, { id, title, body }]);
-    setTimeout(() => {
-      setToasts(prev => prev.filter(t => t.id !== id));
-    }, 4200);
-  }, []);
+  // Toasts disabled globally
+  const toasts = [];
+  const spawnToast = useCallback(() => {}, []);
 
   const openProjectModal = useCallback((projectId) => {
     setSelectedProjectId(projectId);

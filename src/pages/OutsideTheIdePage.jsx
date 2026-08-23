@@ -1,12 +1,8 @@
-/* ========================================
-   OUTSIDE THE IDE PAGE  |  /outside-the-ide Route
-   Photo-Rich Gear & Lifestyle Gallery Architecture
-   ======================================== */
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { gearCatalogData } from '../data/projectData';
 import GearCard from '../components/common/GearCard';
+import WaveBackground from '../components/common/WaveBackground';
 import { useModal } from '../context/ModalContext';
 
 export default function OutsideTheIdePage() {
@@ -22,17 +18,14 @@ export default function OutsideTheIdePage() {
   const sections = useMemo(() => [
     {
       id: 'desk',
-      number: '01',
       title: 'Desk Setup & Battlestation'
     },
     {
       id: 'edc',
-      number: '02',
       title: 'Everyday Carry & Fitness'
     },
     {
       id: 'rituals',
-      number: '03',
       title: 'Sensory Architecture & Olfactory Chemistry'
     }
   ], []);
@@ -75,7 +68,12 @@ export default function OutsideTheIdePage() {
   }, []);
 
   return (
-    <main className="outside-page-wrap gear-showcase-page" style={{ paddingTop: '100px', minHeight: '85vh' }}>
+    <main className="outside-page-wrap gear-showcase-page" style={{ paddingTop: '100px', minHeight: '85vh', position: 'relative' }}>
+      {/* Interactive 3D Harmonic Wave Canvas Background */}
+      <div className="outside-wave-bg-wrap" aria-hidden="true">
+        <WaveBackground />
+      </div>
+
       <section className="section gear-page-section" style={{ paddingTop: 0 }}>
         <div className="wrap profile-wrap">
           {/* Back Navigation Bar */}
@@ -87,7 +85,7 @@ export default function OutsideTheIdePage() {
 
           {/* Header Title Block */}
           <header className="gear-header-block" style={{ marginBottom: '24px' }}>
-            <h1 className="gear-main-title font-display" style={{ marginBottom: 0 }}>
+            <h1 className="profile-title gear-main-title" style={{ marginBottom: 0 }}>
               Outside the IDE
             </h1>
           </header>
@@ -179,7 +177,7 @@ export default function OutsideTheIdePage() {
                     <section key={section.id} className="gear-category-section" aria-labelledby={`sec-${section.id}`}>
                       <div className="gear-category-header">
                         <h2 id={`sec-${section.id}`} className="gear-section-heading font-mono">
-                          <span className="sec-num">{section.number} //</span> {section.title}
+                          {section.title}
                         </h2>
                       </div>
 
@@ -195,7 +193,7 @@ export default function OutsideTheIdePage() {
                 <div className="gear-filtered-view">
                   <div className="gear-category-header">
                     <h2 className="gear-section-heading font-mono">
-                      FILTERED // {sections.find((s) => s.id === activeFilter)?.title}
+                      {sections.find((s) => s.id === activeFilter)?.title}
                     </h2>
                   </div>
                   <div className="gear-bento-grid">

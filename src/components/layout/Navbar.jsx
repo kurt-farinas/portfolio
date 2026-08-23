@@ -5,11 +5,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
-import { useModal } from '../../context/ModalContext';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
-  const { spawnToast } = useModal();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -103,10 +101,7 @@ export default function Navbar() {
             type="button"
             className="theme-btn"
             id="themeToggleBtn"
-            onClick={(e) => {
-              toggleTheme(e);
-              spawnToast('THEME UPDATED', `Switched to ${theme === 'dark' ? 'LIGHT' : 'DARK'} mode`);
-            }}
+            onClick={(e) => toggleTheme(e)}
             aria-label="Toggle Theme"
           >
             {theme === 'dark' ? (

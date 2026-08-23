@@ -4762,7 +4762,31 @@ kbd.keycap {
    ======================================== */
 
 .gear-showcase-page {
+  position: relative;
   padding-bottom: 80px;
+  overflow-x: hidden;
+}
+
+.outside-wave-bg-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  overflow: hidden;
+  will-change: opacity, transform;
+}
+
+[data-theme="light"] .outside-wave-bg-wrap {
+  opacity: 0.5;
+}
+
+.gear-page-section {
+  position: relative;
+  z-index: 1;
 }
 
 .gear-header-block {

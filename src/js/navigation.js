@@ -122,7 +122,6 @@ window.setThemeAccent = function(themeName) {
         root.removeAttribute('data-theme');
       }
       localStorage.setItem('portfolio-theme', themeName);
-      spawnToast('THEME UPDATED', `Switched to ${themeName.toUpperCase()} mode`);
     };
 
     const prefersReducedMotion = (typeof window !== 'undefined' && window.matchMedia)

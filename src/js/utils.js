@@ -2,28 +2,9 @@
    UTILS  |  Toast, Email, Achievements, Konami
    ======================================== */
 
-// Achievement toasts
+// Achievement toasts (disabled globally)
 export function spawnToast(title, body) {
-  const toastLayer = document.getElementById('toastLayer');
-  if (!toastLayer) return;
-
-  const t = document.createElement('div');
-  t.className = 'toast';
-  t.innerHTML = `
-    <svg class="badge-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L14.5 8.5L21 9.5L16 14L17.5 20.5L12 17L6.5 20.5L8 14L3 9.5L9.5 8.5L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-    </svg>
-    <div class="toast-text">
-      <div class="toast-title">${title}</div>
-      <div class="toast-body">${body}</div>
-    </div>`;
-  toastLayer.appendChild(t);
-  requestAnimationFrame(() => t.classList.add('show'));
-  setTimeout(() => {
-    t.classList.remove('show');
-    t.classList.add('hide');
-    setTimeout(() => t.remove(), 450);
-  }, 4200);
+  // Toasts disabled globally
 }
 
 // Copy email helper
