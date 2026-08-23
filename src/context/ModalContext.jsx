@@ -21,7 +21,7 @@ export function ModalProvider({ children }) {
   const [resumeModalOpen, setResumeModalOpen] = useState(false);
 
   // Screenshot lightbox
-  const [lightbox, setLightbox] = useState({ isOpen: false, src: '', caption: '' });
+  const [lightbox, setLightbox] = useState({ isOpen: false, src: '', caption: '', productUrl: null, actionLabel: null });
 
   // Command palette
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
@@ -57,14 +57,14 @@ export function ModalProvider({ children }) {
     document.body.style.overflow = '';
   }, []);
 
-  const openLightbox = useCallback((src, caption) => {
-    setLightbox({ isOpen: true, src, caption });
+  const openLightbox = useCallback((src, caption, productUrl = null, actionLabel = null) => {
+    setLightbox({ isOpen: true, src, caption, productUrl, actionLabel });
     playUiSound('click');
     document.body.style.overflow = 'hidden';
   }, [playUiSound]);
 
   const closeLightbox = useCallback(() => {
-    setLightbox({ isOpen: false, src: '', caption: '' });
+    setLightbox({ isOpen: false, src: '', caption: '', productUrl: null, actionLabel: null });
     if (!selectedProjectId && !resumeModalOpen) {
       document.body.style.overflow = '';
     }

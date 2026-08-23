@@ -44,6 +44,8 @@ function AppContent() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/after-hours" element={<OutsideTheIdePage />} />
+        <Route path="/downtime" element={<OutsideTheIdePage />} />
         <Route path="/outside-the-ide" element={<OutsideTheIdePage />} />
       </Routes>
 

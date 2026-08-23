@@ -44,6 +44,21 @@ export default function CommandPalette() {
       }
     },
     {
+      id: 'jump-about',
+      group: 'Navigation',
+      title: 'Jump to About Me',
+      subtitle: 'Full-stack background, OJT experience, and career goals',
+      icon: 'user',
+      shortcut: 'B',
+      handler: () => {
+        if (location.pathname !== '/') {
+          navigate('/#about');
+        } else {
+          document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    },
+    {
       id: 'jump-projects',
       group: 'Navigation',
       title: 'Jump to Featured Projects',
@@ -89,14 +104,14 @@ export default function CommandPalette() {
       }
     },
     {
-      id: 'jump-outside',
+      id: 'jump-after-hours',
       group: 'Navigation',
-      title: 'Jump to Outside the IDE',
-      subtitle: 'Gym, hardware, perfumes, tactical gaming',
+      title: 'Jump to After Hours',
+      subtitle: 'Snapshots, hardware, and fragrances',
       icon: 'sparkles',
-      shortcut: 'O',
+      shortcut: 'A',
       handler: () => {
-        navigate('/outside-the-ide');
+        navigate('/after-hours');
       }
     },
     {

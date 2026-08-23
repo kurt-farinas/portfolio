@@ -307,18 +307,18 @@ export const gearCatalogData = [
     title: "MCHOSE Ace 60 Pro",
     category: "Keyboard",
     section: "desk",
-    sectionTitle: "Desk Setup & Battlestation",
-    specs: "Magnetic Switches · Rapid Trigger 0.1mm · 60% Layout · Custom Lubed",
-    desc: "Hall effect magnetic switch keyboard customized for rapid actuation, ultra-low input latency, and tactile typing precision during engineering & gaming.",
+    sectionTitle: "Desk Setup and Gear",
+    specs: "Magnetic Switches · 0.005mm RT Accuracy · 8K Polling · 0.1ms Latency · Hot-Swappable",
+    desc: "Hall effect magnetic switch keyboard customized for rapid actuation, 8,000Hz polling rate, ultra-low input latency, and tactile typing precision during engineering & gaming.",
     icon: "keyboard",
-    tags: ["Hall Effect", "0.1mm RT", "60% Layout", "Type-C"],
-    url: "https://www.mchose.store/",
+    tags: ["Hall Effect", "0.005mm RT", "8K Polling", "0.1ms Latency"],
+    url: "https://shopee.ph/MCHOSE-Ace60-Pro-Hall-Effect-Magnetic-Switch-Gaming-Keyboard-0.1ms-Latency-0.005mm-RT-Accuracy-8K-Polling-Rate-RGB-Hot-swappable-Gaming-Keyboard-i.1545423268.44003548801?extraParams=%7B%22display_model_id%22%3A290295496052%2C%22model_selection_logic%22%3A3%7D",
     featured: true,
     aspectRatio: "wide",
     images: [
       {
         src: "/images/outside/mchose-ace60.jpg",
-        caption: "MCHOSE Ace 60 Pro — Magnetic switches with 0.1mm rapid trigger actuation",
+        caption: "MCHOSE Ace 60 Pro — Magnetic switches with 0.005mm rapid trigger accuracy and 8K polling",
         alt: "MCHOSE Ace 60 Pro Keyboard Overview"
       },
       {
@@ -333,12 +333,12 @@ export const gearCatalogData = [
     title: "Attack Shark X6",
     category: "Mouse",
     section: "desk",
-    sectionTitle: "Desk Setup & Battlestation",
+    sectionTitle: "Desk Setup and Gear",
     specs: "PAW3395 Sensor · 49g Ultralight · Tri-Mode Wireless · RGB Magnetic Dock",
     desc: "Tri-mode wireless gaming mouse equipped with PixArt PAW3395 flagship optical sensor and magnetic quick-charge dock.",
     icon: "mouse",
     tags: ["PAW3395", "49g", "Tri-Mode Wireless", "RGB Dock"],
-    url: "https://attackshark.com/",
+    url: "https://shopee.ph/Attack-Shark-X6-Wireless-Ergonomic-Gaming-Mouse-Adjustable-DPI-Wired-2.4G-Bluetooth-High-Precision-Rechargeable-Mice-i.1672861652.40931474667?extraParams=%7B%22display_model_id%22%3A426019836346%2C%22model_selection_logic%22%3A3%7D",
     featured: false,
     aspectRatio: "standard",
     images: [
@@ -351,22 +351,22 @@ export const gearCatalogData = [
   },
   {
     id: "koorui-24e3",
-    title: "Koorui 24E3",
+    title: "Koorui G2411P (24E3 V2)",
     category: "Display",
     section: "desk",
-    sectionTitle: "Desk Setup & Battlestation",
-    specs: "24\" 1080p · 165Hz IPS · 1ms MPRT · 99% sRGB · FreeSync / G-Sync",
-    desc: "High-refresh IPS panel delivering smooth frame pacing, accurate color reproduction, and zero screen tearing for development and gaming.",
+    sectionTitle: "Desk Setup and Gear",
+    specs: "24\" FHD 1080p · 200Hz IPS · 1ms MPRT · FreeSync / G-Sync · Powered by HKC",
+    desc: "High-refresh 200Hz FHD IPS panel delivering smooth frame pacing, accurate color reproduction, and zero screen tearing for engineering workflows and tactical gaming.",
     icon: "display",
-    tags: ["165Hz IPS", "1ms MPRT", "99% sRGB", "FreeSync"],
-    url: "https://www.koorui.net/",
+    tags: ["200Hz IPS", "1ms MPRT", "FHD 1080p", "FreeSync"],
+    url: "https://shopee.ph/Koorui-G2411P-(24E3-V2-powered-by-HKC)-24-Monitor-G2711P-27-FHD-IPS-200Hz-GamingMonitor-COD-i.199257947.20253645196?extraParams=%7B%22display_model_id%22%3A247851053729%2C%22model_selection_logic%22%3A3%7D",
     featured: false,
     aspectRatio: "standard",
     images: [
       {
         src: "/images/outside/koorui-24e3.jpg",
-        caption: "Koorui 24E3 165Hz IPS — Crisp text rendering and fast motion clarity",
-        alt: "Koorui 24E3 Display"
+        caption: "Koorui G2411P 200Hz IPS — Crisp text rendering and fast motion clarity",
+        alt: "Koorui G2411P Display"
       }
     ]
   },
@@ -375,12 +375,12 @@ export const gearCatalogData = [
     title: "7Hz Salnotes Zero",
     category: "Audio",
     section: "desk",
-    sectionTitle: "Desk Setup & Battlestation",
-    specs: "10mm Dynamic Driver · Metal Faceplate · 0.78mm 2-Pin Detachable IEMs",
-    desc: "In-Ear Monitors tuned with neutral sound signature for acoustic clarity, spatial awareness, and fatigue-free listening across long sessions.",
+    sectionTitle: "Desk Setup and Gear",
+    specs: "10mm Dynamic Driver · Metal Faceplate · 0.78mm 2-Pin Detachable Cable · Hi-Fi Tuning",
+    desc: "In-Ear Monitors tuned with neutral sound signature for acoustic clarity, spatial awareness, and fatigue-free listening across long coding sessions.",
     icon: "audio",
     tags: ["10mm Driver", "Detachable Cable", "Hi-Fi Tuning", "IEM"],
-    url: "https://www.linsoul.com/products/7hz-salnotes-zero",
+    url: "https://shopee.ph/7Hz-Salnotes-Zero-TYPE-C-3.5mm-10mm-Dynamic-Driver-In-Ear-Earphone-HIFI-Audio-Music-Earbuds-Headset-0.78mm-Detachable-Cable-i.418622941.23676487815?extraParams=%7B%22display_model_id%22%3A59687074016%2C%22model_selection_logic%22%3A3%7D",
     featured: false,
     aspectRatio: "standard",
     images: [
@@ -392,23 +392,44 @@ export const gearCatalogData = [
     ]
   },
   {
-    id: "battlestation-rig",
-    title: "Custom Battlestation Rig",
-    category: "Compute",
+    id: "asus-tuf-a15",
+    title: "ASUS TUF Gaming A15 (2023)",
+    category: "Compute & Battlestation",
     section: "desk",
-    sectionTitle: "Desk Setup & Battlestation",
-    specs: "Multi-Core CPU · Fast NVMe SSD · Dual-Channel Memory · Dedicated GPU",
-    desc: "My dedicated development and gaming workstation engineered for fast compile cycles, containerized services, and tactical gaming.",
-    icon: "cpu",
-    tags: ["Dev Workstation", "NVMe PCIe", "Dual Channel", "Fast Compile"],
-    url: null,
+    sectionTitle: "Desk Setup and Gear",
+    specs: "AMD Ryzen 7 · NVIDIA GeForce RTX 40-Series · 144Hz FHD · MUX Switch + Advanced Optimus",
+    desc: "My primary development and gaming battlestation engineered for high-performance compile cycles, containerized services, Docker containers, and high-intensity gaming.",
+    icon: "laptop",
+    tags: ["Ryzen 7", "RTX 40-Series", "MUX Switch", "Dev Rig"],
+    url: "https://www.asus.com/ph/laptops/for-gaming/tuf-gaming/asus-tuf-gaming-a15-2023/",
     featured: true,
     aspectRatio: "wide",
     images: [
       {
-        src: "/images/outside/battlestation.jpg",
-        caption: "Workstation interior — High-airflow chassis & cable management",
-        alt: "Custom Battlestation Workstation"
+        src: "/images/outside/asus-tuf-a15.jpg",
+        caption: "ASUS TUF Gaming A15 (2023) — Primary development and gaming powerhouse",
+        alt: "ASUS TUF Gaming A15 (2023) Battlestation Rig"
+      }
+    ]
+  },
+  {
+    id: "iphone-11",
+    title: "iPhone 11",
+    category: "Mobile Device",
+    section: "desk",
+    sectionTitle: "Desk Setup and Gear",
+    specs: "Liquid Retina HD Display · A13 Bionic · 4K Video · Viewport Testing",
+    desc: "Everyday communications device and handheld viewport for verifying responsive web builds, mobile layouts, and touch UX.",
+    icon: "smartphone",
+    tags: ["A13 Bionic", "Liquid Retina", "Mobile Testing", "iOS"],
+    url: "https://support.apple.com/kb/SP804",
+    featured: false,
+    aspectRatio: "standard",
+    images: [
+      {
+        src: "/images/outside/mobile-device.jpg",
+        caption: "iPhone 11 — Handheld viewport for mobile layout inspection and responsive testing",
+        alt: "iPhone 11 Mobile Testing Device"
       }
     ]
   },
@@ -417,7 +438,7 @@ export const gearCatalogData = [
     title: "Gym & Progressive Training Kit",
     category: "Fitness & Health",
     section: "edc",
-    sectionTitle: "Everyday Carry & Fitness",
+    sectionTitle: "Snapshots",
     specs: "Lifting Straps · Protein Shaker · Progressive Overload Logbook",
     desc: "The physical discipline behind the thesis. Regular barbell and dumbbell training that directly inspired the architecture of Boiyet's Gym Management System.",
     icon: "dumbbell",
@@ -439,32 +460,11 @@ export const gearCatalogData = [
     ]
   },
   {
-    id: "mobile-terminal",
-    title: "Daily Mobile Device",
-    category: "Device & Field Testing",
-    section: "edc",
-    sectionTitle: "Everyday Carry & Fitness",
-    specs: "OLED High-PPI · Multi-Factor Auth · Responsive Viewport Testing",
-    desc: "Everyday communications device and handheld viewport for verifying responsive web builds, mobile layouts, and touch UX.",
-    icon: "smartphone",
-    tags: ["Mobile Testing", "MFA Security", "Daily Carry"],
-    url: null,
-    featured: false,
-    aspectRatio: "standard",
-    images: [
-      {
-        src: "/images/outside/mobile-device.jpg",
-        caption: "Handheld testing rig for mobile layout inspection and auth keys",
-        alt: "Daily Mobile Testing Device"
-      }
-    ]
-  },
-  {
     id: "tactical-gaming",
     title: "Tactical & Sandbox Setup",
     category: "Tactical Gaming",
     section: "edc",
-    sectionTitle: "Everyday Carry & Fitness",
+    sectionTitle: "Snapshots",
     specs: "Tactical Team Play · Logic Sandboxes · Low-Latency Voice Channels",
     desc: "Strategy, team coordination, and logic puzzle sandboxes for unwinding after intense coding sessions with friends.",
     icon: "gamepad",
@@ -481,24 +481,136 @@ export const gearCatalogData = [
     ]
   },
   {
-    id: "perfume-rotation",
-    title: "Signature Olfactory Rotation",
-    category: "Fragrance Chemistry",
+    id: "hawas-ice",
+    title: "Rasasi Hawas Ice",
+    category: "Fresh Aquatic & Citrus",
     section: "rituals",
-    sectionTitle: "Sensory & Rituals",
-    specs: "Structured Top / Heart / Base Notes · Clean Citrus · Woody Amber",
-    desc: "Appreciating fragrance chemistry: how scent profiles transition from bright opening notes to rich wood and musk foundations.",
+    sectionTitle: "Fragrance Collection",
+    specs: "Frozen Apple · Italian Bergamot · Lemon · Star Anise · Plum · Ambergris",
+    desc: "Crisp icy aquatic fragrance opening with frosty apple and bright citrus, drying down into smooth ambergris, driftwood, and clean musk.",
     icon: "perfume",
-    tags: ["Citrus Top", "Woody Amber", "Clean Musk", "Scent Chemistry"],
-    url: null,
+    tags: ["Frozen Apple", "Italian Bergamot", "Ambergris", "Beast Mode"],
+    url: "https://shopee.ph/Dubai-Shop-Hawas-Ice-Her-Tropical-Perfumes-i.325803687.24497320511?extraParams=%7B%22display_model_id%22%3A321003737550%2C%22model_selection_logic%22%3A3%7D",
     featured: true,
     aspectRatio: "wide",
     images: [
       {
-        src: "/images/outside/perfume-collection.jpg",
-        caption: "Olfactory rotation — Fresh citrus openings and deep woody amber bases",
-        alt: "Signature Fragrance Collection"
+        src: "/images/outside/hawas-ice.jpg",
+        caption: "Rasasi Hawas Ice — Icy frozen apple, Italian citrus, and ambergris",
+        alt: "Rasasi Hawas Ice Perfume Bottle"
+      }
+    ]
+  },
+  {
+    id: "afnan-sce",
+    title: "Afnan Supremacy Collector's Edition",
+    category: "Smoky Fruity Chypre",
+    section: "rituals",
+    sectionTitle: "Fragrance Collection",
+    specs: "Pineapple · Blackcurrant · Apple · White Birch · Smoke · Ambergris · Oakmoss",
+    desc: "Extrait de parfum featuring bold pineapple and blackcurrant balanced by smoky birch wood, earthy oakmoss, and rich ambergris.",
+    icon: "perfume",
+    tags: ["Pineapple", "Blackcurrant", "Smoky Birch", "Extrait de Parfum"],
+    url: "https://shopee.ph/Afnan-Supremacy-Collectors-Edition-EDP-Perfume-100ML-i.325803687.44858179840?extraParams=%7B%22display_model_id%22%3A356401554492%2C%22model_selection_logic%22%3A3%7D",
+    featured: false,
+    aspectRatio: "standard",
+    images: [
+      {
+        src: "/images/outside/afnan-sce.jpg",
+        caption: "Afnan Supremacy Collector's Edition — Smoky pineapple, birch, and oakmoss",
+        alt: "Afnan Supremacy Collector's Edition Bottle"
+      }
+    ]
+  },
+  {
+    id: "liquid-brun",
+    title: "Liquid Brun · French Avenue",
+    category: "Warm Spicy Gourmand",
+    section: "rituals",
+    sectionTitle: "Fragrance Collection",
+    specs: "Bourbon Vanilla · Cinnamon · Orange Blossom · Cardamom · Praline · Guaiac Wood",
+    desc: "Luxurious warm spicy profile inspired by PdM Althair with creamy bourbon vanilla, toasted cinnamon, orange blossom, and rich woody undertones.",
+    icon: "perfume",
+    tags: ["Bourbon Vanilla", "Cinnamon", "Althair DNA", "Warm Gourmand"],
+    url: "https://shopee.ph/Liquid-Brun-100ML-l-Limited-Edition-150ML-by-French-Avenue-(PDM-Althair)-i.325803687.40556445433?extraParams=%7B%22display_model_id%22%3A345664012222%2C%22model_selection_logic%22%3A3%7D",
+    featured: true,
+    aspectRatio: "wide",
+    images: [
+      {
+        src: "/images/outside/liquid-brun.jpg",
+        caption: "Liquid Brun by French Avenue — Bourbon vanilla, toasted cinnamon, and praline",
+        alt: "Liquid Brun French Avenue Bottle"
+      }
+    ]
+  },
+  {
+    id: "jaguar-red",
+    title: "Jaguar Classic Red",
+    category: "Fruity Aromatic Wood",
+    section: "rituals",
+    sectionTitle: "Fragrance Collection",
+    specs: "Raspberry · Blueberry · Bergamot · Jasmine · Cedarwood · Amber · Tonka Bean",
+    desc: "Smooth dynamic daily wear opening with tart red and blue berries, deepening into cedarwood, warm amber, and creamy tonka bean.",
+    icon: "perfume",
+    tags: ["Red Berries", "Warm Amber", "Cedarwood", "Daily Scent"],
+    url: "https://shopee.ph/Jaguar-Classic-Red-Jaguar-for-men-i.220864586.26781305475?extraParams=%7B%22display_model_id%22%3A215932815162%2C%22model_selection_logic%22%3A3%7D",
+    featured: false,
+    aspectRatio: "standard",
+    images: [
+      {
+        src: "/images/outside/jaguar-red.jpg",
+        caption: "Jaguar Classic Red — Sweet berries, cedarwood, and tonka bean",
+        alt: "Jaguar Classic Red Perfume Bottle"
       }
     ]
   }
 ];
+
+export const snapshotsDeckData = [
+  {
+    id: "deck-barbell",
+    title: "Barbell & Progressive Training",
+    subtitle: "The physical discipline behind the thesis engineering & system architecture",
+    date: "Discipline & Health",
+    src: "/images/outside/gym-training.jpg",
+    alt: "Gym Training & Progressive Overload",
+    caption: "Barbell station & training setup — The offline consistency engine"
+  },
+  {
+    id: "deck-gear",
+    title: "Lifting Gear & Workout Log",
+    subtitle: "Heavy-duty lifting straps, shaker, and trackable progressive overload logs",
+    date: "Daily Grind",
+    src: "/images/outside/gym-gear.jpg",
+    alt: "Lifting Essentials & Workout Logs",
+    caption: "Heavy-duty lifting straps, shaker, and workout logs"
+  },
+  {
+    id: "deck-mobile",
+    title: "Field Rig & Mobile Testing",
+    subtitle: "iPhone 11 handheld viewport for verifying responsive web builds and MFA",
+    date: "Daily Carry",
+    src: "/images/outside/mobile-device.jpg",
+    alt: "iPhone 11 Mobile Testing Device",
+    caption: "iPhone 11 — Handheld viewport for mobile layout inspection and responsive testing"
+  },
+  {
+    id: "deck-tactical",
+    title: "Tactical & Sandbox Sessions",
+    subtitle: "Strategy, team coordination, and logic puzzle sandboxes after coding sprints",
+    date: "Logic Sandboxes",
+    src: "/images/outside/gaming-setup.jpg",
+    alt: "Tactical Gaming Setup",
+    caption: "Tactical and sandbox session environment with low-latency comms"
+  },
+  {
+    id: "deck-battlestation",
+    title: "Battlestation Powerhouse",
+    subtitle: "ASUS TUF A15 development rig engineered for containerized services & compiles",
+    date: "Dev Station",
+    src: "/images/outside/asus-tuf-a15.jpg",
+    alt: "ASUS TUF Gaming A15",
+    caption: "ASUS TUF Gaming A15 (2023) — Primary development and gaming powerhouse"
+  }
+];
+

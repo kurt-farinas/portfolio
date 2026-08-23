@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { projectDetails, timelineData, awardsData, beyondTilesData, gearCatalogData } from '../src/data/projectData.js';
+import { projectDetails, timelineData, awardsData, beyondTilesData, gearCatalogData, snapshotsDeckData } from '../src/data/projectData.js';
 
 describe('React Project Data Integrity', () => {
   it('contains valid definitions for HRIS and Gym Rebuild projects', () => {
@@ -51,7 +51,7 @@ describe('React Project Data Integrity', () => {
     expect(titles).toContain('Java Fundamentals | Terms 1 & 2');
   });
 
-  it('verifies 4 Outside the IDE tiles with genre tags for gaming', () => {
+  it('verifies beyond tiles data', () => {
     const tiles = Object.keys(beyondTilesData);
     expect(tiles).toHaveLength(4);
     expect(beyondTilesData.gaming.tags).toContain('Tactical Team Play');
@@ -59,22 +59,50 @@ describe('React Project Data Integrity', () => {
   });
 
   it('verifies gearCatalogData definitions and section mapping', () => {
-    expect(gearCatalogData.length).toBe(9);
+    expect(gearCatalogData.length).toBe(12);
     const ids = gearCatalogData.map((i) => i.id);
     expect(ids).toContain('mchose-ace60');
     expect(ids).toContain('attack-shark-x6');
     expect(ids).toContain('koorui-24e3');
     expect(ids).toContain('salnotes-zero');
+    expect(ids).toContain('asus-tuf-a15');
     expect(ids).toContain('gym-kit');
-    expect(ids).toContain('perfume-rotation');
+    expect(ids).toContain('hawas-ice');
+    expect(ids).toContain('afnan-sce');
+    expect(ids).toContain('liquid-brun');
+    expect(ids).toContain('jaguar-red');
     expect(ids).not.toContain('black-coffee');
 
     const keyboard = gearCatalogData.find((i) => i.id === 'mchose-ace60');
-    expect(keyboard.specs).toContain('Rapid Trigger');
+    expect(keyboard.specs).toContain('0.005mm RT');
     expect(keyboard.category).toBe('Keyboard');
     expect(keyboard.section).toBe('desk');
+    expect(keyboard.sectionTitle).toBe('Desk Setup and Gear');
     expect(keyboard.images.length).toBeGreaterThanOrEqual(2);
     expect(keyboard.images[0].src).toBe('/images/outside/mchose-ace60.jpg');
+
+    const laptop = gearCatalogData.find((i) => i.id === 'asus-tuf-a15');
+    expect(laptop.title).toContain('ASUS TUF Gaming A15');
+    expect(laptop.url).toContain('asus.com');
+
+    const iphone = gearCatalogData.find((i) => i.id === 'iphone-11');
+    expect(iphone.title).toBe('iPhone 11');
+    expect(iphone.section).toBe('desk');
+    expect(iphone.sectionTitle).toBe('Desk Setup and Gear');
+
+    const gymItem = gearCatalogData.find((i) => i.id === 'gym-kit');
+    expect(gymItem.sectionTitle).toBe('Snapshots');
+
+    const hawas = gearCatalogData.find((i) => i.id === 'hawas-ice');
+    expect(hawas.title).toBe('Rasasi Hawas Ice');
+    expect(hawas.sectionTitle).toBe('Fragrance Collection');
+    expect(hawas.url).toContain('shopee.ph');
+  });
+
+  it('verifies snapshotsDeckData for card deck shuffler', () => {
+    expect(snapshotsDeckData.length).toBeGreaterThanOrEqual(4);
+    const titles = snapshotsDeckData.map((s) => s.title);
+    expect(titles).toContain('Barbell & Progressive Training');
+    expect(titles).toContain('Lifting Gear & Workout Log');
   });
 });
-

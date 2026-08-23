@@ -44,6 +44,20 @@ export default function ScreenshotLightbox() {
             {lightbox.caption}
           </p>
         )}
+        {lightbox.productUrl && (
+          <div className="screenshot-modal-actions">
+            <a
+              href={lightbox.productUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="screenshot-product-btn font-mono"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <span>{lightbox.actionLabel || 'VIEW PRODUCT SPECS'}</span>
+              <span className="link-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

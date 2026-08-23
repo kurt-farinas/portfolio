@@ -75,6 +75,16 @@ function GearSchematic({ icon, title }) {
           <path d="M52 10C55 4 65 4 68 10" stroke="currentColor" strokeWidth="1.4" strokeDasharray="2 2" strokeOpacity="0.5" />
         </svg>
       );
+    case 'laptop':
+      return (
+        <svg viewBox="0 0 120 70" fill="none" className="gear-schematic-svg" aria-label={title}>
+          <rect x="28" y="12" width="64" height="40" rx="3" stroke="currentColor" strokeWidth="2" strokeOpacity="0.8" fill="currentColor" fillOpacity="0.04" />
+          <rect x="33" y="17" width="54" height="30" rx="1.5" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" />
+          <text x="60" y="35" textAnchor="middle" fill="currentColor" fillOpacity="0.75" fontFamily="monospace" fontSize="8" fontWeight="bold">TUF // A15</text>
+          <path d="M18 54L26 52H94L102 54C104 55 103 57 100 57H20C17 57 16 55 18 54Z" stroke="currentColor" strokeWidth="1.8" strokeOpacity="0.8" fill="currentColor" fillOpacity="0.08" />
+          <rect x="52" y="53" width="16" height="2" rx="1" fill="currentColor" fillOpacity="0.5" />
+        </svg>
+      );
     case 'cpu':
       return (
         <svg viewBox="0 0 120 70" fill="none" className="gear-schematic-svg" aria-label={title}>
@@ -144,7 +154,7 @@ function GearSchematic({ icon, title }) {
   }
 }
 
-export default function GearCard({ item, featured = false }) {
+export default function GearCard({ item }) {
   const { openLightbox } = useModal();
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
   const [imgLoadFailed, setImgLoadFailed] = useState(false);
@@ -171,13 +181,18 @@ export default function GearCard({ item, featured = false }) {
     e.stopPropagation();
     e.preventDefault();
     if (currentPhoto && !imgLoadFailed) {
-      openLightbox(currentPhoto.src, currentPhoto.caption || item.title);
+      openLightbox(
+        currentPhoto.src,
+        currentPhoto.caption || item.title,
+        item.url,
+        'PRODUCT LINK'
+      );
     }
   };
 
   return (
-    <article className={`gear-card ${featured || item.featured ? 'gear-card--featured' : ''} group`}>
-      {/* Top Media / Photography Frame */}
+    <article className="gear-card group">
+      {/* Top Square White Showcase Frame */}
       <div 
         className="gear-media-box" 
         onClick={currentPhoto && !imgLoadFailed ? handleZoom : undefined}
@@ -194,7 +209,7 @@ export default function GearCard({ item, featured = false }) {
             />
             {/* Zoom Action Icon Indicator on Hover */}
             <div className="gear-photo-zoom-hint" title="Click to expand fullscreen">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 <line x1="11" y1="8" x2="11" y2="14"></line>
@@ -205,10 +220,6 @@ export default function GearCard({ item, featured = false }) {
         ) : (
           <div className="gear-schematic-frame">
             <GearSchematic icon={item.icon} title={item.title} />
-            <div className="gear-drop-hint font-mono">
-              <span className="drop-icon">📷</span>
-              <span className="drop-text">{currentPhoto?.src || `target: /images/outside/${item.id}.jpg`}</span>
-            </div>
           </div>
         )}
 
@@ -248,46 +259,29 @@ export default function GearCard({ item, featured = false }) {
             </button>
           </div>
         )}
-
-        {/* Photo Counter Pill Badge */}
-        <div className="gear-photo-badge font-mono">
-          <span>{images.length > 0 ? `📸 ${activePhotoIdx + 1}/${images.length}` : '📐 SCHEMATIC'}</span>
-        </div>
       </div>
 
-      {/* Card Content & Metadata Block */}
+      {/* Card Content: Title + Arrow & Specs */}
       <div className="gear-info-block">
-        <div className="gear-meta-header">
-          <span className="gear-category-badge font-mono">{item.category}</span>
-          {item.url && (
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="gear-link-pill font-mono"
-              title={`Visit official ${item.title} specs`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span>SPECS</span>
-              <span className="link-arrow" aria-hidden="true">↗</span>
-            </a>
-          )}
-        </div>
-
-        <h3 className="gear-title">{item.title}</h3>
-        <p className="gear-specs-text font-mono">{item.specs}</p>
-        <p className="gear-desc-text">{item.desc}</p>
-
-        {/* Feature Tags */}
-        {item.tags && item.tags.length > 0 && (
-          <div className="gear-tags-row">
-            {item.tags.map((tag, idx) => (
-              <span key={idx} className="gear-tag-pill font-mono">
-                {tag}
-              </span>
-            ))}
+        {item.url ? (
+          <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gear-title-link"
+            title={`Open ${item.title} product link`}
+          >
+            <div className="gear-title-row">
+              <h3 className="gear-title">{item.title}</h3>
+              <span className="gear-arrow" aria-hidden="true">↗</span>
+            </div>
+          </a>
+        ) : (
+          <div className="gear-title-row">
+            <h3 className="gear-title">{item.title}</h3>
           </div>
         )}
+        <p className="gear-specs-text">{item.specs}</p>
       </div>
     </article>
   );

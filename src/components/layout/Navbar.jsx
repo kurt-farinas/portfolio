@@ -68,6 +68,13 @@ export default function Navbar() {
           <div className="nav-links" id="navLinks">
             <button
               type="button"
+              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'about' ? 'active-glow' : ''}`}
+              onClick={() => handleNavClick('about')}
+            >
+              ABOUT
+            </button>
+            <button
+              type="button"
               className={`nav-link-btn ${location.pathname === '/' && activeSection === 'projects' ? 'active-glow' : ''}`}
               onClick={() => handleNavClick('projects')}
             >
@@ -87,6 +94,13 @@ export default function Navbar() {
             >
               SKILLS
             </button>
+            <Link
+              to="/after-hours"
+              className={`nav-link-btn ${location.pathname === '/after-hours' || location.pathname === '/downtime' || location.pathname === '/outside-the-ide' ? 'active-glow' : ''}`}
+              style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
+            >
+              AFTER HOURS
+            </Link>
             <button
               type="button"
               className={`nav-link-btn ${location.pathname === '/' && activeSection === 'contact' ? 'active-glow' : ''}`}
@@ -145,9 +159,18 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`} id="mobileMenu">
+        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('about')}>ABOUT</button>
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('projects')}>PROJECTS</button>
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('timeline')}>EXPERIENCE</button>
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('skills')}>SKILLS</button>
+        <Link
+          to="/after-hours"
+          className="mobile-nav-btn"
+          style={{ textDecoration: 'none' }}
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          AFTER HOURS
+        </Link>
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('contact')}>CONTACT</button>
         <a href="/resume.pdf" download onClick={() => setMobileMenuOpen(false)}>RESUME ↓</a>
       </div>
