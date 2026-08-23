@@ -80,11 +80,11 @@ const ApprovalStateMachine = {
     statusBadge: '<span class="status-dot-green"></span> Production-Tested Rebuild',
     badge: "Solo Full-Stack · 119 Passing Tests",
     cardSummary: "Rebuilt the thesis platform after a security audit, preserving core workflows with role-based access and 119 passing Pest tests.",
-    desc: "Solo-built and later rebuilt member management and revenue platform after a self-conducted security audit surfaced real vulnerabilities in the original PHP build (public file storage, missing upload validation). Rearchitected on Laravel 12 with Inertia.js and React, covering 29 domain tables and 88 of 92 routes with role-based access, backed by 119 passing Pest tests.",
+    desc: "Solo-built and later rebuilt member management and revenue platform after a self-conducted security audit surfaced real vulnerabilities in the original PHP build (public file storage, missing upload validation). Rearchitected on Laravel 12 with Inertia.js and React, covering 28 domain tables and 86 protected routes (92 total) with role-based access, backed by 119 passing Pest tests.\n\nBeyond core gym operations, the platform includes a relational workout plan builder (exercises, sets, reps, difficulty tiers), structured nutrition and meal planning with macro tracking, and client-facing progress logging for body metrics and completed workouts, giving trainers and clients a full coaching loop, not just administrative tooling.",
     caseStudy: {
       problem: "The original PHP thesis build had critical security issues I discovered post-defense: publicly accessible file storage, missing upload validation, no CSRF protection, and raw SQL queries vulnerable to injection.",
       decision: "Full rebuild on Laravel 12 with Inertia.js and React rather than patching. The original architecture made incremental fixes impractical because routing, auth, and data access were tightly coupled with no separation of concerns.",
-      implementation: "Designed 29 normalized domain tables from scratch. Implemented 88 of 92 routes with RBAC gates (Admin, Trainer, Client). Built contactless QR attendance with 3-second debounce, POS with receipt generation, Chart.js analytics dashboards, and Excel/PDF report exports.",
+      implementation: "Designed 28 normalized domain tables from scratch. Implemented 86 protected routes across 92 total with RBAC gates (Admin, Trainer, Client). Built contactless QR attendance with a 5-minute (300-second) server-side attendance state machine (checks in, returns 'already checked in' on repeat scans within 5 minutes, checks out and calculates duration after 5 minutes), POS with receipt generation, Chart.js analytics dashboards, and streamed CSV report exports with UTF-8 BOM for Excel/Sheets compatibility.",
       tradeoffs: "Full rebuild cost ~3 months vs. patching in weeks. Justified because the original had no tests, no middleware, and adding security retroactively would have required rewriting most controllers anyway. Also gained 119 Pest tests covering auth, gates, registration, and attendance flows.",
       result: "All original thesis features preserved with proper security (CSRF, validated uploads, private storage, parameterized queries). 119 passing Pest tests. Public repository available for code inspection."
     },
@@ -92,16 +92,16 @@ const ApprovalStateMachine = {
       { label: "React", sub: "Frontend" },
       { label: "Inertia.js", sub: "SPA Bridge" },
       { label: "Laravel 12", sub: "Controllers + RBAC" },
-      { label: "MySQL", sub: "29 Tables" }
+      { label: "MySQL", sub: "28 Tables" }
     ],
     demoUrl: "https://gym-management-systemv2.vercel.app/",
     codeUrl: "https://github.com/kurt-farinas/gym-management-systemv2",
     highlights: [
-      "Security-Driven Full-Stack Rebuild: Rearchitected on Laravel 12 with Inertia.js and React, covering 29 domain tables and 88 of 92 routes with strict role-based access.",
+      "Security-Driven Full-Stack Rebuild: Rearchitected on Laravel 12 with Inertia.js and React, covering 28 domain tables and 86 protected routes (92 total) with strict role-based access.",
       "119 Passing Pest Tests: Built comprehensive test coverage across authentication, authorization gates, member registration, and attendance tracking.",
-      "Contactless QR Attendance Scanner: Instant camera QR check-ins with client-side debounce and server-side membership validation.",
+      "Server-Side QR Attendance State Machine: 5-minute (300-second) server-side state machine that checks in, returns 'already checked in' on repeat scans within 5 minutes, and checks out with duration calculation after 5 minutes.",
       "Chart.js Analytics & Financials: Interactive revenue trend curves, expense breakdowns, net profit tracking, and member BMI/strength progress dashboards.",
-      "POS Receipts & Excel Reports: PDF receipt generation for POS retail transactions alongside downloadable HTML and Excel (.xls) financial summaries."
+      "POS Receipts & Streamed CSV Reports: POS receipt generation alongside streamed CSV financial reports with UTF-8 BOM for Excel/Sheets compatibility."
     ],
     stack: ["Laravel 12", "Inertia.js", "React", "Tailwind CSS", "MySQL", "Pest", "QR"],
     filterSkills: ["laravel", "inertia", "react", "tailwind", "mysql", "pest", "qr", "javascript"],
@@ -112,27 +112,76 @@ const ApprovalStateMachine = {
       "QR Attendance"
     ],
     architecturePipeline: [
-      { step: "01", title: "QR Camera Ingestion", desc: "Contactless camera scanner reads personal member token with 3s debounce." },
-      { step: "02", title: "Pest-Tested Auth Gate", desc: "Laravel 12 controller validates active plan, expiration, and multi-tenant constraints." },
+      { step: "01", title: "QR Camera Ingestion", desc: "Camera scanner reads personal member QR token and posts payload to attendance API." },
+      { step: "02", title: "5-Min State Machine Gate", desc: "Laravel 12 validates active plan, enforces 5-min cooldown, or calculates checkout duration." },
       { step: "03", title: "Live Telemetry & Dashboard", desc: "Access granted; attendance logged; real-time revenue & active occupancy updated." }
     ],
     codeSnippet: {
-      title: "Contactless QR Scanner & Real-Time Verification",
-      code: `// Real-Time Contactless QR Verification Pipeline
-async function handleQrScan(memberToken) {
-  if (isDebounced(memberToken, 3000)) return; // Prevent duplicate scan bursts
-  
-  const response = await fetch('/api/attendance/checkin', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({ token: memberToken, timestamp: Date.now() })
-  });
-  
-  const { status, member, planValid } = await response.json();
-  if (status === 'ACTIVE' && planValid) {
-    triggerGreenLightAccess(member.name);
-    syncDashboardMetrics({ activeCheckins: '+1' });
-  }
+      langTag: "PHP / ATTENDANCE STATE MACHINE",
+      title: "Server-Side QR Attendance State Machine (5-Minute Cooldown)",
+      code: `public function scan(Request $request): JsonResponse
+{
+    $request->validate([
+        'qr_code_token' => ['required', 'string', 'size:64'],
+    ]);
+
+    $token = $request->input('qr_code_token');
+
+    // Documented rule: 64-character unguessable token lookup
+    $user = User::where('qr_code_token', $token)->firstOrFail();
+
+    // Validate membership status
+    if ($user->membership_status !== 'active' || ($user->membership_expires_at && $user->membership_expires_at->isPast())) {
+        return response()->json([
+            'message' => 'Membership is expired or inactive.',
+        ], 422);
+    }
+
+    $latestAttendance = Attendance::where('user_id', $user->id)
+        ->latest('checked_in_at')
+        ->first();
+
+    // If there is an open check-in session
+    if ($latestAttendance && $latestAttendance->checked_out_at === null) {
+        $checkedInTimestamp = $latestAttendance->checked_in_at->getTimestamp();
+        $nowTimestamp = now()->getTimestamp();
+        $diffInSeconds = $nowTimestamp - $checkedInTimestamp;
+
+        // 5-minute cooldown: scan within 5 minutes returns "already checked in", does not check out
+        if ($diffInSeconds < 300) {
+            return response()->json([
+                'status' => 'already_checked_in',
+                'message' => 'Already checked in. Please wait before scanning again.',
+                'user_id' => $user->id,
+            ]);
+        }
+
+        // Scan after 5 minutes: check out and calculate duration
+        $durationMinutes = (int) max(1, round($diffInSeconds / 60));
+        $latestAttendance->update([
+            'checked_out_at' => now(),
+            'duration_minutes' => $durationMinutes,
+        ]);
+
+        return response()->json([
+            'status' => 'checked_out',
+            'user_id' => $user->id,
+            'duration_minutes' => $durationMinutes,
+        ]);
+    }
+
+    // Subsequent scan creates a new check-in
+    $attendance = Attendance::create([
+        'user_id' => $user->id,
+        'checked_in_at' => now(),
+        'check_in_method' => 'qr',
+    ]);
+
+    return response()->json([
+        'status' => 'checked_in',
+        'user_id' => $user->id,
+        'checked_in_at' => $attendance->checked_in_at->toDateTimeString(),
+    ]);
 }`
     },
     slides: [
