@@ -92,8 +92,8 @@ export default function CommandPalette() {
       id: 'jump-outside',
       group: 'Navigation',
       title: 'Jump to Outside the IDE',
-      subtitle: 'Gym, hardware, perfumes, gaming, black coffee',
-      icon: 'coffee',
+      subtitle: 'Gym, hardware, perfumes, tactical gaming',
+      icon: 'sparkles',
       shortcut: 'O',
       handler: () => {
         navigate('/outside-the-ide');

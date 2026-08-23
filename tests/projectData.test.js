@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { projectDetails, timelineData, awardsData, beyondTilesData } from '../src/data/projectData.js';
+import { projectDetails, timelineData, awardsData, beyondTilesData, gearCatalogData } from '../src/data/projectData.js';
 
 describe('React Project Data Integrity', () => {
   it('contains valid definitions for HRIS and Gym Rebuild projects', () => {
@@ -51,10 +51,30 @@ describe('React Project Data Integrity', () => {
     expect(titles).toContain('Java Fundamentals | Terms 1 & 2');
   });
 
-  it('verifies 5 Outside the IDE tiles with genre tags for gaming', () => {
+  it('verifies 4 Outside the IDE tiles with genre tags for gaming', () => {
     const tiles = Object.keys(beyondTilesData);
-    expect(tiles).toHaveLength(5);
+    expect(tiles).toHaveLength(4);
     expect(beyondTilesData.gaming.tags).toContain('Tactical Team Play');
     expect(beyondTilesData.gaming.tags).toContain('Sandbox Building');
   });
+
+  it('verifies gearCatalogData definitions and section mapping', () => {
+    expect(gearCatalogData.length).toBe(9);
+    const ids = gearCatalogData.map((i) => i.id);
+    expect(ids).toContain('mchose-ace60');
+    expect(ids).toContain('attack-shark-x6');
+    expect(ids).toContain('koorui-24e3');
+    expect(ids).toContain('salnotes-zero');
+    expect(ids).toContain('gym-kit');
+    expect(ids).toContain('perfume-rotation');
+    expect(ids).not.toContain('black-coffee');
+
+    const keyboard = gearCatalogData.find((i) => i.id === 'mchose-ace60');
+    expect(keyboard.specs).toContain('Rapid Trigger');
+    expect(keyboard.category).toBe('Keyboard');
+    expect(keyboard.section).toBe('desk');
+    expect(keyboard.images.length).toBeGreaterThanOrEqual(2);
+    expect(keyboard.images[0].src).toBe('/images/outside/mchose-ace60.jpg');
+  });
 });
+

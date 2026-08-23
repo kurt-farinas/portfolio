@@ -298,15 +298,207 @@ export const beyondTilesData = {
     desc: "Unwinding through tactical team play, logic-driven sandbox builds, and casual variety sessions with friends.",
     // For /outside-the-ide route: genre labels
     tags: ["Tactical Team Play", "Sandbox Building", "Logic Puzzles", "Co-Op Sessions"]
-  },
-  coffee: {
-    id: "coffee",
-    title: "Pure Black Coffee",
-    eyebrow: "05 · DAILY FUEL",
-    badge: "Ritual",
-    photoSlot: "coffee",
-    photoCaption: "Photo frame · black_coffee.jpg",
-    desc: "Zero sugar. Zero milk. Pure black coffee powering late-night debugging sessions and uninterrupted focus states.",
-    tags: ["100% Black", "Zero Sugar", "Hot & Iced", "Focus Catalyst"]
   }
 };
+
+export const gearCatalogData = [
+  {
+    id: "mchose-ace60",
+    title: "MCHOSE Ace 60 Pro",
+    category: "Keyboard",
+    section: "desk",
+    sectionTitle: "Desk Setup & Battlestation",
+    specs: "Magnetic Switches · Rapid Trigger 0.1mm · 60% Layout · Custom Lubed",
+    desc: "Hall effect magnetic switch keyboard customized for rapid actuation, ultra-low input latency, and tactile typing precision during engineering & gaming.",
+    icon: "keyboard",
+    tags: ["Hall Effect", "0.1mm RT", "60% Layout", "Type-C"],
+    url: "https://www.mchose.store/",
+    featured: true,
+    aspectRatio: "wide",
+    images: [
+      {
+        src: "/images/outside/mchose-ace60.jpg",
+        caption: "MCHOSE Ace 60 Pro — Magnetic switches with 0.1mm rapid trigger actuation",
+        alt: "MCHOSE Ace 60 Pro Keyboard Overview"
+      },
+      {
+        src: "/images/outside/mchose-ace60-detail.jpg",
+        caption: "Custom lubed Hall Effect switches & CNC aluminum chassis profile",
+        alt: "MCHOSE Ace 60 Pro Switch Details"
+      }
+    ]
+  },
+  {
+    id: "attack-shark-x6",
+    title: "Attack Shark X6",
+    category: "Mouse",
+    section: "desk",
+    sectionTitle: "Desk Setup & Battlestation",
+    specs: "PAW3395 Sensor · 49g Ultralight · Tri-Mode Wireless · RGB Magnetic Dock",
+    desc: "Tri-mode wireless gaming mouse equipped with PixArt PAW3395 flagship optical sensor and magnetic quick-charge dock.",
+    icon: "mouse",
+    tags: ["PAW3395", "49g", "Tri-Mode Wireless", "RGB Dock"],
+    url: "https://attackshark.com/",
+    featured: false,
+    aspectRatio: "standard",
+    images: [
+      {
+        src: "/images/outside/attack-shark-x6.jpg",
+        caption: "Attack Shark X6 on magnetic RGB fast-charging dock",
+        alt: "Attack Shark X6 Wireless Mouse"
+      }
+    ]
+  },
+  {
+    id: "koorui-24e3",
+    title: "Koorui 24E3",
+    category: "Display",
+    section: "desk",
+    sectionTitle: "Desk Setup & Battlestation",
+    specs: "24\" 1080p · 165Hz IPS · 1ms MPRT · 99% sRGB · FreeSync / G-Sync",
+    desc: "High-refresh IPS panel delivering smooth frame pacing, accurate color reproduction, and zero screen tearing for development and gaming.",
+    icon: "display",
+    tags: ["165Hz IPS", "1ms MPRT", "99% sRGB", "FreeSync"],
+    url: "https://www.koorui.net/",
+    featured: false,
+    aspectRatio: "standard",
+    images: [
+      {
+        src: "/images/outside/koorui-24e3.jpg",
+        caption: "Koorui 24E3 165Hz IPS — Crisp text rendering and fast motion clarity",
+        alt: "Koorui 24E3 Display"
+      }
+    ]
+  },
+  {
+    id: "salnotes-zero",
+    title: "7Hz Salnotes Zero",
+    category: "Audio",
+    section: "desk",
+    sectionTitle: "Desk Setup & Battlestation",
+    specs: "10mm Dynamic Driver · Metal Faceplate · 0.78mm 2-Pin Detachable IEMs",
+    desc: "In-Ear Monitors tuned with neutral sound signature for acoustic clarity, spatial awareness, and fatigue-free listening across long sessions.",
+    icon: "audio",
+    tags: ["10mm Driver", "Detachable Cable", "Hi-Fi Tuning", "IEM"],
+    url: "https://www.linsoul.com/products/7hz-salnotes-zero",
+    featured: false,
+    aspectRatio: "standard",
+    images: [
+      {
+        src: "/images/outside/salnotes-zero.jpg",
+        caption: "7Hz Salnotes Zero IEMs with custom braided 2-pin cable",
+        alt: "7Hz Salnotes Zero In-Ear Monitors"
+      }
+    ]
+  },
+  {
+    id: "battlestation-rig",
+    title: "Custom Battlestation Rig",
+    category: "Compute",
+    section: "desk",
+    sectionTitle: "Desk Setup & Battlestation",
+    specs: "Multi-Core CPU · Fast NVMe SSD · Dual-Channel Memory · Dedicated GPU",
+    desc: "My dedicated development and gaming workstation engineered for fast compile cycles, containerized services, and tactical gaming.",
+    icon: "cpu",
+    tags: ["Dev Workstation", "NVMe PCIe", "Dual Channel", "Fast Compile"],
+    url: null,
+    featured: true,
+    aspectRatio: "wide",
+    images: [
+      {
+        src: "/images/outside/battlestation.jpg",
+        caption: "Workstation interior — High-airflow chassis & cable management",
+        alt: "Custom Battlestation Workstation"
+      }
+    ]
+  },
+  {
+    id: "gym-kit",
+    title: "Gym & Progressive Training Kit",
+    category: "Fitness & Health",
+    section: "edc",
+    sectionTitle: "Everyday Carry & Fitness",
+    specs: "Lifting Straps · Protein Shaker · Progressive Overload Logbook",
+    desc: "The physical discipline behind the thesis. Regular barbell and dumbbell training that directly inspired the architecture of Boiyet's Gym Management System.",
+    icon: "dumbbell",
+    tags: ["Push/Pull/Legs", "Progressive Overload", "Thesis Origin"],
+    url: null,
+    featured: true,
+    aspectRatio: "wide",
+    images: [
+      {
+        src: "/images/outside/gym-training.jpg",
+        caption: "Barbell station & training setup — The offline consistency engine",
+        alt: "Gym Training & Progressive Overload"
+      },
+      {
+        src: "/images/outside/gym-gear.jpg",
+        caption: "Heavy-duty lifting straps, shaker, and workout logs",
+        alt: "Lifting Essentials"
+      }
+    ]
+  },
+  {
+    id: "mobile-terminal",
+    title: "Daily Mobile Device",
+    category: "Device & Field Testing",
+    section: "edc",
+    sectionTitle: "Everyday Carry & Fitness",
+    specs: "OLED High-PPI · Multi-Factor Auth · Responsive Viewport Testing",
+    desc: "Everyday communications device and handheld viewport for verifying responsive web builds, mobile layouts, and touch UX.",
+    icon: "smartphone",
+    tags: ["Mobile Testing", "MFA Security", "Daily Carry"],
+    url: null,
+    featured: false,
+    aspectRatio: "standard",
+    images: [
+      {
+        src: "/images/outside/mobile-device.jpg",
+        caption: "Handheld testing rig for mobile layout inspection and auth keys",
+        alt: "Daily Mobile Testing Device"
+      }
+    ]
+  },
+  {
+    id: "tactical-gaming",
+    title: "Tactical & Sandbox Setup",
+    category: "Tactical Gaming",
+    section: "edc",
+    sectionTitle: "Everyday Carry & Fitness",
+    specs: "Tactical Team Play · Logic Sandboxes · Low-Latency Voice Channels",
+    desc: "Strategy, team coordination, and logic puzzle sandboxes for unwinding after intense coding sessions with friends.",
+    icon: "gamepad",
+    tags: ["Tactical Play", "Sandbox Building", "Voice Comms", "Team Strategy"],
+    url: null,
+    featured: false,
+    aspectRatio: "standard",
+    images: [
+      {
+        src: "/images/outside/gaming-setup.jpg",
+        caption: "Tactical and sandbox session environment with low-latency comms",
+        alt: "Tactical Gaming Rig Setup"
+      }
+    ]
+  },
+  {
+    id: "perfume-rotation",
+    title: "Signature Olfactory Rotation",
+    category: "Fragrance Chemistry",
+    section: "rituals",
+    sectionTitle: "Sensory & Rituals",
+    specs: "Structured Top / Heart / Base Notes · Clean Citrus · Woody Amber",
+    desc: "Appreciating fragrance chemistry: how scent profiles transition from bright opening notes to rich wood and musk foundations.",
+    icon: "perfume",
+    tags: ["Citrus Top", "Woody Amber", "Clean Musk", "Scent Chemistry"],
+    url: null,
+    featured: true,
+    aspectRatio: "wide",
+    images: [
+      {
+        src: "/images/outside/perfume-collection.jpg",
+        caption: "Olfactory rotation — Fresh citrus openings and deep woody amber bases",
+        alt: "Signature Fragrance Collection"
+      }
+    ]
+  }
+];

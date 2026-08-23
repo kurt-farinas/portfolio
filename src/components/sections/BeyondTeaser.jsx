@@ -65,18 +65,6 @@ export default function BeyondTeaser() {
                   <span className="chip-arrow">↗</span>
                 </Link>
 
-                <Link to="/outside-the-ide" className="telemetry-chip-link" title="Explore Daily Fuel & Ritual">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-                    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-                    <line x1="6" y1="1" x2="6" y2="4"></line>
-                    <line x1="10" y1="1" x2="10" y2="4"></line>
-                    <line x1="14" y1="1" x2="14" y2="4"></line>
-                  </svg>
-                  <span>DAILY FUEL</span>
-                  <span className="chip-arrow">↗</span>
-                </Link>
-
                 <Link to="/outside-the-ide" className="telemetry-chip-link" title="Explore Fragrance Collection">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M10 2v7.31M14 2v7.31M8.5 2h7M14 9.3a6.5 6.5 0 1 1-4 0"></path>
@@ -89,7 +77,7 @@ export default function BeyondTeaser() {
 
             <div className="beyond-teaser-cta">
               <Link to="/outside-the-ide" className="btn-outside-route">
-                <span>Open Full Outside the IDE Dossier (5 Tiles)</span>
+                <span>Open Full Outside the IDE Dossier (4 Pillars)</span>
                 <span className="arrow">→</span>
               </Link>
             </div>

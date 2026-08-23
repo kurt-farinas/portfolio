@@ -1,216 +1,287 @@
 /* ========================================
    OUTSIDE THE IDE PAGE  |  /outside-the-ide Route
-   5 Lifestyle & Discipline Bento Tiles (No Daily Rhythm / Focus Audio)
+   Photo-Rich Gear & Lifestyle Gallery Architecture
    ======================================== */
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { beyondTilesData } from '../data/projectData';
+import { gearCatalogData } from '../data/projectData';
+import GearCard from '../components/common/GearCard';
+import { useModal } from '../context/ModalContext';
 
 export default function OutsideTheIdePage() {
-  const { gym, desk, perfume, gaming, coffee } = beyondTilesData;
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [viewMode, setViewMode] = useState('bento'); // 'bento' | 'lookbook'
+  const [showAssetGuide, setShowAssetGuide] = useState(false);
+  const { openLightbox } = useModal();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const sections = useMemo(() => [
+    {
+      id: 'desk',
+      number: '01',
+      title: 'Desk Setup & Battlestation'
+    },
+    {
+      id: 'edc',
+      number: '02',
+      title: 'Everyday Carry & Fitness'
+    },
+    {
+      id: 'rituals',
+      number: '03',
+      title: 'Sensory Architecture & Olfactory Chemistry'
+    }
+  ], []);
+
+  const filteredItems = useMemo(() => {
+    if (activeFilter === 'all') return gearCatalogData;
+    return gearCatalogData.filter((item) => item.section === activeFilter);
+  }, [activeFilter]);
+
+  // Flatten all photos for the lookbook view
+  const allPhotos = useMemo(() => {
+    const photos = [];
+    gearCatalogData.forEach((item) => {
+      if (activeFilter === 'all' || item.section === activeFilter) {
+        if (item.images && item.images.length > 0) {
+          item.images.forEach((img, idx) => {
+            photos.push({
+              ...img,
+              itemId: item.id,
+              itemTitle: item.title,
+              category: item.category,
+              photoIndex: idx + 1,
+              totalPhotos: item.images.length,
+              icon: item.icon
+            });
+          });
+        }
+      }
+    });
+    return photos;
+  }, [activeFilter]);
+
+  const counts = useMemo(() => {
+    return {
+      all: gearCatalogData.length,
+      desk: gearCatalogData.filter((i) => i.section === 'desk').length,
+      edc: gearCatalogData.filter((i) => i.section === 'edc').length,
+      rituals: gearCatalogData.filter((i) => i.section === 'rituals').length
+    };
+  }, []);
+
   return (
-    <main className="outside-page-wrap" style={{ paddingTop: '100px', minHeight: '80vh' }}>
-      <section className="section beyond-section" style={{ paddingTop: 0 }}>
+    <main className="outside-page-wrap gear-showcase-page" style={{ paddingTop: '100px', minHeight: '85vh' }}>
+      <section className="section gear-page-section" style={{ paddingTop: 0 }}>
         <div className="wrap profile-wrap">
           {/* Back Navigation Bar */}
-          <div className="outside-page-nav-bar" style={{ marginBottom: '24px' }}>
+          <div className="outside-page-nav-bar" style={{ marginBottom: '28px' }}>
             <Link to="/" className="btn-back-home font-mono">
               ← RETURN TO MAIN PORTFOLIO
             </Link>
           </div>
 
-          <div className="section-title-block">
-            <h1 className="profile-title" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+          {/* Header Title Block */}
+          <header className="gear-header-block" style={{ marginBottom: '24px' }}>
+            <h1 className="gear-main-title font-display" style={{ marginBottom: 0 }}>
               Outside the IDE
             </h1>
-            <p className="profile-header-sub">
-              What keeps me grounded, focused, and energized beyond writing code.
-            </p>
-          </div>
+          </header>
 
-          {/* 5-Card Bento Grid */}
-          <div className="beyond-bento-grid">
-            {/* TILE 1: Gym & Physical Training (Wide Card) */}
-            <div className="beyond-card beyond-card--wide">
-              <div className="beyond-card-header">
-                <div className="beyond-eyebrow-group">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path d="M6 4v16M18 4v16M2 9h4M18 9h4M2 15h4M18 15h4M6 12h12"></path>
-                  </svg>
-                  <span className="beyond-eyebrow">{gym.eyebrow}</span>
-                </div>
-                <span className="beyond-badge">{gym.badge}</span>
-              </div>
-
-              <div className="beyond-photo-slot" data-photo="gym">
-                <div className="photo-placeholder">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                  <span>{gym.photoCaption}</span>
-                </div>
-              </div>
-
-              <h3 className="beyond-card-title">{gym.title}</h3>
-              <p className="beyond-card-desc">{gym.desc}</p>
-              <div className="beyond-tags">
-                {gym.tags.map((tag, idx) => (
-                  <span key={idx} className="stack-pill">{tag}</span>
-                ))}
-              </div>
+          {/* Controls Bar: Category Filters + View Mode Switcher */}
+          <div className="gear-controls-container">
+            {/* Category Filter Pills */}
+            <div className="gear-filter-bar" role="tablist" aria-label="Filter gear and photo categories">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeFilter === 'all'}
+                className={`gear-filter-btn font-mono ${activeFilter === 'all' ? 'is-active' : ''}`}
+                onClick={() => setActiveFilter('all')}
+              >
+                All Items <span className="btn-count">({counts.all})</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeFilter === 'desk'}
+                className={`gear-filter-btn font-mono ${activeFilter === 'desk' ? 'is-active' : ''}`}
+                onClick={() => setActiveFilter('desk')}
+              >
+                Desk Setup <span className="btn-count">({counts.desk})</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeFilter === 'edc'}
+                className={`gear-filter-btn font-mono ${activeFilter === 'edc' ? 'is-active' : ''}`}
+                onClick={() => setActiveFilter('edc')}
+              >
+                Everyday &amp; Fitness <span className="btn-count">({counts.edc})</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeFilter === 'rituals'}
+                className={`gear-filter-btn font-mono ${activeFilter === 'rituals' ? 'is-active' : ''}`}
+                onClick={() => setActiveFilter('rituals')}
+              >
+                Olfactory &amp; Scent <span className="btn-count">({counts.rituals})</span>
+              </button>
             </div>
 
-            {/* TILE 2: Hardware Arsenal (Wide Card) */}
-            <div className="beyond-card beyond-card--wide">
-              <div className="beyond-card-header">
-                <div className="beyond-eyebrow-group">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                    <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"></path>
-                  </svg>
-                  <span className="beyond-eyebrow">{desk.eyebrow}</span>
-                </div>
-                <span className="beyond-badge">{desk.badge}</span>
-              </div>
+            {/* View Mode Toggle: Bento vs Lookbook */}
+            <div className="gear-view-switch font-mono">
+              <button
+                type="button"
+                className={`view-switch-btn ${viewMode === 'bento' ? 'is-active' : ''}`}
+                onClick={() => setViewMode('bento')}
+                title="Bento Card & Specs View"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <span>BENTO</span>
+              </button>
+              <button
+                type="button"
+                className={`view-switch-btn ${viewMode === 'lookbook' ? 'is-active' : ''}`}
+                onClick={() => setViewMode('lookbook')}
+                title="Pure Photography Lookbook View"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <span>LOOKBOOK</span>
+              </button>
+            </div>
+          </div>
 
-              <div className="beyond-photo-slot" data-photo="desk">
-                <div className="photo-placeholder">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                  <span>{desk.photoCaption}</span>
-                </div>
-              </div>
+          {/* Main Content Area */}
+          {viewMode === 'bento' ? (
+            /* Bento & Specs Gallery View */
+            <div className="gear-catalog-container">
+              {activeFilter === 'all' ? (
+                sections.map((section) => {
+                  const sectionItems = gearCatalogData.filter((item) => item.section === section.id);
+                  if (sectionItems.length === 0) return null;
 
-              <h3 className="beyond-card-title">{desk.title}</h3>
-              <p className="beyond-card-desc">{desk.desc}</p>
-              <div className="beyond-gear-list">
-                {desk.gear.map((g, idx) => (
-                  <div key={idx} className="gear-item">
-                    <span className="gear-type">{g.type}</span>
-                    <span className="gear-name font-mono">{g.name}</span>
+                  return (
+                    <section key={section.id} className="gear-category-section" aria-labelledby={`sec-${section.id}`}>
+                      <div className="gear-category-header">
+                        <h2 id={`sec-${section.id}`} className="gear-section-heading font-mono">
+                          <span className="sec-num">{section.number} //</span> {section.title}
+                        </h2>
+                      </div>
+
+                      <div className="gear-bento-grid">
+                        {sectionItems.map((item) => (
+                          <GearCard key={item.id} item={item} featured={item.featured} />
+                        ))}
+                      </div>
+                    </section>
+                  );
+                })
+              ) : (
+                <div className="gear-filtered-view">
+                  <div className="gear-category-header">
+                    <h2 className="gear-section-heading font-mono">
+                      FILTERED // {sections.find((s) => s.id === activeFilter)?.title}
+                    </h2>
+                  </div>
+                  <div className="gear-bento-grid">
+                    {filteredItems.map((item) => (
+                      <GearCard key={item.id} item={item} featured={item.featured} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            /* Lookbook Pure Photography Grid */
+            <div className="gear-lookbook-container">
+              <div className="gear-lookbook-header">
+                <span className="font-mono text-faint" style={{ fontSize: '11px', letterSpacing: '0.08em' }}>
+                  SHOWING {allPhotos.length} HIGH-RESOLUTION PHOTOGRAPHY FRAMES (CLICK TO EXPAND LIGHTBOX)
+                </span>
+              </div>
+              <div className="gear-lookbook-grid">
+                {allPhotos.map((photo, idx) => (
+                  <div
+                    key={idx}
+                    className="lookbook-card group"
+                    onClick={() => openLightbox(photo.src, `${photo.itemTitle} — ${photo.caption}`)}
+                    style={{ cursor: 'zoom-in' }}
+                  >
+                    <div className="lookbook-media-wrap">
+                      <img
+                        src={photo.src}
+                        alt={photo.alt || photo.itemTitle}
+                        className="lookbook-img"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          const fallback = e.currentTarget.nextElementSibling;
+                          if (fallback) fallback.style.display = 'flex';
+                        }}
+                      />
+                      <div className="lookbook-fallback-schematic font-mono" style={{ display: 'none' }}>
+                        <span className="camera-icon">📸</span>
+                        <span className="photo-title">{photo.itemTitle}</span>
+                        <span className="photo-path text-faint">{photo.src}</span>
+                      </div>
+                      <div className="lookbook-overlay">
+                        <span className="lookbook-tag font-mono">{photo.category}</span>
+                        <h4 className="lookbook-title">{photo.itemTitle}</h4>
+                        <p className="lookbook-caption">{photo.caption}</p>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
+          )}
 
-            {/* TILE 3: Fragrance Architecture (Standard Card) */}
-            <div className="beyond-card">
-              <div className="beyond-card-header">
-                <div className="beyond-eyebrow-group">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path d="M9 3h6M10 3v3M14 3v3M6 9h12a2 2 0 0 1 2 2v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-8a2 2 0 0 1 2-2z"></path>
-                  </svg>
-                  <span className="beyond-eyebrow">{perfume.eyebrow}</span>
-                </div>
-                <span className="beyond-badge">{perfume.badge}</span>
-              </div>
-
-              <div className="beyond-photo-slot" data-photo="perfume">
-                <div className="photo-placeholder">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                  <span>{perfume.photoCaption}</span>
-                </div>
-              </div>
-
-              <h3 className="beyond-card-title">{perfume.title}</h3>
-              <p className="beyond-card-desc">{perfume.desc}</p>
-              <div className="beyond-tags">
-                {perfume.tags.map((tag, idx) => (
-                  <span key={idx} className="stack-pill">{tag}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* TILE 4: Tactical & Sandbox with Genre Labels (Standard Card) */}
-            <div className="beyond-card">
-              <div className="beyond-card-header">
-                <div className="beyond-eyebrow-group">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <line x1="6" y1="12" x2="10" y2="12"></line>
-                    <line x1="8" y1="10" x2="8" y2="14"></line>
-                    <line x1="15" y1="13" x2="15.01" y2="13"></line>
-                    <line x1="18" y1="11" x2="18.01" y2="11"></line>
-                    <rect x="2" y="6" width="20" height="12" rx="2"></rect>
-                  </svg>
-                  <span className="beyond-eyebrow">{gaming.eyebrow}</span>
-                </div>
-                <span className="beyond-badge">{gaming.badge}</span>
-              </div>
-
-              <div className="beyond-photo-slot" data-photo="gaming">
-                <div className="photo-placeholder">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                  <span>{gaming.photoCaption}</span>
+          {/* Photo Drop-in Helper Guide Toggle */}
+          <div className="gear-asset-helper-block">
+            <button
+              type="button"
+              className="gear-helper-toggle font-mono"
+              onClick={() => setShowAssetGuide(!showAssetGuide)}
+            >
+              <span>{showAssetGuide ? '[-] HIDE PHOTO DIRECTORY GUIDE' : '[+] PHOTO DIRECTORY GUIDE (/public/images/outside/)'}</span>
+            </button>
+            {showAssetGuide && (
+              <div className="gear-helper-content font-mono">
+                <p className="helper-intro">
+                  To load your real photos into these slots, place your images in <code>/public/images/outside/</code> matching the filenames below:
+                </p>
+                <div className="helper-files-grid">
+                  {gearCatalogData.map((item) => (
+                    <div key={item.id} className="helper-row">
+                      <span className="helper-name">{item.title}:</span>
+                      <code className="helper-path">
+                        {item.images && item.images.length > 0 ? item.images.map((i) => i.src).join(', ') : `/images/outside/${item.id}.jpg`}
+                      </code>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              <h3 className="beyond-card-title">{gaming.title}</h3>
-              <p className="beyond-card-desc">{gaming.desc}</p>
-              <div className="beyond-tags">
-                {gaming.tags.map((tag, idx) => (
-                  <span key={idx} className="stack-pill">{tag}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* TILE 5: Pure Black Coffee (Standard Card) */}
-            <div className="beyond-card">
-              <div className="beyond-card-header">
-                <div className="beyond-eyebrow-group">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-                    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-                    <line x1="6" y1="1" x2="6" y2="4"></line>
-                    <line x1="10" y1="1" x2="10" y2="4"></line>
-                    <line x1="14" y1="1" x2="14" y2="4"></line>
-                  </svg>
-                  <span className="beyond-eyebrow">{coffee.eyebrow}</span>
-                </div>
-                <span className="beyond-badge">{coffee.badge}</span>
-              </div>
-
-              <div className="beyond-photo-slot" data-photo="coffee">
-                <div className="photo-placeholder">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                  <span>{coffee.photoCaption}</span>
-                </div>
-              </div>
-
-              <h3 className="beyond-card-title">{coffee.title}</h3>
-              <p className="beyond-card-desc">{coffee.desc}</p>
-              <div className="beyond-tags">
-                {coffee.tags.map((tag, idx) => (
-                  <span key={idx} className="stack-pill">{tag}</span>
-                ))}
-              </div>
-            </div>
+            )}
           </div>
 
-          <div style={{ marginTop: '48px', textAlign: 'center' }}>
-            <Link to="/" className="btn btn-primary" style={{ padding: '12px 28px' }}>
+          {/* Return CTA Footer */}
+          <div className="gear-footer-nav" style={{ marginTop: '64px', textAlign: 'center' }}>
+            <Link to="/" className="btn btn-primary font-mono" style={{ padding: '14px 32px' }}>
               ← Return to Main Portfolio
             </Link>
           </div>

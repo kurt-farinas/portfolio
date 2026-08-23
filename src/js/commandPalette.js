@@ -70,8 +70,8 @@ const PALETTE_COMMANDS = [
     id: 'jump-beyond',
     group: 'Navigation',
     title: 'Jump to Outside the IDE',
-    subtitle: 'Gym, perfume collection, gaming, battlestation & coffee',
-    icon: 'coffee',
+    subtitle: 'Gym, perfume collection, gaming, battlestation',
+    icon: 'sparkles',
     shortcut: 'O',
     handler: () => {
       const el = document.getElementById('beyond');
