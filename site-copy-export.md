@@ -21,7 +21,7 @@ HI, I AM KURT
 JUNIOR FULL-STACK DEVELOPER
 
 ### Subtitle:
-Building responsive web applications, multi-role approval systems, and clean relational backends with React, Inertia.js, Laravel, and MySQL.
+
 
 ### Social & Quick Actions (Accessible Labels):
 - GitHub Profile

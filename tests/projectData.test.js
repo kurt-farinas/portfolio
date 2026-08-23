@@ -27,8 +27,19 @@ describe('React Project Data Integrity', () => {
     expect(gym.stack).toContain('React');
     expect(gym.stack).toContain('Pest');
     expect(gym.badge).toContain('119 Passing Tests');
-    expect(gym.slides).toHaveLength(1);
+    expect(gym.slides).toHaveLength(4);
     expect(gym.slides[0].src).toBe('/boiyets-landing.png');
+    expect(gym.slides[1].src).toBe('/gym-admin.png');
+    expect(gym.slides[2].src).toBe('/gym-trainer.png');
+    expect(gym.slides[3].src).toBe('/gym-client.png');
+  });
+
+  it('verifies 3 narrative career and education timeline milestones', () => {
+    expect(timelineData).toHaveLength(3);
+    const titles = timelineData.map(t => t.title);
+    expect(titles).toContain('BS Computer Science | STI College San Jose');
+    expect(titles).toContain('Software Developer Intern (OJT) | DepEd San Jose');
+    expect(titles).toContain('Gym Management System | Thesis Defense (Defended)');
   });
 
   it('verifies 4 curated honors and certifications from resume', () => {

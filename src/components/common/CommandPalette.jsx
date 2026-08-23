@@ -29,21 +29,6 @@ export default function CommandPalette() {
 
   const commands = useMemo(() => [
     {
-      id: 'jump-about',
-      group: 'Navigation',
-      title: 'Jump to About Me',
-      subtitle: 'Bio, background, and development focus',
-      icon: 'user',
-      shortcut: 'A',
-      handler: () => {
-        if (location.pathname !== '/') {
-          navigate('/#about');
-        } else {
-          document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    },
-    {
       id: 'jump-experience',
       group: 'Navigation',
       title: 'Jump to Experience & Timeline',

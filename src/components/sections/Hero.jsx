@@ -124,14 +124,6 @@ export default function Hero() {
               JUNIOR FULL-STACK DEVELOPER
             </span>
           </h1>
-
-          <p
-            ref={subtitleRef}
-            className="hero-subtitle"
-            style={{ willChange: 'opacity, transform, filter' }}
-          >
-            Building responsive web applications, multi-role approval systems, and clean relational backends with React, Inertia.js, Laravel, and MySQL.
-          </p>
         </div>
 
         <div

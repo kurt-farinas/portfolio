@@ -48,10 +48,10 @@ async function runFullQA() {
   await page.waitForTimeout(400);
   assert(await page.isVisible('#timeline'), 'Nav: Experience Button Scrolls to Timeline');
 
-  // About Link
-  await page.click('#navLinks button:has-text("ABOUT")');
+  // Skills Link
+  await page.click('#navLinks button:has-text("SKILLS")');
   await page.waitForTimeout(400);
-  assert(await page.isVisible('#about'), 'Nav: About Button Scrolls to About');
+  assert(await page.isVisible('#skills'), 'Nav: Skills Button Scrolls to Skills');
 
   // Contact Link
   await page.click('#navLinks button:has-text("CONTACT")');

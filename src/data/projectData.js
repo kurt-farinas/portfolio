@@ -47,6 +47,7 @@ export const projectDetails = {
       { step: "03", title: "Approver Sign-Off", desc: "Division authority grants final sign-off; stamped PDF generated." }
     ],
     codeSnippet: {
+      langTag: "JS / STATE MACHINE",
       title: "Multi-Role State Machine & Approval Workflow",
       code: `// Multi-Role Leave Approval State Machine (CS Form No. 6)
 const ApprovalStateMachine = {
@@ -135,7 +136,10 @@ async function handleQrScan(memberToken) {
 }`
     },
     slides: [
-      { src: '/boiyets-landing.png', label: "Boiyet's Gym Management System", tab: 'Landing Page' }
+      { src: '/boiyets-landing.png', label: "Boiyet's Gym Landing Page", tab: 'Landing' },
+      { src: '/gym-admin.png', label: 'Admin Dashboard · Financials & User Access', tab: 'Admin' },
+      { src: '/gym-trainer.png', label: 'Trainer Portal · Schedules & Client Tracking', tab: 'Trainer' },
+      { src: '/gym-client.png', label: 'Client Portal · QR Attendance & Profile', tab: 'Client' }
     ]
   }
 };
@@ -165,30 +169,6 @@ export const timelineData = [
     desc: "Built and defended a commercial gym management platform (PHP, MySQL) with Admin, Trainer, and Client portals, POS with low-stock alerts, and contactless QR attendance with duplicate-scan protection.",
     badge: "THESIS DEFENDED",
     isFeatured: true
-  },
-  {
-    id: 4,
-    date: "SEPTEMBER 2025",
-    title: "Cisco Networking Academy | Cybersecurity Certification",
-    desc: "Earned official Introduction to Cybersecurity certification, applying defense-in-depth, secure session handling, and authentication best practices.",
-    badge: "CISCO CERTIFIED",
-    isFeatured: false
-  },
-  {
-    id: 5,
-    date: "MARCH 2025",
-    title: "ThinkQuest Champion | Tagisan ng Talino",
-    desc: "Crowned 1st Place Champion at STI College San Jose's School-Level Tagisan ng Talino ThinkQuest academic computing competition.",
-    badge: "1ST PLACE CHAMPION",
-    isFeatured: true
-  },
-  {
-    id: 6,
-    date: "2023",
-    title: "Oracle Academy | Java Fundamentals (Terms 1 & 2)",
-    desc: "Earned certification in Java Fundamentals across Terms 1 & 2 covering object-oriented architecture, data structures, and algorithmic logic.",
-    badge: "ORACLE CERTIFIED",
-    isFeatured: false
   }
 ];
 
@@ -197,24 +177,28 @@ export const awardsData = [
     id: "thinkquest-champ",
     title: "ThinkQuest Champion | Tagisan ng Talino",
     issuer: "STI College San Jose · School Level · Mar 2025",
-    isChampion: true
-  },
-  {
-    id: "deped-sipp",
-    title: "DepEd SIPP OJT Certificate of Completion",
-    issuer: "DepEd Schools Division Office of San Jose City · Feb - Mar 2026",
+    category: "Academic Competition",
     isChampion: true
   },
   {
     id: "cisco-cyber",
     title: "Introduction to Cybersecurity",
     issuer: "Cisco Networking Academy · Sep 2025",
+    category: "Industry Certification",
     isChampion: false
   },
   {
     id: "java-oracle",
     title: "Java Fundamentals | Terms 1 & 2",
     issuer: "Oracle Academy · 2023",
+    category: "Technical Certification",
+    isChampion: false
+  },
+  {
+    id: "deped-sipp",
+    title: "DepEd SIPP OJT Certificate of Completion",
+    issuer: "DepEd Schools Division Office of San Jose City · Feb - Mar 2026",
+    category: "Internship Credential",
     isChampion: false
   }
 ];

@@ -84,10 +84,10 @@ export default function Navbar() {
             </button>
             <button
               type="button"
-              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'about' ? 'active-glow' : ''}`}
-              onClick={() => handleNavClick('about')}
+              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'skills' ? 'active-glow' : ''}`}
+              onClick={() => handleNavClick('skills')}
             >
-              ABOUT
+              SKILLS
             </button>
             <button
               type="button"
@@ -152,7 +152,7 @@ export default function Navbar() {
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`} id="mobileMenu">
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('projects')}>PROJECTS</button>
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('timeline')}>EXPERIENCE</button>
-        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('about')}>ABOUT</button>
+        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('skills')}>SKILLS</button>
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('contact')}>CONTACT</button>
         <a href="/resume.pdf" download onClick={() => setMobileMenuOpen(false)}>RESUME ↓</a>
       </div>

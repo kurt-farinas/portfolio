@@ -198,7 +198,6 @@ export default function SkillsSection() {
             <div className="skill-tags">
               <span className="has-prof">Next.js<em className="prof-dot prof-learn" title="Learning"></em></span>
               <span className="has-prof">Docker<em className="prof-dot prof-learn" title="Learning"></em></span>
-              <span className="has-prof">AI Systems Engineering<em className="prof-dot prof-learn" title="Expanding"></em></span>
             </div>
           </div>
         </div>

@@ -206,7 +206,7 @@ export default function ProjectModal() {
                   </div>
                   <div className="modal-code-box">
                     <div className="code-box-header">
-                      <span className="code-lang-tag">JS / STATE PATTERN</span>
+                      <span className="code-lang-tag">{project.codeSnippet.langTag || "PHP / PEST TEST"}</span>
                       <span className="code-box-title">{project.codeSnippet.title}</span>
                     </div>
                     <pre className="code-pre font-mono"><code>{project.codeSnippet.code}</code></pre>

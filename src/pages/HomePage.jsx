@@ -4,7 +4,6 @@
 
 import React from 'react';
 import Hero from '../components/sections/Hero';
-import AboutSection from '../components/sections/AboutSection';
 import TimelineSection from '../components/sections/TimelineSection';
 import ProjectsSection from '../components/sections/ProjectsSection';
 import SkillsSection from '../components/sections/SkillsSection';
@@ -19,7 +18,6 @@ export default function HomePage() {
       <ProjectsSection />
       <TimelineSection />
       <SkillsSection />
-      <AboutSection />
       <AwardsSection />
       <BeyondTeaser />
       <ContactSection />
