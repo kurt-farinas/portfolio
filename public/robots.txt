@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kurt-farinas.github.io/portfolio/sitemap.xml
+Sitemap: https://kurt-farinas-portfolio.vercel.app/sitemap.xml
