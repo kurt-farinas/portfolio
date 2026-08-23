@@ -22,21 +22,27 @@ export default function AboutSection() {
                 </p>
               </div>
 
-              <div className="about-ledger-grid about-proof-grid">
-                <div className="ledger-cell">
-                  <span className="ledger-label">GOVERNMENT OJT</span>
-                  <span className="ledger-val">342 Hours · 98/100 Rating</span>
-                  <span className="ledger-sub">DepEd San Jose · Frontend Owner</span>
+              <div className="about-focus-grid">
+                <div className="focus-cell">
+                  <div className="focus-header">
+                    <span className="focus-num font-mono">01</span>
+                    <span className="focus-label">FRONTEND ARCHITECTURE</span>
+                  </div>
+                  <p className="focus-desc">Component-driven SPAs with React, complex form state handling, and accessible UI workflows.</p>
                 </div>
-                <div className="ledger-cell">
-                  <span className="ledger-label">THESIS PLATFORM</span>
-                  <span className="ledger-val">Solo-Built &amp; Defended</span>
-                  <span className="ledger-sub">Gym management, POS, QR attendance, analytics</span>
+                <div className="focus-cell">
+                  <div className="focus-header">
+                    <span className="focus-num font-mono">02</span>
+                    <span className="focus-label">REST &amp; RBAC BACKEND</span>
+                  </div>
+                  <p className="focus-desc">Multi-tier role authorization, RESTful controllers, and normalized MySQL relational schemas.</p>
                 </div>
-                <div className="ledger-cell">
-                  <span className="ledger-label">LARAVEL REBUILD</span>
-                  <span className="ledger-val">119 Passing Tests · RBAC</span>
-                  <span className="ledger-sub">Security-driven redesign of the platform</span>
+                <div className="focus-cell">
+                  <div className="focus-header">
+                    <span className="focus-num font-mono">03</span>
+                    <span className="focus-label">AUTOMATED TESTING</span>
+                  </div>
+                  <p className="focus-desc">Test-driven feature development with Pest and PHPUnit (AAA pattern) and regression suites.</p>
                 </div>
               </div>
 

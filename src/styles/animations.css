@@ -190,12 +190,12 @@
 }
 
 .boot-prompt {
-  color: #71717A;
+  color: #A1A1AA;
   font-weight: 600;
 }
 
 .boot-key {
-  color: #8E8E98;
+  color: #A1A1AA;
 }
 
 .boot-val {
@@ -244,7 +244,7 @@
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.08em;
-  color: #71717A;
+  color: #A1A1AA;
   font-weight: 500;
   min-width: 32px;
   text-align: right;
