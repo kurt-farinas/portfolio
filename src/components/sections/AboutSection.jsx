@@ -1,95 +1,86 @@
 /* ========================================
-   ABOUT SECTION  |  Who I Am
-   Primary introduction directly after Hero with Profile Photo,
-   Bio, and Quick Action to After Hours.
+   ABOUT SECTION  |  Background
+   Editorial intro: ownership, proof stats, portrait.
    ======================================== */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export default function AboutSection() {
+  const scrollToContact = (e) => {
+    e.preventDefault();
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => document.getElementById('contactName')?.focus(), 300);
+  };
+
   return (
     <section className="section about-section" id="about">
       <div className="wrap profile-wrap">
+        {/* ── Section Header ── */}
         <div className="section-title-block">
-          <h2 className="profile-title">About Me</h2>
-          <p className="profile-header-sub">Background, project ownership, and career goals.</p>
+          <h2 className="profile-title">Background</h2>
         </div>
 
-        <div className="about-profile-card">
-          {/* Avatar Column with Status Indicator */}
-          <div className="about-avatar-col">
-            <div className="about-avatar-frame">
+        {/* ── Two-column: Copy + Portrait ── */}
+        <div className="about-layout">
+          <div className="about-copy">
+            <p className="about-lead">
+              I build operational systems that replace paper routing and front-desk work&nbsp;&mdash; leave approvals for a division office, and a gym platform I designed, built, and defended.
+            </p>
+
+            <div className="about-text">
+              <p>
+                During OJT at the <strong>DepEd Schools Division of San Jose City</strong>, I owned frontend development for a three-role approval workflow (Applicant &rarr; Admin &rarr; Approver). Backend is Denver Ballesteros&apos;s. Rating: <strong>98/100</strong> across <strong>342 logged hours</strong>.
+              </p>
+              <p>
+                Capstone is a gym management system I built solo&nbsp;&mdash; QR attendance, point-of-sale, and revenue analytics&nbsp;&mdash; then rebuilt after a security audit. I&apos;m looking for a junior full-stack role, or other developer work where I can keep shipping.
+              </p>
+            </div>
+
+            <nav className="about-links font-mono" aria-label="About actions">
+              <a href="/resume.pdf" download className="about-action-link">
+                <span className="about-link-icon">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </span>
+                Download CV
+              </a>
+              <a href="#contact" onClick={scrollToContact} className="about-action-link">
+                <span className="about-link-icon">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                Get in touch
+              </a>
+            </nav>
+          </div>
+
+          <figure className="about-portrait">
+            <div className="about-portrait-frame">
               <img
                 src="/profile.jpg"
                 alt="Kurt Fariñas"
-                className="about-avatar-img"
+                width="480"
+                height="600"
                 loading="eager"
               />
-              <div className="about-status-indicator font-mono">
-                <span className="status-dot"></span>
-                <span>OPEN TO WORK</span>
-              </div>
             </div>
-
-            <div className="about-quick-specs font-mono">
-              <div className="about-spec-item">
-                <span className="spec-k">LOCATION:</span>
-                <span className="spec-v">San Jose City, PH</span>
-              </div>
-              <div className="about-spec-item">
-                <span className="spec-k">DEGREE:</span>
-                <span className="spec-v">BS Computer Science</span>
-              </div>
-              <div className="about-spec-item">
-                <span className="spec-k">COLLEGE:</span>
-                <span className="spec-v">STI College San Jose</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Content Column with Exact Bio Copy & Actions */}
-          <div className="about-content-col">
-            <div className="about-paragraphs">
-              <p className="about-p">
-                I&apos;m a full-stack developer and BS Computer Science graduate from <strong>STI College San Jose</strong>.
-              </p>
-              <p className="about-p">
-                During my OJT with the <strong>DepEd Schools Division of San Jose City</strong>, I owned frontend development for a three-role approval workflow system. I also designed and built a full-stack gym management system as my capstone project, handling QR-based attendance, point-of-sale, and revenue analytics from the ground up.
-              </p>
-              <p className="about-p highlight-p">
-                I&apos;m currently looking for a junior full-stack developer role, or other developer opportunities where I can keep growing.
-              </p>
-            </div>
-
-            {/* Action Bar with After Hours Button */}
-            <div className="about-action-bar">
-              <Link to="/after-hours" className="btn-about-afterhours font-mono">
-                <span className="afterhours-sparkle">✦</span>
-                <span>AFTER HOURS</span>
-                <span className="arrow-icon">↗</span>
-              </Link>
-
-              <a href="/resume.pdf" download className="btn-about-secondary font-mono">
-                <span>DOWNLOAD CV</span>
-                <span className="arrow-icon">↓</span>
-              </a>
-
-              <a
-                href="#contact"
-                className="btn-about-secondary font-mono"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                  setTimeout(() => document.getElementById('contactName')?.focus(), 300);
-                }}
-              >
-                <span>GET IN TOUCH</span>
-                <span className="arrow-icon">→</span>
-              </a>
-            </div>
-          </div>
+            <figcaption>Kurt Fariñas</figcaption>
+          </figure>
         </div>
+
+        {/* ── Proof Stats ── */}
+        <dl className="about-proof">
+          <div>
+            <dt>OJT rating</dt>
+            <dd>98 <span className="proof-unit">/ 100</span></dd>
+          </div>
+          <div>
+            <dt>Hours logged</dt>
+            <dd>342</dd>
+          </div>
+          <div>
+            <dt>Ownership</dt>
+            <dd>HRIS frontend · gym solo</dd>
+          </div>
+        </dl>
       </div>
     </section>
   );
