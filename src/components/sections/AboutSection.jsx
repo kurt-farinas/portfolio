@@ -4,6 +4,7 @@
    ======================================== */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function AboutSection() {
   const scrollToContact = (e) => {
@@ -49,6 +50,12 @@ export default function AboutSection() {
                 </span>
                 Get in touch
               </a>
+              <Link to="/after-hours" className="about-action-link about-link-quiet">
+                <span className="about-link-icon">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+                </span>
+                After hours
+              </Link>
             </nav>
           </div>
 

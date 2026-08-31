@@ -5784,6 +5784,22 @@ kbd.keycap {
   transform: translateY(-1px);
 }
 
+.about-action-link.about-link-quiet {
+  color: var(--text-faint);
+}
+
+.about-action-link.about-link-quiet::after {
+  background: var(--text-muted);
+}
+
+.about-action-link.about-link-quiet:hover {
+  color: var(--text);
+}
+
+.about-action-link.about-link-quiet:hover .about-link-icon {
+  opacity: 1;
+}
+
 /* ── Portrait ── */
 .about-portrait {
   margin: 0;
