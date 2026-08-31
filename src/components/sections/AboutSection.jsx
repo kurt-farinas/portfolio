@@ -1,6 +1,6 @@
 /* ========================================
-   ABOUT SECTION  |  Background
-   Editorial intro: ownership, proof stats, portrait.
+   ABOUT SECTION  |  Who I Am
+   Concise bio copy, action links, square portrait.
    ======================================== */
 
 import React from 'react';
@@ -16,26 +16,12 @@ export default function AboutSection() {
   return (
     <section className="section about-section" id="about">
       <div className="wrap profile-wrap">
-        {/* ── Section Header ── */}
-        <div className="section-title-block">
-          <h2 className="profile-title">Background</h2>
-        </div>
-
         {/* ── Two-column: Copy + Portrait ── */}
         <div className="about-layout">
           <div className="about-copy">
             <p className="about-lead">
-              I build operational systems that replace paper routing and front-desk work&nbsp;&mdash; leave approvals for a division office, and a gym platform I designed, built, and defended.
+              I&apos;m a junior full-stack developer building operational workflow systems with Laravel, Inertia.js, React, and Tailwind CSS. I built the CS Form No. 6 Digitalization System for DepEd San Jose City, and Boiyet&apos;s Fitness gym management platform.
             </p>
-
-            <div className="about-text">
-              <p>
-                During OJT at the <strong>DepEd Schools Division of San Jose City</strong>, I owned frontend development for a three-role approval workflow (Applicant &rarr; Admin &rarr; Approver). Backend is Denver Ballesteros&apos;s. Rating: <strong>98/100</strong> across <strong>342 logged hours</strong>.
-              </p>
-              <p>
-                Capstone is a gym management system I built solo&nbsp;&mdash; QR attendance, point-of-sale, and revenue analytics&nbsp;&mdash; then rebuilt after a security audit. I&apos;m looking for a junior full-stack role, or other developer work where I can keep shipping.
-              </p>
-            </div>
 
             <nav className="about-links font-mono" aria-label="About actions">
               <a href="/resume.pdf" download className="about-action-link">
@@ -64,30 +50,13 @@ export default function AboutSection() {
               <img
                 src="/profile.jpg"
                 alt="Kurt Fariñas"
-                width="480"
-                height="600"
+                width="360"
+                height="360"
                 loading="eager"
               />
             </div>
-            <figcaption>Kurt Fariñas</figcaption>
           </figure>
         </div>
-
-        {/* ── Proof Stats ── */}
-        <dl className="about-proof">
-          <div>
-            <dt>OJT rating</dt>
-            <dd>98 <span className="proof-unit">/ 100</span></dd>
-          </div>
-          <div>
-            <dt>Hours logged</dt>
-            <dd>342</dd>
-          </div>
-          <div>
-            <dt>Ownership</dt>
-            <dd>HRIS frontend · gym solo</dd>
-          </div>
-        </dl>
       </div>
     </section>
   );

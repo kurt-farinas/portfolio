@@ -4304,28 +4304,28 @@ kbd.keycap {
 
 .nav-link-btn {
   background: none;
-  border: none;
+  border: 1px solid transparent;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   color: var(--text-muted);
   cursor: pointer;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
-  transition: color 0.2s ease, background 0.2s ease;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
 .nav-link-btn:hover {
   color: var(--text);
-  background: var(--surface-hover);
+  background: var(--surface-2);
 }
 
 .nav-link-btn.active-glow {
   color: var(--text);
-  font-weight: 700;
-  background: var(--surface-hover);
-  border: 1px solid var(--border-strong);
+  font-weight: 600;
+  background: var(--surface-2);
+  border-color: var(--border-strong);
 }
 
 .mobile-nav-btn {
@@ -5673,8 +5673,8 @@ kbd.keycap {
 
 .about-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 240px;
-  gap: 48px 64px;
+  grid-template-columns: minmax(0, 1fr) 160px;
+  gap: 40px 48px;
   align-items: start;
   position: relative;
   z-index: 1;
@@ -5800,17 +5800,20 @@ kbd.keycap {
   opacity: 1;
 }
 
-/* ── Portrait ── */
+/* ── Compact Square Portrait ── */
 .about-portrait {
   margin: 0;
   width: 100%;
+  max-width: 160px;
   position: relative;
 }
 
 .about-portrait-frame {
   position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: 8px;
 }
 
 .about-portrait-frame::before {
@@ -5818,7 +5821,7 @@ kbd.keycap {
   position: absolute;
   inset: 0;
   border: 1px solid var(--border);
-  border-radius: 2px;
+  border-radius: 8px;
   z-index: 2;
   pointer-events: none;
   transition: border-color 0.4s ease;
@@ -5832,7 +5835,7 @@ kbd.keycap {
   content: "";
   position: absolute;
   inset: -1px;
-  border-radius: 3px;
+  border-radius: 9px;
   box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
   transition: box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
@@ -5840,15 +5843,18 @@ kbd.keycap {
 }
 
 .about-portrait:hover .about-portrait-frame::after {
-  box-shadow: 0 8px 40px -12px rgba(255, 255, 255, 0.06),
-              0 0 0 1px rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 30px -8px rgba(255, 255, 255, 0.08),
+              0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .about-portrait img {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
+  object-position: top;
   display: block;
+  border-radius: 8px;
   background: var(--surface-solid);
   filter: grayscale(0.2) contrast(1.04);
   transition: filter 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -5856,86 +5862,23 @@ kbd.keycap {
 
 .about-portrait:hover img {
   filter: grayscale(0.05) contrast(1.06);
-  transform: scale(1.015);
+  transform: scale(1.02);
 }
 
 .about-portrait figcaption {
-  margin-top: 10px;
+  margin-top: 8px;
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-faint);
   opacity: 0.6;
+  text-align: center;
   transition: opacity 0.3s ease;
 }
 
 .about-portrait:hover figcaption {
   opacity: 0.85;
-}
-
-/* ── Proof Stats ── */
-.about-proof {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0;
-  margin: 48px 0 0;
-  padding: 0;
-  border-top: 1px solid var(--border);
-  position: relative;
-  z-index: 1;
-}
-
-.about-proof > div {
-  padding: 22px 24px 0 0;
-  border-right: 1px solid var(--border);
-  transition: border-color 0.3s ease;
-}
-
-.about-proof > div:last-child {
-  border-right: none;
-  padding-right: 0;
-}
-
-.about-proof > div:first-child {
-  padding-left: 0;
-}
-
-.about-proof dt {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin: 0 0 8px;
-  transition: color 0.3s ease;
-}
-
-.about-proof > div:hover dt {
-  color: var(--text-muted);
-}
-
-.about-proof dd {
-  font-family: var(--font-display);
-  font-size: clamp(22px, 2.4vw, 28px);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  color: var(--text);
-  margin: 0;
-  line-height: 1.2;
-  transition: transform 0.3s ease;
-}
-
-.about-proof > div:hover dd {
-  transform: translateX(2px);
-}
-
-.proof-unit {
-  font-weight: 400;
-  font-size: 0.6em;
-  color: var(--text-faint);
-  letter-spacing: 0;
 }
 
 /* ── Responsive ── */
@@ -5950,35 +5893,16 @@ kbd.keycap {
 
   .about-layout {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 24px;
   }
 
   .about-portrait {
     order: -1;
-    max-width: 180px;
+    width: 120px;
+    max-width: 120px;
   }
 
-  .about-portrait img {
-    aspect-ratio: 1 / 1;
-    border-radius: 2px;
-  }
-
-  .about-proof {
-    grid-template-columns: 1fr;
-    margin-top: 36px;
-  }
-
-  .about-proof > div {
-    padding: 16px 0;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .about-proof > div:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+  .about-portrait figcaption {
+    text-align: left;
   }
 }
-
-
-

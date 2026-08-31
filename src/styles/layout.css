@@ -19,17 +19,28 @@ nav {
   left: 0;
   right: 0;
   z-index: 100;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  padding: 24px 0;
+  background: rgba(8, 8, 10, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
   transition: background 0.3s ease, border-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
 }
 
 nav.scrolled {
-  background: #08080A;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 16px 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  background: rgba(8, 8, 10, 0.92);
+  border-bottom: 1px solid var(--border-strong);
+  padding: 14px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] nav {
+  background: rgba(248, 249, 250, 0.82);
+}
+
+[data-theme="light"] nav.scrolled {
+  background: rgba(248, 249, 250, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 nav .wrap.nav-wrap {
@@ -562,9 +573,9 @@ nav .wrap.nav-wrap {
   position: relative;
   z-index: 5;
   background: var(--bg);
-  padding: 48px 0;
+  padding: 64px 0 52px;
   border-top: 1px solid var(--border);
-  scroll-margin-top: 80px;
+  scroll-margin-top: 90px;
 }
 
 .profile-section {

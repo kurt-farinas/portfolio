@@ -23,7 +23,6 @@ export default function ProjectsSection() {
       <div className="wrap profile-wrap">
         <div className="section-title-block">
           <h2 className="profile-title">Featured Projects</h2>
-          <p className="profile-header-sub">Operational systems built for real workflows.</p>
         </div>
 
         {activeSkillFilter && (
@@ -44,20 +43,6 @@ export default function ProjectsSection() {
             id="ticket-gym"
             data-skills={gym.filterSkills.join(',')}
           >
-            <div className="ticket-header-meta">
-              <span className="ticket-badge-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                  <path d="M4 22h16"></path>
-                  <path d="M10 14.66V17c0 .55-.45 1-1 1H7"></path>
-                  <path d="M14 14.66V17c0 .55.45 1 1 1h2"></path>
-                  <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
-                </svg>
-                <span>{gym.badge}</span>
-              </span>
-            </div>
-
             <div
               className="project-screenshot"
               role="button"
@@ -95,11 +80,6 @@ export default function ProjectsSection() {
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openProjectModal('gym'); }}
                 >
                   {gym.title}
-                </div>
-                <div className="ticket-telemetry-ribbon">
-                  {gym.telemetry.slice(0, 2).map((t, idx) => (
-                    <span key={idx}>{t}</span>
-                  ))}
                 </div>
                 <p className="ticket-summary">{gym.cardSummary}</p>
               </div>
@@ -148,15 +128,6 @@ export default function ProjectsSection() {
             id="ticket-hris"
             data-skills={hris.filterSkills.join(',')}
           >
-            <div className="ticket-header-meta">
-              <span className="ticket-badge-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                <span>98/100 OJT Rating · 342 Hrs</span>
-              </span>
-            </div>
-
             <div
               className="project-screenshot"
               role="button"
@@ -194,11 +165,6 @@ export default function ProjectsSection() {
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openProjectModal('hris'); }}
                 >
                   {hris.title}
-                </div>
-                <div className="ticket-telemetry-ribbon">
-                  {hris.telemetry.slice(0, 2).map((t, idx) => (
-                    <span key={idx}>{t}</span>
-                  ))}
                 </div>
                 <p className="ticket-summary">{hris.cardSummary}</p>
               </div>
