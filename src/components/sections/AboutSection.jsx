@@ -55,6 +55,12 @@ export default function AboutSection() {
                 loading="eager"
               />
             </div>
+            <Link to="/after-hours" className="about-portrait-action font-mono">
+              <span className="about-link-icon" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7" /></svg>
+              </span>
+              After hours
+            </Link>
           </figure>
         </div>
       </div>

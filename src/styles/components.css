@@ -5865,6 +5865,36 @@ kbd.keycap {
   transform: scale(1.02);
 }
 
+.about-portrait-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+}
+
+.about-portrait-action:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+  background: var(--surface);
+}
+
+.about-portrait-action:focus-visible {
+  outline: 2px solid var(--text-faint);
+  outline-offset: 4px;
+}
+
 .about-portrait figcaption {
   margin-top: 8px;
   font-family: var(--font-mono);
