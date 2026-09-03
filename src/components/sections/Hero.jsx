@@ -11,6 +11,7 @@ export default function Hero() {
   const line1Ref = useRef(null);
   const line2Ref = useRef(null);
   const subtitleRef = useRef(null);
+  const availabilityRef = useRef(null);
   const controlsRef = useRef(null);
   const heroWrapRef = useRef(null);
   const bgWrapperRef = useRef(null);
@@ -48,6 +49,12 @@ export default function Hero() {
             line2Ref.current.style.transform = `translateX(${splitFactor}px) translateY(${titleLift}px) scale(${titleScale})`;
             line2Ref.current.style.opacity = titleOpacity;
             line2Ref.current.style.filter = titleBlur > 0.1 ? `blur(${titleBlur}px)` : 'none';
+          }
+
+          if (availabilityRef.current) {
+            availabilityRef.current.style.opacity = Math.max(0, 1 - ease * 1.25);
+            availabilityRef.current.style.transform = `translateY(${-(scrolled * 0.18)}px)`;
+            availabilityRef.current.style.filter = titleBlur > 0.1 ? `blur(${titleBlur}px)` : 'none';
           }
 
           // 3. Subtitle with optical dissipation
@@ -124,6 +131,17 @@ export default function Hero() {
               JUNIOR FULL-STACK DEVELOPER
             </span>
           </h1>
+          <div
+            ref={availabilityRef}
+            className="hero-availability font-mono"
+            aria-label="Currently looking for junior full-stack developer opportunities"
+            style={{ willChange: 'opacity, transform, filter' }}
+          >
+            <span className="hero-availability-dot" aria-hidden="true"></span>
+            <span>OPEN TO WORK</span>
+            <span className="hero-availability-divider" aria-hidden="true">/</span>
+            <span>JUNIOR FULL-STACK ROLES</span>
+          </div>
         </div>
 
         <div

@@ -332,6 +332,41 @@ nav .wrap.nav-wrap {
   will-change: transform, opacity;
 }
 
+.hero-availability {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 24px;
+  color: #C8C6C1;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.hero-availability-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--hover-green);
+  box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.1), 0 0 12px rgba(52, 211, 153, 0.35);
+}
+
+.hero-availability-divider {
+  color: var(--text-faint);
+  font-weight: 400;
+}
+
+[data-theme="light"] .hero-availability {
+  color: var(--text);
+}
+
+[data-theme="light"] .hero-availability-dot {
+  box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1), 0 0 12px rgba(5, 150, 105, 0.25);
+}
+
 /* Bottom Controls */
 .hero-bottom-controls {
   width: 100%;
@@ -1143,6 +1178,13 @@ nav .wrap.nav-wrap {
     white-space: normal;
     word-break: break-word;
     letter-spacing: 0;
+  }
+
+  .hero-availability {
+    flex-wrap: wrap;
+    gap: 7px 9px;
+    margin-top: 18px;
+    font-size: 9px;
   }
 
   .hero-bottom-controls {

@@ -21,12 +21,6 @@ export const projectDetails = {
       tradeoffs: "Used browser-native print CSS for PDF generation instead of a server-side library (wkhtmltopdf/DomPDF) for simpler deployment. Output depends on client browser rendering, which is acceptable for internal division office use.",
       result: "System delivered and deployed to DepEd San Jose Division Office. Earned 98/100 OJT performance rating across 342 logged internship hours. Backend developed by Denver Ballesteros."
     },
-    architectureFlow: [
-      { label: "React", sub: "Frontend" },
-      { label: "Inertia.js", sub: "SPA Bridge" },
-      { label: "Laravel", sub: "Backend" },
-      { label: "MySQL", sub: "Database" }
-    ],
     highlights: [
       "Earned a 98/100 Performance Rating across 342 logged OJT internship hours at DepEd San Jose Division Office.",
       "Implemented 3-Role Workflow: Applicant application submission → Admin verification → Approver digital sign-off.",
@@ -41,30 +35,6 @@ export const projectDetails = {
       "Print PDF Engine",
       "98/100 Rating"
     ],
-    architecturePipeline: [
-      { step: "01", title: "Applicant Submission", desc: "Applicant fills Form 6 details and attaches uploaded e-signature." },
-      { step: "02", title: "Admin Verification", desc: "Division office verifies leave credits and flags in management portal." },
-      { step: "03", title: "Approver Sign-Off", desc: "Division authority grants final sign-off; stamped PDF generated." }
-    ],
-    codeSnippet: {
-      langTag: "JS / STATE MACHINE",
-      title: "Multi-Role State Machine & Approval Workflow",
-      code: `// Multi-Role Leave Approval State Machine (CS Form No. 6)
-const ApprovalStateMachine = {
-  DRAFT: { submit: () => 'PENDING_ADMIN_VERIFICATION' },
-  PENDING_ADMIN_VERIFICATION: {
-    verify: (adminId) => ({ state: 'PENDING_APPROVER_SIGN', verifiedBy: adminId }),
-    reject: (reason) => ({ state: 'REJECTED', reason })
-  },
-  PENDING_APPROVER_SIGN: {
-    approve: (approverSig) => ({ 
-      state: 'APPROVED_AND_STAMPED', 
-      pdfOutput: generateForm6Pdf(approverSig) 
-    }),
-    returnForRevision: (remarks) => ({ state: 'RETURNED', remarks })
-  }
-};`
-    },
     slides: [
       { src: 'hris-admin.png', label: 'Admin Dashboard', tab: 'Admin' },
       { src: 'hris-approver.png', label: 'Approver Interface', tab: 'Approver' },
@@ -88,12 +58,6 @@ const ApprovalStateMachine = {
       tradeoffs: "Full rebuild cost ~3 months vs. patching in weeks. Justified because the original had no tests, no middleware, and adding security retroactively would have required rewriting most controllers anyway. Also gained 119 Pest tests covering auth, gates, registration, and attendance flows.",
       result: "All original thesis features preserved with proper security (CSRF, validated uploads, private storage, parameterized queries). 119 passing Pest tests. Public repository available for code inspection."
     },
-    architectureFlow: [
-      { label: "React", sub: "Frontend" },
-      { label: "Inertia.js", sub: "SPA Bridge" },
-      { label: "Laravel 12", sub: "Controllers + RBAC" },
-      { label: "MySQL", sub: "28 Tables" }
-    ],
     demoUrl: "https://gym-management-systemv2.vercel.app/",
     codeUrl: "https://github.com/kurt-farinas/gym-management-systemv2",
     highlights: [
@@ -111,79 +75,6 @@ const ApprovalStateMachine = {
       "119 Pest Tests",
       "QR Attendance"
     ],
-    architecturePipeline: [
-      { step: "01", title: "QR Camera Ingestion", desc: "Camera scanner reads personal member QR token and posts payload to attendance API." },
-      { step: "02", title: "5-Min State Machine Gate", desc: "Laravel 12 validates active plan, enforces 5-min cooldown, or calculates checkout duration." },
-      { step: "03", title: "Live Telemetry & Dashboard", desc: "Access granted; attendance logged; real-time revenue & active occupancy updated." }
-    ],
-    codeSnippet: {
-      langTag: "PHP / ATTENDANCE STATE MACHINE",
-      title: "Server-Side QR Attendance State Machine (5-Minute Cooldown)",
-      code: `public function scan(Request $request): JsonResponse
-{
-    $request->validate([
-        'qr_code_token' => ['required', 'string', 'size:64'],
-    ]);
-
-    $token = $request->input('qr_code_token');
-
-    // Documented rule: 64-character unguessable token lookup
-    $user = User::where('qr_code_token', $token)->firstOrFail();
-
-    // Validate membership status
-    if ($user->membership_status !== 'active' || ($user->membership_expires_at && $user->membership_expires_at->isPast())) {
-        return response()->json([
-            'message' => 'Membership is expired or inactive.',
-        ], 422);
-    }
-
-    $latestAttendance = Attendance::where('user_id', $user->id)
-        ->latest('checked_in_at')
-        ->first();
-
-    // If there is an open check-in session
-    if ($latestAttendance && $latestAttendance->checked_out_at === null) {
-        $checkedInTimestamp = $latestAttendance->checked_in_at->getTimestamp();
-        $nowTimestamp = now()->getTimestamp();
-        $diffInSeconds = $nowTimestamp - $checkedInTimestamp;
-
-        // 5-minute cooldown: scan within 5 minutes returns "already checked in", does not check out
-        if ($diffInSeconds < 300) {
-            return response()->json([
-                'status' => 'already_checked_in',
-                'message' => 'Already checked in. Please wait before scanning again.',
-                'user_id' => $user->id,
-            ]);
-        }
-
-        // Scan after 5 minutes: check out and calculate duration
-        $durationMinutes = (int) max(1, round($diffInSeconds / 60));
-        $latestAttendance->update([
-            'checked_out_at' => now(),
-            'duration_minutes' => $durationMinutes,
-        ]);
-
-        return response()->json([
-            'status' => 'checked_out',
-            'user_id' => $user->id,
-            'duration_minutes' => $durationMinutes,
-        ]);
-    }
-
-    // Subsequent scan creates a new check-in
-    $attendance = Attendance::create([
-        'user_id' => $user->id,
-        'checked_in_at' => now(),
-        'check_in_method' => 'qr',
-    ]);
-
-    return response()->json([
-        'status' => 'checked_in',
-        'user_id' => $user->id,
-        'checked_in_at' => $attendance->checked_in_at->toDateTimeString(),
-    ]);
-}`
-    },
     slides: [
       { src: '/boiyets-landing.png', label: "Boiyet's Gym Landing Page", tab: 'Landing' },
       { src: '/gym-admin.png', label: 'Admin Dashboard · Financials & User Access', tab: 'Admin' },

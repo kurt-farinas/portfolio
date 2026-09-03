@@ -129,16 +129,6 @@ async function runFullQA() {
   assert(await page.isVisible('#projectModal'), 'Gym: View Full Details Button Opens Modal');
   assert(await page.textContent('#projectModal #modalTitle') === "Boiyet's Fitness Gym Management System", 'Gym Modal Title Correct');
 
-  // Test Modal View Switcher (Arch & Sandbox)
-  await page.click('#projectModal .modal-view-btn:has-text("Interactive Sandbox")');
-  await page.waitForTimeout(300);
-  assert(await page.isVisible('#modalViewArch, .modal-code-wrap'), 'Gym Modal: Switched to Architecture & Sandbox View');
-
-  // Test Modal View Switcher (Screenshots)
-  await page.click('#projectModal .modal-view-btn:has-text("Interface Screenshots")');
-  await page.waitForTimeout(300);
-  assert(await page.isVisible('#modalViewScreens, .screenshot-carousel'), 'Gym Modal: Switched back to Screenshots View');
-
   // Close Gym Modal via Escape Key
   await page.keyboard.press('Escape');
   await page.waitForTimeout(400);

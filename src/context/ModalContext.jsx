@@ -14,7 +14,6 @@ export function ModalProvider({ children }) {
 
   // Project detail modal
   const [selectedProjectId, setSelectedProjectId] = useState(null);
-  const [modalViewMode, setModalViewMode] = useState('screens'); // 'screens' | 'arch'
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   // Resume modal
@@ -35,7 +34,6 @@ export function ModalProvider({ children }) {
 
   const openProjectModal = useCallback((projectId) => {
     setSelectedProjectId(projectId);
-    setModalViewMode('screens');
     setActiveSlideIndex(0);
     playUiSound('tab');
     document.body.style.overflow = 'hidden';
@@ -139,8 +137,6 @@ export function ModalProvider({ children }) {
     <ModalContext.Provider
       value={{
         selectedProjectId,
-        modalViewMode,
-        setModalViewMode,
         activeSlideIndex,
         setActiveSlideIndex,
         openProjectModal,

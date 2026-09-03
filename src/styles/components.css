@@ -5872,22 +5872,25 @@ kbd.keycap {
   gap: 7px;
   width: 100%;
   margin-top: 12px;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
+  padding: 9px 10px;
+  border: 1px solid var(--border-strong);
   border-radius: 2px;
-  color: var(--text-muted);
+  background: var(--surface-2);
+  color: var(--text);
   text-decoration: none;
   font-size: 10px;
+  font-weight: 600;
   letter-spacing: 0.08em;
   line-height: 1.2;
   text-transform: uppercase;
-  transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+  transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
 }
 
 .about-portrait-action:hover {
   border-color: var(--border-hover);
   color: var(--text);
   background: var(--surface);
+  transform: translateY(-1px);
 }
 
 .about-portrait-action:focus-visible {

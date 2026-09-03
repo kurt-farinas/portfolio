@@ -1,5 +1,5 @@
 /* ========================================
-   PROJECT MODAL  |  Architecture Pipeline & Screenshot Carousel
+  PROJECT MODAL  |  Screenshot Carousel & Case Study
    ======================================== */
 
 import React from 'react';
@@ -11,8 +11,6 @@ export default function ProjectModal() {
   const {
     selectedProjectId,
     closeProjectModal,
-    modalViewMode,
-    setModalViewMode,
     activeSlideIndex,
     setActiveSlideIndex,
     openLightbox
@@ -58,7 +56,7 @@ export default function ProjectModal() {
         </button>
 
         <div className="modal-meta-row">
-          <span className="modal-badge">{project.badge || "SYSTEM ARCHITECTURE"}</span>
+          <span className="modal-badge">{project.badge || "PROJECT DETAILS"}</span>
           {project.stamp && <span className="stamp modal-stamp-badge">{project.stamp}</span>}
         </div>
 
@@ -74,29 +72,8 @@ export default function ProjectModal() {
           />
         )}
 
-        {/* Modal View Mode Switcher */}
-        <div className="modal-view-switcher">
-          <button
-            type="button"
-            className={`modal-view-btn ${modalViewMode === 'screens' ? 'active' : ''}`}
-            onClick={() => setModalViewMode('screens')}
-          >
-            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-            <span>Interface Screenshots</span>
-          </button>
-          <button
-            type="button"
-            className={`modal-view-btn ${modalViewMode === 'arch' ? 'active' : ''}`}
-            onClick={() => setModalViewMode('arch')}
-          >
-            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-            <span>Interactive Sandbox &amp; Architecture</span>
-          </button>
-        </div>
-
-        {/* VIEW 1: Screenshots Carousel */}
-        {modalViewMode === 'screens' && (
-          <div id="modalViewScreens">
+        {/* Screenshots Carousel */}
+        <div id="modalViewScreens">
             <div className="screenshot-carousel" data-project={project.id}>
               {slides.length > 1 && (
                 <div className="carousel-tabs">
@@ -182,40 +159,6 @@ export default function ProjectModal() {
               </div>
             </div>
           </div>
-        )}
-
-        {/* VIEW 2: Architecture Pipeline & Code Pattern */}
-        {modalViewMode === 'arch' && (
-          <div id="modalViewArch">
-            <div className="modal-arch-container">
-              <div className="modal-arch-subtitle">WORKFLOW STATE PROGRESSION</div>
-              <div className="modal-pipeline-grid">
-                {project.architecturePipeline?.map((step, idx) => (
-                  <div key={idx} className="pipeline-step-box">
-                    <div className="pipeline-step-num font-mono">{step.step}</div>
-                    <div className="pipeline-step-title">{step.title}</div>
-                    <div className="pipeline-step-desc">{step.desc}</div>
-                  </div>
-                ))}
-              </div>
-
-              {project.codeSnippet && (
-                <>
-                  <div className="modal-arch-subtitle" style={{ marginTop: '20px' }}>
-                    SYSTEM ARCHITECTURE CODE PATTERN
-                  </div>
-                  <div className="modal-code-box">
-                    <div className="code-box-header">
-                      <span className="code-lang-tag">{project.codeSnippet.langTag || "PHP / PEST TEST"}</span>
-                      <span className="code-box-title">{project.codeSnippet.title}</span>
-                    </div>
-                    <pre className="code-pre font-mono"><code>{project.codeSnippet.code}</code></pre>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        )}
 
         {/* Engineering Case Study: Problem → Decision → Implementation → Trade-offs → Result */}
         {project.caseStudy && (
@@ -242,26 +185,6 @@ export default function ProjectModal() {
                 <span className="case-study-label">Result</span>
                 <p className="case-study-text">{project.caseStudy.result}</p>
               </div>
-            </div>
-          </>
-        )}
-
-        {/* Architecture Flow Diagram */}
-        {project.architectureFlow && (
-          <>
-            <div className="modal-section-title">System Architecture</div>
-            <div className="arch-flow-diagram">
-              {project.architectureFlow.map((node, idx) => (
-                <React.Fragment key={idx}>
-                  <div className="arch-flow-node">
-                    <span className="arch-flow-label">{node.label}</span>
-                    <span className="arch-flow-sub">{node.sub}</span>
-                  </div>
-                  {idx < project.architectureFlow.length - 1 && (
-                    <span className="arch-flow-arrow" aria-hidden="true">→</span>
-                  )}
-                </React.Fragment>
-              ))}
             </div>
           </>
         )}
