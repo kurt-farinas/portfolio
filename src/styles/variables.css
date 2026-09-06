@@ -25,6 +25,11 @@
   --mouse-x: 50%;
   --mouse-y: 50%;
   --motion-ui: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --content-width: 980px;
+  --section-space: clamp(52px, 5.5vw, 68px);
+  --section-space-mobile: 44px;
+  --card-radius: 10px;
+  --control-radius: 7px;
   --accent-success: #34D399;
   --accent-proof: #F59E0B;
 

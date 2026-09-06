@@ -639,7 +639,7 @@ nav .wrap.nav-wrap {
   position: relative;
   z-index: 5;
   background: var(--bg);
-  padding: 48px 0 40px;
+  padding: var(--section-space) 0;
   border-top: 1px solid var(--border);
   scroll-margin-top: 90px;
 }
@@ -651,7 +651,7 @@ nav .wrap.nav-wrap {
 }
 
 .profile-wrap {
-  max-width: 980px;
+  max-width: var(--content-width);
   width: 100%;
   margin: 0 auto;
   padding: 0 24px;
@@ -1128,12 +1128,16 @@ nav .wrap.nav-wrap {
 }
 
 @media (max-width: 760px) {
+  .section {
+    padding: var(--section-space-mobile) 0;
+  }
+
   nav .wrap.nav-wrap {
     padding: 0 20px;
   }
 
   .profile-wrap {
-    padding: 48px 20px;
+    padding: 0 20px;
     border-left: none;
     border-right: none;
   }

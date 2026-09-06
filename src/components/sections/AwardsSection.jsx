@@ -20,7 +20,7 @@ export default function AwardsSection() {
               key={award.id}
               className={`award-card ${award.isChampion ? 'award-card-champion' : ''}`}
             >
-              <div className="award-header-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: '8px' }}>
+              <div className="award-header-row">
                 {award.isChampion ? (
                   <svg className="award-badge award-badge-champion" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
@@ -37,15 +37,7 @@ export default function AwardsSection() {
                   </svg>
                 )}
                 {award.category && (
-                  <span className="award-category-pill" style={{
-                    fontSize: '10px',
-                    fontFamily: 'var(--font-mono)',
-                    color: award.isChampion ? 'var(--text)' : 'var(--text-faint)',
-                    background: award.isChampion ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.03)',
-                    padding: '2px 7px',
-                    borderRadius: '999px',
-                    border: '1px solid var(--border)'
-                  }}>
+                  <span className={`award-category-pill ${award.isChampion ? 'award-category-pill-featured' : ''}`}>
                     {award.category}
                   </span>
                 )}

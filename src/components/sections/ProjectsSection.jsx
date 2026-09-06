@@ -24,6 +24,7 @@ export default function ProjectsSection() {
       <div className="wrap profile-wrap">
         <div className="section-title-block">
           <h2 className="profile-title">Featured Projects</h2>
+          <p className="profile-header-sub">Selected systems with implementation details and working demos where available.</p>
         </div>
 
         {activeSkillFilter && (

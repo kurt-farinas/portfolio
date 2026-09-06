@@ -17,62 +17,67 @@ export default function OutsideTheIdePage() {
 
   const sections = useMemo(() => [
     {
-      id: 'edc',
-      title: 'Snapshots'
-    },
-    {
       id: 'desk',
-      title: 'Desk Setup and Gear'
+      number: '01',
+      title: 'Desk Setup and Gear',
+      description: 'The hardware and everyday tools behind my work and downtime.'
     },
     {
       id: 'rituals',
-      title: 'Fragrance Collection'
+      number: '02',
+      title: 'Fragrance Collection',
+      description: 'A small collection of daily and occasion fragrances.'
     }
   ], []);
 
   return (
-    <main className="outside-page-wrap gear-showcase-page" style={{ paddingTop: '76px', minHeight: '85vh', position: 'relative' }}>
+    <main className="outside-page-wrap gear-showcase-page">
       {/* Interactive 3D Harmonic Wave Canvas Background */}
       <div className="outside-wave-bg-wrap" aria-hidden="true">
         <WaveBackground />
       </div>
 
-      <section className="section gear-page-section" style={{ paddingTop: 0 }}>
+      <section className="section gear-page-section">
         <div className="wrap profile-wrap">
-          {/* Back Navigation Bar */}
-          <div className="outside-page-nav-bar" style={{ marginBottom: '20px' }}>
+          <div className="outside-page-nav-bar outside-page-nav-bar-top">
             <Link to="/" className="btn-back-home font-mono">
               ← RETURN TO MAIN PORTFOLIO
             </Link>
           </div>
 
-          {/* Header Title Block */}
-          <header className="gear-header-block" style={{ marginBottom: '24px' }}>
-            <h1 className="profile-title gear-main-title" style={{ marginBottom: 0 }}>
+          <header className="gear-header-block section-title-block">
+            <span className="gear-header-eyebrow font-mono">Personal archive</span>
+            <h1 className="profile-title gear-main-title">
               After Hours
             </h1>
+            <p className="profile-header-sub gear-header-sub">
+              The gear, routines, and moments that make up my time away from development.
+            </p>
           </header>
 
-          {/* Main Content Area */}
           <div className="gear-catalog-container">
-            {sections.map((section) => {
-              if (section.id === 'edc') {
-                return (
-                  <section key={section.id} className="gear-category-section gear-snapshots-deck-section" aria-label="Personal photo stack">
-                    <PhotoDeckShuffler photos={snapshotsDeckData} />
-                  </section>
-                );
-              }
+            <section className="after-hours-photo-section gear-snapshots-deck-section" aria-label="Interactive personal photo stack">
+              <PhotoDeckShuffler photos={snapshotsDeckData} />
+            </section>
 
+            {sections.map((section) => {
               const sectionItems = gearCatalogData.filter((item) => item.section === section.id);
               if (sectionItems.length === 0) return null;
 
               return (
-                <section key={section.id} className="gear-category-section" aria-labelledby={`sec-${section.id}`}>
+                <section
+                  key={section.id}
+                  className="gear-category-section"
+                  aria-labelledby={`sec-${section.id}`}
+                >
                   <div className="gear-category-header">
-                    <h2 id={`sec-${section.id}`} className="gear-section-heading font-mono">
-                      {section.title}
-                    </h2>
+                    <span className="gear-section-index font-mono">{section.number}</span>
+                    <div>
+                      <h2 id={`sec-${section.id}`} className="gear-section-heading">
+                        {section.title}
+                      </h2>
+                      <p className="gear-section-sub">{section.description}</p>
+                    </div>
                   </div>
 
                   <div className="gear-bento-grid">
@@ -85,8 +90,7 @@ export default function OutsideTheIdePage() {
             })}
           </div>
 
-          {/* Bottom Back Button */}
-          <div className="outside-page-nav-bar" style={{ marginTop: '32px', textAlign: 'center' }}>
+          <div className="outside-page-nav-bar outside-page-nav-bar-bottom">
             <Link to="/" className="btn-back-home font-mono">
               ← RETURN TO MAIN PORTFOLIO
             </Link>
