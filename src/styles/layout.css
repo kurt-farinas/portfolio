@@ -608,7 +608,7 @@ nav .wrap.nav-wrap {
   position: relative;
   z-index: 5;
   background: var(--bg);
-  padding: 56px 0 46px;
+  padding: 48px 0 40px;
   border-top: 1px solid var(--border);
   scroll-margin-top: 90px;
 }
@@ -656,7 +656,7 @@ nav .wrap.nav-wrap {
   font-family: var(--font-display);
   font-size: clamp(21px, 2.8vw, 30px);
   font-weight: 700;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   max-width: 640px;
   letter-spacing: -0.015em;
   color: var(--text);
