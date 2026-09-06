@@ -143,55 +143,6 @@ export const awardsData = [
   }
 ];
 
-export const beyondTilesData = {
-  gym: {
-    id: "gym",
-    title: "Gym & Physical Training",
-    eyebrow: "01 · THE OFFLINE GRIND",
-    badge: "Fitness & Health",
-    photoSlot: "gym",
-    photoCaption: "Photo frame · gym.jpg",
-    desc: "Regular gym-goer focused on progressive overload and routine discipline. Living the day-to-day gym experience directly inspired me to design and solo-build the Boiyet's Fitness Gym Management System for real operational workflows.",
-    tags: ["Push / Pull / Legs", "Consistency > Intensity", "Gym Thesis Origin"]
-  },
-  desk: {
-    id: "desk",
-    title: "Peripherals & Hardware",
-    eyebrow: "02 · DESK ARSENAL",
-    badge: "Battlestation Gear",
-    photoSlot: "desk",
-    photoCaption: "Photo frame · desk_setup.jpg",
-    desc: "My daily driver hardware curated for tactile typing accuracy, clean audio, and responsive gaming sessions.",
-    gear: [
-      { type: "Keyboard", name: "MCHOSE Ace 60 Pro" },
-      { type: "Mouse", name: "Attack Shark X6" },
-      { type: "Audio", name: "7Hz Salnotes Zero IEMs" },
-      { type: "Display", name: "Koorui 24E3 (165Hz IPS)" }
-    ]
-  },
-  perfume: {
-    id: "perfume",
-    title: "Perfume Collection",
-    eyebrow: "03 · OLFACTORY",
-    badge: "Collector",
-    photoSlot: "perfume",
-    photoCaption: "Photo frame · perfumes.jpg",
-    desc: "Fascinated by fragrance architecture: how top, mid, and base notes evolve throughout the day like structured systems.",
-    tags: ["Fresh Citrus", "Woody Amber", "Clean Musk", "Warm Vanilla"]
-  },
-  gaming: {
-    id: "gaming",
-    title: "Tactical & Sandbox",
-    eyebrow: "04 · RESPAWN ZONE",
-    badge: "Gaming",
-    photoSlot: "gaming",
-    photoCaption: "Photo frame · gaming.jpg",
-    desc: "Unwinding through tactical team play, logic-driven sandbox builds, and casual variety sessions with friends.",
-    // For /outside-the-ide route: genre labels
-    tags: ["Tactical Team Play", "Sandbox Building", "Logic Puzzles", "Co-Op Sessions"]
-  }
-};
-
 export const gearCatalogData = [
   {
     id: "mchose-ace60",

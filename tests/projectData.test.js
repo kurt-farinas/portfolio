@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { projectDetails, timelineData, awardsData, beyondTilesData, gearCatalogData, snapshotsDeckData } from '../src/data/projectData.js';
+import { projectDetails, timelineData, awardsData, gearCatalogData, snapshotsDeckData } from '../src/data/projectData.js';
 
 describe('React Project Data Integrity', () => {
   it('contains valid definitions for HRIS and Gym Rebuild projects', () => {
@@ -49,13 +49,6 @@ describe('React Project Data Integrity', () => {
     expect(titles).toContain('DepEd SIPP OJT Certificate of Completion');
     expect(titles).toContain('Introduction to Cybersecurity');
     expect(titles).toContain('Java Fundamentals | Terms 1 & 2');
-  });
-
-  it('verifies beyond tiles data', () => {
-    const tiles = Object.keys(beyondTilesData);
-    expect(tiles).toHaveLength(4);
-    expect(beyondTilesData.gaming.tags).toContain('Tactical Team Play');
-    expect(beyondTilesData.gaming.tags).toContain('Sandbox Building');
   });
 
   it('verifies gearCatalogData definitions and section mapping', () => {

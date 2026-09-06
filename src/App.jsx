@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { SoundProvider } from './context/SoundContext';
-import { ModalProvider, useModal } from './context/ModalContext';
+import { ModalProvider } from './context/ModalContext';
 
 import Preloader from './components/common/Preloader';
 import CustomCursor from './components/common/CustomCursor';
