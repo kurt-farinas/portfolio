@@ -459,49 +459,85 @@ export const gearCatalogData = [
 
 export const snapshotsDeckData = [
   {
-    id: "deck-barbell",
-    title: "Barbell & Progressive Training",
-    subtitle: "The physical discipline behind the thesis engineering & system architecture",
-    date: "Discipline & Health",
-    src: "/images/outside/gym-training.jpg",
-    alt: "Gym Training & Progressive Overload",
-    caption: "Barbell station & training setup — The offline consistency engine"
+    id: "deck-photo-1",
+    title: "After Hours Snapshot 01",
+    subtitle: "A view from above",
+    date: "Snapshot 01",
+    src: "/images/outside/1.jpg",
+    alt: "Aerial view over mountain terraces",
+    caption: "After Hours snapshot 01"
   },
   {
-    id: "deck-gear",
-    title: "Lifting Gear & Workout Log",
-    subtitle: "Heavy-duty lifting straps, shaker, and trackable progressive overload logs",
-    date: "Daily Grind",
-    src: "/images/outside/gym-gear.jpg",
-    alt: "Lifting Essentials & Workout Logs",
-    caption: "Heavy-duty lifting straps, shaker, and workout logs"
+    id: "deck-photo-2",
+    title: "After Hours Snapshot 02",
+    subtitle: "A quiet moment away from the screen",
+    date: "Snapshot 02",
+    src: "/images/outside/2.jpg",
+    alt: "After Hours personal snapshot 02",
+    caption: "After Hours snapshot 02"
   },
   {
-    id: "deck-mobile",
-    title: "Field Rig & Mobile Testing",
-    subtitle: "iPhone 11 handheld viewport for verifying responsive web builds and MFA",
-    date: "Daily Carry",
-    src: "/images/outside/mobile-device.jpg",
-    alt: "iPhone 11 Mobile Testing Device",
-    caption: "iPhone 11 — Handheld viewport for mobile layout inspection and responsive testing"
+    id: "deck-photo-3",
+    title: "After Hours Snapshot 03",
+    subtitle: "A personal view beyond the IDE",
+    date: "Snapshot 03",
+    src: "/images/outside/3.jpg",
+    alt: "After Hours personal snapshot 03",
+    caption: "After Hours snapshot 03"
   },
   {
-    id: "deck-tactical",
-    title: "Tactical & Sandbox Sessions",
-    subtitle: "Strategy, team coordination, and logic puzzle sandboxes after coding sprints",
-    date: "Logic Sandboxes",
-    src: "/images/outside/gaming-setup.jpg",
-    alt: "Tactical Gaming Setup",
-    caption: "Tactical and sandbox session environment with low-latency comms"
+    id: "deck-photo-4",
+    title: "After Hours Snapshot 04",
+    subtitle: "Small details from the day",
+    date: "Snapshot 04",
+    src: "/images/outside/4.jpg",
+    alt: "After Hours personal snapshot 04",
+    caption: "After Hours snapshot 04"
   },
   {
-    id: "deck-battlestation",
-    title: "Battlestation Powerhouse",
-    subtitle: "ASUS TUF A15 development rig engineered for containerized services & compiles",
-    date: "Dev Station",
-    src: "/images/outside/asus-tuf-a15.jpg",
-    alt: "ASUS TUF Gaming A15",
-    caption: "ASUS TUF Gaming A15 (2023) — Primary development and gaming powerhouse"
+    id: "deck-photo-5",
+    title: "After Hours Snapshot 05",
+    subtitle: "A meal shared away from the desk",
+    date: "Snapshot 05",
+    src: "/images/outside/5.jpg",
+    alt: "A shared meal and drink",
+    caption: "After Hours snapshot 05"
+  },
+  {
+    id: "deck-photo-6",
+    title: "After Hours Snapshot 06",
+    subtitle: "A different kind of screen time",
+    date: "Snapshot 06",
+    src: "/images/outside/6.jpg",
+    alt: "After Hours personal snapshot 06",
+    caption: "After Hours snapshot 06"
+  },
+  {
+    id: "deck-photo-7",
+    title: "After Hours Snapshot 07",
+    subtitle: "Life outside the workbench",
+    date: "Snapshot 07",
+    src: "/images/outside/7.jpg",
+    alt: "After Hours personal snapshot 07",
+    caption: "After Hours snapshot 07"
+  },
+  {
+    id: "deck-photo-8",
+    title: "After Hours Snapshot 08",
+    subtitle: "Another frame from the archive",
+    date: "Snapshot 08",
+    src: "/images/outside/8.jpg",
+    alt: "After Hours personal snapshot 08",
+    caption: "After Hours snapshot 08"
+  },
+  {
+    id: "deck-photo-9",
+    title: "After Hours Snapshot 09",
+    subtitle: "The setup after the sprint",
+    date: "Snapshot 09",
+    src: "/images/outside/9.jpg",
+    alt: "A development and gaming setup",
+    caption: "After Hours snapshot 09"
   }
 ];
 

@@ -239,7 +239,7 @@
 
 /* ---------- B&W VISUAL GALLERY SECTION ---------- */
 .gallery-section {
-  padding: 90px 0;
+  padding: 72px 0;
   border-top: 1px solid var(--border);
   background: var(--bg);
 }
@@ -313,7 +313,7 @@
 
 .gallery-card img {
   width: 100%;
-  height: 240px;
+  height: 220px;
   object-fit: cover;
   display: block;
   filter: none;
@@ -627,8 +627,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 30px 0;
-  margin: 10px 0;
+  padding: 20px 0;
+  margin: 6px 0;
   box-sizing: border-box;
 }
 
@@ -636,7 +636,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  max-width: 440px;
+  max-width: 380px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -652,9 +652,9 @@
 
 @media (min-width: 768px) {
   :root {
-    --radius-1: 85px;
-    --radius-2: 140px;
-    --radius-3: 195px;
+    --radius-1: 72px;
+    --radius-2: 120px;
+    --radius-3: 168px;
   }
 }
 
@@ -688,8 +688,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 84px;
-  height: 84px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   background: var(--surface-solid);
   border: 2px solid var(--text);
@@ -795,7 +795,7 @@
 
 /* ---------- TERMINAL ---------- */
 .terminal {
-  margin-top: 32px;
+  margin-top: 24px;
   max-width: 100%;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -946,9 +946,9 @@
 /* ---------- TIMELINE ---------- */
 .timeline-container {
   position: relative;
-  max-width: 880px;
+  max-width: 820px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 16px 0;
 }
 
 .timeline-container::before {
@@ -977,8 +977,8 @@
 
 .timeline-item {
   position: relative;
-  padding-left: 74px;
-  margin-bottom: 36px;
+  padding-left: 64px;
+  margin-bottom: 28px;
   opacity: 1;
   transform: none;
 }
@@ -1022,7 +1022,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 22px 24px;
+  padding: 18px 20px;
   transition: all 0.3s ease;
   cursor: pointer;
 }
@@ -1053,7 +1053,7 @@
 
 .timeline-title {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text);
   margin-bottom: 6px;
@@ -1061,7 +1061,7 @@
 
 .timeline-desc {
   color: var(--text-faint);
-  font-size: 14.5px;
+  font-size: 13.5px;
   line-height: 1.65;
 }
 
@@ -1086,8 +1086,8 @@
 
 /* ---------- WORKFLOW PIPELINE ---------- */
 .workflow-container {
-  margin-top: 24px;
-  padding: 22px 20px;
+  margin-top: 18px;
+  padding: 18px 16px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -1122,7 +1122,7 @@
   z-index: 1;
   text-align: center;
   cursor: pointer;
-  padding: 14px 10px;
+  padding: 11px 8px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -1188,7 +1188,7 @@
 .tickets {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 18px;
 }
 
 @media (max-width: 768px) {
@@ -1226,7 +1226,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
+  padding: 12px 18px;
   border-bottom: 1px solid var(--border);
   background: var(--surface-2);
 }
@@ -1299,7 +1299,7 @@
 
 .ticket-title {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text);
   line-height: 1.35;
@@ -1326,8 +1326,8 @@
 
 .ticket-desc {
   color: var(--text-faint);
-  font-size: 14px;
-  margin: 10px 0 16px;
+  font-size: 13px;
+  margin: 8px 0 14px;
   line-height: 1.6;
 }
 
@@ -1385,13 +1385,13 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 14px;
-  padding-top: 18px;
+  padding-top: 14px;
   border-top: 1px solid var(--border);
 }
 
 .metrics {
   display: flex;
-  gap: 24px;
+  gap: 18px;
   flex-wrap: wrap;
 }
 
@@ -4809,7 +4809,7 @@ kbd.keycap {
 
 .gear-showcase-page {
   position: relative;
-  padding-bottom: 80px;
+  padding-bottom: 48px;
   overflow-x: hidden;
 }
 
@@ -4836,7 +4836,7 @@ kbd.keycap {
 }
 
 .gear-header-block {
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .gear-header-eyebrow {
@@ -4850,7 +4850,7 @@ kbd.keycap {
 }
 
 .gear-main-title {
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -4990,8 +4990,8 @@ kbd.keycap {
 .gear-catalog-container {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  max-width: 860px;
+  gap: 28px;
+  max-width: 720px;
   margin: 0 auto;
   width: 100%;
 }
@@ -5014,7 +5014,7 @@ kbd.keycap {
 .gear-category-section {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .gear-category-header {
@@ -5047,7 +5047,7 @@ kbd.keycap {
 .gear-bento-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 12px;
 }
 
 @media (max-width: 820px) {
@@ -5070,8 +5070,8 @@ kbd.keycap {
   flex-direction: column;
   background: #0E0E11;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 8px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
@@ -5101,14 +5101,14 @@ kbd.keycap {
   width: 100%;
   aspect-ratio: 1 / 1;
   background: #FFFFFF;
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
   user-select: none;
-  padding: 14px;
+  padding: 10px;
 }
 
 [data-theme="light"] .gear-media-box {
@@ -5298,15 +5298,15 @@ kbd.keycap {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 24px 0 36px;
+  padding: 16px 0 24px;
   user-select: none;
   outline: none;
 }
 
 .photo-deck-stack {
   position: relative;
-  width: 320px;
-  height: 320px;
+  width: 260px;
+  height: 260px;
   max-width: 85vw;
   max-height: 85vw;
   display: flex;
@@ -5326,7 +5326,7 @@ kbd.keycap {
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 26px;
+  border-radius: 18px;
   overflow: hidden;
   background: #111114;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -5447,8 +5447,8 @@ kbd.keycap {
 
 @media (max-width: 520px) {
   .photo-deck-stack {
-    width: 270px;
-    height: 270px;
+    width: 230px;
+    height: 230px;
   }
 }
 

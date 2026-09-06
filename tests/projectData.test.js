@@ -100,9 +100,17 @@ describe('React Project Data Integrity', () => {
   });
 
   it('verifies snapshotsDeckData for card deck shuffler', () => {
-    expect(snapshotsDeckData.length).toBeGreaterThanOrEqual(4);
-    const titles = snapshotsDeckData.map((s) => s.title);
-    expect(titles).toContain('Barbell & Progressive Training');
-    expect(titles).toContain('Lifting Gear & Workout Log');
+    expect(snapshotsDeckData).toHaveLength(9);
+    expect(snapshotsDeckData.map((s) => s.src)).toEqual([
+      '/images/outside/1.jpg',
+      '/images/outside/2.jpg',
+      '/images/outside/3.jpg',
+      '/images/outside/4.jpg',
+      '/images/outside/5.jpg',
+      '/images/outside/6.jpg',
+      '/images/outside/7.jpg',
+      '/images/outside/8.jpg',
+      '/images/outside/9.jpg'
+    ]);
   });
 });

@@ -31,7 +31,7 @@ export default function OutsideTheIdePage() {
   ], []);
 
   return (
-    <main className="outside-page-wrap gear-showcase-page" style={{ paddingTop: '100px', minHeight: '85vh', position: 'relative' }}>
+    <main className="outside-page-wrap gear-showcase-page" style={{ paddingTop: '76px', minHeight: '85vh', position: 'relative' }}>
       {/* Interactive 3D Harmonic Wave Canvas Background */}
       <div className="outside-wave-bg-wrap" aria-hidden="true">
         <WaveBackground />
@@ -40,14 +40,14 @@ export default function OutsideTheIdePage() {
       <section className="section gear-page-section" style={{ paddingTop: 0 }}>
         <div className="wrap profile-wrap">
           {/* Back Navigation Bar */}
-          <div className="outside-page-nav-bar" style={{ marginBottom: '28px' }}>
+          <div className="outside-page-nav-bar" style={{ marginBottom: '20px' }}>
             <Link to="/" className="btn-back-home font-mono">
               ← RETURN TO MAIN PORTFOLIO
             </Link>
           </div>
 
           {/* Header Title Block */}
-          <header className="gear-header-block" style={{ marginBottom: '32px' }}>
+          <header className="gear-header-block" style={{ marginBottom: '24px' }}>
             <h1 className="profile-title gear-main-title" style={{ marginBottom: 0 }}>
               After Hours
             </h1>
@@ -86,7 +86,7 @@ export default function OutsideTheIdePage() {
           </div>
 
           {/* Bottom Back Button */}
-          <div className="outside-page-nav-bar" style={{ marginTop: '48px', textAlign: 'center' }}>
+          <div className="outside-page-nav-bar" style={{ marginTop: '32px', textAlign: 'center' }}>
             <Link to="/" className="btn-back-home font-mono">
               ← RETURN TO MAIN PORTFOLIO
             </Link>

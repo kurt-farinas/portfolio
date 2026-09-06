@@ -315,7 +315,7 @@ nav .wrap.nav-wrap {
 }
 
 .hero-title .line-1 {
-  font-size: clamp(48px, 8.8vw, 124px);
+  font-size: clamp(46px, 7.8vw, 110px);
   line-height: 0.98;
   color: #ECEAE6;
   margin-bottom: 0.04em;
@@ -324,7 +324,7 @@ nav .wrap.nav-wrap {
 }
 
 .hero-title .line-2 {
-  font-size: clamp(22px, 4.1vw, 58px);
+  font-size: clamp(21px, 3.7vw, 52px);
   line-height: 1.05;
   color: #A1A1AA;
   white-space: nowrap;
@@ -336,7 +336,7 @@ nav .wrap.nav-wrap {
   display: flex;
   align-items: center;
   gap: 9px;
-  margin-top: 24px;
+  margin-top: 20px;
   color: #C8C6C1;
   font-size: 11px;
   font-weight: 600;
@@ -375,7 +375,7 @@ nav .wrap.nav-wrap {
   justify-content: flex-start;
   gap: 16px;
   margin-top: auto;
-  padding-top: 30px;
+  padding-top: 24px;
 }
 
 .btn-view-projects {
@@ -390,7 +390,7 @@ nav .wrap.nav-wrap {
   color: #E2E0DC;
   background: #141418;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 30px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -423,7 +423,7 @@ nav .wrap.nav-wrap {
   color: #08080A;
   background: #E2E0DC;
   border: 1px solid #E2E0DC;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 30px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -479,8 +479,8 @@ nav .wrap.nav-wrap {
 }
 
 .hero p.sub {
-  margin-top: 22px;
-  font-size: 17px;
+  margin-top: 18px;
+  font-size: 16px;
   color: var(--text-faint);
   max-width: 580px;
   line-height: 1.6;
@@ -540,7 +540,7 @@ nav .wrap.nav-wrap {
 }
 
 .cta-row {
-  margin-top: 32px;
+  margin-top: 26px;
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
@@ -608,7 +608,7 @@ nav .wrap.nav-wrap {
   position: relative;
   z-index: 5;
   background: var(--bg);
-  padding: 64px 0 52px;
+  padding: 56px 0 46px;
   border-top: 1px solid var(--border);
   scroll-margin-top: 90px;
 }
@@ -654,9 +654,9 @@ nav .wrap.nav-wrap {
 
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(22px, 3vw, 32px);
+  font-size: clamp(21px, 2.8vw, 30px);
   font-weight: 700;
-  margin-bottom: 36px;
+  margin-bottom: 28px;
   max-width: 640px;
   letter-spacing: -0.015em;
   color: var(--text);
@@ -666,7 +666,7 @@ nav .wrap.nav-wrap {
 .about-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
-  gap: 36px;
+  gap: 28px;
   align-items: start;
 }
 
@@ -819,12 +819,12 @@ nav .wrap.nav-wrap {
 }
 
 .about-card-body {
-  padding: 36px 36px 28px;
+  padding: 28px 28px 22px;
 }
 
 .about-text p {
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.75;
   margin-bottom: 16px;
 }
@@ -860,11 +860,11 @@ nav .wrap.nav-wrap {
 .about-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 22px 24px;
+  padding: 18px 20px;
 }
 
 .about-sidebar-heading {
@@ -920,7 +920,7 @@ nav .wrap.nav-wrap {
 }
 
 .about-stat {
-  padding: 20px 24px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -933,7 +933,7 @@ nav .wrap.nav-wrap {
 
 .about-stat-num {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text);
   line-height: 1.2;
@@ -949,7 +949,7 @@ nav .wrap.nav-wrap {
 
 .profile-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(28px, 3.5vw, 40px);
+  font-size: clamp(27px, 3.2vw, 36px);
   font-weight: 700;
   color: #F2F0EC;
   margin-bottom: 6px;
@@ -963,7 +963,7 @@ nav .wrap.nav-wrap {
 
 .profile-header-sub {
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 13px;
   color: #A1A1AA;
   margin-top: 4px;
   margin-bottom: 0;
@@ -971,7 +971,7 @@ nav .wrap.nav-wrap {
 
 .profile-bio p {
   font-family: var(--font-body);
-  font-size: 14.5px;
+  font-size: 13.5px;
   line-height: 1.65;
   color: #A0A0B0;
   margin-bottom: 14px;
@@ -1035,7 +1035,7 @@ nav .wrap.nav-wrap {
   max-width: 700px;
   margin: 0 auto;
   text-align: center;
-  padding: 40px 28px;
+  padding: 32px 24px;
   border-radius: 14px;
   background: var(--surface);
   border: 1px solid var(--border);
