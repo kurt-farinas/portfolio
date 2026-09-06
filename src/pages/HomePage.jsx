@@ -9,7 +9,6 @@ import ProjectsSection from '../components/sections/ProjectsSection';
 import TimelineSection from '../components/sections/TimelineSection';
 import SkillsSection from '../components/sections/SkillsSection';
 import AwardsSection from '../components/sections/AwardsSection';
-import ContactSection from '../components/sections/ContactSection';
 
 export default function HomePage() {
   return (
@@ -20,7 +19,6 @@ export default function HomePage() {
       <TimelineSection />
       <SkillsSection />
       <AwardsSection />
-      <ContactSection />
     </main>
   );
 }

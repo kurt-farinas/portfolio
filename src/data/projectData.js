@@ -13,7 +13,6 @@ export const projectDetails = {
     badge: "DepEd OJT · Frontend Owner",
     desc: "DepEd San Jose's leave approval process ran on paper across 30+ division office staff and teachers with no audit trail and multi-day turnaround. I owned 100% of frontend development for a web system that digitized the full Applicant → Admin → Approver workflow, replacing manual CS Form No. 6 routing with print-ready PDF output and signature uploads tied directly to the approval chain.",
     cardSummary: "Delivered a three-role leave workflow for 30+ staff, replacing manual paper routing with automated PDF output.",
-    codeStub: "Private repository: organizational confidentiality. Technical walkthrough available on request.",
     caseStudy: {
       problem: "DepEd San Jose's leave approval process ran entirely on paper. CS Form No. 6 documents were printed, hand-signed, and physically routed between 30+ staff, with no audit trail and multi-day turnaround.",
       decision: "Built a 3-role web workflow (Applicant → Admin → Approver) using React + Inertia.js on a Laravel backend, replacing physical routing with digital state transitions and e-signature stamping.",
@@ -491,4 +490,3 @@ export const snapshotsDeckData = [
     caption: "After Hours snapshot 09"
   }
 ];
-

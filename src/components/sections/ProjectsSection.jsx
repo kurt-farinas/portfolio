@@ -6,6 +6,7 @@
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
 import { projectDetails } from '../../data/projectData';
+import BrowserChrome from '../common/BrowserChrome';
 
 export default function ProjectsSection() {
   const { openProjectModal, activeSkillFilter, clearSkillFilter } = useModal();
@@ -43,6 +44,7 @@ export default function ProjectsSection() {
             id="ticket-gym"
             data-skills={gym.filterSkills.join(',')}
           >
+            <BrowserChrome label="gym-management.local" />
             <div
               className="project-screenshot"
               role="button"
@@ -128,6 +130,7 @@ export default function ProjectsSection() {
             id="ticket-hris"
             data-skills={hris.filterSkills.join(',')}
           >
+            <BrowserChrome label="deped-form6.local" />
             <div
               className="project-screenshot"
               role="button"
@@ -183,12 +186,6 @@ export default function ProjectsSection() {
                 >
                   View Full Details →
                 </button>
-                <span className="code-link-stub">
-                  <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                  </svg>
-                  <span>{hris.codeStub}</span>
-                </span>
               </div>
             </div>
           </article>

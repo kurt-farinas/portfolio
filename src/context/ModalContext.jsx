@@ -4,7 +4,7 @@
    Command Palette, Skill Filter, and Achievement Toasts
    ======================================== */
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { useSound } from './SoundContext';
 
 const ModalContext = createContext();
@@ -28,9 +28,34 @@ export function ModalProvider({ children }) {
   // Skill filter
   const [activeSkillFilter, setActiveSkillFilter] = useState(null);
 
-  // Toasts disabled globally
-  const toasts = [];
-  const spawnToast = useCallback(() => {}, []);
+  // Short-lived feedback for copy, contact, and filtering actions
+  const [toasts, setToasts] = useState([]);
+  const toastTimersRef = useRef(new Set());
+
+  const spawnToast = useCallback((title, body) => {
+    const id = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    setToasts((current) => [...current.slice(-2), { id, title, body, visible: true }]);
+
+    const hideTimer = window.setTimeout(() => {
+      setToasts((current) => current.map((toast) => (
+        toast.id === id ? { ...toast, visible: false } : toast
+      )));
+      toastTimersRef.current.delete(hideTimer);
+
+      const removeTimer = window.setTimeout(() => {
+        setToasts((current) => current.filter((toast) => toast.id !== id));
+        toastTimersRef.current.delete(removeTimer);
+      }, 400);
+      toastTimersRef.current.add(removeTimer);
+    }, 3200);
+
+    toastTimersRef.current.add(hideTimer);
+  }, []);
+
+  useEffect(() => () => {
+    toastTimersRef.current.forEach((timer) => window.clearTimeout(timer));
+    toastTimersRef.current.clear();
+  }, []);
 
   const openProjectModal = useCallback((projectId) => {
     setSelectedProjectId(projectId);

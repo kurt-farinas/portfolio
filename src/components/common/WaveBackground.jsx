@@ -15,6 +15,7 @@ export default function WaveBackground() {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d', { alpha: true });
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     let width = 0;
     let height = 0;
     let animationFrameId = null;
@@ -56,8 +57,10 @@ export default function WaveBackground() {
       cursorY = -1000;
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    if (!prefersReducedMotion) {
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    }
 
     // Pause rendering when hero is out of view
     const observer = new IntersectionObserver((entries) => {
@@ -74,8 +77,6 @@ export default function WaveBackground() {
 
     observer.observe(canvas.parentElement || canvas);
 
-    const numLines = 10;
-    const segments = 45;
     let time = 0;
     let lastTime = performance.now();
 
@@ -122,6 +123,8 @@ export default function WaveBackground() {
       ctx.fillStyle = radialGlow;
       ctx.fillRect(0, 0, width, height);
 
+      const numLines = width < 760 ? 7 : 10;
+      const segments = width < 760 ? 30 : 45;
       const lineSpacing = height / (numLines * 0.75);
       const startY = height * 0.08;
       const stepX = (width + 200) / segments;
@@ -176,7 +179,7 @@ export default function WaveBackground() {
         ctx.stroke();
       }
 
-      animationFrameId = requestAnimationFrame(render);
+      animationFrameId = prefersReducedMotion ? null : requestAnimationFrame(render);
     };
 
     animationFrameId = requestAnimationFrame(render);

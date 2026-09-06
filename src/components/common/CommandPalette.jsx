@@ -115,19 +115,14 @@ export default function CommandPalette() {
       }
     },
     {
-      id: 'jump-contact',
-      group: 'Navigation',
-      title: 'Jump to Contact Form',
-      subtitle: 'Send direct message or inquiry',
+      id: 'action-email-direct',
+      group: 'Actions & Utilities',
+      title: 'Email Kurt Directly',
+      subtitle: 'Open a message to kurtfarinas2022@gmail.com',
       icon: 'mail',
       shortcut: 'C',
       handler: () => {
-        if (location.pathname !== '/') {
-          navigate('/#contact');
-        } else {
-          document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-          setTimeout(() => document.getElementById('contactName')?.focus(), 300);
-        }
+        window.location.href = 'mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry';
       }
     },
     {

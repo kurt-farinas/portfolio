@@ -95,13 +95,12 @@ export default function Navbar() {
               SKILLS
             </button>
 
-            <button
-              type="button"
-              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'contact' ? 'active-glow' : ''}`}
-              onClick={() => handleNavClick('contact')}
+            <a
+              className="nav-link-btn"
+              href="mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry"
             >
               CONTACT
-            </button>
+            </a>
           </div>
 
           {/* Theme Toggle Button */}
@@ -131,13 +130,12 @@ export default function Navbar() {
             )}
           </button>
 
-          <button
-            type="button"
+          <a
             className="btn-hire-me"
-            onClick={() => handleNavClick('contact')}
+            href="mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry"
           >
             HIRE ME
-          </button>
+          </a>
 
           <button
             type="button"
@@ -158,7 +156,7 @@ export default function Navbar() {
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('timeline')}>EXPERIENCE</button>
         <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('skills')}>SKILLS</button>
 
-        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('contact')}>CONTACT</button>
+        <a href="mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry" onClick={() => setMobileMenuOpen(false)}>CONTACT</a>
         <a href="/resume.pdf" download onClick={() => setMobileMenuOpen(false)}>RESUME ↓</a>
       </div>
     </nav>
