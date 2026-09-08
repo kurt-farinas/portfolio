@@ -2984,6 +2984,15 @@ input[type="text"], input[type="email"], textarea {
   flex: 0 0 auto;
 }
 
+.project-access-note {
+  flex: 1 0 100%;
+  margin: 2px 0 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
 .btn-card-action {
   font-family: var(--font-mono);
   font-size: 11.5px;

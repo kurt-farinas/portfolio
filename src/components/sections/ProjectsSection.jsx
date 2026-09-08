@@ -147,6 +147,9 @@ export default function ProjectsSection() {
                 >
                   View Full Details →
                 </button>
+                <p className="project-access-note">
+                  Live demo and source are not public for this government workflow project.
+                </p>
               </div>
             </div>
           </article>

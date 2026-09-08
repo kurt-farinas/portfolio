@@ -1,4 +1,4 @@
-# AGENTS.md — Portfolio (kurt-farinas.github.io/portfolio)
+# AGENTS.md — Portfolio (kurt-farinas-portfolio.vercel.app)
 
 ## Purpose
 - This is Kurt Fariñas's recruiter-facing portfolio. Prioritize factual project ownership, mobile readability, working recruiter paths, and a maintainable React codebase over visual novelty.
