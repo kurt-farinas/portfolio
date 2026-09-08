@@ -46,19 +46,7 @@ export default function ProjectsSection() {
             data-skills={gym.filterSkills.join(',')}
           >
             <BrowserChrome label="gym-management.local" />
-            <div
-              className="project-screenshot"
-              role="button"
-              tabIndex={0}
-              onClick={() => openProjectModal('gym')}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') openProjectModal('gym');
-                if (e.key === ' ') {
-                  e.preventDefault();
-                  openProjectModal('gym');
-                }
-              }}
-            >
+            <div className="project-screenshot project-screenshot-static">
               <img
                 src={gym.slides[0].src}
                 alt={gym.slides[0].label}
@@ -69,19 +57,11 @@ export default function ProjectsSection() {
                   e.currentTarget.style.display = 'none';
                 }}
               />
-              <div className="project-screenshot-overlay">View Full Details ↗</div>
             </div>
 
             <div className="ticket-body">
               <div className="ticket-top">
-                <div
-                  className="ticket-title"
-                  role="button"
-                  tabIndex={0}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => openProjectModal('gym')}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openProjectModal('gym'); }}
-                >
+                <div className="ticket-title">
                   {gym.title}
                 </div>
                 <p className="ticket-summary">{gym.cardSummary}</p>
@@ -132,19 +112,7 @@ export default function ProjectsSection() {
             data-skills={hris.filterSkills.join(',')}
           >
             <BrowserChrome label="deped-form6.local" />
-            <div
-              className="project-screenshot"
-              role="button"
-              tabIndex={0}
-              onClick={() => openProjectModal('hris')}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') openProjectModal('hris');
-                if (e.key === ' ') {
-                  e.preventDefault();
-                  openProjectModal('hris');
-                }
-              }}
-            >
+            <div className="project-screenshot project-screenshot-static">
               <img
                 src="/hris-admin.png"
                 alt="CS Form No. 6 Digitalization System - Admin Dashboard"
@@ -155,19 +123,11 @@ export default function ProjectsSection() {
                   e.currentTarget.src = '/hris-mockup.png';
                 }}
               />
-              <div className="project-screenshot-overlay">View Full Details ↗</div>
             </div>
 
             <div className="ticket-body">
               <div className="ticket-top">
-                <div
-                  className="ticket-title"
-                  role="button"
-                  tabIndex={0}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => openProjectModal('hris')}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openProjectModal('hris'); }}
-                >
+                <div className="ticket-title">
                   {hris.title}
                 </div>
                 <p className="ticket-summary">{hris.cardSummary}</p>

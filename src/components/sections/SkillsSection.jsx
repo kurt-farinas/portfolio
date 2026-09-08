@@ -19,12 +19,12 @@ export default function SkillsSection() {
       <div className="wrap profile-wrap">
         <div className="section-title-block">
           <h2 className="profile-title">Tools &amp; Technologies</h2>
-          <p className="profile-header-sub">Tools and technologies used across my projects. Select a skill to view related work.</p>
+          <p className="profile-header-sub">Technologies used in project work, working knowledge, and areas currently being developed. Select a project-work skill to view related work.</p>
         </div>
 
         <div className="skill-legend">
-          <span className="prof-badge prof-pro">Production</span>
-          <span className="prof-badge prof-mid">Proficient</span>
+          <span className="prof-badge prof-pro">Project work</span>
+          <span className="prof-badge prof-mid">Working knowledge</span>
           <span className="prof-badge prof-learn">Learning</span>
         </div>
 
@@ -74,7 +74,7 @@ export default function SkillsSection() {
                 JavaScript<em className="prof-dot prof-pro" title="Production level"></em>
               </span>
               <span className="has-prof">
-                TypeScript<em className="prof-dot prof-mid" title="Proficient"></em>
+                TypeScript<em className="prof-dot prof-learn" title="Learning"></em>
               </span>
               <span
                 role="button"
@@ -137,7 +137,7 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('java'); }}
                 className={`has-prof ${isSkillActive('java') ? 'active-skill-pill' : ''}`}
               >
-                Java<em className="prof-dot prof-mid" title="Oracle Academy certified"></em>
+                Java<em className="prof-dot prof-mid" title="Working knowledge; Oracle Academy certified"></em>
               </span>
             </div>
           </div>
@@ -187,7 +187,7 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('linux'); }}
                 className={`has-prof ${isSkillActive('linux') ? 'active-skill-pill' : ''}`}
               >
-                Linux / CLI<em className="prof-dot prof-mid" title="Production deployment"></em>
+                Linux / CLI<em className="prof-dot prof-mid" title="Working knowledge"></em>
               </span>
             </div>
           </div>

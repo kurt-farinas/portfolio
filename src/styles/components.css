@@ -1644,6 +1644,14 @@
   max-height: 160px;
 }
 
+.ticket .project-screenshot-static {
+  cursor: default;
+}
+
+.ticket .project-screenshot-static:hover img {
+  transform: none;
+}
+
 .project-screenshot:hover {
   border-color: var(--border-strong);
 }

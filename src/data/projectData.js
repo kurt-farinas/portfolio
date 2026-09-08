@@ -12,17 +12,17 @@ export const projectDetails = {
     statusBadge: '<span class="status-dot-amber"></span> Delivered to Division Office',
     badge: "DepEd OJT · Frontend Owner",
     desc: "DepEd San Jose's leave approval process ran on paper across 30+ division office staff and teachers with no audit trail and multi-day turnaround. I owned 100% of frontend development for a web system that digitized the full Applicant → Admin → Approver workflow, replacing manual CS Form No. 6 routing with print-ready PDF output and signature uploads tied directly to the approval chain.",
-    cardSummary: "Delivered a three-role leave workflow for 30+ staff, replacing manual paper routing with automated PDF output.",
+    cardSummary: "Frontend owner for a three-role leave workflow serving 30+ staff, replacing manual paper routing with digital approval screens and print-ready output.",
     caseStudy: {
       problem: "DepEd San Jose's leave approval process ran entirely on paper. CS Form No. 6 documents were printed, hand-signed, and physically routed between 30+ staff, with no audit trail and multi-day turnaround.",
-      decision: "Built a 3-role web workflow (Applicant → Admin → Approver) using React + Inertia.js on a Laravel backend, replacing physical routing with digital state transitions and e-signature stamping.",
+      decision: "Implemented the React + Inertia.js frontend for a 3-role workflow (Applicant → Admin → Approver) on Denver Ballesteros's Laravel backend, replacing physical routing with digital state transitions and e-signature stamping.",
       implementation: "Owned 100% of frontend development: form validation, multi-step approval UI, role-gated views, and a print-optimized PDF engine using browser-native print stylesheets with verified e-signature image stamping.",
       tradeoffs: "Used browser-native print CSS for PDF generation instead of a server-side library (wkhtmltopdf/DomPDF) for simpler deployment. Output depends on client browser rendering, which is acceptable for internal division office use.",
       result: "System delivered and deployed to DepEd San Jose Division Office. Earned 98/100 OJT performance rating across 342 logged internship hours. Backend developed by Denver Ballesteros."
     },
     highlights: [
       "Earned a 98/100 Performance Rating across 342 logged OJT internship hours at DepEd San Jose Division Office.",
-      "Implemented 3-Role Workflow: Applicant application submission → Admin verification → Approver digital sign-off.",
+      "Implemented the frontend for a 3-role workflow: Applicant application submission → Admin verification → Approver digital sign-off.",
       "Print-Optimized PDF Engine: Formatted official CS Form No. 6 documents via browser-native print stylesheets with verified e-signature image stamping.",
       "Owned 100% of frontend development using React, Inertia.js, and Tailwind CSS."
     ],
@@ -97,7 +97,7 @@ export const timelineData = [
     id: 2,
     date: "FEB - MAR 2026 (342 HOURS)",
     title: "Software Developer Intern (OJT) | DepEd San Jose",
-    desc: "Owned frontend development for the CS Form No. 6 Digitalization System (React, Inertia.js, Tailwind, Laravel). Replaced manual paper routing with 3-role RBAC, e-signatures, and print PDFs. Wrote 19 PHPUnit tests (AAA pattern) and earned 98/100 rating across appraisals.",
+    desc: "Owned the React, Inertia.js, and Tailwind CSS frontend for the CS Form No. 6 Digitalization System; Denver Ballesteros developed the Laravel backend. Built the interface for 3-role RBAC, e-signatures, and print-ready PDFs. Wrote 19 PHPUnit tests (AAA pattern) and earned a 98/100 rating across appraisals.",
     badge: "98/100 OJT RATING",
     isFeatured: true
   },
@@ -105,7 +105,7 @@ export const timelineData = [
     id: 3,
     date: "NOVEMBER 2025",
     title: "Gym Management System | Thesis Defense (Defended)",
-    desc: "Built and defended a commercial gym management platform (PHP, MySQL) with Admin, Trainer, and Client portals, POS with low-stock alerts, and contactless QR attendance with duplicate-scan protection.",
+    desc: "Built and defended a gym management thesis platform (PHP, MySQL) with Admin, Trainer, and Client portals, POS with low-stock alerts, and contactless QR attendance with duplicate-scan protection.",
     badge: "THESIS DEFENDED",
     isFeatured: true
   }
