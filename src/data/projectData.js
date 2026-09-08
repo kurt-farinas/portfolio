@@ -12,7 +12,7 @@ export const projectDetails = {
     statusBadge: '<span class="status-dot-amber"></span> Delivered to Division Office',
     badge: "DepEd OJT · Frontend Owner",
     desc: "DepEd San Jose's leave approval process ran on paper across 30+ division office staff and teachers with no audit trail and multi-day turnaround. I owned 100% of frontend development for a web system that digitized the full Applicant → Admin → Approver workflow, replacing manual CS Form No. 6 routing with print-ready PDF output and signature uploads tied directly to the approval chain.",
-    cardSummary: "Frontend owner for a three-role leave workflow serving 30+ staff, replacing manual paper routing with digital approval screens and print-ready output.",
+    cardSummary: "Frontend owner for a three-role DepEd leave workflow serving 30+ staff. Built digital approval screens and print-ready forms.",
     caseStudy: {
       problem: "DepEd San Jose's leave approval process ran entirely on paper. CS Form No. 6 documents were printed, hand-signed, and physically routed between 30+ staff, with no audit trail and multi-day turnaround.",
       decision: "Implemented the React + Inertia.js frontend for a 3-role workflow (Applicant → Admin → Approver) on Denver Ballesteros's Laravel backend, replacing physical routing with digital state transitions and e-signature stamping.",
@@ -48,7 +48,7 @@ export const projectDetails = {
     roleTag: "Solo Full-Stack Developer",
     statusBadge: '<span class="status-dot-green"></span> Production-Tested Rebuild',
     badge: "Solo Full-Stack · 119 Passing Tests",
-    cardSummary: "Rebuilt the thesis platform after a security audit, preserving core workflows with role-based access and 119 passing Pest tests.",
+    cardSummary: "Solo rebuilt a gym management thesis platform with role-based access and 119 passing Pest tests.",
     desc: "Solo-built and later rebuilt member management and revenue platform after a self-conducted security audit surfaced real vulnerabilities in the original PHP build (public file storage, missing upload validation). Rearchitected on Laravel 12 with Inertia.js and React, covering 28 domain tables and 86 protected routes (92 total) with role-based access, backed by 119 passing Pest tests.\n\nBeyond core gym operations, the platform includes a relational workout plan builder (exercises, sets, reps, difficulty tiers), structured nutrition and meal planning with macro tracking, and client-facing progress logging for body metrics and completed workouts, giving trainers and clients a full coaching loop, not just administrative tooling.",
     caseStudy: {
       problem: "The original PHP thesis build had critical security issues I discovered post-defense: publicly accessible file storage, missing upload validation, no CSRF protection, and raw SQL queries vulnerable to injection.",
@@ -97,7 +97,7 @@ export const timelineData = [
     id: 2,
     date: "FEB - MAR 2026 (342 HOURS)",
     title: "Software Developer Intern (OJT) | DepEd San Jose",
-    desc: "Owned the React, Inertia.js, and Tailwind CSS frontend for the CS Form No. 6 Digitalization System; Denver Ballesteros developed the Laravel backend. Built the interface for 3-role RBAC, e-signatures, and print-ready PDFs. Wrote 19 PHPUnit tests (AAA pattern) and earned a 98/100 rating across appraisals.",
+    desc: "Led frontend development for the CS Form No. 6 Digitalization System; Denver Ballesteros developed the Laravel backend. Built the React, Inertia.js, and Tailwind CSS interface for three approval roles, e-signatures, and print-ready forms. Wrote 19 PHPUnit tests and earned a 98/100 OJT rating.",
     badge: "98/100 OJT RATING",
     isFeatured: true
   },

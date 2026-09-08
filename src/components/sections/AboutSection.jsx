@@ -15,7 +15,7 @@ export default function AboutSection() {
         <div className="about-layout">
           <div className="about-copy">
             <p className="about-lead">
-              I&apos;m a junior full-stack developer building operational workflow systems with Laravel, Inertia.js, React, and Tailwind CSS. I led frontend development for DepEd San Jose City&apos;s CS Form No. 6 Digitalization System and solo-built and defended Boiyet&apos;s Fitness gym management platform.
+              I&apos;m a junior full-stack developer focused on operational workflow systems. I led frontend development for DepEd San Jose City&apos;s CS Form No. 6 Digitalization System and solo-built and defended Boiyet&apos;s Fitness gym management platform.
             </p>
 
             <EmailCta className="about-email-cta" />
