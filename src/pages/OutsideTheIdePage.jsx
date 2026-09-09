@@ -50,9 +50,6 @@ export default function OutsideTheIdePage() {
             <h1 className="profile-title gear-main-title">
               After Hours
             </h1>
-            <p className="profile-header-sub gear-header-sub">
-              The gear, routines, and moments that make up my time away from development.
-            </p>
           </header>
 
           <div className="gear-catalog-container">

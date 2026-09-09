@@ -19,7 +19,6 @@ export default function SkillsSection() {
       <div className="wrap profile-wrap">
         <div className="section-title-block">
           <h2 className="profile-title">Tools &amp; Technologies</h2>
-          <p className="profile-header-sub">Technologies used in project work, working knowledge, and areas currently being developed. Select a project-work skill to view related work.</p>
         </div>
 
         <div className="skill-legend">
@@ -29,9 +28,11 @@ export default function SkillsSection() {
         </div>
 
         <div className="skills-grid">
-          {/* Group 1: Languages & Frontend */}
-          <div className="skill-group">
-            <h4>Frontend</h4>
+          <div className="skill-group skill-group-interface">
+            <div className="skill-group-heading">
+              <span className="skill-group-index" aria-hidden="true">01</span>
+              <h4>Interface</h4>
+            </div>
             <div className="skill-tags">
               <span
                 role="button"
@@ -41,7 +42,7 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('react'); }}
                 className={`has-prof ${isSkillActive('react') ? 'active-skill-pill' : ''}`}
               >
-                React<em className="prof-dot prof-pro" title="Production level"></em>
+                React<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span
                 role="button"
@@ -51,7 +52,7 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('inertia'); }}
                 className={`has-prof ${isSkillActive('inertia') ? 'active-skill-pill' : ''}`}
               >
-                Inertia.js<em className="prof-dot prof-pro" title="Production level"></em>
+                Inertia.js<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span
                 role="button"
@@ -61,7 +62,7 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('tailwind'); }}
                 className={`has-prof ${isSkillActive('tailwind') ? 'active-skill-pill' : ''}`}
               >
-                Tailwind CSS<em className="prof-dot prof-pro" title="Production level"></em>
+                Tailwind CSS<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span
                 role="button"
@@ -71,7 +72,7 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('javascript'); }}
                 className={`has-prof ${isSkillActive('javascript') ? 'active-skill-pill' : ''}`}
               >
-                JavaScript<em className="prof-dot prof-pro" title="Production level"></em>
+                JavaScript<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span
                 role="button"
@@ -91,14 +92,16 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('html'); }}
                 className={`has-prof ${isSkillActive('html') ? 'active-skill-pill' : ''}`}
               >
-                HTML / CSS<em className="prof-dot prof-pro" title="Production level"></em>
+                HTML / CSS<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
             </div>
           </div>
 
-          {/* Group 2: Backend */}
-          <div className="skill-group">
-            <h4>Backend</h4>
+          <div className="skill-group skill-group-systems">
+            <div className="skill-group-heading">
+              <span className="skill-group-index" aria-hidden="true">02</span>
+              <h4>Systems</h4>
+            </div>
             <div className="skill-tags">
               <span
                 role="button"
@@ -108,7 +111,7 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('php'); }}
                 className={`has-prof ${isSkillActive('php') ? 'active-skill-pill' : ''}`}
               >
-                PHP<em className="prof-dot prof-pro" title="Production level"></em>
+                PHP<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span
                 role="button"
@@ -118,7 +121,7 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('laravel'); }}
                 className={`has-prof ${isSkillActive('laravel') ? 'active-skill-pill' : ''}`}
               >
-                Laravel<em className="prof-dot prof-pro" title="Production level"></em>
+                Laravel<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span
                 role="button"
@@ -128,13 +131,13 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('mysql'); }}
                 className={`has-prof ${isSkillActive('mysql') ? 'active-skill-pill' : ''}`}
               >
-                MySQL / Schema Design<em className="prof-dot prof-pro" title="Production level"></em>
+                MySQL / Schema Design<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span className="has-prof">
-                Eloquent ORM<em className="prof-dot prof-pro" title="Production level"></em>
+                Eloquent ORM<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span className="has-prof">
-                RESTful Patterns<em className="prof-dot prof-pro" title="Production level"></em>
+                RESTful Patterns<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span
                 role="button"
@@ -149,9 +152,11 @@ export default function SkillsSection() {
             </div>
           </div>
 
-          {/* Group 3: Tools, Testing & Practices */}
-          <div className="skill-group">
-            <h4>Tools, Testing &amp; Practices</h4>
+          <div className="skill-group skill-group-workflow">
+            <div className="skill-group-heading">
+              <span className="skill-group-index" aria-hidden="true">03</span>
+              <h4>Engineering Workflow</h4>
+            </div>
             <div className="skill-tags">
               <span
                 role="button"
@@ -161,7 +166,7 @@ export default function SkillsSection() {
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('git'); }}
                 className={`has-prof ${isSkillActive('git') ? 'active-skill-pill' : ''}`}
               >
-                Git / GitHub<em className="prof-dot prof-pro" title="Production level"></em>
+                Git / GitHub<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span
                 role="button"
@@ -174,7 +179,7 @@ export default function SkillsSection() {
                 PHPUnit &amp; Pest (AAA)<em className="prof-dot prof-pro" title="119 Passing Tests"></em>
               </span>
               <span className="has-prof">
-                Chart.js Analytics<em className="prof-dot prof-pro" title="Production level"></em>
+                Chart.js Analytics<em className="prof-dot prof-pro" title="Project work"></em>
               </span>
               <span
                 role="button"
@@ -199,9 +204,11 @@ export default function SkillsSection() {
             </div>
           </div>
 
-          {/* Group 4: In Progress / Expanding */}
-          <div className="skill-group">
-            <h4>In Progress / Expanding</h4>
+          <div className="skill-group skill-group-growth">
+            <div className="skill-group-heading">
+              <span className="skill-group-index" aria-hidden="true">04</span>
+              <h4>Growing Toolkit</h4>
+            </div>
             <div className="skill-tags">
               <span className="has-prof">Next.js<em className="prof-dot prof-learn" title="Learning"></em></span>
               <span className="has-prof">Docker<em className="prof-dot prof-learn" title="Learning"></em></span>

@@ -67,9 +67,6 @@ export default function TimelineSection() {
       <div className="wrap profile-wrap">
         <div className="section-title-block">
           <h2 className="profile-title">Career &amp; Education</h2>
-          <p className="profile-header-sub">
-            Education, internship work, and project milestones.
-          </p>
         </div>
 
         <div className="timeline-container" ref={containerRef}>

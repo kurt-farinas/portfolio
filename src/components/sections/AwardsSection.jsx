@@ -11,7 +11,6 @@ export default function AwardsSection() {
       <div className="wrap profile-wrap">
         <div className="section-title-block">
           <h2 className="profile-title">Honors &amp; Certifications</h2>
-          <p className="profile-header-sub">Academic competition win and verified technical credentials.</p>
         </div>
 
         <div className="awards-grid">
