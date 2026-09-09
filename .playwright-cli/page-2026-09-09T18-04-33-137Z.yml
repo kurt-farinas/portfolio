@@ -1,0 +1,268 @@
+- generic [ref=e3]:
+  - navigation [ref=e27]:
+    - generic [ref=e28]:
+      - link "Kurt Fariñas Home" [ref=e29] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e32]: kurt.dev
+      - generic [ref=e33]:
+        - button "Toggle Theme" [ref=e40] [cursor=pointer]
+        - link "HIRE ME" [ref=e47] [cursor=pointer]:
+          - /url: mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry
+        - button "Toggle navigation" [ref=e430] [cursor=pointer]
+  - main [ref=e48]:
+    - generic [ref=e49]:
+      - generic:
+        - generic:
+          - heading "HI, I AM KURT JUNIOR FULL-STACK DEVELOPER" [level=1]:
+            - generic: HI, I AM KURT
+            - generic: JUNIOR FULL-STACK DEVELOPER
+          - generic "Currently looking for junior full-stack developer opportunities":
+            - generic: OPEN TO WORK
+            - generic [aria-hidden]: /
+            - generic: JUNIOR FULL-STACK ROLES
+        - generic:
+          - generic:
+            - link "GitHub Profile":
+              - /url: https://github.com/kurt-farinas
+            - link "LinkedIn Profile":
+              - /url: https://www.linkedin.com/in/kurt-vincent-fari%C3%B1as-315ab1367
+            - button "Copy email address"
+            - button "Preview Resume PDF"
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - paragraph [ref=e80]: I'm a junior full-stack developer focused on operational workflow systems. I led frontend development for DepEd San Jose City's CS Form No. 6 Digitalization System and solo-built and defended Boiyet's Fitness gym management platform.
+        - link "Email Kurt Fariñas at kurtfarinas2022@gmail.com" [ref=e81] [cursor=pointer]:
+          - /url: mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry
+          - generic [ref=e86]:
+            - strong [ref=e87]: Email Me Directly
+            - generic [ref=e88]: kurtfarinas2022@gmail.com
+          - generic [aria-hidden] [ref=e89]: ↗
+        - navigation "About actions" [ref=e90]:
+          - link [ref=e91] [cursor=pointer]:
+            - /url: /resume.pdf
+          - link [ref=e96] [cursor=pointer]:
+            - /url: /after-hours
+      - figure [ref=e100]:
+        - img "Kurt Fariñas" [ref=e102]
+        - link "After hours →" [ref=e103] [cursor=pointer]:
+          - /url: /after-hours
+    - generic [ref=e108]:
+      - generic [ref=e109]:
+        - heading "Featured Projects" [level=2] [ref=e110]
+        - paragraph [ref=e111]: Selected systems with implementation details and working demos where available.
+      - generic [ref=e434]:
+        - generic [ref=e435]:
+          - text: "Filtered by:"
+          - strong [ref=e436]: TYPESCRIPT
+        - button "Reset Filter ×" [ref=e437] [cursor=pointer]
+      - generic [ref=e112]:
+        - article [ref=e113] [cursor=pointer]:
+          - generic [aria-hidden] [ref=e114]:
+            - generic [ref=e119]: job-hunt-ledger.local
+            - generic [ref=e120]: LOCAL ONLY
+          - img "Job Hunt Ledger dashboard" [ref=e122]
+          - generic [ref=e123]:
+            - generic [ref=e124]:
+              - generic [ref=e125]: Job Hunt Ledger
+              - paragraph [ref=e126]: Built a private dashboard that finds credible developer roles, explains each match, and keeps application tracking under my control.
+            - generic [ref=e127]:
+              - generic [ref=e128]: React
+              - generic [ref=e129]: TypeScript
+              - generic [ref=e130]: FastAPI
+              - generic [ref=e131]: Python
+              - generic [ref=e132]: SQLite
+              - generic [ref=e133]: Vite
+            - generic [ref=e134]:
+              - button "View Full Details →" [ref=e135]
+              - link "View Code" [ref=e136]:
+                - /url: https://github.com/kurt-farinas/job-hunt-ledger
+        - article [ref=e140] [cursor=pointer]:
+          - generic [aria-hidden] [ref=e141]:
+            - generic [ref=e146]: gym.local
+            - generic [ref=e147]: LIVE UI
+          - img "Boiyet's Gym Landing Page" [ref=e149]
+          - generic [ref=e150]:
+            - generic [ref=e151]:
+              - generic [ref=e152]: Boiyet's Fitness Gym Management System
+              - paragraph [ref=e153]: Solo rebuilt a gym management thesis platform with role-based access and 119 passing Pest tests.
+            - generic [ref=e154]:
+              - generic [ref=e155]: Laravel 12
+              - generic [ref=e156]: Inertia.js
+              - generic [ref=e157]: React
+              - generic [ref=e158]: Tailwind CSS
+              - generic [ref=e159]: MySQL
+              - generic [ref=e160]: Pest
+              - generic [ref=e161]: QR
+            - generic [ref=e162]:
+              - button "View Full Details →" [ref=e163]
+              - link "Live Demo ↗" [ref=e164]:
+                - /url: https://gym-management-systemv2.vercel.app/
+              - link "View Code" [ref=e168]:
+                - /url: https://github.com/kurt-farinas/gym-management-systemv2
+        - article [ref=e172] [cursor=pointer]:
+          - generic [aria-hidden] [ref=e173]:
+            - generic [ref=e178]: hris.local
+            - generic [ref=e179]: LIVE UI
+          - img "Admin Dashboard" [ref=e181]
+          - generic [ref=e182]:
+            - generic [ref=e183]:
+              - generic [ref=e184]: CS Form No. 6 Digitalization System
+              - paragraph [ref=e185]: Frontend owner for a three-role DepEd leave workflow serving 30+ staff. Built digital approval screens and print-ready forms.
+            - generic [ref=e186]:
+              - generic [ref=e187]: React
+              - generic [ref=e188]: Inertia.js
+              - generic [ref=e189]: Tailwind CSS
+              - generic [ref=e190]: Laravel
+              - generic [ref=e191]: MySQL
+            - generic [ref=e192]:
+              - button "View Full Details →" [ref=e193]
+              - paragraph [ref=e194]: Live demo and source are not public for this government workflow project.
+    - generic [ref=e196]:
+      - generic [ref=e197]:
+        - heading "Career & Education" [level=2] [ref=e198]
+        - paragraph [ref=e199]: Education, internship work, and project milestones.
+      - generic [ref=e200]:
+        - generic [ref=e201]:
+          - generic [ref=e202]: "1"
+          - generic [ref=e203]:
+            - generic [ref=e204]: 2022 - 2026
+            - generic [ref=e205]: BS Computer Science | STI College San Jose
+            - generic [ref=e206]: Bachelor of Science in Computer Science. Honored on the Presidential List (2022) with academic coursework in software engineering, database architecture, and OOP.
+            - generic [ref=e207]: PRESIDENTIAL LIST (2022)
+        - generic [ref=e209]:
+          - generic [ref=e210]: "2"
+          - generic [ref=e211]:
+            - generic [ref=e212]: FEB - MAR 2026 (342 HOURS)
+            - generic [ref=e213]: Software Developer Intern (OJT) | DepEd San Jose
+            - generic [ref=e214]: Led frontend development for the CS Form No. 6 Digitalization System; Denver Ballesteros developed the Laravel backend. Built the React, Inertia.js, and Tailwind CSS interface for three approval roles, e-signatures, and print-ready forms. Wrote 19 PHPUnit tests and earned a 98/100 OJT rating.
+            - generic [ref=e215]: 98/100 OJT RATING
+        - generic [ref=e216]:
+          - generic [ref=e217]: "3"
+          - generic [ref=e218]:
+            - generic [ref=e219]: NOVEMBER 2025
+            - generic [ref=e220]: Gym Management System | Thesis Defense (Defended)
+            - generic [ref=e221]: Built and defended a gym management thesis platform (PHP, MySQL) with Admin, Trainer, and Client portals, POS with low-stock alerts, and contactless QR attendance with duplicate-scan protection.
+            - generic [ref=e222]: THESIS DEFENDED
+    - generic [ref=e224]:
+      - generic [ref=e225]:
+        - heading "Tools & Technologies" [level=2] [ref=e226]
+        - paragraph [ref=e227]: Technologies used in project work, working knowledge, and areas currently being developed. Select a project-work skill to view related work.
+      - generic [ref=e228]:
+        - generic [ref=e229]: Project work
+        - generic [ref=e230]: Working knowledge
+        - generic [ref=e231]: Learning
+      - generic [ref=e232]:
+        - generic [ref=e233]:
+          - heading "Frontend" [level=4] [ref=e234]
+          - generic [ref=e235]:
+            - button "Filter projects by React" [ref=e236] [cursor=pointer]:
+              - text: React
+              - emphasis [ref=e237]
+            - button "Filter projects by Inertia.js" [ref=e238] [cursor=pointer]:
+              - text: Inertia.js
+              - emphasis [ref=e239]
+            - button "Filter projects by Tailwind CSS" [ref=e240] [cursor=pointer]:
+              - text: Tailwind CSS
+              - emphasis [ref=e241]
+            - button "Filter projects by JavaScript" [ref=e242] [cursor=pointer]:
+              - text: JavaScript
+              - emphasis [ref=e243]
+            - button "Filter projects by TypeScript" [active] [ref=e355] [cursor=pointer]:
+              - text: TypeScript
+              - emphasis [ref=e245]
+            - button "Filter projects by HTML/CSS" [ref=e246] [cursor=pointer]:
+              - text: HTML / CSS
+              - emphasis [ref=e247]
+        - generic [ref=e248]:
+          - heading "Backend" [level=4] [ref=e249]
+          - generic [ref=e250]:
+            - button "Filter projects by PHP" [ref=e251] [cursor=pointer]:
+              - text: PHP
+              - emphasis [ref=e252]
+            - button "Filter projects by Laravel" [ref=e253] [cursor=pointer]:
+              - text: Laravel
+              - emphasis [ref=e254]
+            - button "Filter projects by MySQL" [ref=e255] [cursor=pointer]:
+              - text: MySQL / Schema Design
+              - emphasis [ref=e256]
+            - generic [ref=e257] [cursor=pointer]:
+              - text: Eloquent ORM
+              - emphasis [ref=e258]
+            - generic [ref=e259] [cursor=pointer]:
+              - text: RESTful Patterns
+              - emphasis [ref=e260]
+            - button "Filter projects by Java" [ref=e261] [cursor=pointer]:
+              - text: Java
+              - emphasis [ref=e262]
+        - generic [ref=e263]:
+          - heading "Tools, Testing & Practices" [level=4] [ref=e264]
+          - generic [ref=e265]:
+            - button "Filter projects by Git" [ref=e266] [cursor=pointer]:
+              - text: Git / GitHub
+              - emphasis [ref=e267]
+            - button "Filter projects by Pest" [ref=e268] [cursor=pointer]:
+              - text: PHPUnit & Pest (AAA)
+              - emphasis [ref=e269]
+            - generic [ref=e270] [cursor=pointer]:
+              - text: Chart.js Analytics
+              - emphasis [ref=e271]
+            - button "Filter projects by VS Code" [ref=e272] [cursor=pointer]:
+              - text: VS Code
+              - emphasis [ref=e273]
+            - button "Filter projects by Linux" [ref=e274] [cursor=pointer]:
+              - text: Linux / CLI
+              - emphasis [ref=e275]
+        - generic [ref=e276]:
+          - heading "In Progress / Expanding" [level=4] [ref=e277]
+          - generic [ref=e278]:
+            - generic [ref=e279] [cursor=pointer]:
+              - text: Next.js
+              - emphasis [ref=e280]
+            - generic [ref=e281] [cursor=pointer]:
+              - text: Docker
+              - emphasis [ref=e282]
+    - generic [ref=e284]:
+      - generic [ref=e285]:
+        - heading "Honors & Certifications" [level=2] [ref=e286]
+        - paragraph [ref=e287]: Academic competition win and verified technical credentials.
+      - generic [ref=e288]:
+        - generic [ref=e289] [cursor=pointer]:
+          - generic [ref=e290]: Academic Competition
+          - generic [ref=e298]:
+            - heading "ThinkQuest Champion | Tagisan ng Talino" [level=4] [ref=e299]
+            - paragraph [ref=e300]: STI College San Jose · School Level · Mar 2025
+        - generic [ref=e301] [cursor=pointer]:
+          - generic [ref=e302]: Industry Certification
+          - generic [ref=e307]:
+            - heading "Introduction to Cybersecurity" [level=4] [ref=e308]
+            - paragraph [ref=e309]: Cisco Networking Academy · Sep 2025
+        - generic [ref=e310] [cursor=pointer]:
+          - generic [ref=e311]: Technical Certification
+          - generic [ref=e316]:
+            - heading "Java Fundamentals | Terms 1 & 2" [level=4] [ref=e317]
+            - paragraph [ref=e318]: Oracle Academy · 2023
+        - generic [ref=e319] [cursor=pointer]:
+          - generic [ref=e320]: Internship Credential
+          - generic [ref=e325]:
+            - heading "DepEd SIPP OJT Certificate of Completion" [level=4] [ref=e326]
+            - paragraph [ref=e327]: DepEd Schools Division Office of San Jose City · Feb - Mar 2026
+  - contentinfo [ref=e328]:
+    - generic [ref=e329]:
+      - generic [ref=e330]:
+        - link "Kurt Fariñas Home" [ref=e331] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e334]: kurt.dev
+        - generic [ref=e335]: © 2026 Kurt Fariñas
+      - generic [ref=e336]:
+        - link "GitHub Profile" [ref=e337] [cursor=pointer]:
+          - /url: https://github.com/kurt-farinas
+        - link "LinkedIn Profile" [ref=e340] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/kurt-vincent-fari%C3%B1as-315ab1367
+        - button "Copy Email Address" [ref=e343] [cursor=pointer]
+        - button "View Resume CV" [ref=e347] [cursor=pointer]
+        - button "Back to Top" [ref=e351] [cursor=pointer]
+  - generic:
+    - status:
+      - generic:
+        - generic: SKILL FILTER
+        - generic: Showing projects built with TYPESCRIPT

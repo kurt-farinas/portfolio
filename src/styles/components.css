@@ -2993,103 +2993,58 @@ input[type="text"], input[type="email"], textarea {
   line-height: 1.45;
 }
 
-/* ---------- CAPABILITY MAP ---------- */
-.skills-section .skill-legend {
-  justify-content: flex-end;
-  margin: -8px 0 18px;
-}
-
-.skills-section .skills-grid {
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.skills-section .skill-group,
-.skills-section .skill-group:last-child {
-  grid-column: span 6;
-  min-height: 186px;
-  padding: 20px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: linear-gradient(145deg, var(--surface) 0%, color-mix(in srgb, var(--surface) 84%, transparent) 100%);
-  overflow: hidden;
-}
-
-.skills-section .skill-group-workflow {
-  grid-column: span 7;
-}
-
-.skills-section .skill-group-growth {
-  grid-column: span 5;
-}
-
-.skills-section .skill-group-heading {
+/* ---------- MINIMAL TECHNOLOGY STACK ---------- */
+.skills-minimal-list {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 780px;
 }
 
-.skills-section .skill-group h4 {
-  margin: 0;
-  color: var(--text);
-  font-size: 11px;
-  letter-spacing: 0.11em;
-}
-
-.skills-section .skill-group-index {
-  color: var(--text-faint);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-}
-
-.skills-section .skill-tags {
-  gap: 7px;
-}
-
-.skills-section .skill-tags span {
+.skill-chip {
   min-height: 38px;
   padding: 7px 12px;
+  border: 1px solid var(--border);
   border-radius: 5px;
-  background: color-mix(in srgb, var(--surface-2) 72%, transparent);
+  background: transparent;
   color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
-.skills-section .skill-tags span[role="button"]:hover {
+button.skill-chip {
+  cursor: pointer;
+}
+
+button.skill-chip:hover,
+button.skill-chip:focus-visible {
   border-color: var(--text-muted);
   color: var(--text);
-  transform: translateY(-1px);
+  outline: none;
 }
 
-.skills-section .skill-tags span:not([role="button"]) {
+.skill-chip-static {
+  color: var(--text-faint);
   cursor: default;
 }
 
-.skills-section .prof-badge {
-  background: var(--surface);
+.skills-minimal-list .active-skill-pill {
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--bg);
 }
 
 @media (max-width: 760px) {
-  .skills-section .skill-legend {
-    justify-content: flex-start;
-    margin-top: -2px;
+  .skills-minimal-list {
+    gap: 7px;
   }
 
-  .skills-section .skills-grid,
-  .skills-section .skill-group,
-  .skills-section .skill-group-workflow,
-  .skills-section .skill-group-growth,
-  .skills-section .skill-group:last-child {
-    grid-column: 1 / -1;
-  }
-
-  .skills-section .skill-group,
-  .skills-section .skill-group:last-child {
-    min-height: 0;
-    padding: 18px;
+  .skill-chip {
+    min-height: 36px;
+    padding: 7px 10px;
+    font-size: 11px;
   }
 }
 
