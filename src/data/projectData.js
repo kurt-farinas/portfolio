@@ -3,6 +3,39 @@
    ======================================== */
 
 export const projectDetails = {
+  jobHuntLedger: {
+    id: "job-hunt-ledger",
+    title: "Job Hunt Ledger",
+    ticketId: "Personal Developer Tool",
+    stamp: "Local-Only · Privacy-First",
+    roleTag: "Solo Full-Stack Developer",
+    statusBadge: '<span class="status-dot-green"></span> Local-Only Personal Tool',
+    badge: "Solo Full-Stack · Local-Only",
+    browserLabel: "job-hunt-ledger.local",
+    browserStatus: "LOCAL ONLY",
+    cardSummary: "Built a private dashboard that finds credible developer roles, explains each match, and keeps application tracking under my control.",
+    desc: "Job Hunt Ledger is a local personal dashboard for junior frontend and full-stack roles in Metro Manila, the Philippines, and remote-friendly markets. It uses approved structured job sources, records readable match reasons, prevents duplicate listings, and preserves deliberate manual application tracking.",
+    caseStudy: {
+      problem: "Job searching across several sources makes it difficult to compare relevant roles, avoid reviewing the same listing twice, and keep application decisions organized without putting personal notes into a hosted service.",
+      decision: "Built a local-only application around approved structured sources rather than browser scraping or automatic applications. The interface keeps source facts and match evidence visible next to deliberate tracking controls.",
+      implementation: "Created a React and TypeScript frontend with a FastAPI and SQLite backend. A shared refresh pipeline normalizes approved-source listings, applies deterministic preferences, deduplicates records with a SHA-256 identity, and preserves statuses, notes, and status history across refreshes.",
+      tradeoffs: "The dashboard is intentionally not publicly hosted and its in-process scheduled refresh works only while the local application is running. That limits convenience in exchange for privacy and direct user control.",
+      result: "A working local workspace for filtering, sorting, saving views, exporting filtered CSVs, backing up the database, and tracking applications without automated submissions, email sending, or hidden status changes."
+    },
+    codeUrl: "https://github.com/kurt-farinas/job-hunt-ledger",
+    highlights: [
+      "Approved Structured Sources: Fetches from configured APIs and feeds without browser scraping, then shows readable match evidence beside each lead.",
+      "Deterministic Deduplication: Uses a SHA-256 identity from normalized company, title, and source URL so rediscovered listings preserve existing manual tracking.",
+      "Deliberate Application Tracking: Status changes and notes are explicit actions with immutable history; refreshes never overwrite manual decisions.",
+      "Private Local Operations: Supports filters, saved views, CSV export, consistent SQLite backups, and optional Gmail read-only suggestions that require confirmation before any status change."
+    ],
+    stack: ["React", "TypeScript", "FastAPI", "Python", "SQLite", "Vite"],
+    filterSkills: ["react", "typescript"],
+    telemetry: ["Local-Only", "Explainable Matching", "SHA-256 Dedupe", "Manual Tracking"],
+    slides: [
+      { src: "/job-hunt-ledger.png", label: "Job Hunt Ledger dashboard", tab: "Dashboard" }
+    ]
+  },
   hris: {
     id: "hris",
     title: "CS Form No. 6 Digitalization System",

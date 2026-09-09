@@ -76,7 +76,10 @@ export default function ProjectModal() {
         {/* Screenshots Carousel */}
         <div id="modalViewScreens">
             <div className="screenshot-carousel" data-project={project.id}>
-              <BrowserChrome label={`${project.id}-case-study.local`} />
+              <BrowserChrome
+                label={`${project.id}-case-study.local`}
+                statusLabel={project.browserStatus}
+              />
               {slides.length > 1 && (
                 <div className="carousel-tabs">
                   {slides.map((s, idx) => (

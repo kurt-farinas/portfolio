@@ -73,7 +73,14 @@ export default function SkillsSection() {
               >
                 JavaScript<em className="prof-dot prof-pro" title="Production level"></em>
               </span>
-              <span className="has-prof">
+              <span
+                role="button"
+                tabIndex={0}
+                aria-label="Filter projects by TypeScript"
+                onClick={() => filterBySkill('typescript')}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') filterBySkill('typescript'); }}
+                className={`has-prof ${isSkillActive('typescript') ? 'active-skill-pill' : ''}`}
+              >
                 TypeScript<em className="prof-dot prof-learn" title="Learning"></em>
               </span>
               <span

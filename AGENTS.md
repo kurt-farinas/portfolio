@@ -23,6 +23,7 @@ When sources conflict, use this order:
 
 ## Features to preserve (do not remove or degrade without asking)
 - Project detail modals with screenshot carousel, case-study content, and screenshot lightbox
+- Featured Projects includes Job Hunt Ledger, a local-only personal job-search dashboard with a public code repository but no hosted demo
 - Resume PDF preview modal + direct download link
 - Command palette, including the Ctrl/Cmd+K shortcut and keyboard navigation
 - Action-feedback toast notifications
