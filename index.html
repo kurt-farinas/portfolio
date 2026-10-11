@@ -30,6 +30,12 @@
 
   <link rel="canonical" href="https://kurt-farinas-portfolio.vercel.app/">
   <meta name="author" content="Kurt Fariñas">
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('portfolio-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
+    } catch { /* Use the system scheme when storage is unavailable. */ }
+  </script>
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -51,13 +57,8 @@
 }
 </script>
 
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" href="/node_modules/@fontsource/pixelify-sans/files/pixelify-sans-latin-400-normal.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/node_modules/@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-400-normal.woff2" crossorigin>
 </head>
 
 <body>

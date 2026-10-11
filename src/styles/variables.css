@@ -1,72 +1,24 @@
-/* ========================================
-   DESIGN TOKENS & THEME VARIABLES
-   Monochrome — Color only on hover
-   ======================================== */
-
+/* Paper and ink are the only color literals. SVG masks are painted with ink. */
 :root {
-  --bg: #08080A;
-  --surface: rgba(18, 18, 22, 0.85);
-  --surface-solid: #121216;
-  --surface-2: rgba(26, 26, 32, 0.6);
-  --border: rgba(255, 255, 255, 0.05);
-  --border-strong: rgba(255, 255, 255, 0.10);
-  --border-hover: rgba(255, 255, 255, 0.22);
-  --accent-silver: #D4D4D8;
-  --accent-silver-light: #E4E4E7;
-  --accent-silver-glow: rgba(255, 255, 255, 0.10);
-  --accent: #F2F0EC;
-  --accent-hover: #FFFFFF;
-  --text: #F2F0EC;
-  --text-muted: #A1A1AA;
-  --text-faint: #71717A;
-  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --mouse-x: 50%;
-  --mouse-y: 50%;
-  --motion-ui: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  --content-width: 980px;
-  --section-space: clamp(52px, 5.5vw, 68px);
-  --section-space-mobile: 44px;
-  --card-radius: 10px;
-  --control-radius: 7px;
-  --accent-success: #34D399;
-  --accent-proof: #F59E0B;
-
-  /* Hover-only subtle highlights */
-  --hover-green: #34D399;
-  --hover-blue: #60A5FA;
-  --hover-white: #FFFFFF;
+  --paper: #FFFFFF; --ink: #000000; color-scheme: light;
+  --font-body: 'Atkinson Hyperlegible', sans-serif;
+  --font-display: 'Pixelify Sans', sans-serif;
+  --type-small: 0.875rem; --type-body: 1rem; --type-lead: 1.25rem;
+  --type-title: clamp(1.5rem, 3vw, 2.5rem);
+  --type-section: clamp(2rem, 6.5vw, 5.375rem);
+  --type-hero: clamp(6.25rem, 15vw, 13.5rem);
+  --type-archive: clamp(4rem, 9vw, 7.25rem);
+  --content-width: 1200px;
+  --section-space: clamp(80px, 8vw, 112px); --section-space-mobile: 64px;
+  --dither-25: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' shape-rendering='crispEdges'%3E%3Cpath fill='black' d='M0 0h1v1H0zM2 0h1v1H2zM0 2h1v1H0zM2 2h1v1H2z'/%3E%3C/svg%3E");
+  --dither-50: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' shape-rendering='crispEdges'%3E%3Cpath fill='black' d='M0 0h1v1H0zM2 0h1v1H2zM1 1h1v1H1zM3 1h1v1H3zM0 2h1v1H0zM2 2h1v1H2zM1 3h1v1H1zM3 3h1v1H3z'/%3E%3C/svg%3E");
+  --dither-75: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4' shape-rendering='crispEdges'%3E%3Cpath fill='black' d='M0 0h4v1H0zM1 1h1v1H1zM3 1h1v1H3zM0 2h4v1H0zM1 3h1v1H1zM3 3h1v1H3z'/%3E%3C/svg%3E");
 }
-
-[data-theme="light"] {
-  --bg: #F8F9FA;
-  --surface: rgba(255, 255, 255, 0.98);
-  --surface-solid: #FFFFFF;
-  --surface-2: #F1F3F5;
-  --border: rgba(24, 24, 27, 0.06);
-  --border-strong: rgba(24, 24, 27, 0.12);
-  --border-hover: rgba(24, 24, 27, 0.28);
-  --accent-silver: #27272A;
-  --accent-silver-light: #18181B;
-  --accent-silver-glow: rgba(0, 0, 0, 0.06);
-  --accent: #18181B;
-  --accent-hover: #000000;
-  --text: #09090B;
-  --text-muted: #52525B;
-  --text-faint: #71717A;
-
-  --hover-green: #059669;
-  --hover-blue: #2563EB;
-  --hover-white: #000000;
-  --accent-success: #059669;
-  --accent-proof: #B45309;
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) { --paper: #000000; --ink: #FFFFFF; color-scheme: dark; }
 }
-
-/* Global Theme Smooth Transition */
-body, nav, .section, .bento-card, .timeline-content, .terminal, .fact-card, .cmd-chip, .btn, .modal-content, .spec-row, .hero-social-pill, .theme-btn, .mobile-menu, .terminal-titlebar, .terminal-shortcuts, .profile-eyebrow, .profile-header-divider, .hero-section, .simple-footer {
-  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+:root[data-theme='dark'] { --paper: #000000; --ink: #FFFFFF; color-scheme: dark; }
+:root[data-theme='light'] { --paper: #FFFFFF; --ink: #000000; color-scheme: light; }
+@media (max-width: 760px) {
+  :root { --type-hero: clamp(3.75rem, 18.5vw, 7.75rem); --type-archive: clamp(3.5rem, 13vw, 5rem); --type-section: 2.5rem; }
 }

@@ -1,0 +1,58 @@
+/* Dither photography and user-operated galleries. */
+.studio-after-hours { padding-top: 112px; }
+.studio-archive-section { padding-bottom: var(--section-space); }
+.outside-page-nav-bar-top { margin-bottom: 44px; }
+.studio-archive-header { margin-bottom: 72px; }
+.studio-archive-header h1 { font: 400 var(--type-archive)/1.1 var(--font-display); margin-block: 20px; }
+.studio-archive-header > p { font-size: var(--type-lead); }
+.gear-catalog-container { display: flex; flex-direction: column; gap: 80px; }
+.after-hours-photo-section { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); align-items: center; gap: 40px; }
+.studio-photo-intro h2 { font: 400 var(--type-section)/1.1 var(--font-display); margin-block: 20px; }
+.studio-photo-intro p { max-width: 34ch; }
+.photo-deck-wrapper { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 24px 12px; min-width: 0; }
+.photo-deck-stack { position: relative; width: min(280px, 100%); aspect-ratio: 1; touch-action: pan-y; }
+.deck-photo-card { position: absolute; inset: 0; border: 2px solid var(--ink); background: var(--paper); padding: 8px; cursor: grab; user-select: none; }
+.deck-stack-level-0 { z-index: 4; }
+.deck-stack-level-1 { z-index: 3; transform: translate(8px, 8px); }
+.deck-stack-level-2 { z-index: 2; transform: translate(16px, 16px); }
+.deck-stack-level-3 { z-index: 1; transform: translate(24px, 24px); }
+.deck-photo-img { width: 100%; height: 100%; object-fit: cover; }
+.deck-photo-fallback { display: grid; place-content: center; height: 100%; }
+.studio-photo-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 12px; }
+.studio-photo-controls button { padding: 8px 12px; }
+.gear-category-header { margin-bottom: 28px; }
+.gear-section-heading { font: 400 var(--type-section)/1.1 var(--font-display); }
+.gear-section-sub { margin-top: 16px; }
+.gear-bento-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 24px; }
+.gear-card { min-width: 0; }
+.gear-media-box { position: relative; aspect-ratio: 4 / 3; }
+.gear-photo-container, .gear-schematic-frame { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 12px; }
+.gear-photo-img { width: 100%; height: 100%; object-fit: contain; }
+.gear-schematic-frame { background: var(--paper); }
+.gear-schematic-svg { width: 80%; }
+.studio-gear-zoom { position: absolute; inset: 0; width: 100%; height: 100%; background: transparent; border: 0; cursor: zoom-in; }
+.studio-gear-zoom:hover { background: transparent; }
+.studio-gear-zoom:focus-visible { outline-offset: -5px; }
+.gear-photo-zoom-hint { position: absolute; display: flex; align-items: center; justify-content: center; top: 8px; right: 8px; width: 44px; height: 44px; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); }
+.studio-gear-zoom:hover .gear-photo-zoom-hint { background: var(--ink); color: var(--paper); }
+.gear-photo-controls { position: absolute; z-index: 2; bottom: 8px; left: 8px; right: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.gear-photo-nav-btn, .gear-photo-dot { width: 44px; height: 44px; }
+.gear-photo-nav-btn { font-size: var(--type-lead); }
+.gear-photo-dots { display: flex; gap: 4px; }
+.gear-photo-dot { position: relative; }
+.gear-photo-dot::after { content: ''; position: absolute; inset: 16px; border: 2px solid currentColor; }
+.gear-photo-dot.active { background: var(--ink); color: var(--paper); }
+.gear-info-block { padding-top: 20px; }
+.gear-title-link { display: flex; align-items: center; padding: 4px; }
+.gear-title { font-size: var(--type-lead); line-height: 1.6; }
+.gear-specs-text { font-size: var(--type-small); margin-top: 12px; }
+.outside-page-nav-bar-bottom { margin-top: 72px; }
+@media (max-width: 1000px) { .gear-bento-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .studio-after-hours { padding-top: 100px; }
+  .studio-archive-header { margin-bottom: 32px; }
+  .after-hours-photo-section { grid-template-columns: 1fr; gap: 20px; }
+  .photo-deck-stack { width: min(220px, 100%); }
+  .gear-catalog-container { gap: 64px; }
+}
+@media (max-width: 540px) { .gear-bento-grid { grid-template-columns: 1fr; } }
