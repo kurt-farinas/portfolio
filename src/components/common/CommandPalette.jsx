@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useModal } from '../../context/ModalContext';
 import { useTheme } from '../../context/ThemeContext';
 import useDialogFocus from './useDialogFocus';
+import { scrollBehavior } from '../../utils/motion';
 
 export default function CommandPalette() {
   const {
@@ -39,7 +40,7 @@ export default function CommandPalette() {
         if (location.pathname !== '/') {
           navigate('/#timeline');
         } else {
-          document.getElementById('timeline')?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('timeline')?.scrollIntoView({ behavior: scrollBehavior() });
         }
       }
     },
@@ -54,7 +55,7 @@ export default function CommandPalette() {
         if (location.pathname !== '/') {
           navigate('/#about');
         } else {
-          document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('about')?.scrollIntoView({ behavior: scrollBehavior() });
         }
       }
     },
@@ -69,7 +70,7 @@ export default function CommandPalette() {
         if (location.pathname !== '/') {
           navigate('/#projects');
         } else {
-          document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('projects')?.scrollIntoView({ behavior: scrollBehavior() });
         }
       }
     },
@@ -84,7 +85,7 @@ export default function CommandPalette() {
         if (location.pathname !== '/') {
           navigate('/#skills');
         } else {
-          document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('skills')?.scrollIntoView({ behavior: scrollBehavior() });
         }
       }
     },
@@ -99,7 +100,7 @@ export default function CommandPalette() {
         if (location.pathname !== '/') {
           navigate('/#awards');
         } else {
-          document.getElementById('awards')?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('awards')?.scrollIntoView({ behavior: scrollBehavior() });
         }
       }
     },
@@ -195,6 +196,11 @@ export default function CommandPalette() {
   }, [query]);
 
   useEffect(() => {
+    if (!commandPaletteOpen) return;
+    listRef.current?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+  }, [commandPaletteOpen, selectedIndex, query]);
+
+  useEffect(() => {
     if (commandPaletteOpen) {
       setQuery('');
       setSelectedIndex(0);
@@ -208,6 +214,7 @@ export default function CommandPalette() {
   };
 
   const handleKeyDown = (e) => {
+    if (e.target !== inputRef.current || !filteredCommands.length) return;
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedIndex(prev => (prev + 1) % filteredCommands.length);
@@ -231,17 +238,6 @@ export default function CommandPalette() {
       aria-modal="true"
       aria-label="Command palette"
       onClick={closeCommandPalette}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
-        backdropFilter: 'blur(8px)',
-        zIndex: 9990,
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        paddingTop: '12vh'
-      }}
     >
       <div
         ref={dialogRef}
@@ -258,7 +254,11 @@ export default function CommandPalette() {
             placeholder="Type a command or search (e.g. projects, resume, theme)..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
+            role="combobox"
+            aria-label="Search commands"
+            aria-expanded="true"
+            aria-controls="command-list"
+            aria-activedescendant={filteredCommands[selectedIndex] ? `command-${filteredCommands[selectedIndex].id}` : undefined}
             autoComplete="off"
             spellCheck="false"
           />
@@ -272,10 +272,13 @@ export default function CommandPalette() {
           </button>
         </div>
 
-        <div className="cmd-palette-list" ref={listRef} role="listbox">
+        <div className="cmd-palette-list" id="command-list" ref={listRef} role="listbox" aria-label="Commands">
           {filteredCommands.map((cmd, idx) => (
             <div
               key={cmd.id}
+              id={`command-${cmd.id}`}
+              role="option"
+              aria-selected={idx === selectedIndex}
               className={`cmd-palette-item ${idx === selectedIndex ? 'selected' : ''}`}
               onClick={() => executeCommand(cmd)}
               onMouseEnter={() => setSelectedIndex(idx)}

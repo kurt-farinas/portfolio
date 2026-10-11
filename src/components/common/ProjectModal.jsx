@@ -2,6 +2,7 @@
   PROJECT MODAL  |  Screenshot Carousel & Case Study
    ======================================== */
 
+import DitherImage from './DitherImage';
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
 import { projectDetails } from '../../data/projectData';
@@ -43,7 +44,7 @@ export default function ProjectModal() {
       aria-labelledby="modalTitle"
       onClick={closeProjectModal}
     >
-      <div ref={dialogRef} className="modal-card" onClick={(e) => e.stopPropagation()}>
+      <div ref={dialogRef} className="modal-card studio-dialog" onClick={(e) => e.stopPropagation()}>
         <button
           type="button"
           className="modal-close"
@@ -108,13 +109,13 @@ export default function ProjectModal() {
                     }
                   }}
                 >
-                  <img
+                  <DitherImage
                     src={currentSlide.src}
                     alt={currentSlide.label || "Project Screenshot"}
                     loading="lazy"
                     onError={(e) => {
                       e.currentTarget.onerror = null;
-                      e.currentTarget.src = `/${project.id}-mockup.png`;
+                      e.currentTarget.hidden = true;
                     }}
                   />
                   <div className="project-screenshot-overlay">View Full Screenshot ↗</div>
@@ -204,7 +205,7 @@ export default function ProjectModal() {
         <div className="modal-section-title">Tech Stack &amp; Tools</div>
         <div className="stack-row">
           {project.stack?.map((tech, idx) => (
-            <span key={idx} className="stack-pill">{tech}</span>
+            <span key={idx} className="studio-stack-item">{tech}</span>
           ))}
         </div>
 

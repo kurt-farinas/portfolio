@@ -12,10 +12,10 @@ import AwardsSection from '../components/sections/AwardsSection';
 
 export default function HomePage() {
   return (
-    <main id="mainContent">
+    <main id="mainContent" className="studio-home">
       <Hero />
-      <AboutSection />
       <ProjectsSection />
+      <AboutSection />
       <TimelineSection />
       <SkillsSection />
       <AwardsSection />

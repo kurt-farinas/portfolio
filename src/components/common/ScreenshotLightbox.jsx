@@ -2,6 +2,7 @@
    SCREENSHOT LIGHTBOX  |  Full-Screen Image Preview
    ======================================== */
 
+import DitherImage from './DitherImage';
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
 import useDialogFocus from './useDialogFocus';
@@ -33,7 +34,7 @@ export default function ScreenshotLightbox() {
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
-        <img
+        <DitherImage
           id="screenshotModalImg"
           className="screenshot-modal-img"
           src={lightbox.src}
@@ -54,7 +55,6 @@ export default function ScreenshotLightbox() {
               onClick={(e) => e.stopPropagation()}
             >
               <span>{lightbox.actionLabel || 'VIEW PRODUCT SPECS'}</span>
-              <span className="link-arrow" aria-hidden="true">↗</span>
             </a>
           </div>
         )}

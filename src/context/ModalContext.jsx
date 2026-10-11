@@ -6,6 +6,7 @@
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { useSound } from './SoundContext';
+import { scrollBehavior } from '../utils/motion';
 
 const ModalContext = createContext();
 
@@ -119,7 +120,7 @@ export function ModalProvider({ children }) {
     setActiveSkillFilter(skillName);
     const projectsEl = document.getElementById('projects');
     if (projectsEl) {
-      projectsEl.scrollIntoView({ behavior: 'smooth' });
+      projectsEl.scrollIntoView({ behavior: scrollBehavior() });
     }
     spawnToast('SKILL FILTER', `Showing projects built with ${skillName.toUpperCase()}`);
   }, [activeSkillFilter, playUiSound, spawnToast]);

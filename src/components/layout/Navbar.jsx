@@ -1,163 +1,82 @@
-/* ========================================
-   NAVBAR COMPONENT  |  Header Navigation & State
-   ======================================== */
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import { scrollBehavior } from '../../utils/motion';
+
+const sections = [
+  { id: 'projects', label: 'Projects' },
+  { id: 'about', label: 'About' },
+  { id: 'timeline', label: 'Experience' },
+  { id: 'skills', label: 'Tools' }
+];
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-
+  const menuButtonRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
+    setMobileMenuOpen(false);
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-
-      if (location.pathname === '/') {
-        const sections = document.querySelectorAll('section[id], header[id]');
-        let current = 'hero';
-        sections.forEach((sec) => {
-          const secTop = sec.offsetTop - 140;
-          if (window.scrollY >= secTop) {
-            current = sec.getAttribute('id');
-          }
-        });
-        setActiveSection(current);
-      }
+      if (location.pathname !== '/') return;
+      let current = 'hero';
+      document.querySelectorAll('main section[id], main header[id]').forEach((section) => {
+        if (window.scrollY >= section.offsetTop - 140) current = section.id;
+      });
+      setActiveSection(current);
     };
-
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [mobileMenuOpen]);
+
   const handleNavClick = (sectionId) => {
     setMobileMenuOpen(false);
-    if (location.pathname !== '/') {
-      navigate(`/#${sectionId}`);
-    } else {
-      const el = document.getElementById(sectionId);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (location.pathname !== '/') navigate(`/#${sectionId}`);
+    else document.getElementById(sectionId)?.scrollIntoView({ behavior: scrollBehavior() });
   };
 
   return (
-    <nav className={isScrolled ? 'scrolled' : ''}>
-      <div className="wrap nav-wrap">
-        <Link
-          to="/"
-          className="logo"
-          aria-label="Kurt Fariñas Home"
-          onClick={() => {
-            if (location.pathname === '/') {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-          }}
-        >
-          <span className="dot-box"><span className="dot"></span></span>
-          <span className="logo-text">kurt.dev</span>
-        </Link>
-
-        <div className="nav-right">
-          <div className="nav-links" id="navLinks">
-            <button
-              type="button"
-              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'about' ? 'active-glow' : ''}`}
-              onClick={() => handleNavClick('about')}
-            >
-              ABOUT
-            </button>
-            <button
-              type="button"
-              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'projects' ? 'active-glow' : ''}`}
-              onClick={() => handleNavClick('projects')}
-            >
-              PROJECTS
-            </button>
-            <button
-              type="button"
-              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'timeline' ? 'active-glow' : ''}`}
-              onClick={() => handleNavClick('timeline')}
-            >
-              EXPERIENCE
-            </button>
-            <button
-              type="button"
-              className={`nav-link-btn ${location.pathname === '/' && activeSection === 'skills' ? 'active-glow' : ''}`}
-              onClick={() => handleNavClick('skills')}
-            >
-              SKILLS
-            </button>
-
-            <a
-              className="nav-link-btn"
-              href="mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry"
-            >
-              CONTACT
-            </a>
+    <nav className="studio-navbar" aria-label="Main navigation">
+      <div className="studio-container studio-nav-inner">
+        <Link to="/" className="studio-logo" aria-label="Kurt Fariñas Home" onClick={() => {
+          setMobileMenuOpen(false);
+          if (location.pathname === '/') window.scrollTo({ top: 0, behavior: scrollBehavior() });
+        }}><span className="studio-monogram" aria-hidden="true">kf.</span><span>kurt.dev</span></Link>
+        <div className="studio-nav-actions">
+          <div className="studio-nav-links">
+            {sections.map((section) => <button type="button" key={section.id} onClick={() => handleNavClick(section.id)} aria-current={location.pathname === '/' && activeSection === section.id ? 'location' : undefined}>{section.label}</button>)}
+            <Link to="/after-hours" aria-current={location.pathname !== '/' ? 'page' : undefined}>After Hours</Link>
           </div>
-
-          {/* Theme Toggle Button */}
-          <button
-            type="button"
-            className="theme-btn"
-            id="themeToggleBtn"
-            onClick={(e) => toggleTheme(e)}
-            aria-label="Toggle Theme"
-          >
-            {theme === 'dark' ? (
-              <svg className="theme-icon theme-icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-              </svg>
-            ) : (
-              <svg className="theme-icon theme-icon--moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-              </svg>
-            )}
+          <button type="button" className="studio-icon-button studio-theme-toggle" onClick={toggleTheme} aria-label="Toggle Theme" title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>
+            {theme === 'dark' ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" /></svg> : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M21 13A9 9 0 0 1 11 3a9 9 0 1 0 10 10Z" /></svg>}
           </button>
-
-          <a
-            className="btn-hire-me"
-            href="mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry"
-          >
-            HIRE ME
-          </a>
-
-          <button
-            type="button"
-            className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}
-            onClick={() => setMobileMenuOpen(prev => !prev)}
-            aria-label="Toggle navigation"
-            aria-expanded={mobileMenuOpen}
-          >
-            <span></span><span></span><span></span>
+          <a className="studio-action studio-nav-contact" href="mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry">Let's talk</a>
+          <button ref={menuButtonRef} type="button" className="studio-icon-button studio-menu-toggle" onClick={() => setMobileMenuOpen((open) => !open)} aria-label="Toggle navigation" aria-expanded={mobileMenuOpen} aria-controls="mobileMenu">
+            <span aria-hidden="true">{mobileMenuOpen ? '×' : '☰'}</span>
           </button>
         </div>
       </div>
-
-      {/* Mobile dropdown */}
-      <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`} id="mobileMenu">
-        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('about')}>ABOUT</button>
-        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('projects')}>PROJECTS</button>
-        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('timeline')}>EXPERIENCE</button>
-        <button type="button" className="mobile-nav-btn" onClick={() => handleNavClick('skills')}>SKILLS</button>
-
-        <a href="mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry" onClick={() => setMobileMenuOpen(false)}>CONTACT</a>
-        <a href="/resume.pdf" download onClick={() => setMobileMenuOpen(false)}>RESUME ↓</a>
+      <div className="studio-mobile-menu studio-container" id="mobileMenu" hidden={!mobileMenuOpen}>
+        {sections.map((section) => <button type="button" key={section.id} onClick={() => handleNavClick(section.id)} aria-current={location.pathname === '/' && activeSection === section.id ? 'location' : undefined}>{section.label}</button>)}
+        <Link to="/after-hours" aria-current={location.pathname !== '/' ? 'page' : undefined} onClick={() => setMobileMenuOpen(false)}>After Hours</Link>
+        <a href="mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry" onClick={() => setMobileMenuOpen(false)}>Contact</a>
+        <a href="/resume.pdf" download onClick={() => setMobileMenuOpen(false)}>Download résumé</a>
       </div>
     </nav>
   );

@@ -22,11 +22,11 @@ export default function ResumeModal() {
       aria-label="Kurt Fariñas Resume PDF Preview"
       onClick={closeResumeModal}
     >
-      <div ref={dialogRef} className="modal-card resume-modal-card" onClick={(e) => e.stopPropagation()}>
+      <div ref={dialogRef} className="modal-card resume-modal-card studio-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="resume-modal-header">
           <div>
             <span className="modal-badge">OFFICIAL CURRICULUM VITAE</span>
-            <h3 className="modal-title" style={{ marginBottom: 0, fontSize: '20px' }}>
+            <h3 className="modal-title">
               Kurt Fariñas · Resume
             </h3>
           </div>
@@ -37,7 +37,6 @@ export default function ResumeModal() {
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-secondary btn-sm"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -51,7 +50,6 @@ export default function ResumeModal() {
               href="/resume.pdf"
               download="Kurt_Farinas_Resume.pdf"
               className="btn btn-primary btn-sm"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -65,7 +63,6 @@ export default function ResumeModal() {
               type="button"
               className="modal-close"
               aria-label="Close resume modal"
-              style={{ position: 'static' }}
               onClick={closeResumeModal}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -76,6 +73,7 @@ export default function ResumeModal() {
           </div>
         </div>
 
+        <p className="studio-resume-help">If the preview is blank, open the PDF in a new tab or download it.</p>
         <div className="resume-embed-wrapper">
           <iframe
             id="resumeIframe"

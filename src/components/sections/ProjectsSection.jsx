@@ -3,10 +3,11 @@
    Supports skill cross-filtering and detailed modal triggers
    ======================================== */
 
+import DitherImage from '../common/DitherImage';
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
 import { projectDetails } from '../../data/projectData';
-import BrowserChrome from '../common/BrowserChrome';
+import SectionHeading from '../common/SectionHeading';
 
 const featuredProjectIds = ['hris', 'gym', 'jobHuntLedger'];
 
@@ -38,77 +39,80 @@ export default function ProjectsSection() {
   );
 
   return (
-    <section className="section projects-section" id="projects">
-      <div className="wrap profile-wrap">
-        <div className="section-title-block">
-          <h2 className="profile-title">Featured Projects</h2>
-        </div>
+    <section className="studio-section studio-projects" id="projects">
+      <div className="studio-container">
+        <SectionHeading title="Featured Projects" />
 
         {activeSkillFilter && (
-          <div id="skillFilterBanner" className="skill-filter-banner" style={{ display: 'flex' }}>
+          <div id="skillFilterBanner" className="studio-filter-banner" role="status">
             <span className="skill-filter-text">
               Filtered by: <strong>{activeSkillFilter.toUpperCase()}</strong>
             </span>
-            <button type="button" className="btn-clear-filter" onClick={clearSkillFilter}>
+            <button type="button" className="studio-action studio-action-outline" onClick={clearSkillFilter}>
               Reset Filter ×
             </button>
           </div>
         )}
 
-        <div className="tickets">
+        <div className="studio-project-list">
           {projects.map((project) => {
             const preview = project.slides[0];
 
             return (
               <article
                 key={project.id}
-                className={`ticket ${isSkillMatching(project.filterSkills) ? 'highlight-pulse' : ''}`}
+                className={`studio-project ${isSkillMatching(project.filterSkills) ? 'is-matching' : ''}`}
                 id={`ticket-${project.id}`}
                 data-skills={project.filterSkills.join(',')}
               >
-                <BrowserChrome label={project.browserLabel || `${project.id}.local`} statusLabel={project.browserStatus} />
-                <div className="project-screenshot project-screenshot-static">
-                  <img
-                    src={preview.src}
-                    alt={preview.label}
-                    loading="lazy"
-                    decoding="async"
-                    onError={(event) => {
-                      event.currentTarget.onerror = null;
-                      event.currentTarget.style.display = 'none';
-                    }}
-                  />
+                <div className="studio-project-preview">
+                  <div className="studio-project-image">
+                    <DitherImage
+                      src={preview.src}
+                      alt={preview.label}
+                      loading="lazy"
+                      decoding="async"
+                      onError={(event) => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
                 </div>
 
-                <div className="ticket-body">
-                  <div className="ticket-top">
-                    <div className="ticket-title">{project.title}</div>
-                    <p className="ticket-summary">{project.cardSummary}</p>
+                <div className="studio-project-copy">
+                  <div className="studio-project-title-group">
+                    <p className="studio-project-index">{project.ticketId}</p>
+                    <h3>{project.title}</h3>
                   </div>
+                  <div className="studio-project-details">
+                    <p className="studio-project-summary">{project.cardSummary}</p>
+                    <p className="studio-project-ownership">{project.roleTag}{project.browserStatus && ` · ${project.browserStatus}`}</p>
 
-                  <div className="ticket-stack">
-                    {project.stack.map((skill) => <span key={skill} className="stack-pill">{skill}</span>)}
-                  </div>
+                    <div className="studio-project-stack">
+                      {project.stack.map((skill) => <span key={skill}>{skill}</span>)}
+                    </div>
 
-                  <div className="ticket-footer-actions">
-                    <button type="button" className="btn-card-action" onClick={() => openProjectModal(project.projectKey)}>
-                      View Full Details →
-                    </button>
-                    {project.demoUrl && (
-                      <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="code-link-btn btn-showcase-demo">
-                        <ExternalIcon />
-                        <span>Live Demo ↗</span>
-                      </a>
-                    )}
-                    {project.codeUrl && (
-                      <a href={project.codeUrl} target="_blank" rel="noopener noreferrer" className="code-link-btn">
-                        <GitHubIcon />
-                        <span>View Code</span>
-                      </a>
-                    )}
-                    {!project.demoUrl && !project.codeUrl && (
-                      <p className="project-access-note">Live demo and source are not public for this government workflow project.</p>
-                    )}
+                    <div className="studio-project-actions">
+                      <button type="button" className="studio-action" onClick={() => openProjectModal(project.projectKey)}>
+                        View case study
+                      </button>
+                      {project.demoUrl && (
+                        <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="studio-text-action">
+                          <ExternalIcon />
+                          <span>Live Demo ↗</span>
+                        </a>
+                      )}
+                      {project.codeUrl && (
+                        <a href={project.codeUrl} target="_blank" rel="noopener noreferrer" className="studio-text-action">
+                          <GitHubIcon />
+                          <span>View Code</span>
+                        </a>
+                      )}
+                      {!project.demoUrl && !project.codeUrl && (
+                        <p className="studio-project-access">Live demo and source are not public for this government workflow project.</p>
+                      )}
+                    </div>
                   </div>
                 </div>
               </article>

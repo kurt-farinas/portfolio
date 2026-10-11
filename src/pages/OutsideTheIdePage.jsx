@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { gearCatalogData, snapshotsDeckData } from '../data/projectData';
 import GearCard from '../components/common/GearCard';
 import PhotoDeckShuffler from '../components/common/PhotoDeckShuffler';
-import WaveBackground from '../components/common/WaveBackground';
+
 
 export default function OutsideTheIdePage() {
   useEffect(() => {
@@ -18,42 +18,39 @@ export default function OutsideTheIdePage() {
   const sections = useMemo(() => [
     {
       id: 'desk',
-      number: '01',
       title: 'Desk Setup and Gear',
       description: 'The hardware and everyday tools behind my work and downtime.'
     },
     {
       id: 'rituals',
-      number: '02',
       title: 'Fragrance Collection',
       description: 'A small collection of daily and occasion fragrances.'
     }
   ], []);
 
   return (
-    <main className="outside-page-wrap gear-showcase-page">
-      {/* Interactive 3D Harmonic Wave Canvas Background */}
-      <div className="outside-wave-bg-wrap" aria-hidden="true">
-        <WaveBackground />
-      </div>
-
-      <section className="section gear-page-section">
-        <div className="wrap profile-wrap">
+    <main className="outside-page-wrap gear-showcase-page studio-after-hours">
+<section className="studio-archive-section">
+        <div className="studio-container">
           <div className="outside-page-nav-bar outside-page-nav-bar-top">
-            <Link to="/" className="btn-back-home font-mono">
+            <Link to="/" className="studio-text-action font-mono">
               ← RETURN TO MAIN PORTFOLIO
             </Link>
           </div>
 
-          <header className="gear-header-block section-title-block">
-            <span className="gear-header-eyebrow font-mono">Personal archive</span>
-            <h1 className="profile-title gear-main-title">
+          <header className="studio-archive-header">
+            <h1>
               After Hours
             </h1>
+            <p>A few things from the other side of the screen.</p>
           </header>
 
           <div className="gear-catalog-container">
             <section className="after-hours-photo-section gear-snapshots-deck-section" aria-label="Interactive personal photo stack">
+              <div className="studio-photo-intro">
+                <h2>Life outside<br />the IDE.</h2>
+                <p>Swipe, drag, or use the arrow keys to explore the photo stack.</p>
+              </div>
               <PhotoDeckShuffler photos={snapshotsDeckData} />
             </section>
 
@@ -68,7 +65,6 @@ export default function OutsideTheIdePage() {
                   aria-labelledby={`sec-${section.id}`}
                 >
                   <div className="gear-category-header">
-                    <span className="gear-section-index font-mono">{section.number}</span>
                     <div>
                       <h2 id={`sec-${section.id}`} className="gear-section-heading">
                         {section.title}
@@ -88,7 +84,7 @@ export default function OutsideTheIdePage() {
           </div>
 
           <div className="outside-page-nav-bar outside-page-nav-bar-bottom">
-            <Link to="/" className="btn-back-home font-mono">
+            <Link to="/" className="studio-action font-mono">
               ← RETURN TO MAIN PORTFOLIO
             </Link>
           </div>

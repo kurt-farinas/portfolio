@@ -1,9 +1,9 @@
 /* ========================================
-   PHOTO DECK SHUFFLER (Zero-Delay Instant Smooth Swipe)
-   Pure photo card deck matching reference: instant swipe cycling with no lockout delay,
-   smooth fly-away transitions, and organic rotational stack depth.
+   PHOTO DECK SHUFFLER
+   Immediate cycling with pointer and keyboard controls and whole-pixel dragging.
    ======================================== */
 
+import DitherImage from './DitherImage';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useModal } from '../../context/ModalContext';
 
@@ -12,7 +12,6 @@ export default function PhotoDeckShuffler({ photos = [] }) {
 
   // Active deck order
   const [deck, setDeck] = useState(photos);
-  const [exitingCards, setExitingCards] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [imgErrors, setImgErrors] = useState({});
@@ -27,40 +26,15 @@ export default function PhotoDeckShuffler({ photos = [] }) {
     setDeck(photos);
   }, [photos]);
 
-  const handleNextCard = useCallback((direction = 'right', startX = 0, startY = 0) => {
-    setDeck((prev) => {
-      if (prev.length <= 1) return prev;
-      const [top, ...rest] = prev;
-
-      // Spawn exiting flying animation independently so the next card is instantly interactive
-      const exitId = Date.now() + Math.random();
-      const startRot = startX * 0.08;
-
-      setExitingCards((old) => [
-        ...old,
-        {
-          ...top,
-          exitId,
-          direction,
-          startX,
-          startY,
-          startRot
-        }
-      ]);
-
-      setTimeout(() => {
-        setExitingCards((old) => old.filter((c) => c.exitId !== exitId));
-      }, 300);
-
-      return [...rest, top];
-    });
-
+  const handleNextCard = useCallback(() => {
+    setDeck(previous => previous.length > 1 ? [...previous.slice(1), previous[0]] : previous);
     setDragOffset({ x: 0, y: 0 });
     currentDragOffsetRef.current = { x: 0, y: 0 };
   }, []);
 
   // Keyboard navigation
   const handleKeyDown = (e) => {
+    if (e.target !== e.currentTarget) return;
     if (e.key === 'ArrowRight' || e.key === ' ') {
       e.preventDefault();
       handleNextCard('right');
@@ -147,31 +121,6 @@ export default function PhotoDeckShuffler({ photos = [] }) {
       aria-label="Interactive Photo Stack (Swipe or drag to shuffle)"
     >
       <div className="photo-deck-stack">
-        {/* Render Exiting Cards Flying Away */}
-        {exitingCards.map((card) => {
-          const style = {
-            '--start-x': `${card.startX}px`,
-            '--start-y': `${card.startY}px`,
-            '--start-rot': `${card.startRot}deg`
-          };
-
-          return (
-            <div
-              key={card.exitId}
-              className={`deck-photo-card is-exiting-flying is-exiting-${card.direction}`}
-              style={style}
-              aria-hidden="true"
-            >
-              <img
-                src={card.src}
-                alt={card.alt || card.title}
-                className="deck-photo-img"
-                draggable="false"
-              />
-            </div>
-          );
-        })}
-
         {/* Render Active Stack Cards */}
         {visibleCards.map((card, stackIndex) => {
           const isTop = stackIndex === 0;
@@ -179,9 +128,9 @@ export default function PhotoDeckShuffler({ photos = [] }) {
           let cardClass = `deck-photo-card deck-stack-level-${stackIndex}`;
 
           if (isTop && isDragging) {
-            const rotation = dragOffset.x * 0.08;
+
             cardStyle = {
-              transform: `translate3d(${dragOffset.x}px, ${dragOffset.y}px, 0) rotate(${rotation}deg)`,
+              transform: `translate3d(${Math.round(dragOffset.x)}px, ${Math.round(dragOffset.y)}px, 0)`,
               cursor: 'grabbing',
               transition: 'none'
             };
@@ -202,7 +151,7 @@ export default function PhotoDeckShuffler({ photos = [] }) {
               onDoubleClick={isTop ? (e) => handleDoubleClick(card, e) : undefined}
             >
               {!hasFailed ? (
-                <img
+                <DitherImage
                   src={card.src}
                   alt={card.alt || card.title}
                   className="deck-photo-img"
@@ -219,6 +168,10 @@ export default function PhotoDeckShuffler({ photos = [] }) {
             </div>
           );
         })}
+      </div>
+      <div className="studio-photo-controls">
+        <button type="button" onClick={() => handleNextCard('right')}>Next photo</button>
+        <button type="button" onClick={() => openLightbox(deck[0].src, deck[0].caption || deck[0].title)}>View photo</button>
       </div>
     </div>
   );

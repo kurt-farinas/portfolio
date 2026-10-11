@@ -23,7 +23,6 @@ export default function EmailCta({ className = '' }) {
         <strong>Email Me Directly</strong>
         <small>kurtfarinas2022@gmail.com</small>
       </span>
-      <span className="contact-email-cta-arrow" aria-hidden="true">↗</span>
     </a>
   );
 }

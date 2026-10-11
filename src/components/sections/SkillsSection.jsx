@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
+import SectionHeading from '../common/SectionHeading';
 
 const skills = [
   { name: 'React', filter: 'react' },
@@ -31,27 +32,26 @@ export default function SkillsSection() {
   const { activeSkillFilter, filterBySkill } = useModal();
 
   return (
-    <section className="section skills-section" id="skills">
-      <div className="wrap profile-wrap">
-        <div className="section-title-block">
-          <h2 className="profile-title">Tools &amp; Technologies</h2>
-        </div>
+    <section className="studio-section studio-technologies" id="skills">
+      <div className="studio-container">
+        <SectionHeading title="Tools & Technologies" description="Select a technology to highlight the related projects above." />
 
-        <div className="skills-minimal-list" aria-label="Technology stack">
+        <div className="studio-skills" aria-label="Technology stack">
           {skills.map((skill) => {
             const isActive = skill.filter && activeSkillFilter?.toLowerCase() === skill.filter;
 
             if (!skill.filter) {
-              return <span key={skill.name} className="skill-chip skill-chip-static">{skill.name}</span>;
+              return <span key={skill.name} className="studio-skill studio-skill-static">{skill.name}</span>;
             }
 
             return (
               <button
                 key={skill.name}
                 type="button"
-                className={`skill-chip ${isActive ? 'active-skill-pill' : ''}`}
+                className="studio-skill"
                 onClick={() => filterBySkill(skill.filter)}
                 aria-label={`Filter projects by ${skill.name}`}
+                aria-pressed={Boolean(isActive)}
               >
                 {skill.name}
               </button>

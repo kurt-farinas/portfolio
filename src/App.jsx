@@ -8,7 +8,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { SoundProvider } from './context/SoundContext';
 import { ModalProvider } from './context/ModalContext';
 
-import Preloader from './components/common/Preloader';
+import { HeroMotionProvider } from './components/common/HeroDither';
 import CustomCursor from './components/common/CustomCursor';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -22,6 +22,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 import HomePage from './pages/HomePage';
 import OutsideTheIdePage from './pages/OutsideTheIdePage';
+import { scrollBehavior } from './utils/motion';
 
 function AppContent() {
   const location = useLocation();
@@ -32,14 +33,13 @@ function AppContent() {
       const id = location.hash.replace('#', '');
       const el = document.getElementById(id);
       if (el) {
-        setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
+        setTimeout(() => el.scrollIntoView({ behavior: scrollBehavior() }), 100);
       }
     }
   }, [location]);
 
   return (
-    <div className="app-shell">
-      <Preloader />
+    <div className="app-shell studio-system">
       <CustomCursor />
       <Navbar />
 
@@ -68,9 +68,11 @@ export default function App() {
     <BrowserRouter>
       <ThemeProvider>
         <SoundProvider>
-          <ModalProvider>
-            <AppContent />
-          </ModalProvider>
+          <HeroMotionProvider>
+            <ModalProvider>
+              <AppContent />
+            </ModalProvider>
+          </HeroMotionProvider>
         </SoundProvider>
       </ThemeProvider>
     </BrowserRouter>
