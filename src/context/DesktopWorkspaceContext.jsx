@@ -20,6 +20,9 @@ export const DESKTOP_APPS = [
   { id: 'credits', label: 'Credits', glyph: 'i', description: 'Verified profile and interface credits' }
 ];
 
+// Matches the <title> in index.html.
+const BASE_TITLE = 'Kurt Fariñas | Junior Full-Stack Developer';
+
 const ROUTE_TO_APP = {
   '/projects': 'projects',
   '/after-hours': 'after-hours',
@@ -84,7 +87,7 @@ export const DesktopWorkspaceContext = createContext(null);
 
 const initialWindow = {
   appId: 'about',
-  rect: { x: 4, y: 5, width: 55, height: 77 },
+  rect: { x: 4, y: 4, width: 60, height: 86 },
   minimized: false,
   maximized: false
 };
@@ -122,6 +125,12 @@ export function DesktopWorkspaceProvider({ children }) {
     if (classicMode && location.pathname === '/classic') navigate('/', { replace: true });
   }, [classicMode, location.pathname, navigate]);
 
+  useEffect(() => {
+    const appId = classicMode ? ROUTE_TO_APP[location.pathname] : activeAppId;
+    const app = appId !== 'about' && DESKTOP_APPS.find(item => item.id === appId);
+    document.title = app ? app.label + ' | Kurt Fariñas' : BASE_TITLE;
+  }, [classicMode, location.pathname, activeAppId]);
+
   const openApplication = useCallback((appId, options = {}) => {
     if (appId === 'classic') { enterClassic(); return; }
     if (!DESKTOP_APPS.some(app => app.id === appId)) return;
@@ -131,7 +140,7 @@ export function DesktopWorkspaceProvider({ children }) {
       const offset = current.length % 6;
       const windowItem = {
         appId,
-        rect: { x: Math.min(14 + offset * 3, 27), y: Math.min(8 + offset * 3, 24), width: 66, height: 76 },
+        rect: { x: Math.min(8 + offset * 2, 18), y: Math.min(4 + offset * 2, 12), width: 78, height: 86 },
         minimized: false,
         maximized: false
       };
@@ -156,7 +165,7 @@ export function DesktopWorkspaceProvider({ children }) {
     setWindows(current => {
       const found = current.find(item => item.appId === nextApp);
       if (found) return current.map(item => item.appId === nextApp ? { ...item, minimized: false } : item);
-      return [...current, { appId: nextApp, rect: { x: 12, y: 9, width: 70, height: 78 }, minimized: false, maximized: false }];
+      return [...current, { appId: nextApp, rect: { x: 10, y: 6, width: 78, height: 86 }, minimized: false, maximized: false }];
     });
     setActiveAppId(nextApp);
     if (view === 'desk') setView('screen');

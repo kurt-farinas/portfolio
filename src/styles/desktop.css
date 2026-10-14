@@ -288,7 +288,8 @@
   color: var(--ink);
   font-size: 13px;
   line-height: 1.2;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: manual;
 }
 .desktop-window-area {
   position: absolute;
@@ -485,6 +486,7 @@
 .desktop-app-scroll .studio-container { width: min(100% - 40px, var(--content-width)); }
 .desktop-app-scroll .studio-project-detail-preview img { max-height: 360px; object-fit: contain; }
 .desktop-app-scroll .studio-project-detail { scroll-margin-top: 12px; }
+.desktop-app-scroll :is(.studio-project-page, .studio-after-hours, .studio-hero) { padding-top: 24px; }
 .desktop-app-scroll .studio-archive-section { padding-top: 18px; }
 .desktop-app-scroll .studio-archive-header h1,
 .desktop-app-scroll .studio-project-page-header h1 { font: 600 clamp(26px, 3vw, 34px)/1.15 var(--font-display); }
@@ -529,7 +531,7 @@
   .desktop-taskbar { padding-inline: 6px; }
   .desktop-taskbar-clock { display: none; }
   .desktop-taskbar-item { padding-inline: 8px; }
-  .desktop-taskbar-label { display: none; }
+  .desktop-taskbar-label { font-size: 12px; }
   .desktop-about-app .studio-profile-photo { width: 64px; height: 64px; }
 }
 
@@ -556,4 +558,9 @@
   .desktop-resume-preview { min-height: 300px; height: 58vh; }
   .desktop-contact-app { padding: 20px; }
   .desktop-contact-profile img { width: 60px; height: 60px; }
+  .desktop-app-scroll .studio-container { width: 100%; padding-inline: 12px; }
+  .desktop-app-scroll :is(.studio-project-page, .studio-after-hours, .studio-hero) { padding-top: 16px; }
+  .desktop-app-scroll .studio-project-detail-list > .studio-project-detail { padding: 12px 12px 16px; }
+  .desktop-taskbar-item { flex: 1 1 0; min-width: 0; overflow: hidden; }
+  .desktop-taskbar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }

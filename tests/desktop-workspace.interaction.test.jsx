@@ -104,6 +104,7 @@ describe('portfolio desktop workspace', () => {
     await act(async () => host.querySelectorAll('button')[0].click());
     expect(host.querySelector('[data-testid="location"]').textContent).toBe('/projects');
     expect(host.querySelector('[data-testid="active"]').textContent).toBe('projects');
+    expect(document.title).toBe('Projects | Kurt Fariñas');
     await act(async () => host.querySelectorAll('button')[1].click());
     expect(host.querySelector('[data-testid="location"]').textContent).toBe('/gear');
     await act(async () => host.querySelectorAll('button')[3].click());
