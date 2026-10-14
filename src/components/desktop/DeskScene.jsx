@@ -5,11 +5,12 @@ import { Box3, Color, SRGBColorSpace, Spherical, Vector3 } from 'three';
 import DesktopWorkspace from './DesktopWorkspace';
 import { bindDesktopCameraInput, computeDesktopScenePointer } from './desktopCameraInput';
 import { DesktopWorkspaceContext } from '../../context/DesktopWorkspaceContext';
-import { ModalContext } from '../../context/ModalContext';
+import { ModalContext, useModal } from '../../context/ModalContext';
 import { RetroOSContext, useRetroOS } from '../../context/RetroOSContext';
 import { roomPhase, ROOM_LIGHT } from '../../utils/roomPhase';
 import useMinuteClock from './useMinuteClock';
 import DeskRoom, { CorkBoard } from './DeskRoom';
+import FairyLights from './FairyLights';
 import { CoffeeMug, DeskClock, DeskLamp, DeskPrinter, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
 
 function readColor(name, fallback) {
@@ -89,6 +90,8 @@ function DeskWindow({ phase, colors, animate }) {
 function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors }) {
   const { noteDeskOpen, unlock, warmLamp } = useRetroOS();
   const openFromDesk = appId => { noteDeskOpen(appId); onOpenApp(appId); };
+  const { openLightbox } = useModal();
+  const openPhoto = photo => { noteDeskOpen('after-hours'); openLightbox(photo.src, photo.caption); };
   const photoClick = () => openFromDesk('after-hours');
   const root = useRef(null);
   const { handlers, tooltip } = useDeskHover(view === 'desk', colors.accent);
@@ -143,6 +146,7 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
       <DeskWindow phase={phase} colors={colors} animate={animate} />
       <DeskRoom colors={colors} animate={animate} lampOn={warmLamp || phase === 'night'} />
       <CorkBoard colors={colors} onOpen={() => openFromDesk('projects')} />
+      <FairyLights colors={colors} animate={animate} lit={warmLamp || phase === 'night'} onOpenPhoto={openPhoto} />
       <group position={[2.45, 4.75, -4.94]} userData={{ label: 'Recognition' }} onClick={event => { event.stopPropagation(); openFromDesk('recognition'); }}>
         <mesh><boxGeometry args={[1.05, 0.8, 0.06]} /><meshStandardMaterial color={colors.frame} roughness={0.6} /></mesh>
         <mesh position={[0, 0, 0.035]}><planeGeometry args={[0.9, 0.65]} /><meshStandardMaterial color={colors.paper} roughness={0.9} /></mesh>
@@ -311,7 +315,8 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
     lamp: readColor('--desk-lamp'), mug: readColor('--desk-mug'), coffee: readColor('--desk-coffee'),
     curtain: readColor('--desk-curtain'), curtainRod: readColor('--desk-curtain-rod'), plant: readColor('--desk-plant'), pot: readColor('--desk-pot'),
     rug: readColor('--desk-rug'), rugEdge: readColor('--desk-rug-edge'), cork: readColor('--desk-cork'), pin: readColor('--desk-pin'),
-    books: [readColor('--desk-book-a'), readColor('--desk-book-b'), readColor('--desk-book-c')], nightWarm: readColor('--desk-night-warm')
+    books: [readColor('--desk-book-a'), readColor('--desk-book-b'), readColor('--desk-book-c')], nightWarm: readColor('--desk-night-warm'),
+    fairyBulb: readColor('--desk-fairy-bulb'), fairyWire: readColor('--desk-fairy-wire')
   }), [theme]);
   const motionReduced = Boolean(reducedMotion);
   const phase = roomPhase(useMinuteClock());
