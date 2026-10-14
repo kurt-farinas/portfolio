@@ -172,7 +172,8 @@ export function DesktopWorkspaceProvider({ children }) {
     let attempts = 0;
     const focusAnchor = () => {
       const scrollRoot = document.querySelector('[data-app-scroll="' + appId + '"]');
-      const target = scrollRoot && scrollRoot.querySelector('#' + CSS.escape(anchor));
+      const byId = document.getElementById(anchor);
+      const target = scrollRoot && byId && scrollRoot.contains(byId) ? byId : null;
       if (target) {
         target.scrollIntoView({ block: 'start', behavior: reducedMotion ? 'instant' : 'smooth' });
       } else if (attempts < 8) {

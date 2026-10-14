@@ -51,6 +51,7 @@ describe('portfolio desktop workspace', () => {
 
   beforeEach(() => {
     vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true);
+    Element.prototype.scrollIntoView = vi.fn();
     oldWidth = window.innerWidth;
     oldMatchMedia = window.matchMedia;
     Object.defineProperty(window, 'matchMedia', {

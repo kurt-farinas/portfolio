@@ -21,7 +21,7 @@ describe('Profile introduction and original imagery', () => {
     expect(host.textContent).not.toContain('Open to developer opportunities');
     expect(host.querySelector('.studio-availability')).toBeNull();
     expect(host.querySelector('canvas')).toBeNull();
-    expect(host.querySelector('img').getAttribute('src')).toBe('/images/kurt-farinas-profile.png');
+    expect(host.querySelector('img').getAttribute('src')).toBe('/optimized/images/kurt-farinas-profile.png.webp');
     const resumeLink = host.querySelector('a.studio-profile-resume');
     expect(resumeLink.getAttribute('href')).toBe('/resume.pdf');
     expect(resumeLink.getAttribute('target')).toBe('_blank');
@@ -36,11 +36,21 @@ describe('Profile introduction and original imagery', () => {
     document.documentElement.dataset.theme = 'dark';
     await act(async () => root.render(<PortfolioImage src="hris-admin.png" alt="Admin dashboard" />));
     const image = host.querySelector('img');
-    expect(image.getAttribute('src')).toBe('/hris-admin.png');
+    expect(image.getAttribute('src')).toBe('/optimized/hris-admin.png.webp');
     expect(Number(image.getAttribute('width'))).toBeGreaterThan(0);
     expect(Number(image.getAttribute('height'))).toBeGreaterThan(0);
     expect(image.getAttribute('loading')).toBe('lazy');
     expect(hasPortfolioImage('/images/outside/mchose-ace60-side.jpg')).toBe(false);
     expect(hasPortfolioImage('/images/kurt-farinas-profile.png')).toBe(true);
+  });
+  it('falls back to the original file when the WebP copy fails, then reports a second failure', async () => {
+    const onError = vi.fn();
+    await act(async () => root.render(<PortfolioImage src="/hris-admin.png" alt="Admin dashboard" onError={onError} />));
+    const image = host.querySelector('img');
+    await act(async () => image.dispatchEvent(new Event('error')));
+    expect(image.getAttribute('src')).toBe('/hris-admin.png');
+    expect(onError).not.toHaveBeenCalled();
+    await act(async () => image.dispatchEvent(new Event('error')));
+    expect(onError).toHaveBeenCalledTimes(1);
   });
 });

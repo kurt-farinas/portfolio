@@ -37,6 +37,7 @@ The Classic Portfolio app and direct /classic links switch to classic mode for t
 - Keep the current Junior Full-Stack Developer role at People's Multi-Purpose Cooperative from September 16, 2026, and retain the OJT 98/100 rating and 342 hours.
 - Keep Job Hunt Ledger labelled local-only with no hosted demo. Do not invent stats, dates, releases, or responsibilities.
 - Keep the supplied portrait, project screenshots, After Hours photos, gear photos and image fallbacks, original image dimensions, and public asset paths.
+- PortfolioImage serves WebP copies from public/optimized/ and falls back to the original path. After adding or replacing images, run node scripts/prepare-portfolio-assets.mjs, then npm run images.
 - Use the Win98 system font stack (Tahoma) for all text, keeping sizes and weights from variables.css. No rounded corners except avatars and status dots. Keep typography and color variables in src/styles/variables.css. Preserve the saved dark/light choice and dark default.
 - Keep /resume.pdf unchanged in the hero/app/modal links. The Résumé app must retain open-in-tab, download, and accessible preview actions.
 

@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "images": "node scripts/optimize-images.mjs",
     "dither": "node scripts/dither-images.mjs",
     "dither:check": "node scripts/check-dither-images.mjs",
     "theme:check": "node scripts/check-portfolio-theme.mjs"
