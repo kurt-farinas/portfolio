@@ -3,7 +3,7 @@ import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { useRetroOS } from '../../context/RetroOSContext';
 import { useModal } from '../../context/ModalContext';
 import { portfolioCommand, portfolioProfile, portfolioProjects, awardsData } from '../../data/portfolioFacts';
-import { WORD_BANK, scoreGuess, INITIAL_BUG_GAME, moveBugPlayer, bugCanBeHit, nextBugTarget, rayDistance } from '../../utils/retroGames';
+import { WORD_BANK, scoreGuess, INITIAL_BUG_GAME, moveBugPlayer, bugCanBeHit, nextBugTarget, rayDistance, newSweeper, revealCell, toggleFlag } from '../../utils/retroGames';
 import useAppSession from './useAppSession';
 
 export function useAppInteractionReady(appId) {
@@ -21,12 +21,14 @@ export function useAppInteractionReady(appId) {
 
 export function KurtOrdleApp() {
   const ready = useAppInteractionReady('kurtordle');
+  const { unlock } = useRetroOS();
   const [game, setGame] = useAppSession('kurtordle-game', { target: WORD_BANK[0], guesses: [], input: '', message: 'Guess a five-letter word in six attempts.', result: '' });
   const enter = () => {
     if (!ready || game.result) return;
     if (!/^[A-Z]{5}$/.test(game.input)) { setGame(current => ({ ...current, message: 'Enter exactly five letters.' })); return; }
     const guesses = [...game.guesses, game.input];
     const result = game.input === game.target ? 'win' : guesses.length === 6 ? 'loss' : '';
+    if (result === 'win') unlock('wordsmith');
     setGame(current => ({ ...current, guesses, input: '', result, message: result === 'win' ? 'Solved: ' + game.target + '.' : result === 'loss' ? 'The word was ' + game.target + '. Try a new word.' : 'Guess ' + (guesses.length + 1) + ' of 6.' }));
   };
   const type = key => {
@@ -166,5 +168,59 @@ export function CreditsApp() {
     <ul>{awardsData.map(award => <li key={award.id}>{award.title} · {award.issuer}</li>)}</ul>
     <p>3D portfolio concept inspiration: <a href="https://henryheffernan.com/" target="_blank" rel="noopener noreferrer">Henry Heffernan</a>.</p>
     <a href={p.resume} target="_blank" rel="noopener noreferrer">Open actual résumé PDF</a>
+  </section>;
+}
+
+function sweeperCellName(cell, row, col) {
+  const place = 'Row ' + (row + 1) + ', column ' + (col + 1) + ', ';
+  if (cell.flag) return place + 'flagged';
+  if (!cell.open) return place + 'hidden';
+  if (cell.bug) return place + 'bug';
+  return place + (cell.adjacent ? cell.adjacent + (cell.adjacent === 1 ? ' bug' : ' bugs') + ' nearby' : 'empty');
+}
+
+export function BugsweeperApp() {
+  const ready = useAppInteractionReady('bugsweeper');
+  const { unlock } = useRetroOS();
+  const [game, setGame] = useAppSession('bugsweeper-game', () => newSweeper());
+  const [flagMode, setFlagMode] = useState(false);
+  const [focusIndex, setFocusIndex] = useState(0);
+  const cells = useRef([]);
+  const flags = game.cells.filter(cell => cell.flag).length;
+  const act = (index, flag = flagMode) => {
+    if (!ready) return;
+    const next = flag ? toggleFlag(game, index) : revealCell(game, index);
+    if (next.status === 'won' && game.status !== 'won') unlock('exterminator');
+    setGame(next);
+  };
+  // Roving focus: arrow keys move between tiles, Enter/Space reveal (native button), F flags.
+  const move = (event, index) => {
+    const step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -game.cols, ArrowDown: game.cols }[event.key];
+    if (step !== undefined) {
+      event.preventDefault();
+      const next = index + step;
+      const horizontal = event.key === 'ArrowLeft' || event.key === 'ArrowRight';
+      if (next >= 0 && next < game.cells.length && (!horizontal || Math.floor(next / game.cols) === Math.floor(index / game.cols))) { setFocusIndex(next); cells.current[next]?.focus(); }
+    } else if (event.key.toLowerCase() === 'f') { event.preventDefault(); act(index, true); }
+  };
+  const status = game.status === 'won' ? 'Board cleared. Every bug found.' : game.status === 'lost' ? 'A bug got loose. Start a new board.' : (game.bugs - flags) + ' bugs left';
+  return <section className="retro-extra-app retro-sweeper"><p className="desktop-eyebrow">BUGSWEEPER</p><h1>Bugsweeper</h1>
+    <p>Reveal every safe tile. Numbers count the bugs around a tile. Right-click, press F, or turn on Flag mode to mark a bug.</p>
+    <div className="retro-sweeper-bar">
+      <span className="retro-sweeper-counter" aria-live="polite">{status}</span>
+      <button type="button" onClick={() => { setGame(newSweeper()); setFocusIndex(0); }} aria-label="New Bugsweeper board">{game.status === 'lost' ? 'x_x' : game.status === 'won' ? 'B-)' : ':-)'}</button>
+      <button type="button" aria-pressed={flagMode} onClick={() => setFlagMode(value => !value)}>Flag mode: {flagMode ? 'On' : 'Off'}</button>
+    </div>
+    <div className="retro-sweeper-board" role="grid" aria-label="Bugsweeper board" style={{ gridTemplateColumns: 'repeat(' + game.cols + ', 44px)' }}>
+      {game.cells.map((cell, index) => {
+        const row = Math.floor(index / game.cols), col = index % game.cols;
+        return <button key={index} ref={node => { cells.current[index] = node; }} type="button" role="gridcell" tabIndex={index === focusIndex ? 0 : -1}
+          className={'retro-sweeper-cell' + (cell.open ? ' is-open' : '') + (cell.open && cell.bug ? ' is-bug' : '')}
+          aria-label={sweeperCellName(cell, row, col)} onFocus={() => setFocusIndex(index)}
+          onClick={() => act(index)} onContextMenu={event => { event.preventDefault(); act(index, true); }} onKeyDown={event => move(event, index)}>
+          {cell.flag ? '⚑' : cell.open ? (cell.bug ? '✱' : cell.adjacent || '') : ''}
+        </button>;
+      })}
+    </div>
   </section>;
 }

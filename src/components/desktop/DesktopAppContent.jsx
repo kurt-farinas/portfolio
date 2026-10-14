@@ -12,7 +12,8 @@ import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { useModal } from '../../context/ModalContext';
 import { portfolioProfile } from '../../data/portfolioFacts';
 import PortfolioContactForm from './PortfolioContactForm';
-import { BugHunterApp, CreditsApp, KurtOrdleApp, TerminalApp } from './RetroExtraApps';
+import { BugHunterApp, BugsweeperApp, CreditsApp, KurtOrdleApp, TerminalApp } from './RetroExtraApps';
+import { ACHIEVEMENTS, useRetroOS } from '../../context/RetroOSContext';
 import RetroIcon from './RetroIcon';
 
 const DRIVES = [['C', 'projects'], ['D', 'experience'], ['E', 'stack'], ['F', 'recognition'], ['G', 'resume'], ['H', 'contact']];
@@ -20,8 +21,12 @@ const DRIVES = [['C', 'projects'], ['D', 'experience'], ['E', 'stack'], ['F', 'r
 // Win98-style drive list; each drive opens an existing app with its existing label and description.
 function MyComputerApp() {
   const { apps, openApplication } = useDesktopWorkspace();
+  const { achievements } = useRetroOS();
   return <section className="retro-extra-app retro-my-computer"><p className="desktop-eyebrow">MY COMPUTER</p><h1>Kurt-OS drives</h1>
     <ul className="retro-drive-list">{DRIVES.map(([letter, id]) => { const app = apps.find(item => item.id === id); return app && <li key={id}><button type="button" onClick={() => openApplication(id)}><RetroIcon id="drive" /><span><strong>{app.label} ({letter}:)</strong><span>{app.description}</span></span></button></li>; })}</ul>
+    <h2 className="retro-achievements-title">Achievements ({achievements.length}/{ACHIEVEMENTS.length})</h2>
+    <p>Saved only for this browser session.</p>
+    <ul className="retro-achievement-list">{ACHIEVEMENTS.map(item => { const done = achievements.includes(item.id); return <li key={item.id}><span aria-hidden="true">{done ? '✓' : '○'}</span><span><strong>{item.label}</strong> ({done ? 'unlocked' : 'locked'})<br />{item.hint}</span></li>; })}</ul>
   </section>;
 }
 
@@ -81,6 +86,7 @@ function AppBody({ appId }) {
     case 'resume': return <ResumeApp />;
     case 'contact': return <ContactApp />;
     case 'kurtordle': return <KurtOrdleApp />;
+    case 'bugsweeper': return <BugsweeperApp />;
     case 'bughunter': return <BugHunterApp />;
     case 'terminal': return <TerminalApp />;
     case 'credits': return <CreditsApp />;

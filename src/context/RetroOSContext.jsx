@@ -2,12 +2,24 @@ import React, { createContext, useCallback, useContext, useEffect, useRef, useSt
 import { useLocation } from 'react-router-dom';
 import { useTheme } from './ThemeContext';
 import { useDesktopWorkspace } from './DesktopWorkspaceContext';
+import { useModal } from './ModalContext';
 import { portfolioProfile } from '../data/portfolioFacts';
+import { featuredProjectIds } from '../data/projectData';
+
+// Session-only achievements: stored in sessionStorage, never sent anywhere.
+export const ACHIEVEMENTS = [
+  { id: 'explorer', label: 'Desk explorer', hint: 'Open apps from 5 different desk objects' },
+  { id: 'reader', label: 'Case-study reader', hint: 'Open all six project case studies' },
+  { id: 'wordsmith', label: 'Wordsmith', hint: 'Solve KurtOrdle' },
+  { id: 'exterminator', label: 'Exterminator', hint: 'Clear a Bugsweeper board' },
+  { id: 'paper-trail', label: 'Paper trail', hint: 'Print the résumé from the desk printer' }
+];
+const ACHIEVEMENT_KEY = 'kurt-os-achievements';
 
 export const RetroOSContext = createContext(null);
 const noop = () => {};
 const EMPTY_DRAFT = { name: '', email: '', message: '' };
-const defaults = { theme: 'dark', bootOpen: false, introKey: 0, soundEnabled: false, soundError: '', crtEffects: false, warmLamp: false, wallpaper: 0, monitorOn: true, pressedKey: '', contactDraft: EMPTY_DRAFT, contactStatus: { kind: '', message: '' }, sending: false, toggleSound: noop, toggleCrt: noop, toggleLamp: noop, cycleWallpaper: noop, togglePower: noop, powerOn: noop, replayBoot: noop, finishBoot: noop, playSound: noop, pressKey: noop, setContactDraft: noop, sendContact: noop };
+const defaults = { theme: 'dark', bootOpen: false, introKey: 0, achievements: [], unlock: noop, noteDeskOpen: noop, soundEnabled: false, soundError: '', crtEffects: false, warmLamp: false, wallpaper: 0, monitorOn: true, pressedKey: '', contactDraft: EMPTY_DRAFT, contactStatus: { kind: '', message: '' }, sending: false, toggleSound: noop, toggleCrt: noop, toggleLamp: noop, cycleWallpaper: noop, togglePower: noop, powerOn: noop, replayBoot: noop, finishBoot: noop, playSound: noop, pressKey: noop, setContactDraft: noop, sendContact: noop };
 
 export function RetroOSProvider({ children }) {
   const location = useLocation();
@@ -48,11 +60,11 @@ export function RetroOSProvider({ children }) {
     const context = audio.current;
     context.resume?.().catch?.(() => {});
     // 'boot' is an original C-E-G-C arpeggio whose last note rings out; 'startup' is the short toggle blip.
-    const notes = kind === 'boot' ? [262, 330, 392, 523] : kind === 'startup' ? [262, 330, 392] : [kind === 'key' ? 420 : 880];
+    const notes = kind === 'print' ? Array(10).fill(1480) : kind === 'boot' ? [262, 330, 392, 523] : kind === 'startup' ? [262, 330, 392] : [kind === 'key' ? 420 : 880];
     notes.forEach((frequency, index) => {
       const oscillator = context.createOscillator();
       const gain = context.createGain();
-      const start = context.currentTime + index * (kind === 'boot' ? 0.11 : 0.08);
+      const start = context.currentTime + index * (kind === 'boot' ? 0.11 : kind === 'print' ? 0.06 : 0.08);
       const duration = kind === 'boot' ? (index === notes.length - 1 ? 0.6 : 0.14) : kind === 'startup' ? 0.1 : 0.025;
       oscillator.type = 'sine'; oscillator.frequency.value = frequency;
       gain.gain.setValueAtTime(0.025, start);
@@ -77,6 +89,24 @@ export function RetroOSProvider({ children }) {
     clearTimeout(keyTimer.current); setPressedKey(key.toUpperCase());
     keyTimer.current = setTimeout(() => setPressedKey(''), 120);
   }, [playSound, reducedMotion]);
+  const { spawnToast, selectedProjectId } = useModal();
+  const [achievements, setAchievements] = useState(() => { try { return JSON.parse(sessionStorage.getItem(ACHIEVEMENT_KEY)) || []; } catch { return []; } });
+  const unlock = useCallback(id => setAchievements(current => {
+    if (current.includes(id)) return current;
+    const next = [...current, id];
+    try { sessionStorage.setItem(ACHIEVEMENT_KEY, JSON.stringify(next)); } catch { /* Session storage is optional. */ }
+    spawnToast?.('Achievement unlocked', ACHIEVEMENTS.find(item => item.id === id)?.label);
+    return next;
+  }), [spawnToast]);
+  const deskOpens = useRef(new Set());
+  const noteDeskOpen = useCallback(target => { deskOpens.current.add(target); if (deskOpens.current.size >= 5) unlock('explorer'); }, [unlock]);
+  const projectsRead = useRef(new Set());
+  useEffect(() => {
+    if (!selectedProjectId) return;
+    projectsRead.current.add(selectedProjectId);
+    // Project dialogs are keyed by featuredProjectIds (e.g. 'pmpcPis'), not by each project's id field.
+    if (featuredProjectIds.every(id => projectsRead.current.has(id))) unlock('reader');
+  }, [selectedProjectId, unlock]);
   const finishBoot = useCallback(mode => {
     try { sessionStorage.setItem('kurt-os-boot-seen', 'true'); } catch { /* Session storage is optional. */ }
     setBootOpen(false); setMonitorOn(true); playSound('boot');
@@ -105,6 +135,6 @@ export function RetroOSProvider({ children }) {
     } finally { postGate.current = false; setSending(false); }
   }, [contactDraft]);
 
-  return <RetroOSContext.Provider value={{ theme, bootOpen, introKey, soundEnabled, soundError, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => !value), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower: () => setMonitorOn(value => !value), powerOn: () => setMonitorOn(true), setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
+  return <RetroOSContext.Provider value={{ theme, bootOpen, introKey, achievements, unlock, noteDeskOpen, soundEnabled, soundError, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => !value), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower: () => setMonitorOn(value => !value), powerOn: () => setMonitorOn(true), setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
 }
 export function useRetroOS() { return useContext(RetroOSContext) || defaults; }

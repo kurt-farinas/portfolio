@@ -16,6 +16,7 @@ try {
     const icons=page.locator('.desktop-workspace-screen .desktop-icon');
     for (let index=0;index<await icons.count();index++) {
       const label=await icons.nth(index).getAttribute('aria-label');
+      if (label==='Open Classic Portfolio') continue; // leaves the desktop for classic mode
       await icons.nth(index).click();await page.waitForTimeout(700);
       const state=await page.evaluate(()=>{const wrapper=document.querySelector('.desk-projected-html');const frame=document.querySelector('.desk-projection-frame').getBoundingClientRect();return {scroll:[wrapper.scrollTop,wrapper.scrollLeft],inView:frame.bottom>0&&frame.top<innerHeight};});
       expect(state,label+' must keep the projected screen in view').toEqual({scroll:[0,0],inView:true});

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 export const DESKTOP_APPS = [
   { id: 'my-computer', label: 'My Computer', glyph: 'C', description: 'Browse the portfolio as drives' },
+  { id: 'classic', label: 'Classic Portfolio', glyph: 'K', description: 'The editorial version of this portfolio' },
   { id: 'about', label: 'About', glyph: 'K', description: 'Profile and background' },
   { id: 'projects', label: 'Projects', glyph: '▧', description: 'Six projects and case studies' },
   { id: 'experience', label: 'Experience', glyph: '◷', description: 'Career and education' },
@@ -13,6 +14,7 @@ export const DESKTOP_APPS = [
   { id: 'resume', label: 'Résumé', glyph: '▤', description: 'Preview and download résumé' },
   { id: 'contact', label: 'Contact', glyph: '↗', description: 'Message composer and profile links' },
   { id: 'kurtordle', label: 'KurtOrdle', glyph: 'W', description: 'Five-letter portfolio mini-game' },
+  { id: 'bugsweeper', label: 'Bugsweeper', glyph: 'S', description: 'Find the bugs without stepping on one' },
   { id: 'bughunter', label: 'BugHunter 3D', glyph: 'B', description: 'Fictional raycaster mini-game' },
   { id: 'terminal', label: 'Terminal', glyph: '>', description: 'Simulated portfolio commands' },
   { id: 'credits', label: 'Credits', glyph: 'i', description: 'Verified profile and interface credits' }
@@ -29,7 +31,7 @@ const ROUTE_TO_APP = {
 function appFromLocation(pathname, hash) {
   if (ROUTE_TO_APP[pathname]) return ROUTE_TO_APP[pathname];
   const anchor = (hash || '').replace(/^#/, '').split('&')[0];
-  if (['my-computer', 'kurtordle', 'bughunter', 'terminal', 'credits'].includes(anchor)) return anchor;
+  if (['my-computer', 'kurtordle', 'bugsweeper', 'bughunter', 'terminal', 'credits'].includes(anchor)) return anchor;
   if (anchor === 'timeline') return 'experience';
   if (anchor === 'skills') return 'stack';
   if (anchor === 'awards') return 'recognition';
@@ -99,8 +101,29 @@ export function DesktopWorkspaceProvider({ children }) {
   const scrollPositions = useRef(new Map());
   const appStates = useRef(new Map());
   const didSyncRoute = useRef(false);
+  // Classic mode swaps the OS for the editorial portfolio; it lasts for the browser session and /classic links straight to it.
+  const [classicMode, setClassicMode] = useState(() => {
+    if (location.pathname === '/classic') return true;
+    try { return sessionStorage.getItem('kurt-os-classic') === 'true'; } catch { return false; }
+  });
+  const enterClassic = useCallback(() => {
+    try { sessionStorage.setItem('kurt-os-classic', 'true'); } catch { /* Session storage is optional. */ }
+    setClassicMode(true);
+    navigate('/');
+  }, [navigate]);
+  const exitClassic = useCallback(() => {
+    try { sessionStorage.removeItem('kurt-os-classic'); } catch { /* Session storage is optional. */ }
+    setClassicMode(false);
+    navigate('/');
+  }, [navigate]);
+  useEffect(() => {
+    if (classicMode) document.documentElement.dataset.mode = 'classic';
+    else delete document.documentElement.dataset.mode;
+    if (classicMode && location.pathname === '/classic') navigate('/', { replace: true });
+  }, [classicMode, location.pathname, navigate]);
 
   const openApplication = useCallback((appId, options = {}) => {
+    if (appId === 'classic') { enterClassic(); return; }
     if (!DESKTOP_APPS.some(app => app.id === appId)) return;
     setWindows(current => {
       const found = current.find(windowItem => windowItem.appId === appId);
@@ -120,9 +143,10 @@ export function DesktopWorkspaceProvider({ children }) {
       const nextPath = options.path || pathForApp(appId, location.pathname);
       if (nextPath !== location.pathname + location.hash) navigate(nextPath, { state: { desktopApp: appId } });
     }
-  }, [location.pathname, location.hash, navigate]);
+  }, [location.pathname, location.hash, navigate, enterClassic]);
 
   useEffect(() => {
+    if (classicMode) return;
     const nextApp = appFromLocation(location.pathname, location.hash);
     if (location.pathname === '/' && !location.hash && !didSyncRoute.current) {
       didSyncRoute.current = true;
@@ -212,11 +236,11 @@ export function DesktopWorkspaceProvider({ children }) {
   const setAppState = useCallback((key, state) => appStates.current.set(key, state), []);
 
   const value = useMemo(() => ({
-    apps: DESKTOP_APPS, windows, activeAppId, view, canUse3D, sceneFailed, reducedMotion,
+    apps: DESKTOP_APPS, windows, activeAppId, view, canUse3D, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic,
     openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication,
     updateWindowRect, setActiveAppId, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene,
     saveScrollPosition, getScrollPosition, getAppState, setAppState
-  }), [windows, activeAppId, view, canUse3D, sceneFailed, reducedMotion, openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication, updateWindowRect, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene, saveScrollPosition, getScrollPosition, getAppState, setAppState]);
+  }), [windows, activeAppId, view, canUse3D, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic, openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication, updateWindowRect, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene, saveScrollPosition, getScrollPosition, getAppState, setAppState]);
 
   return <DesktopWorkspaceContext.Provider value={value}>{children}</DesktopWorkspaceContext.Provider>;
 }

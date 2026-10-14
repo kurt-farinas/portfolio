@@ -7,7 +7,9 @@ import { bindDesktopCameraInput, computeDesktopScenePointer } from './desktopCam
 import { DesktopWorkspaceContext } from '../../context/DesktopWorkspaceContext';
 import { ModalContext } from '../../context/ModalContext';
 import { RetroOSContext, useRetroOS } from '../../context/RetroOSContext';
-import { CoffeeMug, DeskClock, DeskLamp, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
+import { roomPhase, ROOM_LIGHT } from '../../utils/roomPhase';
+import useMinuteClock from './useMinuteClock';
+import { CoffeeMug, DeskClock, DeskLamp, DeskPrinter, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
 
 function readColor(name, fallback) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
@@ -47,7 +49,7 @@ function useDeskHover(enabled, accent) {
       const material = node.material;
       if (!node.isMesh || !material?.emissive) return;
       saved.push([material, material.emissive.clone(), material.emissiveIntensity]);
-      material.emissive.copy(tint); material.emissiveIntensity = 0.25;
+      material.emissive.copy(tint); material.emissiveIntensity = 0.4;
     });
     return () => saved.forEach(([material, emissive, intensity]) => { material.emissive.copy(emissive); material.emissiveIntensity = intensity; });
   }, [hovered, accent]);
@@ -66,8 +68,21 @@ function useDeskHover(enabled, accent) {
   return { handlers, tooltip };
 }
 
-function DeskObjects({ view, onOpenDesktop, onOpenApp, colors }) {
-  const photoClick = () => onOpenApp('after-hours');
+function DeskWindow({ phase, colors }) {
+  const sky = phase === 'day' ? colors.skyDay : phase === 'dusk' ? colors.skyDusk : colors.skyNight;
+  return <group position={[5.2, 4.8, -4.93]}>
+    <mesh><boxGeometry args={[3.2, 2.4, 0.12]} /><meshStandardMaterial color={colors.retroShell} roughness={0.8} /></mesh>
+    <mesh position={[0, 0, 0.065]}><planeGeometry args={[2.9, 2.1]} /><meshBasicMaterial color={sky} toneMapped={false} /></mesh>
+    <mesh position={[0, 0, 0.09]}><boxGeometry args={[0.08, 2.1, 0.04]} /><meshStandardMaterial color={colors.retroShell} /></mesh>
+    <mesh position={[0, 0, 0.09]}><boxGeometry args={[2.9, 0.08, 0.04]} /><meshStandardMaterial color={colors.retroShell} /></mesh>
+    {phase === 'night' && [[-1, 0.6], [-0.5, 0.25], [0.4, 0.75], [0.95, 0.35], [-0.85, -0.45], [0.6, -0.6]].map(([x, y]) => <mesh key={x + ':' + y} position={[x, y, 0.07]}><planeGeometry args={[0.035, 0.035]} /><meshBasicMaterial color={colors.paper} toneMapped={false} /></mesh>)}
+  </group>;
+}
+
+function DeskObjects({ view, phase, onOpenDesktop, onOpenApp, colors }) {
+  const { noteDeskOpen, unlock } = useRetroOS();
+  const openFromDesk = appId => { noteDeskOpen(appId); onOpenApp(appId); };
+  const photoClick = () => openFromDesk('after-hours');
   const root = useRef(null);
   const { handlers, tooltip } = useDeskHover(view === 'desk', colors.accent);
   // Every desk mesh casts and receives hard-edged shadows; set once here instead of on each mesh.
@@ -80,19 +95,20 @@ function DeskObjects({ view, onOpenDesktop, onOpenApp, colors }) {
       <mesh position={[4.8, -0.4, -2.2]}><boxGeometry args={[0.22, 2.05, 0.22]} /><meshStandardMaterial color={colors.frame} /></mesh>
       <mesh position={[-4.8, -0.4, 2.1]}><boxGeometry args={[0.22, 2.05, 0.22]} /><meshStandardMaterial color={colors.frame} /></mesh>
       <mesh position={[4.8, -0.4, 2.1]}><boxGeometry args={[0.22, 2.05, 0.22]} /><meshStandardMaterial color={colors.frame} /></mesh>
-      <RetroMonitor colors={colors} onOpenDesktop={onOpenDesktop} onOpenApp={onOpenApp} />
+      <RetroMonitor colors={colors} onOpenDesktop={() => { noteDeskOpen('desktop'); onOpenDesktop(); }} onOpenApp={openFromDesk} />
       <RoundedBox args={[3.5, 0.02, 1.55]} radius={0.01} smoothness={2} position={[0, 0.79, 1.28]}><meshStandardMaterial color={colors.objectDark} roughness={0.95} /></RoundedBox>
       <RoundedBox args={[0.95, 0.015, 0.95]} radius={0.01} smoothness={2} position={[2.14, 0.787, 1.23]}><meshStandardMaterial color={colors.objectDark} roughness={0.95} /></RoundedBox>
-      <RetroKeyboard colors={colors} onOpenProjects={() => onOpenApp('projects')} />
-      <RetroMouse colors={colors} onOpenProjects={() => onOpenApp('projects')} />
-      <DeskLamp colors={colors} /><CoffeeMug colors={colors} /><DeskClock colors={colors} />
-      <group position={[3.75, 0.78, 0.1]} userData={{ label: 'Gear & Collections' }} onClick={event => { event.stopPropagation(); onOpenApp('gear'); }}>
+      <RetroKeyboard colors={colors} onOpenProjects={() => openFromDesk('projects')} />
+      <RetroMouse colors={colors} onOpenProjects={() => openFromDesk('projects')} />
+      <DeskLamp colors={colors} night={phase === 'night'} /><CoffeeMug colors={colors} /><DeskClock colors={colors} />
+      <DeskPrinter colors={colors} onPrinted={() => { unlock('paper-trail'); openFromDesk('resume'); }} />
+      <group position={[3.75, 0.78, 0.1]} userData={{ label: 'Gear & Collections' }} onClick={event => { event.stopPropagation(); openFromDesk('gear'); }}>
         <RoundedBox args={[0.52, 0.7, 0.3]} radius={0.06} smoothness={4} position={[0, 0.35, 0]}><meshPhysicalMaterial color={colors.accent} roughness={0.12} clearcoat={1} clearcoatRoughness={0.08} /></RoundedBox>
         <mesh position={[0, 0.34, 0.152]}><planeGeometry args={[0.3, 0.2]} /><meshStandardMaterial color={colors.paper} roughness={0.9} /></mesh>
         <mesh position={[0, 0.74, 0]}><cylinderGeometry args={[0.07, 0.09, 0.08, 24]} /><meshStandardMaterial color={colors.frame} roughness={0.25} metalness={0.85} /></mesh>
         <mesh position={[0, 0.87, 0]}><cylinderGeometry args={[0.15, 0.15, 0.2, 32]} /><meshStandardMaterial color={colors.objectDark} roughness={0.35} metalness={0.4} /></mesh>
       </group>
-      <group position={[2.92, 0.78, -0.88]} rotation={[0, -0.4, 0]} userData={{ label: 'Contact' }} onClick={event => { event.stopPropagation(); onOpenApp('contact'); }}>
+      <group position={[2.92, 0.78, -0.88]} rotation={[0, -0.4, 0]} userData={{ label: 'Contact' }} onClick={event => { event.stopPropagation(); openFromDesk('contact'); }}>
         <mesh position={[0, 0.025, 0]}><cylinderGeometry args={[0.26, 0.28, 0.05, 32]} /><meshStandardMaterial color={colors.objectDark} roughness={0.5} metalness={0.3} /></mesh>
         <mesh position={[0, 0.23, 0]}><cylinderGeometry args={[0.03, 0.03, 0.38, 12]} /><meshStandardMaterial color={colors.objectDark} roughness={0.4} metalness={0.5} /></mesh>
         <mesh position={[0, 0.58, 0]} rotation={[0, 0, Math.PI]}><torusGeometry args={[0.17, 0.018, 8, 24, Math.PI]} /><meshStandardMaterial color={colors.objectDark} roughness={0.4} metalness={0.5} /></mesh>
@@ -107,7 +123,7 @@ function DeskObjects({ view, onOpenDesktop, onOpenApp, colors }) {
         <mesh position={[0, 0, -0.02]}><boxGeometry args={[0.8, 1, 0.04]} /><meshStandardMaterial color={colors.frame} /></mesh>
         <PhotoPrint onClick={photoClick} paper={colors.paper} />
       </group>
-      <group position={[0.92, 0.82, 0.55]} rotation={[-Math.PI / 2, 0, -0.12]} userData={{ label: 'Résumé' }} onClick={event => { event.stopPropagation(); onOpenApp('resume'); }}>
+      <group position={[0.92, 0.82, 0.55]} rotation={[-Math.PI / 2, 0, -0.12]} userData={{ label: 'Résumé' }} onClick={event => { event.stopPropagation(); openFromDesk('resume'); }}>
         <mesh position={[0, 0, -0.025]}><boxGeometry args={[0.74, 1.02, 0.04]} /><meshStandardMaterial color={colors.frame} /></mesh>
         <mesh position={[0, 0, 0.002]}><planeGeometry args={[0.67, 0.93]} /><meshStandardMaterial color={colors.screen} roughness={0.92} /></mesh>
         <mesh position={[0, 0.28, 0.008]}><boxGeometry args={[0.38, 0.025, 0.01]} /><meshStandardMaterial color={colors.accent} /></mesh>
@@ -117,6 +133,7 @@ function DeskObjects({ view, onOpenDesktop, onOpenApp, colors }) {
       </group>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.52, 0]} receiveShadow><planeGeometry args={[80, 80]} /><meshStandardMaterial color={colors.world} roughness={0.92} /></mesh>
       <mesh position={[0, 6, -5]}><planeGeometry args={[80, 30]} /><meshStandardMaterial color={colors.wall} roughness={0.95} /></mesh>
+      <DeskWindow phase={phase} colors={colors} />
     </group>
   );
 }
@@ -227,6 +244,7 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
   const palette = useMemo(() => ({
     world: readColor('--desk-world', '#292a27'),
     wall: readColor('--desk-wall', '#3b3c35'),
+    skyDay: readColor('--desk-sky-day'), skyDusk: readColor('--desk-sky-dusk'), skyNight: readColor('--desk-sky-night'),
     board: readColor('--desk-board', '#544136'),
     frame: readColor('--desk-frame', '#393936'),
     objectDark: readColor('--desk-object-dark', '#1a1b1a'),
@@ -247,6 +265,8 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
     lamp: readColor('--desk-lamp'), mug: readColor('--desk-mug'), coffee: readColor('--desk-coffee')
   }), [theme]);
   const motionReduced = Boolean(reducedMotion);
+  const phase = roomPhase(useMinuteClock());
+  const light = ROOM_LIGHT[phase];
 
   useEffect(() => () => contextLostCleanup.current?.(), []);
 
@@ -268,11 +288,11 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
     >
       <ContextBridge>
         <color attach="background" args={[palette.world]} />
-        <ambientLight intensity={1.15} />
-        <directionalLight position={[-3, 8, 6]} intensity={2.3} castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-camera-near={1} shadow-camera-far={25} />
-        <directionalLight position={[6, 5, -4]} intensity={1.1} color={palette.accent} />
+        <ambientLight intensity={light.ambient} />
+        <directionalLight position={[-3, 8, 6]} intensity={light.key} castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-camera-near={1} shadow-camera-far={25} />
+        <directionalLight position={[6, 5, -4]} intensity={light.window} color={phase === 'dusk' ? palette.accent : palette.skyDay} />
         <DeskCamera view={view} reducedMotion={motionReduced} onOpenDesktop={onOpenDesktop} onBackToDesk={onBackToDesk} />
-        <DeskObjects view={view} onOpenDesktop={onOpenDesktop} onOpenApp={onOpenApp} colors={palette} />
+        <DeskObjects view={view} phase={phase} onOpenDesktop={onOpenDesktop} onOpenApp={onOpenApp} colors={palette} />
         <ScreenProjection view={view} theme={theme} onOpenResume={onOpenResume} toggleTheme={toggleTheme} onBackToDesk={onBackToDesk} ContextBridge={ContextBridge} portal={screenPortal} />
       </ContextBridge>
     </Canvas>

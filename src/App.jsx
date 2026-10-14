@@ -13,6 +13,7 @@ import ScreenshotLightbox from './components/common/ScreenshotLightbox';
 import CommandPalette from './components/common/CommandPalette';
 import ToastContainer from './components/common/ToastContainer';
 import DesktopWorkspace from './components/desktop/DesktopWorkspace';
+import ClassicPortfolio from './pages/ClassicPortfolio';
 import { Analytics } from '@vercel/analytics/react';
 
 const LazyDeskScene = lazy(() => import('./components/desktop/DeskScene'));
@@ -135,10 +136,14 @@ function ImmersivePortfolio() {
   );
 }
 
+function PortfolioView() {
+  return useDesktopWorkspace().classicMode ? <ClassicPortfolio /> : <ImmersivePortfolio />;
+}
+
 function AppContent() {
   return (
     <DesktopWorkspaceProvider>
-      <RetroOSProvider><ImmersivePortfolio /></RetroOSProvider>
+      <RetroOSProvider><PortfolioView /></RetroOSProvider>
     </DesktopWorkspaceProvider>
   );
 }

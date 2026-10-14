@@ -83,7 +83,7 @@
   font-size: 16px;
 }
 /* On narrower 3D screens the monitor sits higher in the frame; drop the description so the card stays on the wall. */
-@media (max-width: 1279px) { .desk-welcome-copy > p:not(.desktop-eyebrow) { display: none; } }
+@media (max-width: 1279px) { .desk-welcome-copy { top: 14px; width: min(360px, calc(100vw - 40px)); } .desk-welcome-copy > p:not(.desktop-eyebrow) { display: none; } }
 .desk-welcome-actions,
 .desk-welcome-toolbar,
 .desktop-action-row,

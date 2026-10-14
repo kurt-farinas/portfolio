@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Instance, Instances, RoundedBox, RoundedBoxGeometry } from '@react-three/drei';
 import { CanvasTexture, SRGBColorSpace } from 'three';
-import { useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useRetroOS } from '../../context/RetroOSContext';
 import useMinuteClock, { formatClock } from './useMinuteClock';
+import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
+import { portfolioProfile } from '../../data/portfolioFacts';
 
 export const MONITOR_CENTER_Y = 2.54;
 export const MONITOR_SCREEN_Z = -0.86;
@@ -66,8 +68,9 @@ export function RetroMouse({ colors, onOpenProjects }) {
   </group>;
 }
 
-export function DeskLamp({ colors }) {
-  const { warmLamp } = useRetroOS();
+export function DeskLamp({ colors, night }) {
+  const { warmLamp: lampSetting } = useRetroOS();
+  const warmLamp = lampSetting || night; // the lamp switches itself on after dark
   const arm = <meshStandardMaterial color={colors.retroRecess} metalness={0.35} roughness={0.55} />;
   // Articulated arm: base, lower arm leaning toward the keyboard, upper arm reaching over, domed shade aimed down.
   return <group position={[-4.4,0.8,-0.8]} rotation={[0,-0.55,0]}>
@@ -112,5 +115,49 @@ export function DeskClock({ colors }) {
   return <group position={[-2.3,0.78,0.75]} rotation={[0,0.35,0]}>
     <RoundedBox args={[0.62,0.3,0.24]} radius={0.04} smoothness={3} position={[0,0.15,0]}><meshStandardMaterial color={colors.retroShell} roughness={0.7} /></RoundedBox>
     <mesh position={[0,0.16,0.122]}><planeGeometry args={[0.5,0.19]} /><meshBasicMaterial map={texture} toneMapped={false} /></mesh>
+  </group>;
+}
+const PRINT_SECONDS = 1.4;
+const PAPER_HEIGHT = 1.1;
+
+// A dot-matrix printer that feeds out a résumé page, then opens the Résumé app.
+export function DeskPrinter({ colors, onPrinted }) {
+  const { reducedMotion } = useDesktopWorkspace();
+  const { playSound } = useRetroOS();
+  const invalidate = useThree(state => state.invalidate);
+  const paper = useRef(null);
+  const progress = useRef(0);
+  const [printing, setPrinting] = useState(false);
+  const [printed, setPrinted] = useState(false);
+  const texture = useMemo(() => {
+    const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 330;
+    const context = canvas.getContext('2d');
+    context.fillStyle = colors.paper; context.fillRect(0, 0, 256, 330);
+    context.fillStyle = colors.noteInk; context.font = '700 22px monospace'; context.fillText(portfolioProfile.name, 18, 46);
+    context.font = '15px monospace'; context.fillText(portfolioProfile.role, 18, 72);
+    context.fillRect(18, 90, 220, 2);
+    [120, 146, 172, 198, 224, 250].forEach((y, index) => context.fillRect(18, y, index % 2 ? 160 : 210, 6));
+    const value = new CanvasTexture(canvas); value.colorSpace = SRGBColorSpace; return value;
+  }, [colors.paper, colors.noteInk]);
+  useEffect(() => () => texture.dispose(), [texture]);
+  useFrame((state, delta) => {
+    if (!printing || !paper.current) return;
+    progress.current = Math.min(1, progress.current + Math.min(delta, 0.05) / PRINT_SECONDS);
+    paper.current.position.y = 0.33 - PAPER_HEIGHT / 2 + PAPER_HEIGHT * progress.current;
+    if (progress.current < 1) { invalidate(); return; }
+    setPrinting(false); onPrinted();
+  });
+  const print = event => {
+    event.stopPropagation();
+    if (printing) return;
+    if (reducedMotion) { onPrinted(); return; }
+    progress.current = 0; setPrinted(true); setPrinting(true); playSound('print'); invalidate();
+  };
+  return <group position={[4.35,0.78,-1.9]} rotation={[0,-0.35,0]} userData={{ label: 'Print résumé' }} onClick={print}>
+    <RoundedBox args={[1.2,0.32,0.72]} radius={0.05} smoothness={3} position={[0,0.16,0]}><meshStandardMaterial color={colors.retroShell} roughness={0.72} /></RoundedBox>
+    <mesh position={[0,0.325,-0.12]}><boxGeometry args={[0.92,0.02,0.07]} /><meshStandardMaterial color={colors.retroRecess} roughness={0.9} /></mesh>
+    <mesh position={[0,0.06,-0.56]}><boxGeometry args={[0.95,0.12,0.36]} /><meshStandardMaterial color={colors.paper} roughness={0.95} /></mesh>
+    <mesh position={[0.45,0.2,0.362]}><boxGeometry args={[0.05,0.03,0.01]} /><meshStandardMaterial color={colors.led} emissive={colors.led} emissiveIntensity={printing ? 0.8 : 0.3} /></mesh>
+    <mesh ref={paper} visible={printed} position={[0,0.33 - PAPER_HEIGHT / 2,-0.12]} rotation={[-0.22,0,0]}><planeGeometry args={[0.85,PAPER_HEIGHT]} /><meshStandardMaterial map={texture} roughness={0.95} side={2} /></mesh>
   </group>;
 }

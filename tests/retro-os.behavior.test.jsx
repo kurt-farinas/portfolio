@@ -8,6 +8,7 @@ import { DesktopWorkspaceProvider, useDesktopWorkspace } from '../src/context/De
 import { RetroOSProvider, useRetroOS } from '../src/context/RetroOSContext';
 import DesktopWorkspace from '../src/components/desktop/DesktopWorkspace';
 import BootScreen from '../src/components/desktop/BootScreen';
+import { createSweeperBoard } from '../src/utils/retroGames';
 import { portfolioCommand, portfolioProjects, portfolioProfile } from '../src/data/portfolioFacts';
 import { scoreGuess, isWalkable, moveBugPlayer, bugCanBeHit } from '../src/utils/retroGames';
 
@@ -84,6 +85,24 @@ describe('retro portfolio apps', () => {
   it('shows an immediately usable first-visit boot and keeps audio off',async()=>{
     await mount('/');expect(host.querySelector('.retro-boot').open).toBe(true);
     await click('Enter desktop');expect(host.querySelector('.retro-boot').open).toBe(false);expect(audioConstructor).not.toHaveBeenCalled();
+  });
+  it('unlocks the Wordsmith achievement once, for this session only',async()=>{
+    await mount('/#kurtordle');
+    for(const letter of 'REACT') await act(async()=>host.querySelector('[aria-label="Type '+letter+'"]').click());
+    await click('Enter guess');
+    expect(JSON.parse(sessionStorage.getItem('kurt-os-achievements'))).toEqual(['wordsmith']);
+  });
+  it('unlocks Exterminator after clearing a Bugsweeper board',async()=>{
+    await mount('/#bugsweeper');
+    const seeded=seed=>()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646;};
+    const random=vi.spyOn(Math,'random').mockImplementation(seeded(11));
+    const tiles=()=>[...host.querySelectorAll('.retro-sweeper-cell')];
+    await act(async()=>tiles()[31].click());
+    random.mockRestore();
+    const board=createSweeperBoard(9,7,10,31,seeded(11));
+    for(const [index,cell] of board.entries()) if(!cell.bug) await act(async()=>tiles()[index].click());
+    expect(host.querySelector('.retro-sweeper-counter').textContent).toContain('Board cleared');
+    expect(JSON.parse(sessionStorage.getItem('kurt-os-achievements'))).toContain('exterminator');
   });
   it('preserves a solved word game when it is closed and reopened',async()=>{
     await mount('/#kurtordle');
