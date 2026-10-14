@@ -1,12 +1,10 @@
+/* Figtree Latin variable font, licensed under public/fonts/OFL.txt. */
 @font-face {
-  font-family: 'Atkinson Hyperlegible'; font-style: normal; font-weight: 400; font-display: swap;
-  src: url('@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-400-normal.woff2') format('woff2');
+  font-family: 'Figtree'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url('/fonts/figtree-latin.woff2') format('woff2');
 }
+/* Local preview: Space Grotesk display font, licensed in public/fonts/SPACE-GROTESK-OFL.txt. */
 @font-face {
-  font-family: 'Atkinson Hyperlegible'; font-style: normal; font-weight: 700; font-display: swap;
-  src: url('@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-700-normal.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Pixelify Sans'; font-style: normal; font-weight: 400; font-display: swap;
-  src: url('@fontsource/pixelify-sans/files/pixelify-sans-latin-400-normal.woff2') format('woff2');
+  font-family: 'Space Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url('/fonts/space-grotesk-latin.woff2') format('woff2');
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8">
@@ -10,8 +10,8 @@
     content="Portfolio of Kurt Fariñas | BS Computer Science graduate, frontend owner of CS Form No. 6 Digitalization System, and creator of Boiyet's Gym Management System. Open to Junior Full-Stack Developer roles.">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.svg">
 
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
@@ -19,14 +19,14 @@
   <meta property="og:title" content="Kurt Fariñas | Junior Full-Stack Developer">
   <meta property="og:description"
     content="BS Computer Science graduate. Frontend owner of the CS Form No. 6 Digitalization System. Solo-built and defended a full gym management platform. Open to Junior Full-Stack Developer roles.">
-  <meta property="og:image" content="https://kurt-farinas-portfolio.vercel.app/og-preview.jpg">
+  <meta property="og:image" content="https://kurt-farinas-portfolio.vercel.app/og-preview-2026.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Kurt Fariñas | Junior Full-Stack Developer">
   <meta name="twitter:description"
     content="BS Computer Science graduate. 342 OJT hours on live government software. Open to Junior Full-Stack Developer roles.">
-  <meta name="twitter:image" content="https://kurt-farinas-portfolio.vercel.app/og-preview.jpg">
+  <meta name="twitter:image" content="https://kurt-farinas-portfolio.vercel.app/og-preview-2026.jpg">
 
   <link rel="canonical" href="https://kurt-farinas-portfolio.vercel.app/">
   <meta name="author" content="Kurt Fariñas">
@@ -34,7 +34,7 @@
     try {
       const savedTheme = localStorage.getItem('portfolio-theme');
       if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
-    } catch { /* Use the system scheme when storage is unavailable. */ }
+    } catch { /* Keep the dark default when storage is unavailable. */ }
   </script>
 
   <!-- Structured Data (JSON-LD) -->
@@ -57,8 +57,7 @@
 }
 </script>
 
-  <link rel="preload" as="font" type="font/woff2" href="/node_modules/@fontsource/pixelify-sans/files/pixelify-sans-latin-400-normal.woff2" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="/node_modules/@fontsource/atkinson-hyperlegible/files/atkinson-hyperlegible-latin-400-normal.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/figtree-latin.woff2" crossorigin>
 </head>
 
 <body>

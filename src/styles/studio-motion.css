@@ -1,0 +1,62 @@
+/* Brief, shared feedback. Content remains visible, and gestures keep native timing. */
+.studio-system > main { animation: studio-page-enter var(--motion-short) var(--ease-precise) both; }
+@keyframes studio-page-enter { from { opacity: 0.9; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .studio-project,
+  .studio-nav-links :is(a, button),
+  .studio-action, .studio-text-action, .studio-icon-button,
+  .studio-hero-socials :is(a, button),
+  .studio-footer-links :is(a, button),
+  .studio-photo-controls button,
+  .gear-photo-nav-btn, .gear-photo-dot, .gear-title-link,
+  .carousel-arrow, .carousel-tab, .carousel-slide-chip,
+  .modal-close, .screenshot-modal-close, .code-link-btn,
+  .cmd-palette-item, .gear-photo-zoom-hint {
+    transition: transform var(--motion-short) var(--ease-precise),
+      background-color var(--motion-short) var(--ease-precise),
+      color var(--motion-short) var(--ease-precise),
+      border-color var(--motion-short) var(--ease-precise);
+  }
+
+  .studio-project:hover { transform: translateY(-2px); }
+  .studio-nav-links :is(a, button):hover,
+  .studio-action:hover, .studio-text-action:hover, .studio-icon-button:hover,
+  .studio-hero-socials :is(a, button):hover,
+  .studio-footer-links :is(a, button):hover,
+  .studio-photo-controls button:hover,
+  .gear-photo-nav-btn:hover, .gear-photo-dot:hover, .gear-title-link:hover,
+  .carousel-arrow:hover, .carousel-tab:hover, .carousel-slide-chip:hover,
+  .modal-close:hover, .screenshot-modal-close:hover, .code-link-btn:hover,
+  .cmd-palette-item:hover, .studio-gear-zoom:hover .gear-photo-zoom-hint {
+    transform: translateY(-1px);
+  }
+  .carousel-arrow:hover { transform: translateY(calc(-50% - 1px)); }
+}
+
+.studio-project:active,
+.studio-nav-links :is(a, button):active,
+.studio-action:active, .studio-text-action:active, .studio-icon-button:active,
+.studio-hero-socials :is(a, button):active,
+.studio-footer-links :is(a, button):active,
+.studio-photo-controls button:active,
+.gear-photo-nav-btn:active, .gear-photo-dot:active, .gear-title-link:active,
+.carousel-arrow:active, .carousel-tab:active, .carousel-slide-chip:active,
+.modal-close:active, .screenshot-modal-close:active, .code-link-btn:active,
+.cmd-palette-item:active { transform: scale(0.985); }
+.carousel-arrow:active { transform: translateY(-50%) scale(0.985); }
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-system > main { animation: none; }
+  .studio-project:active,
+  .studio-nav-links :is(a, button):active,
+  .studio-action:active, .studio-text-action:active, .studio-icon-button:active,
+  .studio-hero-socials :is(a, button):active,
+  .studio-footer-links :is(a, button):active,
+  .studio-photo-controls button:active,
+  .gear-photo-nav-btn:active, .gear-photo-dot:active, .gear-title-link:active,
+  .carousel-arrow:active, .carousel-tab:active, .carousel-slide-chip:active,
+  .modal-close:active, .screenshot-modal-close:active, .code-link-btn:active,
+  .cmd-palette-item:active { transform: none; }
+  .carousel-arrow:active { transform: translateY(-50%); }
+}

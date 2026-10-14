@@ -5,12 +5,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useModal } from '../../context/ModalContext';
-import { useSound } from '../../context/SoundContext';
 import { scrollBehavior } from '../../utils/motion';
 
 export default function Footer() {
-  const { copyEmail, openResumeModal, openCommandPalette } = useModal();
-  const { soundEnabled, toggleSound } = useSound();
+  const { copyEmail, openResumeModal } = useModal();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: scrollBehavior() });
@@ -86,10 +84,6 @@ export default function Footer() {
               <polyline points="5 12 12 5 19 12"></polyline>
             </svg>
           </button>
-        </div>
-        <div className="studio-footer-utilities">
-          <button type="button" onClick={openCommandPalette}>Commands <kbd>Ctrl / ⌘ K</kbd></button>
-          <button type="button" onClick={toggleSound} aria-pressed={soundEnabled}>Sound {soundEnabled ? 'on' : 'off'}</button>
         </div>
       </div>
     </footer>

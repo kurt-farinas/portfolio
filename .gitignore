@@ -21,3 +21,6 @@ Thumbs.db
 .edge-*/
 *-live.png
 live-*.png
+
+.vercel
+.env*

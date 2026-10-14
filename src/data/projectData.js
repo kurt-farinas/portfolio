@@ -2,7 +2,84 @@
    PROJECT DATA & SITE CONTENT  |  Single Source of Truth
    ======================================== */
 
+export const featuredProjectIds = ['pmpcPis', 'pmpcWorkforce', 'pmpcGenMdse', 'hris', 'gym', 'jobHuntLedger'];
+
 export const projectDetails = {
+  pmpcPis: {
+    id: "pmpc-pis",
+    title: "PMPC People's Information System",
+    ticketId: "PMPC · Inherited System",
+    roleTag: "Maintenance & Improvements",
+    browserStatus: "DEPLOYED IMPROVEMENTS",
+    badge: "Inherited System · Contributor",
+    cardSummary: "Manage and improve an inherited cooperative system, including Finance and Operations interfaces, approval workflows, and private supporting documents.",
+    websiteUrl: "https://peoplesmpcoop.com/",
+    browserLabel: "peoplesmpcoop.com",
+    desc: "An inherited cooperative information system. My work focuses on maintaining and improving existing workflows rather than claiming original authorship.",
+    highlights: [
+      "Portal usability: improved Finance and Operations navigation, review rows, member filters, forms, and shared dialogs, with desktop and mobile checks.",
+      "Supporting documents: added eligible Petty Cash document reuse, private previews, and Remove/Undo controls.",
+      "Financial corrections: strengthened reason capture, original/proposed values, reviewer decisions, and private audit evidence.",
+      "Monthly controls: added financial month locks and audited correction safeguards within existing permissions.",
+      "Release scope: October 7–9 deployment records document these improvements. Live UI checks did not include financial submissions; newer request-table changes remain local."
+    ],
+    stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS", "MySQL"],
+    previewCallout: {
+      label: "PUBLIC SITE",
+      note: "The public homepage is shown; internal workflow work is documented in the case study."
+    },
+    slides: [{ src: "/images/projects/pmpc-pis-landing.webp", label: "People's MPC public landing page with membership, loan calculator, and member login navigation", tab: "Landing page" }]
+  },
+  pmpcGenMdse: {
+    id: "pmpc-gen-mdse",
+    title: "PMPC General Merchandise",
+    ticketId: "PMPC · Inherited Website",
+    roleTag: "Website Management",
+    browserStatus: "ONGOING MANAGEMENT",
+    badge: "Inherited Website · Management",
+    cardSummary: "Manage the existing General Merchandise website and propose workflow fixes, while preserving its established retail operations.",
+    browserLabel: "genmdse.peoplesmpcoop.com",
+    desc: "Website management for an inherited retail system. Current proposed fixes are separate from previously delivered maintenance work.",
+    highlights: [
+      "Website management: maintain the inherited application and review proposed improvements to existing workflows.",
+      "Completed mobile work: an October 1 release improved navigation and dashboard, product, and report layouts, with larger touch controls and readable mobile inputs.",
+      "Verification: the recorded mobile release was checked at 320, 390, 768, and 1024 pixels without live transactions or form submissions.",
+      "Proposed work: inventory valuation and monthly-report additions remain local and are not presented as deployed features."
+    ],
+    stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS", "Vite"],
+    previewCallout: {
+      label: "PUBLIC LANDING",
+      note: "Public landing page for the internal General Merchandise system."
+    },
+    slides: [
+      { src: "/images/projects/pmpc-gen-mdse.jpg", label: "Public landing page for PMPC General Merchandise internal point-of-sale and inventory system", tab: "Landing page" },
+      { src: "/images/projects/pmpc-gen-mdse-prototype.jpg", label: "Local General Merchandise inventory prototype with synthetic data; not deployed", tab: "Local prototype" }
+    ]
+  },
+  pmpcWorkforce: {
+    id: "pmpc-workforce",
+    title: "PMPC WorkForce / DTR",
+    ticketId: "PMPC · Inherited System",
+    roleTag: "Maintenance & Improvements",
+    browserStatus: "LATEST WORK UNRELEASED",
+    badge: "Inherited System · Contributor",
+    cardSummary: "Maintain and improve employee and admin attendance workflows, permissions, and payroll review. Latest payroll and account-setup additions remain unreleased.",
+    browserLabel: "peoplescoopdtr.online",
+    desc: "An inherited attendance and workforce system. Contributions focus on operational usability, reliability, and controlled payroll preparation; original system authorship is not claimed.",
+    highlights: [
+      "Attendance workflows: improved employee/admin interfaces and attendance correction requests with permission and employee ownership checks.",
+      "Reliability: addressed navigation/loading issues, payroll validation, and multi-record data consistency.",
+      "Local account setup: implemented HR-reviewed identity and office confirmation, private signatures, and preserved existing account and attendance links.",
+      "Local payroll work: added verified office preparation, reviewed exceptions and deductions, management Excel exports, and finalized-only employee payslip access.",
+      "Release boundary: latest payroll, exports, and account-setup changes are documented as Unreleased. They are not claimed as live or independently certified payroll compliance."
+    ],
+    stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS"],
+    previewCallout: {
+      label: "SIGN-IN",
+      note: "WorkForce access screen with empty credential fields; no employee or payroll records shown."
+    },
+    slides: [{ src: "/images/projects/pmpc-workforce.png", label: "PMPC WorkForce sign-in screen with empty employee ID and password fields; no employee or payroll data shown", tab: "Sign-in screen" }]
+  },
   jobHuntLedger: {
     id: "job-hunt-ledger",
     title: "Job Hunt Ledger",
@@ -30,7 +107,6 @@ export const projectDetails = {
       "Private Local Operations: Supports filters, saved views, CSV export, consistent SQLite backups, and optional Gmail read-only suggestions that require confirmation before any status change."
     ],
     stack: ["React", "TypeScript", "FastAPI", "Python", "SQLite", "Vite"],
-    filterSkills: ["react", "typescript"],
     telemetry: ["Local-Only", "Explainable Matching", "SHA-256 Dedupe", "Manual Tracking"],
     slides: [
       { src: "/job-hunt-ledger.png", label: "Job Hunt Ledger dashboard", tab: "Dashboard" }
@@ -60,7 +136,6 @@ export const projectDetails = {
       "Owned 100% of frontend development using React, Inertia.js, and Tailwind CSS."
     ],
     stack: ["React", "Inertia.js", "Tailwind CSS", "Laravel", "MySQL"],
-    filterSkills: ["react", "inertia", "tailwind", "laravel", "javascript"],
     telemetry: [
       "Frontend Ownership",
       "3-Tier RBAC",
@@ -100,7 +175,6 @@ export const projectDetails = {
       "POS Receipts & Streamed CSV Reports: POS receipt generation alongside streamed CSV financial reports with UTF-8 BOM for Excel/Sheets compatibility."
     ],
     stack: ["Laravel 12", "Inertia.js", "React", "Tailwind CSS", "MySQL", "Pest", "QR"],
-    filterSkills: ["laravel", "inertia", "react", "tailwind", "mysql", "pest", "qr", "javascript"],
     telemetry: [
       "Solo Full-Stack",
       "Security Rebuild",
@@ -118,10 +192,18 @@ export const projectDetails = {
 
 export const timelineData = [
   {
+    id: "pmpc-role",
+    date: "SEP 16, 2026 – PRESENT",
+    title: "Junior Full-Stack Developer | People's Multi-Purpose Cooperative",
+    desc: "Work on the People's Information System, WorkForce / DTR, and General Merchandise website. Project entries describe my contributions and note unreleased work.",
+    badge: "CURRENT ROLE",
+    isFeatured: true
+  },
+  {
     id: 1,
-    date: "2022 - 2026",
+    date: "SEP 2022 – JUL 2026",
     title: "BS Computer Science | STI College San Jose",
-    desc: "Bachelor of Science in Computer Science. Honored on the Presidential List (2022) with academic coursework in software engineering, database architecture, and OOP.",
+    desc: "Coursework included software engineering, database architecture, and object-oriented programming.",
     badge: "PRESIDENTIAL LIST (2022)",
     badgeType: "status-open-to-work",
     isFeatured: true
@@ -130,7 +212,7 @@ export const timelineData = [
     id: 2,
     date: "FEB - MAR 2026 (342 HOURS)",
     title: "Software Developer Intern (OJT) | DepEd San Jose",
-    desc: "Led frontend development for the CS Form No. 6 Digitalization System; Denver Ballesteros developed the Laravel backend. Built the React, Inertia.js, and Tailwind CSS interface for three approval roles, e-signatures, and print-ready forms. Wrote 19 PHPUnit tests and earned a 98/100 OJT rating.",
+    desc: "Led the React, Inertia.js, and Tailwind CSS frontend for three approval roles, e-signatures, and print-ready forms. Denver Ballesteros developed the Laravel backend. Wrote 19 PHPUnit tests and earned a 98/100 OJT rating.",
     badge: "98/100 OJT RATING",
     isFeatured: true
   },
@@ -138,7 +220,7 @@ export const timelineData = [
     id: 3,
     date: "NOVEMBER 2025",
     title: "Gym Management System | Thesis Defense (Defended)",
-    desc: "Built and defended a gym management thesis platform (PHP, MySQL) with Admin, Trainer, and Client portals, POS with low-stock alerts, and contactless QR attendance with duplicate-scan protection.",
+    desc: "Solo-built and defended a PHP/MySQL gym system with Admin, Trainer, and Client portals, low-stock POS alerts, and QR attendance with duplicate-scan protection.",
     badge: "THESIS DEFENDED",
     isFeatured: true
   }
@@ -195,11 +277,6 @@ export const gearCatalogData = [
         caption: "MCHOSE Ace 60 Pro — Magnetic switches with 0.005mm rapid trigger accuracy and 8K polling",
         alt: "MCHOSE Ace 60 Pro Keyboard Overview"
       },
-      {
-        src: "/images/outside/mchose-ace60-detail.jpg",
-        caption: "Custom lubed Hall Effect switches & CNC aluminum chassis profile",
-        alt: "MCHOSE Ace 60 Pro Switch Details"
-      }
     ]
   },
   {
@@ -262,6 +339,23 @@ export const gearCatalogData = [
         src: "/images/outside/salnotes-zero.jpg",
         caption: "7Hz Salnotes Zero IEMs with custom braided 2-pin cable",
         alt: "7Hz Salnotes Zero In-Ear Monitors"
+      }
+    ]
+  },
+  {
+    id: "fifine-k678",
+    title: "FIFINE K678",
+    category: "Microphone",
+    section: "desk",
+    sectionTitle: "Desk Setup and Gear",
+    icon: "audio",
+    featured: false,
+    aspectRatio: "standard",
+    images: [
+      {
+        src: "/images/outside/fifine-k678.png",
+        caption: "FIFINE K678 on a boom arm",
+        alt: "FIFINE K678 microphone mounted on a black boom arm"
       }
     ]
   },

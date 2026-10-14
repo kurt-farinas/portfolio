@@ -1,5 +1,8 @@
 import { chromium } from 'playwright';
 import { preview } from 'vite';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 async function main() {
   const server = await preview({ preview: { port: 4193 } });
@@ -8,32 +11,25 @@ async function main() {
 
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const outputDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../.git/portfolio-redesign/ui');
+  await fs.mkdir(outputDir, { recursive: true });
 
-  await page.goto(serverUrl, { waitUntil: 'networkidle' });
-  await page.waitForTimeout(4500);
+  try {
+    await page.goto(serverUrl, { waitUntil: 'networkidle' });
+    const stack = page.locator('.photo-deck-stack');
+    await stack.waitFor({ state: 'visible' });
+    if (await stack.locator('.deck-photo-card').count() !== 3) throw new Error('Expected three layered After Hours photo cards.');
+    if (await page.getByText('Swipe, drag, or use the arrow keys to explore the photo stack.').count()) {
+      throw new Error('The removed photo stack instructions are still visible.');
+    }
 
-  // Scroll to snapshots section
-  const deckSection = await page.$('.gear-category-section:nth-of-type(2)');
-  if (deckSection) {
-    await deckSection.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(500);
+    await page.screenshot({ path: path.join(outputDir, 'after-hours-photo-stack.png'), fullPage: true });
+    await page.locator('.deck-stack-level-0').click();
+    await page.screenshot({ path: path.join(outputDir, 'after-hours-photo-stack-next.png'), fullPage: true });
+  } finally {
+    await browser.close();
+    server.httpServer.close();
   }
-
-  await page.screenshot({ path: 'C:/Users/Kurtong/.gemini/antigravity-ide/brain/1a0b358d-5235-4f13-8c7e-ed145940cba2/pure_deck_initial.png', fullPage: true });
-  console.log('Pure deck initial screenshot saved.');
-
-  // Click on top card to trigger card slide/shuffle
-  const topCard = await page.$('.deck-photo-card.deck-stack-level-0');
-  if (topCard) {
-    await topCard.click();
-    await page.waitForTimeout(600);
-    await page.screenshot({ path: 'C:/Users/Kurtong/.gemini/antigravity-ide/brain/1a0b358d-5235-4f13-8c7e-ed145940cba2/pure_deck_after_click.png', fullPage: true });
-    console.log('Pure deck after click saved.');
-  }
-
-  await browser.close();
-  server.httpServer.close();
-  process.exit(0);
 }
 
 main().catch(err => {

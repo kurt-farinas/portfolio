@@ -2,7 +2,7 @@
    SCREENSHOT LIGHTBOX  |  Full-Screen Image Preview
    ======================================== */
 
-import DitherImage from './DitherImage';
+import PortfolioImage from './PortfolioImage';
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
 import useDialogFocus from './useDialogFocus';
@@ -34,7 +34,7 @@ export default function ScreenshotLightbox() {
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
-        <DitherImage
+        <PortfolioImage
           id="screenshotModalImg"
           className="screenshot-modal-img"
           src={lightbox.src}

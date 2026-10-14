@@ -2,7 +2,7 @@
   PROJECT MODAL  |  Screenshot Carousel & Case Study
    ======================================== */
 
-import DitherImage from './DitherImage';
+import PortfolioImage from './PortfolioImage';
 import React from 'react';
 import { useModal } from '../../context/ModalContext';
 import { projectDetails } from '../../data/projectData';
@@ -75,7 +75,7 @@ export default function ProjectModal() {
         )}
 
         {/* Screenshots Carousel */}
-        <div id="modalViewScreens">
+        {slides.length > 0 && <div id="modalViewScreens">
             <div className="screenshot-carousel" data-project={project.id}>
               <BrowserChrome
                 label={`${project.id}-case-study.local`}
@@ -109,7 +109,7 @@ export default function ProjectModal() {
                     }
                   }}
                 >
-                  <DitherImage
+                  <PortfolioImage
                     src={currentSlide.src}
                     alt={currentSlide.label || "Project Screenshot"}
                     loading="lazy"
@@ -164,7 +164,9 @@ export default function ProjectModal() {
                 )}
               </div>
             </div>
-          </div>
+          </div>}
+
+        {project.desc && !project.caseStudy && <p className="case-study-text">{project.desc}</p>}
 
         {/* Engineering Case Study: Problem → Decision → Implementation → Trade-offs → Result */}
         {project.caseStudy && (
@@ -209,10 +211,11 @@ export default function ProjectModal() {
           ))}
         </div>
 
-        {(project.demoUrl || project.codeUrl) && (
+        {(project.demoUrl || project.codeUrl || project.websiteUrl) && (
           <>
             <div className="modal-section-title">Project Links &amp; Resources</div>
             <div className="modal-links-row">
+              {project.websiteUrl && <a href={project.websiteUrl} target="_blank" rel="noopener noreferrer" className="code-link-btn">Visit website ↗</a>}
               {project.demoUrl && (
                 <a
                   href={project.demoUrl}

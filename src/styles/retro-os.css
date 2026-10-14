@@ -1,0 +1,132 @@
+/* Retro chrome is built with solid surfaces and bevel borders, not raster filters. */
+.retro-desktop-content { position: absolute; inset: 0; }
+.desktop-workspace { background: var(--retro-wallpaper-0); font-family: Tahoma, 'Segoe UI', sans-serif; }
+.desktop-workspace[data-wallpaper='1'] { background: var(--retro-wallpaper-1); }
+.desktop-workspace[data-wallpaper='2'] { background: var(--retro-wallpaper-2); }
+.desktop-menubar, .desktop-taskbar, .desktop-window, .retro-start-menu { background: var(--retro-chrome); color: var(--retro-ink); border-radius: 0; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+.desktop-menubar, .desktop-taskbar { padding: 6px 8px; }
+.desktop-menubar-context { color: var(--retro-ink); }
+.desktop-brand, .desktop-brand-mark { color: var(--retro-ink); border-radius: 0; }
+.desktop-brand-mark { border: 1px solid var(--retro-edge); background: var(--retro-highlight); color: var(--retro-edge); font-family: Tahoma, sans-serif; }
+.desktop-toolbar-button, .desktop-taskbar-item, .desktop-taskbar-home,
+.retro-extra-app button, .retro-terminal-app button, .retro-mail-form button,
+.retro-start-items > button, .retro-monitor-off button, .retro-monitor-off a {
+  min-width: 44px; min-height: 44px; padding: 8px 12px; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); border-radius: 0; background: var(--retro-chrome); color: var(--retro-ink); font: 600 13px/1.3 Tahoma, 'Segoe UI', sans-serif;
+}
+.desktop-toolbar-button:hover, .desktop-taskbar-item:hover, .desktop-taskbar-home:hover, .retro-start-items > button:hover { background: var(--retro-highlight); color: var(--retro-edge); }
+.desktop-toolbar-button:active, .desktop-taskbar-item.is-active, .desktop-taskbar-home[aria-expanded='true'] { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+.desktop-toolbar-button kbd { border-radius: 0; color: inherit; }
+.retro-icon { flex: 0 0 auto; shape-rendering: crispEdges; }
+.desktop-launcher { width: 172px; grid-template-columns: repeat(2, 1fr); grid-auto-rows: minmax(74px, auto); gap: 8px 2px; }
+.desktop-launcher[hidden] { display: none; }
+.desktop-icon { flex-direction: column; justify-content: center; text-align: center; gap: 5px; padding: 4px; border-radius: 0; min-height: 74px; }
+.desktop-icon:hover, .desktop-icon:focus-visible { background: var(--retro-title); border-color: var(--retro-title-ink); }
+.desktop-icon-glyph { width: 32px; height: 32px; flex-basis: 32px; border: 0; border-radius: 0; background: transparent; color: var(--retro-icon-ink); }
+.desktop-icon-label { color: var(--retro-title-ink); font-family: Tahoma, 'Segoe UI', sans-serif; font-size: 13px; }
+.desktop-window-area { left: 190px; }
+.desktop-window.is-active { border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+.desktop-window-titlebar { min-height: 54px; padding: 3px 3px 3px 8px; background: var(--retro-inactive-title); border: 0; color: var(--retro-title-ink); }
+.desktop-window.is-active .desktop-window-titlebar { background: var(--retro-title); }
+.desktop-window-titlebar h2 { flex: 1; min-width: 44px; overflow: hidden; text-overflow: ellipsis; color: var(--retro-title-ink); font: 700 14px/1.3 Tahoma, sans-serif; }
+.desktop-window-glyph { color: inherit; }
+.desktop-window-glyph .retro-icon { width: 19px; height: 19px; }
+.desktop-window-controls { gap: 3px; }
+.desktop-window-controls button { border-radius: 0; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); color: var(--retro-ink); }
+.retro-window-address { position: absolute; inset: 54px 0 auto; height: 36px; margin: 0; padding: 7px 12px; border-bottom: 1px solid var(--retro-edge); color: var(--retro-ink); background: var(--retro-chrome); font: 400 13px/20px Tahoma, sans-serif; }
+.desktop-app-scroll { top: 90px; font-family: var(--font-body); }
+.desktop-window-resize-handle { border-radius: 0; background: var(--retro-chrome); color: var(--retro-ink); }
+.desktop-taskbar-home { flex: 0 0 auto; }
+.desktop-taskbar-apps { flex: 1; min-width: 0; overflow-x: auto; }
+.desktop-taskbar-item { gap: 6px; }
+.desktop-taskbar-item .retro-icon { width: 20px; height: 20px; }
+.desktop-taskbar-clock { color: var(--retro-ink); font-family: Tahoma, sans-serif; }
+.retro-start-menu { position: absolute; z-index: 30; left: 8px; bottom: 70px; width: 320px; max-width: calc(100% - 16px); max-height: calc(100% - 140px); display: flex; overflow: hidden; }
+.retro-start-banner { flex: 0 0 35px; background: var(--retro-title); color: var(--retro-title-ink); writing-mode: vertical-rl; transform: rotate(180deg); padding: 12px 6px; font: 700 18px/1.3 Tahoma, sans-serif; }
+.retro-start-items { flex: 1; min-width: 0; overflow-y: auto; padding: 4px; }
+.retro-start-items > p { margin: 8px 4px 4px; font: 700 13px/1.4 Tahoma, sans-serif; border-bottom: 1px solid var(--retro-edge); }
+.retro-start-items > button, .retro-start-items .desktop-icon { display: flex; flex-direction: row; justify-content: flex-start; gap: 10px; width: 100%; min-height: 44px; padding: 5px 8px; text-align: left; }
+.retro-start-items .desktop-icon-glyph { color: var(--retro-ink); }
+.retro-start-items .desktop-icon-label { color: var(--retro-ink); }
+.retro-start-items .desktop-icon:hover :is(.desktop-icon-label,.desktop-icon-glyph) { color: var(--retro-title-ink); }
+.retro-start-items > button[aria-pressed='true'] { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+.retro-scanlines { position: absolute; z-index: 35; inset: 0; pointer-events: none; opacity: 0.12; }
+.desk-projection-overview, .desk-projection-overview * { pointer-events: none !important; }
+.retro-monitor-off { position: absolute; z-index: 60; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; background: var(--retro-boot-bg); color: var(--retro-boot-ink); }
+.retro-monitor-off p { text-align: center; }
+.desk-welcome-copy { border-radius: 2px; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+.desk-projection-frame { border-radius: 0; }
+.immersive-portfolio-shell :is(.studio-action,.studio-proof,.tech-pill,.studio-project-preview-status,.modal-close) { border-radius: 0; }
+.retro-profile-facts { display: grid; gap: 8px; padding: 0 32px 32px; font-size: 16px; }
+.retro-profile-facts dt { font-weight: 600; }
+.retro-profile-facts dd { margin: 0 0 12px; color: var(--muted); }
+
+.retro-extra-app { max-width: 780px; margin: 0 auto; padding: 24px; font: 400 16px/1.6 var(--font-body); }
+.retro-extra-app h1 { margin: 0 0 12px; font: 600 32px/1.2 var(--font-display); }
+.retro-extra-app p { margin: 0 0 16px; }
+.retro-extra-app a, .retro-mail-form a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 2px; color: var(--accent); text-decoration: underline; overflow-wrap: anywhere; }
+.retro-word-grid { width: 100%; max-width: 300px; display: grid; gap: 6px; margin: 16px auto; }
+.retro-word-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
+.retro-word-cell { position: relative; display: grid; place-items: center; aspect-ratio: 1; border: 2px solid var(--border); font: 600 24px/1 var(--font-display); }
+.retro-word-cell.correct { background: var(--word-correct); color: var(--word-ink); }
+.retro-word-cell.present { background: var(--word-present); color: var(--word-ink); }
+.retro-word-cell.absent { background: var(--word-absent); color: var(--word-ink); }
+.retro-word-cell:is(.correct,.present,.absent)::after { position: absolute; bottom: 2px; right: 3px; font: 600 13px/1 Tahoma, sans-serif; }
+.retro-word-cell.correct::after { content: '✓'; }
+.retro-word-cell.present::after { content: '↔'; }
+.retro-word-cell.absent::after { content: '×'; }
+.retro-game-message { min-height: 26px; }
+.retro-word-input { display: flex; align-items: end; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.retro-word-input label { flex: 1; min-width: 130px; }
+.retro-word-input input, .retro-terminal-app input, .retro-mail-form input, .retro-mail-form textarea { display: block; width: 100%; min-height: 44px; padding: 10px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); border-radius: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.4 var(--font-body); }
+.retro-letter-keyboard { display: grid; grid-template-columns: repeat(auto-fit,minmax(44px,1fr)); gap: 4px; max-width: 440px; margin: 0 0 16px; }
+.retro-letter-keyboard button { padding: 4px; }
+.retro-letter-keyboard button:nth-last-child(-n+2) { grid-column: span 2; }
+.retro-word-legend { font-size: 13px; }
+.retro-bug-arena { width: 100%; max-width: 600px; border: 2px solid var(--retro-edge); margin-bottom: 16px; }
+.retro-bug-arena canvas { display: block; width: 100%; height: auto; aspect-ratio: 1.587; background: var(--game-ceiling); touch-action: manipulation; }
+.retro-game-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.retro-game-controls button { flex: 1 0 100px; }
+.retro-terminal-app { min-height: 100%; padding: 20px; background: var(--retro-terminal-bg); color: var(--retro-terminal-ink); font: 400 16px/1.6 monospace; overflow-wrap: anywhere; }
+.retro-terminal-app p { margin: 0 0 8px; }
+.retro-terminal-entry { margin: 20px 0; }
+.retro-terminal-app form { display: flex; align-items: end; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.retro-terminal-app label { flex: 1; min-width: 140px; }
+.retro-terminal-app input { font-family: monospace; }
+.retro-credits ul { padding-left: 24px; }
+.retro-credits li { margin: 0 0 12px; }
+.retro-mail-form { display: grid; gap: 16px; width: 100%; }
+.retro-mail-form > p { margin: 0; }
+.retro-mail-to { overflow-wrap: anywhere; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.retro-mail-form label { display: grid; gap: 6px; }
+.retro-mail-form button { justify-self: start; }
+.retro-mail-form .studio-contact-honeypot { display: none; }
+.retro-mail-status { padding: 12px; border: 1px solid var(--border); }
+.retro-mail-status.is-error { border-left: 4px solid var(--word-present); }
+.retro-mail-status.is-success { border-left: 4px solid var(--word-correct); }
+
+.retro-boot { position: fixed; inset: 0; width: 100vw; height: 100svh; max-width: none; max-height: none; margin: 0; padding: clamp(20px,4vw,48px); border: 0; background: var(--retro-boot-bg); color: var(--retro-boot-ink); font: 400 16px/1.6 monospace; overflow: auto; }
+.retro-boot[open] { display: flex; flex-direction: column; gap: 12px; }
+.retro-boot::backdrop { background: var(--retro-boot-bg); }
+.retro-boot-header { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-bottom: 1px solid var(--retro-boot-accent); padding-bottom: 16px; font-size: 13px; }
+.retro-boot-kicker { margin: 24px 0 0; color: var(--retro-boot-accent); font-size: 13px; }
+.retro-boot h1 { font: 600 clamp(28px,5vw,48px)/1.2 var(--font-display); margin: 0; }
+.retro-boot p { max-width: 65ch; margin: 0; }
+.retro-boot-log { padding: 20px 0; color: var(--retro-boot-accent); }
+.retro-boot-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+.retro-boot button, .retro-boot a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 10px 16px; border: 2px solid var(--retro-boot-accent); background: var(--retro-boot-bg); color: var(--retro-boot-ink); font: 600 14px/1.4 monospace; text-decoration: none; border-radius: 0; }
+.retro-boot-sound { align-self: flex-start; }
+.retro-boot-footer { margin-top: auto !important; padding-top: 28px; font-size: 13px; }
+
+@media (max-width:1099px), (pointer:coarse) {
+  .desktop-launcher, .desktop-launcher.is-open { display: none; }
+  .desktop-window-area { left: 5px; }
+  .desktop-window:not(.is-active) { visibility: hidden; pointer-events: none; }
+  .retro-start-menu { bottom: 66px; max-height: calc(100% - 134px); }
+  .desktop-taskbar-clock { display: none; }
+  .desktop-icon { flex-direction: column; }
+  .retro-extra-app { padding: 20px; }
+  .retro-extra-app h1 { font-size: 26px; }
+  .retro-profile-facts { padding: 0 20px 24px; }
+  .desktop-window-titlebar { padding-left: 6px; }
+  .desktop-window-titlebar h2 { font-size: 13px; }
+}

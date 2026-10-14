@@ -1,12 +1,11 @@
 /* ========================================
    GEAR & PHOTO CARD COMPONENT
-   Photo-rich product & lifestyle card with multi-image slider, 
-   lightbox zoom, and schematic blueprint fallbacks
+   Product photo card with optional image controls and fallback
    ======================================== */
 
-import DitherImage, { hasDitherImage } from './DitherImage';
+import PortfolioImage, { hasPortfolioImage } from './PortfolioImage';
 import React, { useState } from 'react';
-import { useModal } from '../../context/ModalContext';
+import { useOptionalDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 
 function GearSchematic({ icon, title }) {
   switch (icon) {
@@ -81,7 +80,7 @@ function GearSchematic({ icon, title }) {
         <svg viewBox="0 0 120 70" fill="none" className="gear-schematic-svg" aria-label={title}>
           <rect x="28" y="12" width="64" height="40" rx="3" stroke="currentColor" strokeWidth="2" fill="currentColor" />
           <rect x="33" y="17" width="54" height="30" rx="1.5" stroke="currentColor" strokeWidth="1" />
-          <text x="60" y="35" textAnchor="middle" fill="currentColor" fontFamily="Atkinson Hyperlegible" fontSize="8" fontWeight="bold">TUF // A15</text>
+          <text x="60" y="35" textAnchor="middle" fill="currentColor" fontFamily="Figtree" fontSize="8" fontWeight="bold">TUF // A15</text>
           <path d="M18 54L26 52H94L102 54C104 55 103 57 100 57H20C17 57 16 55 18 54Z" stroke="currentColor" strokeWidth="1.8" fill="currentColor" />
           <rect x="52" y="53" width="16" height="2" rx="1" fill="currentColor" />
         </svg>
@@ -91,7 +90,7 @@ function GearSchematic({ icon, title }) {
         <svg viewBox="0 0 120 70" fill="none" className="gear-schematic-svg" aria-label={title}>
           <rect x="35" y="10" width="50" height="50" rx="6" stroke="currentColor" strokeWidth="2" fill="currentColor" />
           <rect x="43" y="18" width="34" height="34" rx="3" stroke="currentColor" strokeWidth="1.2" />
-          <text x="60" y="38" textAnchor="middle" fill="currentColor" fontFamily="Atkinson Hyperlegible" fontSize="9" fontWeight="bold">RIG // X</text>
+          <text x="60" y="38" textAnchor="middle" fill="currentColor" fontFamily="Figtree" fontSize="9" fontWeight="bold">RIG // X</text>
           <line x1="42" y1="5" x2="42" y2="10" stroke="currentColor" strokeWidth="1.5" />
           <line x1="51" y1="5" x2="51" y2="10" stroke="currentColor" strokeWidth="1.5" />
           <line x1="60" y1="5" x2="60" y2="10" stroke="currentColor" strokeWidth="1.5" />
@@ -156,11 +155,18 @@ function GearSchematic({ icon, title }) {
 }
 
 export default function GearCard({ item }) {
-  const { openLightbox } = useModal();
-  const [activePhotoIdx, setActivePhotoIdx] = useState(0);
-  const [imgLoadFailed, setImgLoadFailed] = useState(false);
-
+  const desktopWorkspace = useOptionalDesktopWorkspace();
+  const getAppState = desktopWorkspace?.getAppState;
+  const saveAppState = desktopWorkspace?.setAppState;
   const images = item.images && item.images.length > 0 ? item.images : [];
+  const photoStateKey = 'gear.photo.' + item.id;
+  const [activePhotoIdx, setActivePhotoIdxInternal] = useState(() => Math.min(getAppState ? getAppState(photoStateKey, 0) : 0, Math.max(0, images.length - 1)));
+  const [imgLoadFailed, setImgLoadFailed] = useState(false);
+  const setActivePhotoIdx = update => setActivePhotoIdxInternal(previous => {
+    const next = typeof update === 'function' ? update(previous) : update;
+    saveAppState?.(photoStateKey, next);
+    return next;
+  });
   const currentPhoto = images[activePhotoIdx] || null;
   const hasMultiplePhotos = images.length > 1;
 
@@ -178,44 +184,21 @@ export default function GearCard({ item }) {
     setActivePhotoIdx((prev) => (prev < images.length - 1 ? prev + 1 : 0));
   };
 
-  const handleZoom = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (currentPhoto && hasDitherImage(currentPhoto.src) && !imgLoadFailed) {
-      openLightbox(
-        currentPhoto.src,
-        currentPhoto.caption || item.title,
-        item.url,
-        'PRODUCT LINK'
-      );
-    }
-  };
-
   return (
     <article className="gear-card group">
       {/* Top Square White Showcase Frame */}
       <div 
         className="gear-media-box" 
       >
-        {currentPhoto && hasDitherImage(currentPhoto.src) && !imgLoadFailed ? (
+        {currentPhoto && hasPortfolioImage(currentPhoto.src) && !imgLoadFailed ? (
           <div className="gear-photo-container">
-            <DitherImage
+            <PortfolioImage
               src={currentPhoto.src}
               alt={currentPhoto.alt || item.title}
               className="gear-photo-img"
               loading="lazy"
               onError={() => setImgLoadFailed(true)}
             />
-            <button type="button" className="studio-gear-zoom" onClick={handleZoom} aria-label={`View ${item.title} photo`}>
-            <span className="gear-photo-zoom-hint" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                <line x1="11" y1="8" x2="11" y2="14"></line>
-                <line x1="8" y1="11" x2="14" y2="11"></line>
-              </svg>
-            </span>
-            </button>
           </div>
         ) : (
           <div className="gear-schematic-frame">
@@ -261,7 +244,7 @@ export default function GearCard({ item }) {
         )}
       </div>
 
-      {/* Card Content: Title + Arrow & Specs */}
+      {/* Card title and optional product link. */}
       <div className="gear-info-block">
         {item.url ? (
           <a
@@ -280,7 +263,6 @@ export default function GearCard({ item }) {
             <h3 className="gear-title">{item.title}</h3>
           </div>
         )}
-        <p className="gear-specs-text">{item.specs}</p>
       </div>
     </article>
   );

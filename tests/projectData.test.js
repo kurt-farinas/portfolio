@@ -8,6 +8,27 @@ describe('React Project Data Integrity', () => {
     expect(projects).toContain('gym');
   });
 
+  it('keeps live site links off the PMPC WorkForce and General Merchandise projects', () => {
+    expect(projectDetails.pmpcPis.websiteUrl).toBe('https://peoplesmpcoop.com/');
+    expect(projectDetails.pmpcWorkforce).not.toHaveProperty('websiteUrl');
+    expect(projectDetails.pmpcGenMdse).not.toHaveProperty('websiteUrl');
+  });
+
+  it('keeps PMPC screenshot captions factual and distinct', () => {
+    expect(projectDetails.pmpcPis.previewCallout.label).toBe('PUBLIC SITE');
+    expect(projectDetails.pmpcWorkforce.previewCallout.label).toBe('SIGN-IN');
+    expect(projectDetails.pmpcWorkforce.previewCallout.note).toContain('empty credential fields');
+    expect(projectDetails.pmpcWorkforce.slides[0].src).toBe('/images/projects/pmpc-workforce.png');
+    expect(projectDetails.pmpcGenMdse.previewCallout.label).toBe('PUBLIC LANDING');
+    expect(projectDetails.pmpcGenMdse.previewCallout.note).toContain('internal General Merchandise system');
+    expect(projectDetails.pmpcGenMdse.slides.map(slide => slide.src)).toEqual([
+      '/images/projects/pmpc-gen-mdse.jpg',
+      '/images/projects/pmpc-gen-mdse-prototype.jpg'
+    ]);
+    expect(projectDetails.pmpcGenMdse.slides.map(slide => slide.tab)).toEqual(['Landing page', 'Local prototype']);
+    expect(projectDetails.pmpcGenMdse.slides[1].label).toContain('not deployed');
+  });
+
   it('verifies CS Form No. 6 (HRIS) metadata', () => {
     const hris = projectDetails.hris;
     expect(hris.title).toBe('CS Form No. 6 Digitalization System');
@@ -34,9 +55,18 @@ describe('React Project Data Integrity', () => {
     expect(gym.slides[3].src).toBe('/gym-client.png');
   });
 
-  it('verifies 3 narrative career and education timeline milestones', () => {
-    expect(timelineData).toHaveLength(3);
+  it('verifies 4 narrative career and education timeline milestones', () => {
+    expect(timelineData).toHaveLength(4);
     const titles = timelineData.map(t => t.title);
+    const currentRole = timelineData.find(t => t.id === 'pmpc-role');
+    expect(currentRole.title).toBe("Junior Full-Stack Developer | People's Multi-Purpose Cooperative");
+    expect(currentRole.date).toBe('SEP 16, 2026 – PRESENT');
+    expect(currentRole.desc).toContain('People\'s Information System, WorkForce / DTR, and General Merchandise website');
+    expect(currentRole.desc).toContain('note unreleased work');
+    expect(timelineData.find(t => t.title === 'BS Computer Science | STI College San Jose').date).toBe('SEP 2022 – JUL 2026');
+    expect(timelineData.find(t => t.title === 'Software Developer Intern (OJT) | DepEd San Jose').desc).toContain('Denver Ballesteros developed the Laravel backend');
+    expect(timelineData.find(t => t.title === 'Software Developer Intern (OJT) | DepEd San Jose').desc).toContain('98/100 OJT rating');
+    expect(timelineData.find(t => t.title === 'Gym Management System | Thesis Defense (Defended)').desc).toContain('Solo-built and defended');
     expect(titles).toContain('BS Computer Science | STI College San Jose');
     expect(titles).toContain('Software Developer Intern (OJT) | DepEd San Jose');
     expect(titles).toContain('Gym Management System | Thesis Defense (Defended)');
@@ -52,12 +82,13 @@ describe('React Project Data Integrity', () => {
   });
 
   it('verifies gearCatalogData definitions and section mapping', () => {
-    expect(gearCatalogData.length).toBe(12);
+    expect(gearCatalogData.length).toBe(13);
     const ids = gearCatalogData.map((i) => i.id);
     expect(ids).toContain('mchose-ace60');
     expect(ids).toContain('attack-shark-x6');
     expect(ids).toContain('koorui-24e3');
     expect(ids).toContain('salnotes-zero');
+    expect(ids).toContain('fifine-k678');
     expect(ids).toContain('asus-tuf-a15');
     expect(ids).toContain('gym-kit');
     expect(ids).toContain('hawas-ice');
@@ -71,8 +102,12 @@ describe('React Project Data Integrity', () => {
     expect(keyboard.category).toBe('Keyboard');
     expect(keyboard.section).toBe('desk');
     expect(keyboard.sectionTitle).toBe('Desk Setup and Gear');
-    expect(keyboard.images.length).toBeGreaterThanOrEqual(2);
+    expect(keyboard.images).toHaveLength(1);
     expect(keyboard.images[0].src).toBe('/images/outside/mchose-ace60.jpg');
+
+    const microphone = gearCatalogData.find((i) => i.id === 'fifine-k678');
+    expect(microphone.title).toBe('FIFINE K678');
+    expect(microphone.images[0].src).toBe('/images/outside/fifine-k678.png');
 
     const laptop = gearCatalogData.find((i) => i.id === 'asus-tuf-a15');
     expect(laptop.title).toContain('ASUS TUF Gaming A15');

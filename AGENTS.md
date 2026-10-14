@@ -1,92 +1,74 @@
-# AGENTS.md — Portfolio (kurt-farinas-portfolio.vercel.app)
+# AGENTS.md — Portfolio
 
-## Purpose
-- This is Kurt Fariñas's recruiter-facing portfolio. Prioritize factual project ownership, mobile readability, working recruiter paths, and a maintainable React codebase over visual novelty.
+## Purpose and source of truth
 
-## Source-of-truth hierarchy
-When sources conflict, use this order:
-1. Current user instruction
-2. Active implementation and deployment files: `src/`, `public/`, `index.html`, and `vercel.json`
-3. `AGENTS.md`
-4. Tests and build configuration
-5. Legacy files under `src/js/`
+This is Kurt Fariñas's recruiter-facing portfolio. Keep project ownership accurate, evidence visible, navigation usable on phones, and the React application maintainable.
 
-## Stack
-- React 19 + Vite 6, with React Router and Vitest.
-- Main portfolio data: `src/data/projectData.js`.
-- Routes: `/`, `/after-hours`, `/downtime`, and `/outside-the-ide`.
-- Source entry point: `src/main.jsx` → `src/App.jsx`.
-- Hosted on Vercel as a static Vite build. Use `npm run dev`, `npm test -- --run`, and `npm run build`.
-- CSS is split by responsibility under `src/styles/` and imported by `src/styles/index.css`.
-- Treat `src/js/` as legacy code, not the source of truth for active features.
-- Dark/light theme, monochrome palette, Space Grotesk/Inter/JetBrains Mono typography.
+When sources conflict, follow: current user instruction; active implementation and deployment files in src/, public/, index.html, and vercel.json; this guide; tests/build configuration; legacy files in src/js/.
 
-## Features to preserve (do not remove or degrade without asking)
-- Project detail modals with screenshot carousel, case-study content, and screenshot lightbox
-- Featured Projects includes Job Hunt Ledger, a local-only personal job-search dashboard with a public code repository but no hosted demo
-- Resume PDF preview modal + direct download link
-- Command palette, including the Ctrl/Cmd+K shortcut and keyboard navigation
-- Action-feedback toast notifications
-- Dark/light theme and sound controls
+## Stack and routes
 
-## Change boundaries
-- Do not add new packages, analytics, tracking, APIs, or third-party widgets without explicit approval.
-- Keep content, styling, and behavior changes scoped to the request.
-- Do not modify unrelated legacy files during feature work.
+- React 19, Vite 6, React Router, and Vitest. The app starts at src/main.jsx → src/App.jsx; portfolio data remains in src/data/projectData.js.
+- The workstation uses Three.js, React Three Fiber v9, and Drei. Load the scene through a dynamic import. The initial bundle and mobile/coarse-pointer flows must avoid downloading the scene and Three.js.
+- Routes: /, /projects, /after-hours, and /gear; /downtime and /outside-the-ide remain Gear & Collections aliases. Homepage section hashes open their matching app. Project hashes focus that Projects entry. Keep direct /resume.pdf access.
+- Hosted as a static Vite build on Vercel. Use npm run dev, npm test -- --run, npm run build, and npm run theme:check.
+- Keep src/js/ as legacy code, not active feature source.
 
-## Version control and deployment
-- Do not commit, push, create pull requests, change hosting configuration, or deploy without explicit approval.
-- Preserve unrelated working-tree changes.
-- Before a requested publish, inspect `git status`, `git diff --check`, branch, remote, and local/remote commit IDs.
+## Portfolio desktop
 
-## Hard rules
-- Keep the existing Vite build and do not replace the React source with legacy vanilla files under `src/js/`.
-- Never break or change the resume.pdf link path.
-- Never modify canonical, og:*, or twitter:* meta tags without flagging it explicitly — these control how the site appears when shared and how it's indexed, which matters directly for job applications.
-- Never remove or shrink content that establishes credibility (OJT rating, hours logged, project ownership scope) — this is a job-hunting asset, not a demo site.
-- Check mobile responsiveness on every visual change. This site gets viewed on phones by recruiters.
+The desktop overview is a fictional retro workstation made from reusable geometry. The beige CRT opens the projected React desktop; Expand desktop and Back to desk move between views. Sticky notes open Projects and Contact, photos open After Hours, fragrance opens Gear & Collections, and the résumé sheet opens Résumé. Keep an accessible 2D desktop ready during scene loading and use it after WebGL errors.
 
-## Visual safeguards
-- Preserve the hero section's original scale. Compact other sections only when requested; do not make the hero smaller as a side effect.
-- For visual changes, verify desktop and a 375px-wide viewport, no horizontal overflow, keyboard access, and visible focus states.
+Use a beige CRT, instanced retro keyboard caps and legends, beige mouse, optional desk lamp, and static coffee mug. The monitor has reversible power and the projected desktop remains aligned with it. Overview content is inert until focused. Gear & Collections retains the actual equipment. No automatic scene motion, steam, blur, or gradients.
 
-## Interaction safeguards
-- Dialogs must support Escape to close, keep focus inside while open, and restore focus when closed.
-- Do not replace React state/context interactions with direct DOM manipulation or new `window` globals.
+Apps: About, Projects, Experience, Stack, Recognition, After Hours, Gear & Collections, Résumé, Contact, KurtOrdle, BugHunter 3D, Terminal, and Credits. About opens first. Provide one non-modal window per app, drag, resize, minimize, maximize, close, focus, and taskbar restoration. Reopening an app focuses its existing window. Keep windows inside the visible workspace when it resizes. Include keyboard Move/Resize controls, visible focus, and 44px minimum targets.
 
-## Content accuracy
-- Never fabricate or round up stats, dates, or scope claims. Match what's actually true: HRIS frontend ownership only (backend is Denver Ballesteros's), gym system solo-built and defended.
-- Keep tone factual and technical, not marketing copy. Avoid generic buzzwords ("passionate," "results-driven," "synergy").
+At widths below 1100px or on coarse pointers, show one full-screen 2D app window at a time and do not import the 3D scene. Browser Back/Forward follows app navigation and route/hash entry. Save app scroll positions and gallery selections across view changes. Ctrl/Cmd+K opens the searchable application palette.
 
-## Content changes
-- Before changing project claims, verify them against existing project data or user-provided evidence.
-- Flag wording that could overstate ownership, scale, or production status.
+Project, résumé, screenshot, and photo dialogs remain outside the projected screen, readable, and focus-contained. Escape closes the topmost dialog first and restores focus afterward. Keep action-feedback toasts, theme persistence, project screenshot carousel/lightbox, photo navigation, and product links.
 
-## Accessibility
-- Preserve semantic HTML, accessible names, keyboard navigation, and focus management.
-- Respect `prefers-reduced-motion` for new animation.
-- Do not use color as the only way to communicate status.
+## Content safeguards
 
-## Assets and links
-- Keep `public/` asset paths stable unless every reference is updated and verified.
-- For changed pages, verify internal navigation, resume links, project links, images, and downloadable files.
-- New meaningful images require accurate alt text; decorative images should use empty alt text.
-- Use `rel="noopener noreferrer"` for new external links opened in a new tab.
+- Keep all six projects in their current order: PIS, WorkForce/DTR, General Merchandise, CS Form No. 6, Gym Management System, Job Hunt Ledger.
+- Preserve contribution, ownership, release status, screenshot captions, and link distinctions already in projectData.js. PIS is inherited work; DepEd wording is frontend ownership and Denver Ballesteros developed the Laravel backend; the gym platform was solo-built and defended.
+- Keep the current Junior Full-Stack Developer role at People's Multi-Purpose Cooperative from September 16, 2026, and retain the OJT 98/100 rating and 342 hours.
+- Keep Job Hunt Ledger labelled local-only with no hosted demo. Do not invent stats, dates, releases, or responsibilities.
+- Keep the supplied portrait, project screenshots, After Hours photos, gear photos and image fallbacks, original image dimensions, and public asset paths.
+- Use Figtree body text and Space Grotesk display text. Keep typography and color variables in src/styles/variables.css. Preserve the saved dark/light choice and dark default.
+- Keep /resume.pdf unchanged in the hero/app/modal links. The Résumé app must retain open-in-tab, download, and accessible preview actions.
 
-## SEO and social previews
-- Metadata is maintained in `index.html`; treat canonical, Open Graph, Twitter, title, description, and JSON-LD changes as high-risk.
-- If these fields change, verify that they match the portfolio identity, route behavior, and intended public URL.
-- Do not create route-specific metadata behavior unless it is requested and verified.
+## Accessibility and behavior
 
-## Validation requirements
-- For React, JavaScript, styling, dependency, routing, or configuration changes, run `npm test -- --run`, `npm run build`, and `git diff --check`.
-- For content-only or documentation-only changes, run `git diff --check`; run additional checks when the changed content affects rendering, links, or metadata.
-- Verify the `/resume.pdf` preview and download paths after related changes.
+- Preserve semantic HTML, labels, keyboard navigation, 3px visible focus outlines, 44px interactive targets, and focus containment/restoration in dialogs.
+- Respect prefers-reduced-motion; camera view changes become instant and no scene animation runs automatically.
+- Preserve native touch, text selection, drag, zoom, and text-entry behavior.
+- Keep mobile behavior readable without horizontal overflow. Verify desktop and 375px in dark and light themes.
+- Do not replace React context/state interactions with direct DOM manipulation or new window globals.
 
-## Communication style
-- No "I've successfully..." preambles. Show the diff directly.
-- Explicitly flag any change that affects SEO, social preview metadata, or mobile layout — these are the changes with the highest cost if wrong and lowest visibility if silently broken.
+## Change boundaries and publishing
 
-## Keeping this guide current
-- When a visible feature is added, removed, or substantially changed, update this guide in the same change.
-- Do not list CSS classes, unmounted components, or legacy scripts as active features.
+- Keep interface colors in variables.css; prefer solid grayscale UI surfaces and restrained borders. Keep the warm workstation palette in theme tokens.
+- Keep interface changes scoped to this replacement. Do not add analytics, tracking, APIs, or third-party widgets.
+- Do not change canonical, Open Graph, Twitter, description, title, or JSON-LD metadata without flagging the SEO/social-preview impact.
+- Do not change hosting configuration, commit, push, create a pull request, or deploy without explicit approval.
+- Preserve unrelated user changes. Do not modify unreferenced legacy files during active feature work.
+
+## Required validation
+
+For JavaScript, CSS, routing, dependency, or configuration changes, run npm test -- --run, npm run build, and git diff --check. For visual changes, also run npm run theme:check and node scripts/verify-portfolio-ui.mjs and node scripts/verify-retro-apps.mjs against the production preview. Verify internal navigation, project links, images, all résumé paths, both schemes, keyboard operation, and 3D failure recovery.
+
+Update this guide and DESIGN.md when visible features change.
+
+## Retro extras
+
+- Share profile facts and terminal responses through src/data/portfolioFacts.js, deriving project and timeline content from projectData.js. Use BS Computer Science, STI College San Jose, September 2022–July 2026, Presidential List recognition, and the verified employment/OJT facts. Never copy unsupported prototype claims.
+- Use Windows 98-inspired gray chrome, navy active title bars, beveled borders, SVG icons, Start menu, and taskbar. OS chrome uses system fonts; content retains Figtree/Space Grotesk.
+- First-visit homepage boot is immediately skippable, provides actual résumé access, and is bypassed on direct routes/hashes. Replay preserves apps. Sounds and static CRT effects start off; WebAudio starts only on opt-in. Settings include wallpaper, lamp, and reversible monitor power.
+- KurtOrdle uses six five-letter attempts with correct duplicate scoring. BugHunter is a fictional raycaster with safe collision checks and scoped keyboard/touch input; it pauses when inactive, minimized, hidden, behind a modal, or in desk overview. Both retain progress and stop rendering while idle.
+- Terminal is clearly simulated and renders escaped React text without command execution or HTML injection. Contact preserves the original Web3Forms validation, honeypot, honest success/error feedback, and draft recovery; mock submission during verification.
+- Verify all 13 apps, boot bypass, audio opt-in, focused game input, pause behavior, terminal escaping, contact feedback, and mobile 3D exclusion. Do not commit, push, or deploy this trial.
+
+## Projected desktop input
+
+The projected screen owns pointer, wheel, and keyboard-focus input. While its pointer or focus is inside, or a pointer gesture that began inside remains active, manual camera controls are disabled. Native capture guards disable camera input before its container listeners without cancelling desktop scrolling or React handlers. A desktop drag remains owned until release/cancellation, including outside the screen. Outside pointer-down releases focus ownership so camera dragging works immediately.
+
+Desktop-origin events also skip scene raycasting so buttons cannot activate the monitor or desk objects behind them. The HTML portal uses a stable canvas host when returning from expanded view. Only residual manual camera motion is stopped on desktop entry; programmatic monitor/desk transitions remain intact. Locks clear on view changes, unmount, pointer cancellation, and window blur. Keep expanded/mobile desktop behavior unchanged. Run node scripts/verify-desktop-input.mjs against the production preview to verify input separation, escaping window drags/resizing, camera restoration, view transitions, terminal/game input, and modal access in both themes.
