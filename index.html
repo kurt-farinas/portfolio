@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://kurt-farinas.github.io blob:; connect-src 'self' https://api.web3forms.com https://fonts.googleapis.com https://fonts.gstatic.com; frame-src 'self' blob:; object-src 'self' blob:; form-action 'self' https://api.web3forms.com mailto:; base-uri 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https://kurt-farinas.github.io blob:; connect-src 'self' https://api.web3forms.com; frame-src 'self' blob:; object-src 'self' blob:; form-action 'self' https://api.web3forms.com mailto:; base-uri 'self';">
   <title>Kurt Fariñas | Junior Full-Stack Developer</title>
   <meta name="description"
     content="Portfolio of Kurt Fariñas | BS Computer Science graduate, frontend owner of CS Form No. 6 Digitalization System, and creator of Boiyet's Gym Management System. Open to Junior Full-Stack Developer roles.">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="shortcut icon" href="/favicon.svg">
 
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
@@ -19,17 +19,23 @@
   <meta property="og:title" content="Kurt Fariñas | Junior Full-Stack Developer">
   <meta property="og:description"
     content="BS Computer Science graduate. Frontend owner of the CS Form No. 6 Digitalization System. Solo-built and defended a full gym management platform. Open to Junior Full-Stack Developer roles.">
-  <meta property="og:image" content="https://kurt-farinas-portfolio.vercel.app/og-preview.jpg">
+  <meta property="og:image" content="https://kurt-farinas-portfolio.vercel.app/og-preview-2026.jpg">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Kurt Fariñas | Junior Full-Stack Developer">
   <meta name="twitter:description"
     content="BS Computer Science graduate. 342 OJT hours on live government software. Open to Junior Full-Stack Developer roles.">
-  <meta name="twitter:image" content="https://kurt-farinas-portfolio.vercel.app/og-preview.jpg">
+  <meta name="twitter:image" content="https://kurt-farinas-portfolio.vercel.app/og-preview-2026.jpg">
 
   <link rel="canonical" href="https://kurt-farinas-portfolio.vercel.app/">
   <meta name="author" content="Kurt Fariñas">
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('portfolio-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
+    } catch { /* Keep the dark default when storage is unavailable. */ }
+  </script>
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -51,13 +57,6 @@
 }
 </script>
 
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
 </head>
 
 <body>

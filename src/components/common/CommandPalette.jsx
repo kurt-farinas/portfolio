@@ -3,9 +3,10 @@
    ======================================== */
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../context/ModalContext';
 import { useTheme } from '../../context/ThemeContext';
+import { useOptionalDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import useDialogFocus from './useDialogFocus';
 
 export default function CommandPalette() {
@@ -19,7 +20,12 @@ export default function CommandPalette() {
 
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
-  const location = useLocation();
+  const desktopWorkspace = useOptionalDesktopWorkspace();
+  const openApplication = appId => {
+    if (desktopWorkspace) return desktopWorkspace.openApplication(appId);
+    const fallbackPaths = { about: '/#about', projects: '/projects', experience: '/#timeline', stack: '/#skills', recognition: '/#awards', 'after-hours': '/after-hours', gear: '/gear', contact: '/#contact' };
+    navigate(fallbackPaths[appId] || '/');
+  };
 
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -28,6 +34,7 @@ export default function CommandPalette() {
   const dialogRef = useDialogFocus(commandPaletteOpen);
 
   const commands = useMemo(() => [
+    ...(desktopWorkspace?.apps.filter(app => ['my-computer', 'classic', 'kurtordle', 'bugsweeper', 'bughunter', 'terminal', 'credits'].includes(app.id)).map(app => ({ id: 'app-' + app.id, group: 'Portfolio extras', title: 'Open ' + app.label, subtitle: app.description, icon: 'code', handler: () => openApplication(app.id) })) || []),
     {
       id: 'jump-experience',
       group: 'Navigation',
@@ -35,13 +42,7 @@ export default function CommandPalette() {
       subtitle: 'DepEd OJT 342 hrs, thesis defense, graduation',
       icon: 'briefcase',
       shortcut: 'E',
-      handler: () => {
-        if (location.pathname !== '/') {
-          navigate('/#timeline');
-        } else {
-          document.getElementById('timeline')?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
+      handler: () => openApplication('experience')
     },
     {
       id: 'jump-about',
@@ -50,28 +51,16 @@ export default function CommandPalette() {
       subtitle: 'Full-stack background, OJT experience, and career goals',
       icon: 'user',
       shortcut: 'B',
-      handler: () => {
-        if (location.pathname !== '/') {
-          navigate('/#about');
-        } else {
-          document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
+      handler: () => openApplication('about')
     },
     {
       id: 'jump-projects',
       group: 'Navigation',
-      title: 'Jump to Featured Projects',
-      subtitle: 'Form 6 digital approval system & Gym platform',
+      title: 'Open Projects',
+      subtitle: 'Project details, contributions, screenshots, and links',
       icon: 'folder',
       shortcut: 'P',
-      handler: () => {
-        if (location.pathname !== '/') {
-          navigate('/#projects');
-        } else {
-          document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
+      handler: () => openApplication('projects')
     },
     {
       id: 'jump-skills',
@@ -80,13 +69,7 @@ export default function CommandPalette() {
       subtitle: 'React, Inertia.js, Laravel, PHP, MySQL, Tailwind',
       icon: 'code',
       shortcut: 'S',
-      handler: () => {
-        if (location.pathname !== '/') {
-          navigate('/#skills');
-        } else {
-          document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
+      handler: () => openApplication('stack')
     },
     {
       id: 'jump-awards',
@@ -95,24 +78,7 @@ export default function CommandPalette() {
       subtitle: 'ThinkQuest Champion, Oracle Java, Alumni President',
       icon: 'award',
       shortcut: 'W',
-      handler: () => {
-        if (location.pathname !== '/') {
-          navigate('/#awards');
-        } else {
-          document.getElementById('awards')?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    },
-    {
-      id: 'jump-after-hours',
-      group: 'Navigation',
-      title: 'Jump to After Hours',
-      subtitle: 'Snapshots, hardware, and fragrances',
-      icon: 'sparkles',
-      shortcut: 'A',
-      handler: () => {
-        navigate('/after-hours');
-      }
+      handler: () => openApplication('recognition')
     },
     {
       id: 'action-email-direct',
@@ -121,9 +87,7 @@ export default function CommandPalette() {
       subtitle: 'Open a message to kurtfarinas2022@gmail.com',
       icon: 'mail',
       shortcut: 'C',
-      handler: () => {
-        window.location.href = 'mailto:kurtfarinas2022@gmail.com?subject=Portfolio%20Inquiry';
-      }
+      handler: () => openApplication('contact')
     },
     {
       id: 'open-hris',
@@ -153,6 +117,24 @@ export default function CommandPalette() {
       handler: () => openResumeModal()
     },
     {
+      id: 'open-after-hours',
+      group: 'Applications',
+      title: 'Open After Hours',
+      subtitle: 'Browse personal photos',
+      icon: 'image',
+      shortcut: 'A',
+      handler: () => openApplication('after-hours')
+    },
+    {
+      id: 'open-gear',
+      group: 'Applications',
+      title: 'Open Gear & Collections',
+      subtitle: 'Desk setup and fragrance collection',
+      icon: 'layers',
+      shortcut: 'G',
+      handler: () => openApplication('gear')
+    },
+    {
       id: 'action-email',
       group: 'Actions & Utilities',
       title: 'Copy Email to Clipboard',
@@ -170,7 +152,7 @@ export default function CommandPalette() {
       shortcut: 'T',
       handler: (e) => toggleTheme(e)
     },
-  ], [location.pathname, navigate, openProjectModal, openResumeModal, copyEmail, theme, toggleTheme]);
+  ], [openApplication, openProjectModal, openResumeModal, copyEmail, theme, toggleTheme]);
 
   const filteredCommands = useMemo(() => {
     if (!query.trim()) return commands;
@@ -195,6 +177,11 @@ export default function CommandPalette() {
   }, [query]);
 
   useEffect(() => {
+    if (!commandPaletteOpen) return;
+    listRef.current?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+  }, [commandPaletteOpen, selectedIndex, query]);
+
+  useEffect(() => {
     if (commandPaletteOpen) {
       setQuery('');
       setSelectedIndex(0);
@@ -208,6 +195,7 @@ export default function CommandPalette() {
   };
 
   const handleKeyDown = (e) => {
+    if (e.target !== inputRef.current || !filteredCommands.length) return;
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       setSelectedIndex(prev => (prev + 1) % filteredCommands.length);
@@ -231,17 +219,6 @@ export default function CommandPalette() {
       aria-modal="true"
       aria-label="Command palette"
       onClick={closeCommandPalette}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
-        backdropFilter: 'blur(8px)',
-        zIndex: 9990,
-        display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        paddingTop: '12vh'
-      }}
     >
       <div
         ref={dialogRef}
@@ -258,7 +235,11 @@ export default function CommandPalette() {
             placeholder="Type a command or search (e.g. projects, resume, theme)..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
+            role="combobox"
+            aria-label="Search commands"
+            aria-expanded="true"
+            aria-controls="command-list"
+            aria-activedescendant={filteredCommands[selectedIndex] ? `command-${filteredCommands[selectedIndex].id}` : undefined}
             autoComplete="off"
             spellCheck="false"
           />
@@ -272,10 +253,13 @@ export default function CommandPalette() {
           </button>
         </div>
 
-        <div className="cmd-palette-list" ref={listRef} role="listbox">
+        <div className="cmd-palette-list" id="command-list" ref={listRef} role="listbox" aria-label="Commands">
           {filteredCommands.map((cmd, idx) => (
             <div
               key={cmd.id}
+              id={`command-${cmd.id}`}
+              role="option"
+              aria-selected={idx === selectedIndex}
               className={`cmd-palette-item ${idx === selectedIndex ? 'selected' : ''}`}
               onClick={() => executeCommand(cmd)}
               onMouseEnter={() => setSelectedIndex(idx)}

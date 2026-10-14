@@ -1,0 +1,10 @@
+/* Figtree Latin variable font, licensed under public/fonts/OFL.txt. */
+@font-face {
+  font-family: 'Figtree'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url('/fonts/figtree-latin.woff2') format('woff2');
+}
+/* Local preview: Space Grotesk display font, licensed in public/fonts/SPACE-GROTESK-OFL.txt. */
+@font-face {
+  font-family: 'Space Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url('/fonts/space-grotesk-latin.woff2') format('woff2');
+}

@@ -5,19 +5,17 @@
    ======================================== */
 
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
-import { useSound } from './SoundContext';
 
-const ModalContext = createContext();
+export const ModalContext = createContext();
 
 export function ModalProvider({ children }) {
-  const { playUiSound } = useSound();
-
   // Project detail modal
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   // Resume modal
   const [resumeModalOpen, setResumeModalOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
 
   // Screenshot lightbox
   const [lightbox, setLightbox] = useState({ isOpen: false, src: '', caption: '', productUrl: null, actionLabel: null });
@@ -25,12 +23,10 @@ export function ModalProvider({ children }) {
   // Command palette
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
-  // Skill filter
-  const [activeSkillFilter, setActiveSkillFilter] = useState(null);
-
   // Short-lived feedback for copy, contact, and filtering actions
   const [toasts, setToasts] = useState([]);
   const toastTimersRef = useRef(new Set());
+  const savedBodyOverflowRef = useRef('');
 
   const spawnToast = useCallback((title, body) => {
     const id = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -57,88 +53,71 @@ export function ModalProvider({ children }) {
     toastTimersRef.current.clear();
   }, []);
 
+  const anyDialogOpen = Boolean(selectedProjectId || resumeModalOpen || lightbox.isOpen || commandPaletteOpen || contactModalOpen);
+  useEffect(() => {
+    if (anyDialogOpen && document.body.style.overflow !== 'hidden') {
+      savedBodyOverflowRef.current = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+    } else if (!anyDialogOpen && document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = savedBodyOverflowRef.current;
+      savedBodyOverflowRef.current = '';
+    }
+    return () => {
+      if (anyDialogOpen && document.body.style.overflow === 'hidden') {
+        document.body.style.overflow = savedBodyOverflowRef.current;
+        savedBodyOverflowRef.current = '';
+      }
+    };
+  }, [anyDialogOpen]);
+
   const openProjectModal = useCallback((projectId) => {
     setSelectedProjectId(projectId);
     setActiveSlideIndex(0);
-    playUiSound('tab');
-    document.body.style.overflow = 'hidden';
-  }, [playUiSound]);
+  }, []);
 
   const closeProjectModal = useCallback(() => {
     setSelectedProjectId(null);
-    document.body.style.overflow = '';
   }, []);
 
   const openResumeModal = useCallback(() => {
     setResumeModalOpen(true);
-    playUiSound('click');
-    document.body.style.overflow = 'hidden';
-  }, [playUiSound]);
+  }, []);
 
   const closeResumeModal = useCallback(() => {
     setResumeModalOpen(false);
-    document.body.style.overflow = '';
   }, []);
+
+  const openContactModal = useCallback(() => setContactModalOpen(true), []);
+  const closeContactModal = useCallback(() => setContactModalOpen(false), []);
 
   const openLightbox = useCallback((src, caption, productUrl = null, actionLabel = null) => {
     setLightbox({ isOpen: true, src, caption, productUrl, actionLabel });
-    playUiSound('click');
-    document.body.style.overflow = 'hidden';
-  }, [playUiSound]);
+  }, []);
 
   const closeLightbox = useCallback(() => {
     setLightbox({ isOpen: false, src: '', caption: '', productUrl: null, actionLabel: null });
-    if (!selectedProjectId && !resumeModalOpen) {
-      document.body.style.overflow = '';
-    }
-  }, [selectedProjectId, resumeModalOpen]);
+  }, []);
 
   const openCommandPalette = useCallback(() => {
     setCommandPaletteOpen(true);
-    playUiSound('tab');
-  }, [playUiSound]);
+  }, []);
 
   const closeCommandPalette = useCallback(() => {
     setCommandPaletteOpen(false);
   }, []);
 
   const toggleCommandPalette = useCallback(() => {
-    setCommandPaletteOpen(prev => {
-      playUiSound('tab');
-      return !prev;
-    });
-  }, [playUiSound]);
-
-  const filterBySkill = useCallback((skillName) => {
-    playUiSound('click');
-    if (activeSkillFilter === skillName) {
-      setActiveSkillFilter(null);
-      spawnToast('FILTER RESET', 'Showing all featured projects');
-      return;
-    }
-    setActiveSkillFilter(skillName);
-    const projectsEl = document.getElementById('projects');
-    if (projectsEl) {
-      projectsEl.scrollIntoView({ behavior: 'smooth' });
-    }
-    spawnToast('SKILL FILTER', `Showing projects built with ${skillName.toUpperCase()}`);
-  }, [activeSkillFilter, playUiSound, spawnToast]);
-
-  const clearSkillFilter = useCallback(() => {
-    setActiveSkillFilter(null);
-    playUiSound('click');
-    spawnToast('FILTER RESET', 'Showing all featured projects');
-  }, [playUiSound, spawnToast]);
+    setCommandPaletteOpen(prev => !prev);
+  }, []);
 
   const copyEmail = useCallback(() => {
-    playUiSound('success');
     const email = 'kurtfarinas2022@gmail.com';
     navigator.clipboard.writeText(email).then(() => {
       spawnToast('EMAIL COPIED', 'kurtfarinas2022@gmail.com copied to clipboard!');
     }).catch(() => {
       spawnToast('CONTACT EMAIL', 'kurtfarinas2022@gmail.com');
     });
-  }, [playUiSound, spawnToast]);
+  }, [spawnToast]);
 
   // Global keyboard shortcuts (Ctrl+K, ⌘K, Escape)
   useEffect(() => {
@@ -152,11 +131,12 @@ export function ModalProvider({ children }) {
         else if (commandPaletteOpen) closeCommandPalette();
         else if (selectedProjectId) closeProjectModal();
         else if (resumeModalOpen) closeResumeModal();
+        else if (contactModalOpen) closeContactModal();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightbox.isOpen, commandPaletteOpen, selectedProjectId, resumeModalOpen, toggleCommandPalette, closeLightbox, closeCommandPalette, closeProjectModal, closeResumeModal]);
+  }, [lightbox.isOpen, commandPaletteOpen, selectedProjectId, resumeModalOpen, contactModalOpen, toggleCommandPalette, closeLightbox, closeCommandPalette, closeProjectModal, closeResumeModal, closeContactModal]);
 
   return (
     <ModalContext.Provider
@@ -169,6 +149,9 @@ export function ModalProvider({ children }) {
         resumeModalOpen,
         openResumeModal,
         closeResumeModal,
+        contactModalOpen,
+        openContactModal,
+        closeContactModal,
         lightbox,
         openLightbox,
         closeLightbox,
@@ -176,9 +159,6 @@ export function ModalProvider({ children }) {
         openCommandPalette,
         closeCommandPalette,
         toggleCommandPalette,
-        activeSkillFilter,
-        filterBySkill,
-        clearSkillFilter,
         toasts,
         spawnToast,
         copyEmail

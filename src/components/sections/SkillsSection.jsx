@@ -3,58 +3,36 @@
    ======================================== */
 
 import React from 'react';
-import { useModal } from '../../context/ModalContext';
 
-const skills = [
-  { name: 'React', filter: 'react' },
-  { name: 'TypeScript', filter: 'typescript' },
-  { name: 'JavaScript', filter: 'javascript' },
-  { name: 'Inertia.js', filter: 'inertia' },
-  { name: 'Tailwind CSS', filter: 'tailwind' },
-  { name: 'Laravel', filter: 'laravel' },
-  { name: 'PHP' },
-  { name: 'MySQL', filter: 'mysql' },
-  { name: 'FastAPI' },
-  { name: 'Python' },
-  { name: 'SQLite' },
-  { name: 'PHPUnit & Pest', filter: 'pest' },
-  { name: 'Git / GitHub' },
-  { name: 'HTML / CSS' },
-  { name: 'Chart.js' },
-  { name: 'Linux / CLI' },
-  { name: 'Java' },
-  { name: 'Next.js' },
-  { name: 'Docker' }
-];
+import { technologyGroups } from '../../data/portfolioFacts';
+
+const skills = Object.entries(technologyGroups).flatMap(([category, names]) => names.map(name => ({ name, category })));
+const categories = Object.keys(technologyGroups);
 
 export default function SkillsSection() {
-  const { activeSkillFilter, filterBySkill } = useModal();
-
   return (
-    <section className="section skills-section" id="skills">
-      <div className="wrap profile-wrap">
-        <div className="section-title-block">
-          <h2 className="profile-title">Tools &amp; Technologies</h2>
+    <section className="studio-section studio-technologies" id="skills">
+      <div className="studio-container">
+        <div className="studio-stack-heading">
+          <h2>Stack</h2>
         </div>
 
-        <div className="skills-minimal-list" aria-label="Technology stack">
-          {skills.map((skill) => {
-            const isActive = skill.filter && activeSkillFilter?.toLowerCase() === skill.filter;
-
-            if (!skill.filter) {
-              return <span key={skill.name} className="skill-chip skill-chip-static">{skill.name}</span>;
-            }
+        <div className="studio-skills" role="list" aria-label="Technologies by category">
+          {categories.map((category) => {
+            const categorySkills = skills.filter((skill) => skill.category === category);
 
             return (
-              <button
-                key={skill.name}
-                type="button"
-                className={`skill-chip ${isActive ? 'active-skill-pill' : ''}`}
-                onClick={() => filterBySkill(skill.filter)}
-                aria-label={`Filter projects by ${skill.name}`}
-              >
-                {skill.name}
-              </button>
+              <div className="studio-skill-row" role="listitem" key={category}>
+                <span className="studio-skill-category">{category}</span>
+                <ul className="studio-skill-list" aria-label={`${category} technologies`}>
+                  {categorySkills.map((skill, index) => (
+                    <li key={skill.name}>
+                      <span className="studio-skill studio-skill-name">{skill.name}</span>
+                      {index < categorySkills.length - 1 && <span className="studio-skill-separator" aria-hidden="true">,</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             );
           })}
         </div>

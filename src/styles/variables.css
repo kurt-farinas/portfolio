@@ -1,72 +1,55 @@
-/* ========================================
-   DESIGN TOKENS & THEME VARIABLES
-   Monochrome — Color only on hover
-   ======================================== */
-
+/* Shared reference-inspired palette. */
 :root {
-  --bg: #08080A;
-  --surface: rgba(18, 18, 22, 0.85);
-  --surface-solid: #121216;
-  --surface-2: rgba(26, 26, 32, 0.6);
-  --border: rgba(255, 255, 255, 0.05);
-  --border-strong: rgba(255, 255, 255, 0.10);
-  --border-hover: rgba(255, 255, 255, 0.22);
-  --accent-silver: #D4D4D8;
-  --accent-silver-light: #E4E4E7;
-  --accent-silver-glow: rgba(255, 255, 255, 0.10);
-  --accent: #F2F0EC;
-  --accent-hover: #FFFFFF;
-  --text: #F2F0EC;
-  --text-muted: #A1A1AA;
-  --text-faint: #71717A;
-  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --mouse-x: 50%;
-  --mouse-y: 50%;
-  --motion-ui: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  --content-width: 980px;
-  --section-space: clamp(52px, 5.5vw, 68px);
-  --section-space-mobile: 44px;
-  --card-radius: 10px;
-  --control-radius: 7px;
-  --accent-success: #34D399;
-  --accent-proof: #F59E0B;
-
-  /* Hover-only subtle highlights */
-  --hover-green: #34D399;
-  --hover-blue: #60A5FA;
-  --hover-white: #FFFFFF;
+  --retro-tooltip-bg: #ffffe1; --retro-tooltip-ink: #161616; --retro-chrome: #42464c; --retro-ink: #f1f0ea; --retro-highlight: #747b84; --retro-edge: #1b1e22; --retro-etch: #747b84;
+  --retro-title: #132a7a; --retro-title-ink: #ffffff; --retro-inactive-title: #4c525b;
+  --retro-wallpaper-0: #123b3c; --retro-wallpaper-1: #18314f; --retro-wallpaper-2: #392c48;
+  --retro-icon-ink: #e8dec1; --retro-scanline: #000000; --retro-boot-bg: #090d0c; --retro-boot-ink: #d5e5d9; --retro-boot-accent: #80bf96;
+  --retro-terminal-bg: #101512; --retro-terminal-ink: #c1dfc8;
+  --game-ceiling: #202633; --game-floor: #292a27; --game-wall: #57758b; --game-target: #b83443; --game-ink: #ffffff; --game-crosshair: #a8d7b4;
+  --word-correct: #325f44; --word-present: #6a5b2e; --word-absent: #41474c; --word-ink: #ffffff;
+  --desk-retro-shell: #c7c0ad; --desk-retro-edge: #9c9687; --desk-retro-key: #e2decb; --desk-retro-recess: #37372e;
+  --desk-note-yellow: #ead978; --desk-note-green: #a8cda4; --desk-note-ink: #25271f; --desk-badge: #365f79; --desk-led: #68a94e; --desk-lamp: #334f43; --desk-mug: #712e32; --desk-sky-day: #a9cbe0; --desk-sky-dusk: #e09a5f; --desk-sky-night: #121c38; --desk-coffee: #3a2618;
+  --desk-curtain: #6e3b34; --desk-curtain-rod: #2a2622; --desk-plant: #4d7a46; --desk-pot: #a2593c; --desk-rug: #3f4a5c; --desk-rug-edge: #c9b48a; --desk-cork: #a7804f; --desk-pin: #c0392b; --desk-book-a: #2f4f6f; --desk-book-b: #7a3b2e; --desk-book-c: #5b6b3a; --desk-night-warm: #ffd9b0; --desk-fairy-bulb: #ffcf8a; --desk-fairy-wire: #2b2620;
+  --paper: #111113; --ink: #eeeef0; --surface: #19191c; --surface-soft: #212124;
+  --muted: #a5a5ac; --border: #343439; --accent: #75c696; --backdrop: #000000bd;
+  --desk-world: #292a27; --desk-wall: #3b3c35; --desk-board: #574437; --desk-frame: #41413c;
+  --desk-hardware-black: #151619; --desk-hardware-edge: #303237; --desk-hardware-detail: #72757d;
+  --desk-display-glass: #11151b; --desk-purple-led: #8e47e6; --desk-key-legend: #aaa1ba;
+  --desk-object-dark: #1a1b1a; --desk-screen: #151617; --desk-key: #202125; --desk-accent: #ad7852; --desk-paper: #f0e9df;
+  --grain-opacity: 0.04; color-scheme: dark;
+  --font-body: Tahoma, 'Segoe UI', Verdana, sans-serif; --font-display: var(--font-body);
+  --type-label: 0.8125rem; --type-small: 0.875rem; --type-body: 1rem; --type-lead: 1.125rem;
+  --type-case-body: 0.9375rem; --type-card-title: 1rem;
+  --type-title: 1.25rem; --type-section: 1.25rem;
+  --type-hero: 2rem; --type-archive: var(--type-hero);
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-7: 32px; --space-8: 40px;
+  --space-9: 48px; --space-10: 56px; --space-11: 64px;
+  --space-detail-gap: 28px; --space-detail-gap-mobile: 24px;
+  --radius-control: 0; --radius-frame: 0; --radius-dialog: 0; --radius-shell: 0;
+  --motion-short: 160ms; --motion-click: 180ms;
+  --ease-precise: cubic-bezier(.2, .7, .25, 1);
+  --content-measure: 65ch; --content-width: 780px;
+  --section-space: 40px; --section-space-mobile: 36px;
+  --section-inset: 20px; --section-inset-mobile: 18px;
+  --page-space-top: 44px; --page-space-bottom: 80px;
 }
-
-[data-theme="light"] {
-  --bg: #F8F9FA;
-  --surface: rgba(255, 255, 255, 0.98);
-  --surface-solid: #FFFFFF;
-  --surface-2: #F1F3F5;
-  --border: rgba(24, 24, 27, 0.06);
-  --border-strong: rgba(24, 24, 27, 0.12);
-  --border-hover: rgba(24, 24, 27, 0.28);
-  --accent-silver: #27272A;
-  --accent-silver-light: #18181B;
-  --accent-silver-glow: rgba(0, 0, 0, 0.06);
-  --accent: #18181B;
-  --accent-hover: #000000;
-  --text: #09090B;
-  --text-muted: #52525B;
-  --text-faint: #71717A;
-
-  --hover-green: #059669;
-  --hover-blue: #2563EB;
-  --hover-white: #000000;
-  --accent-success: #059669;
-  --accent-proof: #B45309;
+@media (max-width: 760px) { :root { --type-hero: 1.625rem; } }
+:root[data-theme='dark'] {
+  --paper: #111113; --ink: #eeeef0; --surface: #19191c; --surface-soft: #212124;
+  --muted: #a5a5ac; --border: #343439; --accent: #75c696; --backdrop: #000000bd;
+  --desk-world: #292a27; --desk-wall: #3b3c35; --desk-board: #574437; --desk-frame: #41413c;
+  --desk-object-dark: #1a1b1a; --desk-screen: #151617; --desk-key: #202125; --desk-accent: #ad7852; --desk-paper: #f0e9df;
+  --grain-opacity: 0.04; color-scheme: dark;
 }
-
-/* Global Theme Smooth Transition */
-body, nav, .section, .bento-card, .timeline-content, .terminal, .fact-card, .cmd-chip, .btn, .modal-content, .spec-row, .hero-social-pill, .theme-btn, .mobile-menu, .terminal-titlebar, .terminal-shortcuts, .profile-eyebrow, .profile-header-divider, .hero-section, .simple-footer {
-  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+:root[data-theme='light'] {
+  --retro-chrome: #c0c0c0; --retro-ink: #161616; --retro-highlight: #ffffff; --retro-edge: #555555; --retro-etch: #808080;
+  --retro-title: #000080; --retro-inactive-title: #707070;
+  --retro-wallpaper-0: #008080; --retro-wallpaper-1: #255273; --retro-wallpaper-2: #574264;
+  --retro-icon-ink: #fff0c3;
+  --paper: #faf9f6; --ink: #242426; --surface: #ffffff; --surface-soft: #f1f0ed;
+  --muted: #626267; --border: #deddda; --accent: #247348; --backdrop: #141416b8;
+  --desk-world: #e7e5de; --desk-wall: #d8d4ca; --desk-board: #80644f; --desk-frame: #5f5a52;
+  --desk-object-dark: #302d29; --desk-screen: #f4f1e9; --desk-key: #202125; --desk-accent: #9f6949; --desk-paper: #f0e9df;
+  --grain-opacity: 0.03; color-scheme: light;
 }

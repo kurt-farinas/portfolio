@@ -1,0 +1,223 @@
+[
+  {
+    "source": "/job-hunt-ledger.png",
+    "exportWidth": 1200,
+    "cssWidth": 1200,
+    "reason": "600px export lost interface labels; raised to 1200px without cropping",
+    "crop": null
+  },
+  {
+    "source": "/hris-admin.png",
+    "exportWidth": 1200,
+    "cssWidth": 1200,
+    "reason": "600px export lost interface labels; raised to 1200px without cropping",
+    "crop": null
+  },
+  {
+    "source": "/hris-approver.png",
+    "exportWidth": 1200,
+    "cssWidth": 1200,
+    "reason": "600px export lost interface labels; raised to 1200px without cropping",
+    "crop": null
+  },
+  {
+    "source": "/hris-applicant.png",
+    "exportWidth": 1200,
+    "cssWidth": 1200,
+    "reason": "600px export lost interface labels; raised to 1200px without cropping",
+    "crop": null
+  },
+  {
+    "source": "/boiyets-landing.png",
+    "exportWidth": 1200,
+    "cssWidth": 1200,
+    "reason": "600px export lost interface labels; raised to 1200px without cropping",
+    "crop": null
+  },
+  {
+    "source": "/gym-admin.png",
+    "exportWidth": 1200,
+    "cssWidth": 1200,
+    "reason": "600px export lost interface labels; raised to 1200px without cropping",
+    "crop": null
+  },
+  {
+    "source": "/gym-trainer.png",
+    "exportWidth": 1200,
+    "cssWidth": 1200,
+    "reason": "600px export lost interface labels; raised to 1200px without cropping",
+    "crop": null
+  },
+  {
+    "source": "/gym-client.png",
+    "exportWidth": 1200,
+    "cssWidth": 1200,
+    "reason": "600px export lost interface labels; raised to 1200px without cropping",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/mchose-ace60.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/mchose-ace60-detail.jpg",
+    "status": "missing original; existing schematic fallback retained"
+  },
+  {
+    "source": "/images/outside/attack-shark-x6.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/koorui-24e3.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/salnotes-zero.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/asus-tuf-a15.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/mobile-device.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/gym-training.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/gym-gear.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/gaming-setup.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/hawas-ice.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/afnan-sce.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/liquid-brun.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/jaguar-red.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/1.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/2.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/3.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/4.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/5.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/6.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/7.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/8.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/images/outside/9.jpg",
+    "exportWidth": 600,
+    "cssWidth": 1200,
+    "reason": "half-size export",
+    "crop": null
+  },
+  {
+    "source": "/profile.jpg",
+    "exportWidth": 140,
+    "cssWidth": 280,
+    "reason": "half-size export",
+    "crop": null
+  }
+]

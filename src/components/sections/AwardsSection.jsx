@@ -4,20 +4,19 @@
 
 import React from 'react';
 import { awardsData } from '../../data/projectData';
+import SectionHeading from '../common/SectionHeading';
 
 export default function AwardsSection() {
   return (
-    <section className="section awards-section" id="awards">
-      <div className="wrap profile-wrap">
-        <div className="section-title-block">
-          <h2 className="profile-title">Honors &amp; Certifications</h2>
-        </div>
+    <section className="studio-section studio-recognition" id="awards">
+      <div className="studio-container">
+        <SectionHeading title="Honors & Certifications" />
 
-        <div className="awards-grid">
+        <div className="studio-awards">
           {awardsData.map((award) => (
             <div
               key={award.id}
-              className={`award-card ${award.isChampion ? 'award-card-champion' : ''}`}
+              className="studio-award"
             >
               <div className="award-header-row">
                 {award.isChampion ? (
@@ -42,7 +41,7 @@ export default function AwardsSection() {
                 )}
               </div>
               <div className="award-text">
-                <h4>{award.title}</h4>
+                <h3>{award.title}</h3>
                 <p>{award.issuer}</p>
               </div>
             </div>

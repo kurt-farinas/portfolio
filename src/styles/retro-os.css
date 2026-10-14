@@ -1,0 +1,187 @@
+/* Retro chrome is built with solid surfaces and bevel borders, not raster filters. */
+.retro-desktop-content { position: absolute; inset: 0; }
+.desktop-workspace { background: var(--retro-wallpaper-0); font-family: Tahoma, 'Segoe UI', sans-serif; }
+.desktop-workspace[data-wallpaper='1'] { background: var(--retro-wallpaper-1); }
+.desktop-workspace[data-wallpaper='2'] { background: var(--retro-wallpaper-2); }
+.desktop-menubar, .desktop-taskbar, .desktop-window, .retro-start-menu { background: var(--retro-chrome); color: var(--retro-ink); border-radius: 0; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+.desktop-menubar, .desktop-taskbar { padding: 6px 8px; }
+.desktop-menubar-context { color: var(--retro-ink); }
+.desktop-brand, .desktop-brand-mark { color: var(--retro-ink); border-radius: 0; }
+.desktop-brand-mark { border: 1px solid var(--retro-edge); background: var(--retro-highlight); color: var(--retro-edge); font-family: Tahoma, sans-serif; }
+.desktop-toolbar-button, .desktop-taskbar-item, .desktop-taskbar-home,
+.retro-extra-app button, .retro-terminal-app button, .retro-mail-form button,
+.retro-start-items > button, .retro-monitor-off button, .retro-monitor-off a,
+.studio-action, .studio-icon-button, .btn, .code-link-btn, .screenshot-product-btn, .modal-close, .screenshot-modal-close, .carousel-arrow {
+  min-width: 44px; min-height: 44px; padding: 8px 12px; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); border-radius: 0; background: var(--retro-chrome); color: var(--retro-ink); font: 600 13px/1.3 Tahoma, 'Segoe UI', sans-serif;
+}
+.desktop-toolbar-button:hover, .desktop-taskbar-item:hover, .desktop-taskbar-home:hover, .retro-start-items > button:hover,
+:is(.studio-action, .studio-icon-button, .btn, .code-link-btn, .screenshot-product-btn, .modal-close, .screenshot-modal-close, .carousel-arrow):hover { background: var(--retro-highlight); color: var(--retro-edge); border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+.desktop-toolbar-button:active, .desktop-taskbar-item.is-active, .desktop-taskbar-home[aria-expanded='true'],
+:is(.studio-action, .studio-icon-button, .btn, .code-link-btn, .screenshot-product-btn, .modal-close, .screenshot-modal-close, .carousel-arrow):active { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+/* Win98 buttons press in instead of lifting; this overrides studio-motion.css. */
+:is(.studio-action, .studio-text-action, .studio-icon-button, .btn, .code-link-btn, .screenshot-product-btn, .cmd-palette-item, .studio-project):is(:hover, :active) { transform: none; }
+.carousel-arrow:is(:hover, :active) { transform: translateY(-50%); }
+:is(.studio-text-action, .desk-text-action):hover { background: transparent; text-decoration: underline dotted; }
+.desktop-toolbar-button kbd { border-radius: 0; color: inherit; }
+.retro-icon { flex: 0 0 auto; shape-rendering: crispEdges; }
+.desktop-launcher { width: 172px; grid-template-columns: repeat(2, 1fr); grid-auto-rows: minmax(74px, auto); gap: 8px 2px; }
+.desktop-launcher[hidden] { display: none; }
+.desktop-icon { flex-direction: column; justify-content: center; text-align: center; gap: 5px; padding: 4px; border-radius: 0; min-height: 74px; }
+.desktop-icon:hover, .desktop-icon:focus-visible { background: var(--retro-title); border-color: var(--retro-title-ink); }
+.desktop-icon-glyph { width: 32px; height: 32px; flex-basis: 32px; border: 0; border-radius: 0; background: transparent; color: var(--retro-icon-ink); }
+.desktop-icon-label { color: var(--retro-title-ink); font-family: Tahoma, 'Segoe UI', sans-serif; font-size: 13px; }
+.desktop-launcher .desktop-icon-label { font-size: 12px; }
+.desktop-window-area { left: 190px; }
+.desktop-window.is-active { border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+.desktop-window-titlebar { min-height: 54px; padding: 3px 3px 3px 8px; background: var(--retro-inactive-title); border: 0; color: var(--retro-title-ink); }
+.desktop-window.is-active .desktop-window-titlebar { background: var(--retro-title); }
+.desktop-window-titlebar h2 { flex: 1; min-width: 44px; overflow: hidden; text-overflow: ellipsis; color: var(--retro-title-ink); font: 700 14px/1.3 Tahoma, sans-serif; }
+.desktop-window-glyph { color: inherit; }
+.desktop-window-glyph .retro-icon { width: 19px; height: 19px; }
+.desktop-window-controls { gap: 3px; }
+.desktop-window-controls button { border-radius: 0; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); color: var(--retro-ink); }
+.retro-window-address { position: absolute; inset: 54px 0 auto; max-width: none; height: 36px; margin: 0; padding: 7px 12px; border-bottom: 1px solid var(--retro-edge); color: var(--retro-ink); background: var(--retro-chrome); font: 400 13px/20px Tahoma, sans-serif; }
+.desktop-app-scroll { top: 90px; font-family: var(--font-body); }
+.desktop-window-resize-handle { place-items: end; padding: 4px; border-radius: 0; background: transparent; color: var(--ink); }
+.desktop-window-resize-handle:is(:hover, :active, :focus-visible) { background: var(--retro-chrome); color: var(--retro-ink); }
+.desktop-taskbar-home { flex: 0 0 auto; }
+.desktop-taskbar-apps { flex: 1; min-width: 0; overflow-x: auto; }
+.desktop-taskbar-item { flex: 0 1 160px; gap: 6px; overflow: hidden; }
+.desktop-taskbar-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.desktop-taskbar-item .retro-icon { width: 20px; height: 20px; }
+.desktop-taskbar-clock { color: var(--retro-ink); font-family: Tahoma, sans-serif; }
+.retro-start-menu { position: absolute; z-index: 30; left: 8px; bottom: 70px; width: 320px; max-width: calc(100% - 16px); max-height: calc(100% - 140px); display: flex; overflow: hidden; }
+.retro-start-banner { flex: 0 0 35px; background: var(--retro-title); color: var(--retro-title-ink); writing-mode: vertical-rl; transform: rotate(180deg); padding: 12px 6px; font: 700 18px/1.3 Tahoma, sans-serif; }
+.retro-start-items { flex: 1; min-width: 0; overflow-y: auto; padding: 4px; }
+.retro-start-items > p { margin: 8px 4px 4px; font: 700 13px/1.4 Tahoma, sans-serif; border-bottom: 1px solid var(--retro-edge); }
+.retro-start-items > button, .retro-start-items .desktop-icon { display: flex; flex-direction: row; justify-content: flex-start; gap: 10px; width: 100%; min-height: 44px; padding: 5px 8px; text-align: left; }
+.retro-start-items .desktop-icon-glyph { color: var(--retro-ink); }
+.retro-start-items .desktop-icon-label { color: var(--retro-ink); }
+.retro-start-items .desktop-icon:hover :is(.desktop-icon-label,.desktop-icon-glyph) { color: var(--retro-title-ink); }
+.retro-start-items > button[aria-pressed='true'] { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+.retro-scanlines { position: absolute; z-index: 35; inset: 0; pointer-events: none; opacity: 0.12; }
+.desk-tooltip { display: block; padding: 3px 7px; border: 1px solid var(--retro-tooltip-ink); background: var(--retro-tooltip-bg); color: var(--retro-tooltip-ink); font: 400 13px/1.3 var(--font-body); white-space: nowrap; }
+.desk-projection-overview, .desk-projection-overview * { pointer-events: none !important; }
+.retro-monitor-off { position: absolute; z-index: 60; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; background: var(--retro-boot-bg); color: var(--retro-boot-ink); }
+.retro-monitor-off p { text-align: center; }
+/* Short-text panels become raised gray chrome; local tokens keep their text readable on it. */
+.desk-welcome-copy, .desk-loading, .toast, .cmd-palette-card, .desktop-fallback-note, .desktop-window-keyboard-help {
+  --ink: var(--retro-ink); --muted: var(--retro-ink); --surface: var(--retro-chrome); --surface-soft: var(--retro-highlight); --border: var(--retro-edge);
+  background: var(--retro-chrome); color: var(--retro-ink); border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight);
+}
+/* Reading dialogs keep a paper client area inside a gray window frame. */
+.modal-card, .screenshot-modal-content { border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); box-shadow: inset 0 0 0 4px var(--retro-chrome); }
+.cmd-palette-input { min-height: 44px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--paper); color: var(--ink); }
+.cmd-palette-item.selected { background: var(--retro-title); color: var(--retro-title-ink); }
+/* Win98 scrollbars: ::-webkit-scrollbar for Chromium/Safari, scrollbar-color only for Firefox (Chromium ignores the pseudo-elements when it is set). */
+::-webkit-scrollbar { width: 16px; height: 16px; background: var(--retro-chrome); }
+::-webkit-scrollbar-thumb { background: var(--retro-chrome); border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+::-webkit-scrollbar-corner { background: var(--retro-chrome); }
+@supports (-moz-appearance: none) { * { scrollbar-color: var(--retro-highlight) var(--retro-chrome); } }
+/* App content reads like a Win98 program: etched dividers, group boxes, sunken pictures, raised tags. Text sizes stay readable. */
+:is(.desktop-app-scroll, .modal-card) { --border: var(--retro-etch); }
+:is(.desktop-app-scroll, .modal-card) :is(h1, h2, h3, h4) { letter-spacing: 0; font-weight: 700; }
+:is(.desktop-app-scroll, .modal-card) :is(.studio-project-detail, .studio-project-case-item) { padding: 16px 20px 20px; border: 2px groove var(--retro-etch); }
+.desktop-app-scroll .studio-project-detail-list { gap: 20px; }
+:is(.desktop-app-scroll, .modal-card) :is(.studio-project-detail-preview, .studio-project-preview, .gear-media-box, .studio-portrait-frame, .case-study-item, .deck-photo-card) { border: 2px inset var(--retro-etch); }
+:is(.desktop-app-scroll, .modal-card) :is(.studio-proof, .tech-pill, .role-tag, .stamp, .modal-badge, .studio-stack-item, .studio-project-detail-stack li, .studio-project-preview-label) { border: 2px outset var(--retro-etch); background: var(--retro-chrome); color: var(--retro-ink); }
+.retro-profile-facts { display: grid; gap: 8px; padding: 0 32px 32px; font-size: 16px; }
+.retro-profile-facts dt { font-weight: 600; }
+.retro-profile-facts dd { margin: 0 0 12px; color: var(--muted); }
+
+.retro-extra-app { max-width: 780px; margin: 0 auto; padding: 24px; font: 400 16px/1.6 var(--font-body); }
+.retro-extra-app h1 { margin: 0 0 12px; font: 600 32px/1.2 var(--font-display); }
+.retro-extra-app p { margin: 0 0 16px; }
+.retro-extra-app a, .retro-mail-form a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 2px; color: var(--accent); text-decoration: underline; overflow-wrap: anywhere; }
+.retro-word-grid { width: 100%; max-width: 300px; display: grid; gap: 6px; margin: 16px auto; }
+.retro-word-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
+.retro-word-cell { position: relative; display: grid; place-items: center; aspect-ratio: 1; border: 2px solid var(--border); font: 600 24px/1 var(--font-display); }
+.retro-word-cell.correct { background: var(--word-correct); color: var(--word-ink); }
+.retro-word-cell.present { background: var(--word-present); color: var(--word-ink); }
+.retro-word-cell.absent { background: var(--word-absent); color: var(--word-ink); }
+.retro-word-cell:is(.correct,.present,.absent)::after { position: absolute; bottom: 2px; right: 3px; font: 600 13px/1 Tahoma, sans-serif; }
+.retro-word-cell.correct::after { content: '✓'; }
+.retro-word-cell.present::after { content: '↔'; }
+.retro-word-cell.absent::after { content: '×'; }
+.retro-game-message { min-height: 26px; }
+.retro-word-input { display: flex; align-items: end; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.retro-word-input label { flex: 1; min-width: 130px; }
+.retro-word-input input, .retro-terminal-app input, .retro-mail-form input, .retro-mail-form textarea { display: block; width: 100%; min-height: 44px; padding: 10px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); border-radius: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.4 var(--font-body); }
+.retro-letter-keyboard { display: grid; grid-template-columns: repeat(auto-fit,minmax(44px,1fr)); gap: 4px; max-width: 440px; margin: 0 0 16px; }
+.retro-letter-keyboard button { padding: 4px; }
+.retro-letter-keyboard button:nth-last-child(-n+2) { grid-column: span 2; }
+.retro-word-legend { font-size: 13px; }
+.retro-bug-arena { width: 100%; max-width: 600px; border: 2px solid var(--retro-edge); margin-bottom: 16px; }
+.retro-bug-arena canvas { display: block; width: 100%; height: auto; aspect-ratio: 1.587; background: var(--game-ceiling); touch-action: manipulation; }
+.retro-game-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.retro-game-controls button { flex: 1 0 100px; }
+.retro-terminal-app { min-height: 100%; padding: 20px; background: var(--retro-terminal-bg); color: var(--retro-terminal-ink); font: 400 16px/1.6 monospace; overflow-wrap: anywhere; }
+.retro-terminal-app p { margin: 0 0 8px; }
+.retro-terminal-entry { margin: 20px 0; }
+.retro-terminal-app form { display: flex; align-items: end; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.retro-terminal-app label { flex: 1; min-width: 140px; }
+.retro-terminal-app input { font-family: monospace; }
+.retro-credits ul { padding-left: 24px; }
+.retro-sweeper-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
+.retro-sweeper-counter { min-width: 120px; padding: 8px 10px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--paper); color: var(--ink); font: 700 14px/1.4 monospace; }
+.retro-sweeper-board { display: grid; width: max-content; max-width: 100%; border: 3px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+.retro-extra-app .retro-sweeper-cell { min-width: 44px; width: 44px; height: 44px; min-height: 44px; padding: 0; font: 700 18px/1 var(--font-body); }
+.retro-extra-app .retro-sweeper-cell.is-open { border: 1px solid var(--retro-etch); background: var(--paper); color: var(--ink); }
+.retro-extra-app .retro-sweeper-cell.is-bug { background: var(--word-present); color: var(--word-ink); }
+.retro-achievements-title { margin: 24px 0 4px; font-size: 20px; }
+.retro-achievement-list { display: grid; gap: 8px; padding: 0; list-style: none; }
+.retro-achievement-list li { display: flex; gap: 10px; padding: 8px 10px; border: 2px groove var(--retro-etch); }
+.retro-achievement-list li > span:first-child { font-weight: 700; }
+.retro-drive-list { display: grid; gap: 8px; padding: 0; list-style: none; }
+.retro-drive-list button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 12px; text-align: left; }
+.retro-drive-list button > span { display: grid; gap: 2px; }
+.retro-drive-list button > span > span { font-weight: 400; }
+.retro-credits li { margin: 0 0 12px; }
+.retro-mail-form { display: grid; gap: 16px; width: 100%; }
+.retro-mail-form > p { margin: 0; }
+.retro-mail-to { overflow-wrap: anywhere; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.retro-mail-form label { display: grid; gap: 6px; }
+.retro-mail-form button { justify-self: start; }
+.retro-mail-form .studio-contact-honeypot { display: none; }
+.retro-mail-status { padding: 12px; border: 1px solid var(--border); }
+.retro-mail-status.is-error { border-left: 4px solid var(--word-present); }
+.retro-mail-status.is-success { border-left: 4px solid var(--word-correct); }
+
+.retro-boot { position: fixed; inset: 0; width: 100vw; height: 100svh; max-width: none; max-height: none; margin: 0; padding: clamp(20px,4vw,48px); border: 0; background: var(--retro-title); color: var(--retro-title-ink); font: 400 16px/1.5 var(--font-body); overflow: auto; }
+.retro-boot[open] { display: flex; flex-direction: column; gap: 24px; }
+.retro-boot::backdrop { background: var(--retro-title); }
+.retro-boot-splash { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; }
+.retro-boot-mark { display: grid; place-items: center; width: 72px; height: 72px; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); color: var(--retro-ink); font: 700 28px/1 var(--font-body); }
+.retro-boot h1 { margin: 0; font: 700 clamp(34px,6vw,56px)/1.1 var(--font-body); }
+.retro-boot h1 span { display: block; margin-top: 6px; font-size: 0.4em; font-weight: 400; letter-spacing: 0.08em; }
+.retro-boot p { max-width: 65ch; margin: 0; }
+.retro-boot-progress { width: min(320px, 100%); height: 22px; margin-top: 12px; padding: 2px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--retro-chrome); }
+.retro-boot-progress span { display: block; width: 100%; height: 100%; background: var(--retro-title); }
+.retro-boot-note { font-size: 13px; }
+.retro-boot-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.retro-boot button, .retro-boot a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 8px 12px; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); border-radius: 0; background: var(--retro-chrome); color: var(--retro-ink); font: 600 13px/1.3 var(--font-body); text-decoration: none; }
+.retro-boot :is(button, a):active { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+.retro-boot-footer { align-self: flex-end; font-size: 13px; }
+@media (prefers-reduced-motion: no-preference) {
+  .retro-boot[open] .retro-boot-progress span { animation: retro-boot-fill var(--boot-ms, 3000ms) steps(12, end) both; }
+}
+@keyframes retro-boot-fill { from { width: 0; } to { width: 100%; } }
+/* Windows zoom in from slightly smaller each time they appear (open, restore, switching apps on phones). */
+@media (prefers-reduced-motion: no-preference) {
+  .desktop-window { animation: desktop-window-open 200ms cubic-bezier(.2, .8, .2, 1) both; }
+}
+@keyframes desktop-window-open { from { opacity: .35; transform: scale(.85); } to { opacity: 1; transform: none; } }
+
+@media (max-width:1099px), (pointer:coarse) {
+  .desktop-launcher, .desktop-launcher.is-open { display: none; }
+  .desktop-window-area { left: 5px; }
+  .desktop-window:not(.is-active) { visibility: hidden; pointer-events: none; }
+  .retro-start-menu { bottom: 66px; max-height: calc(100% - 134px); }
+  .desktop-taskbar-clock { display: none; }
+  .desktop-icon { flex-direction: column; }
+  .retro-extra-app { padding: 20px; }
+  .retro-extra-app h1 { font-size: 26px; }
+  .retro-profile-facts { padding: 0 20px 24px; }
+  .desktop-window-titlebar { padding-left: 6px; }
+  .desktop-window-titlebar h2 { font-size: 13px; }
+}

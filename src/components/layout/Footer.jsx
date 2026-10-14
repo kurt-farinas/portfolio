@@ -5,26 +5,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useModal } from '../../context/ModalContext';
+import { scrollBehavior } from '../../utils/motion';
 
 export default function Footer() {
   const { copyEmail, openResumeModal } = useModal();
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: scrollBehavior() });
   };
 
   return (
-    <footer className="simple-footer">
-      <div className="wrap profile-wrap simple-footer-wrap">
+    <footer className="simple-footer studio-footer">
+      <div className="studio-container studio-footer-inner">
         <div className="footer-left-info">
-          <Link to="/" className="logo footer-logo" aria-label="Kurt Fariñas Home" onClick={scrollToTop}>
-            <span className="dot-box"><span className="dot"></span></span>
-            <span className="logo-text">kurt.dev</span>
+          <Link to="/" className="studio-logo" aria-label="Kurt Fariñas Home" onClick={scrollToTop}>
+            <span className="studio-monogram" aria-hidden="true">kf.</span><span>kurt.dev</span>
           </Link>
           <span className="footer-copy-text">© 2026 Kurt Fariñas</span>
         </div>
 
-        <div className="footer-simple-links">
+        <div className="footer-simple-links studio-footer-links">
           <a
             href="https://github.com/kurt-farinas"
             target="_blank"
