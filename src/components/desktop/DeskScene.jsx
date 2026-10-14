@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, events, useThree } from '@react-three/fiber';
+import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Canvas, events, useFrame, useThree } from '@react-three/fiber';
 import { CameraControls, Html, PerspectiveCamera, RoundedBox, useContextBridge, useCursor, useTexture } from '@react-three/drei';
 import { Box3, Color, SRGBColorSpace, Spherical, Vector3 } from 'three';
 import DesktopWorkspace from './DesktopWorkspace';
@@ -9,6 +9,7 @@ import { ModalContext } from '../../context/ModalContext';
 import { RetroOSContext, useRetroOS } from '../../context/RetroOSContext';
 import { roomPhase, ROOM_LIGHT } from '../../utils/roomPhase';
 import useMinuteClock from './useMinuteClock';
+import DeskRoom, { CorkBoard } from './DeskRoom';
 import { CoffeeMug, DeskClock, DeskLamp, DeskPrinter, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
 
 function readColor(name, fallback) {
@@ -68,25 +69,31 @@ function useDeskHover(enabled, accent) {
   return { handlers, tooltip };
 }
 
-function DeskWindow({ phase, colors }) {
+function DeskWindow({ phase, colors, animate }) {
+  const stars = useRef(null);
+  useFrame(({ clock }) => {
+    if (!animate || !stars.current) return;
+    const t = clock.getElapsedTime();
+    stars.current.children.forEach((star, index) => star.scale.setScalar(0.7 + 0.45 * Math.abs(Math.sin(t * 0.9 + index * 1.7))));
+  });
   const sky = phase === 'day' ? colors.skyDay : phase === 'dusk' ? colors.skyDusk : colors.skyNight;
   return <group position={[5.2, 4.8, -4.93]}>
     <mesh><boxGeometry args={[3.2, 2.4, 0.12]} /><meshStandardMaterial color={colors.retroShell} roughness={0.8} /></mesh>
     <mesh position={[0, 0, 0.065]}><planeGeometry args={[2.9, 2.1]} /><meshBasicMaterial color={sky} toneMapped={false} /></mesh>
     <mesh position={[0, 0, 0.09]}><boxGeometry args={[0.08, 2.1, 0.04]} /><meshStandardMaterial color={colors.retroShell} /></mesh>
     <mesh position={[0, 0, 0.09]}><boxGeometry args={[2.9, 0.08, 0.04]} /><meshStandardMaterial color={colors.retroShell} /></mesh>
-    {phase === 'night' && [[-1, 0.6], [-0.5, 0.25], [0.4, 0.75], [0.95, 0.35], [-0.85, -0.45], [0.6, -0.6]].map(([x, y]) => <mesh key={x + ':' + y} position={[x, y, 0.07]}><planeGeometry args={[0.035, 0.035]} /><meshBasicMaterial color={colors.paper} toneMapped={false} /></mesh>)}
+    {phase === 'night' && <group ref={stars}>{[[-1, 0.6], [-0.5, 0.25], [0.4, 0.75], [0.95, 0.35], [-0.85, -0.45], [0.6, -0.6]].map(([x, y]) => <mesh key={x + ':' + y} position={[x, y, 0.07]}><planeGeometry args={[0.035, 0.035]} /><meshBasicMaterial color={colors.paper} toneMapped={false} /></mesh>)}</group>}
   </group>;
 }
 
-function DeskObjects({ view, phase, onOpenDesktop, onOpenApp, colors }) {
-  const { noteDeskOpen, unlock } = useRetroOS();
+function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors }) {
+  const { noteDeskOpen, unlock, warmLamp } = useRetroOS();
   const openFromDesk = appId => { noteDeskOpen(appId); onOpenApp(appId); };
   const photoClick = () => openFromDesk('after-hours');
   const root = useRef(null);
   const { handlers, tooltip } = useDeskHover(view === 'desk', colors.accent);
   // Every desk mesh casts and receives hard-edged shadows; set once here instead of on each mesh.
-  useEffect(() => { root.current?.traverse(node => { if (node.isMesh) { node.castShadow = true; node.receiveShadow = true; } }); });
+  useEffect(() => { root.current?.traverse(node => { if (node.isMesh && !node.material?.transparent) { node.castShadow = true; node.receiveShadow = true; } }); });
   return (
     <group ref={root} {...handlers}>
       {tooltip}
@@ -133,7 +140,17 @@ function DeskObjects({ view, phase, onOpenDesktop, onOpenApp, colors }) {
       </group>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.52, 0]} receiveShadow><planeGeometry args={[80, 80]} /><meshStandardMaterial color={colors.world} roughness={0.92} /></mesh>
       <mesh position={[0, 6, -5]}><planeGeometry args={[80, 30]} /><meshStandardMaterial color={colors.wall} roughness={0.95} /></mesh>
-      <DeskWindow phase={phase} colors={colors} />
+      <DeskWindow phase={phase} colors={colors} animate={animate} />
+      <DeskRoom colors={colors} animate={animate} lampOn={warmLamp || phase === 'night'} />
+      <CorkBoard colors={colors} onOpen={() => openFromDesk('projects')} />
+      <group position={[2.45, 4.75, -4.94]} userData={{ label: 'Recognition' }} onClick={event => { event.stopPropagation(); openFromDesk('recognition'); }}>
+        <mesh><boxGeometry args={[1.05, 0.8, 0.06]} /><meshStandardMaterial color={colors.frame} roughness={0.6} /></mesh>
+        <mesh position={[0, 0, 0.035]}><planeGeometry args={[0.9, 0.65]} /><meshStandardMaterial color={colors.paper} roughness={0.9} /></mesh>
+        <mesh position={[0, 0.18, 0.04]}><boxGeometry args={[0.5, 0.05, 0.005]} /><meshStandardMaterial color={colors.accent} /></mesh>
+        <mesh position={[0, 0.04, 0.04]}><boxGeometry args={[0.62, 0.018, 0.005]} /><meshStandardMaterial color={colors.frame} /></mesh>
+        <mesh position={[0, -0.04, 0.04]}><boxGeometry args={[0.5, 0.018, 0.005]} /><meshStandardMaterial color={colors.frame} /></mesh>
+        <mesh position={[0.26, -0.19, 0.04]}><circleGeometry args={[0.07, 24]} /><meshStandardMaterial color={colors.accent} /></mesh>
+      </group>
     </group>
   );
 }
@@ -237,9 +254,38 @@ function DeskCamera({ view, reducedMotion, onOpenDesktop, onBackToDesk }) {
   return <><PerspectiveCamera makeDefault position={DESK_CAMERA_POSITION} fov={38} /><CameraControls ref={controls} makeDefault onControl={onControl} smoothTime={SMOOTH_TIME} restThreshold={0.05} minDistance={3.5} maxDistance={18} minPolarAngle={0.65} maxPolarAngle={1.42} maxAzimuthAngle={0.8} minAzimuthAngle={-0.8} /></>;
 }
 
+// Requests ~30 frames a second only while ambient motion is active; otherwise the demand-rendered scene sleeps.
+function AmbientDriver({ active }) {
+  const invalidate = useThree(state => state.invalidate);
+  useEffect(() => {
+    if (!active) return undefined;
+    const id = window.setInterval(() => invalidate(), 33);
+    return () => window.clearInterval(id);
+  }, [active, invalidate]);
+  return null;
+}
+
+function usePageVisible() {
+  const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden');
+  useEffect(() => {
+    const update = () => setVisible(document.visibilityState !== 'hidden');
+    document.addEventListener('visibilitychange', update);
+    return () => document.removeEventListener('visibilitychange', update);
+  }, []);
+  return visible;
+}
+
+// Mounts only after every suspended desk asset (e.g. the photo texture) has loaded.
+function SceneReady({ onReady }) {
+  useEffect(onReady, [onReady]);
+  return null;
+}
+
 export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, onOpenApp, onOpenResume, toggleTheme, onBackToDesk, onSceneFailure }) {
   const contextLostCleanup = useRef(null);
   const screenPortal = useRef(null);
+  const [ready, setReady] = useState(false);
+  const markReady = useCallback(() => setReady(true), []);
   const ContextBridge = useContextBridge(DesktopWorkspaceContext, ModalContext, RetroOSContext);
   const palette = useMemo(() => ({
     world: readColor('--desk-world', '#292a27'),
@@ -262,15 +308,21 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
     retroKey: readColor('--desk-retro-key'), retroRecess: readColor('--desk-retro-recess'),
     noteYellow: readColor('--desk-note-yellow'), noteGreen: readColor('--desk-note-green'),
     noteInk: readColor('--desk-note-ink'), badge: readColor('--desk-badge'), led: readColor('--desk-led'),
-    lamp: readColor('--desk-lamp'), mug: readColor('--desk-mug'), coffee: readColor('--desk-coffee')
+    lamp: readColor('--desk-lamp'), mug: readColor('--desk-mug'), coffee: readColor('--desk-coffee'),
+    curtain: readColor('--desk-curtain'), curtainRod: readColor('--desk-curtain-rod'), plant: readColor('--desk-plant'), pot: readColor('--desk-pot'),
+    rug: readColor('--desk-rug'), rugEdge: readColor('--desk-rug-edge'), cork: readColor('--desk-cork'), pin: readColor('--desk-pin'),
+    books: [readColor('--desk-book-a'), readColor('--desk-book-b'), readColor('--desk-book-c')], nightWarm: readColor('--desk-night-warm')
   }), [theme]);
   const motionReduced = Boolean(reducedMotion);
   const phase = roomPhase(useMinuteClock());
   const light = ROOM_LIGHT[phase];
+  const pageVisible = usePageVisible();
+  const animate = ready && view === 'desk' && !motionReduced && pageVisible;
 
   useEffect(() => () => contextLostCleanup.current?.(), []);
 
   return (
+    <>
     <Canvas
       className="desk-canvas"
       dpr={[1, 1.25]}
@@ -288,14 +340,25 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
     >
       <ContextBridge>
         <color attach="background" args={[palette.world]} />
-        <ambientLight intensity={light.ambient} />
+        <ambientLight intensity={light.ambient} color={phase === 'night' ? palette.nightWarm : '#ffffff'} />
+        <AmbientDriver active={animate} />
         <directionalLight position={[-3, 8, 6]} intensity={light.key} castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-camera-near={1} shadow-camera-far={25} />
         <directionalLight position={[6, 5, -4]} intensity={light.window} color={phase === 'dusk' ? palette.accent : palette.skyDay} />
         <DeskCamera view={view} reducedMotion={motionReduced} onOpenDesktop={onOpenDesktop} onBackToDesk={onBackToDesk} />
-        <DeskObjects view={view} phase={phase} onOpenDesktop={onOpenDesktop} onOpenApp={onOpenApp} colors={palette} />
+        <Suspense fallback={null}>
+          <DeskObjects view={view} phase={phase} animate={animate} onOpenDesktop={onOpenDesktop} onOpenApp={onOpenApp} colors={palette} />
+          <SceneReady onReady={markReady} />
+        </Suspense>
         <ScreenProjection view={view} theme={theme} onOpenResume={onOpenResume} toggleTheme={toggleTheme} onBackToDesk={onBackToDesk} ContextBridge={ContextBridge} portal={screenPortal} />
       </ContextBridge>
     </Canvas>
+    {!ready && (
+      <div className="desk-loading" role="status" aria-live="polite">
+        <span className="desk-loading-mark" aria-hidden="true">KF</span>
+        <p>Setting up the workstation…</p>
+      </div>
+    )}
+    </>
   );
 }
 

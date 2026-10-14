@@ -9,5 +9,5 @@ export function roomPhase(date) {
 export const ROOM_LIGHT = {
   day: { ambient: 1.15, key: 2.3, window: 1.1 },
   dusk: { ambient: 0.8, key: 1.6, window: 0.9 },
-  night: { ambient: 0.45, key: 0.7, window: 0 }
+  night: { ambient: 0.6, key: 0.95, window: 0 }
 };

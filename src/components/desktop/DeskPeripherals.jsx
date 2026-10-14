@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Instance, Instances, RoundedBox, RoundedBoxGeometry } from '@react-three/drei';
+import { Instance, Instances, RoundedBox, RoundedBoxGeometry, useTexture } from '@react-three/drei';
 import { CanvasTexture, SRGBColorSpace } from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useRetroOS } from '../../context/RetroOSContext';
@@ -68,6 +68,28 @@ export function RetroMouse({ colors, onOpenProjects }) {
   </group>;
 }
 
+// Postage-stamp portrait taped to the lamp shade: paper border, perforated edge, cropped photo.
+const STAMP_W = 0.24, STAMP_H = 0.28, STAMP_HOLE = 0.04;
+const stampHoles = [];
+for (let x = -STAMP_W / 2; x <= STAMP_W / 2 + 1e-6; x += STAMP_HOLE) stampHoles.push([x, STAMP_H / 2], [x, -STAMP_H / 2]);
+for (let y = -STAMP_H / 2 + STAMP_HOLE; y < STAMP_H / 2 - 1e-6; y += STAMP_HOLE) stampHoles.push([STAMP_W / 2, y], [-STAMP_W / 2, y]);
+function ProfileStamp({ colors }) {
+  const source = useTexture('/optimized/images/kurt-farinas-profile.png.webp');
+  const photo = useMemo(() => {
+    const texture = source.clone();
+    texture.colorSpace = SRGBColorSpace;
+    texture.repeat.set(0.18 / 0.22, 1); // crop the square portrait to the stamp's portrait window
+    texture.offset.set((1 - 0.18 / 0.22) / 2, 0);
+    texture.needsUpdate = true;
+    return texture;
+  }, [source]);
+  return <group>
+    <mesh><planeGeometry args={[STAMP_W, STAMP_H]} /><meshStandardMaterial color={colors.paper} roughness={0.9} /></mesh>
+    <mesh position={[0, 0, 0.002]}><planeGeometry args={[0.18, 0.22]} /><meshBasicMaterial map={photo} toneMapped={false} /></mesh>
+    {stampHoles.map(([x, y]) => <mesh key={x.toFixed(3) + ':' + y.toFixed(3)} position={[x, y, 0.001]}><circleGeometry args={[0.012, 10]} /><meshStandardMaterial color={colors.lamp} /></mesh>)}
+  </group>;
+}
+
 export function DeskLamp({ colors, night }) {
   const { warmLamp: lampSetting } = useRetroOS();
   const warmLamp = lampSetting || night; // the lamp switches itself on after dark
@@ -83,8 +105,10 @@ export function DeskLamp({ colors, night }) {
         <mesh position={[0,0.42,0]}><cylinderGeometry args={[0.024,0.024,0.84,12]} />{arm}</mesh>
         <group position={[0,0.86,0]} rotation={[0,0,1.47]}>
           <mesh position={[0,-0.12,0]}><sphereGeometry args={[0.3,32,16,0,Math.PI*2,0,Math.PI/2]} /><meshStandardMaterial color={colors.lamp} roughness={0.45} metalness={0.25} side={2} /></mesh>
+          {/* Faces the camera: yaw undoes the lamp's turn, pitch tips it onto the upper dome. */}
+          <group position={[0,-0.12,0]} rotation={[-0.5,0.53,0.05,'YXZ']}><group position={[0,0,0.315]}><ProfileStamp colors={colors} /></group></group>
           <mesh position={[0,-0.06,0]}><sphereGeometry args={[0.09,16,10]} /><meshStandardMaterial color={colors.retroKey} emissive={colors.paper} emissiveIntensity={warmLamp?1.2:0} /></mesh>
-          {warmLamp && <pointLight position={[0,-0.3,0]} color={colors.paper} intensity={4} distance={7} decay={2} />}
+          {warmLamp && <pointLight position={[0,-0.3,0]} color={colors.paper} intensity={5} distance={7} decay={2} />}
         </group>
       </group>
     </group>

@@ -41,6 +41,8 @@ async function settleImages(page) {
 }
 
 async function scan(page, label) {
+  // Window zoom-in animations scale targets briefly; measure the settled layout.
+  await page.evaluate(() => Promise.all(document.getAnimations().map(animation => animation.finished.catch(() => {}))));
   const result = await page.evaluate(() => {
     const isVisible = element => {
       const rect = element.getBoundingClientRect();
@@ -223,8 +225,8 @@ try {
       await expect(page.locator('#pmpc-pis')).toContainText('PUBLIC SITE');
       await expect(page.locator('#pmpc-workforce')).toContainText('SIGN-IN');
       await expect(page.locator('#pmpc-gen-mdse')).toContainText('PUBLIC LANDING');
-      await expect(page.locator('#pmpc-workforce img')).toHaveAttribute('src', '/images/projects/pmpc-workforce.png');
-      await expect(page.locator('#pmpc-gen-mdse img')).toHaveAttribute('src', '/images/projects/pmpc-gen-mdse.jpg');
+      await expect(page.locator('#pmpc-workforce img')).toHaveAttribute('src', '/optimized/images/projects/pmpc-workforce.png.webp');
+      await expect(page.locator('#pmpc-gen-mdse img')).toHaveAttribute('src', '/optimized/images/projects/pmpc-gen-mdse.jpg.webp');
       await expect(page.locator('#pmpc-pis').getByRole('link', { name: /Visit website/ })).toHaveCount(1);
       await expect(page.locator('#pmpc-workforce').getByRole('link', { name: /Visit website/ })).toHaveCount(0);
       await expect(page.locator('#pmpc-gen-mdse').getByRole('link', { name: /Visit website/ })).toHaveCount(0);

@@ -30,6 +30,7 @@
 .desktop-icon:hover, .desktop-icon:focus-visible { background: var(--retro-title); border-color: var(--retro-title-ink); }
 .desktop-icon-glyph { width: 32px; height: 32px; flex-basis: 32px; border: 0; border-radius: 0; background: transparent; color: var(--retro-icon-ink); }
 .desktop-icon-label { color: var(--retro-title-ink); font-family: Tahoma, 'Segoe UI', sans-serif; font-size: 13px; }
+.desktop-launcher .desktop-icon-label { font-size: 12px; }
 .desktop-window-area { left: 190px; }
 .desktop-window.is-active { border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
 .desktop-window-titlebar { min-height: 54px; padding: 3px 3px 3px 8px; background: var(--retro-inactive-title); border: 0; color: var(--retro-title-ink); }
@@ -165,6 +166,11 @@
   .retro-boot[open] .retro-boot-progress span { animation: retro-boot-fill var(--boot-ms, 3000ms) steps(12, end) both; }
 }
 @keyframes retro-boot-fill { from { width: 0; } to { width: 100%; } }
+/* Windows zoom in from slightly smaller each time they appear (open, restore, switching apps on phones). */
+@media (prefers-reduced-motion: no-preference) {
+  .desktop-window { animation: desktop-window-open 200ms cubic-bezier(.2, .8, .2, 1) both; }
+}
+@keyframes desktop-window-open { from { opacity: .35; transform: scale(.85); } to { opacity: 1; transform: none; } }
 
 @media (max-width:1099px), (pointer:coarse) {
   .desktop-launcher, .desktop-launcher.is-open { display: none; }
