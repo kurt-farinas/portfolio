@@ -1,6 +1,6 @@
 /* Shared reference-inspired palette. */
 :root {
-  --retro-chrome: #42464c; --retro-ink: #f1f0ea; --retro-highlight: #747b84; --retro-edge: #1b1e22;
+  --retro-chrome: #42464c; --retro-ink: #f1f0ea; --retro-highlight: #747b84; --retro-edge: #1b1e22; --retro-etch: #747b84;
   --retro-title: #132a7a; --retro-title-ink: #ffffff; --retro-inactive-title: #4c525b;
   --retro-wallpaper-0: #123b3c; --retro-wallpaper-1: #18314f; --retro-wallpaper-2: #392c48;
   --retro-icon-ink: #e8dec1; --retro-scanline: #000000; --retro-boot-bg: #090d0c; --retro-boot-ink: #d5e5d9; --retro-boot-accent: #80bf96;
@@ -11,12 +11,12 @@
   --desk-note-yellow: #ead978; --desk-note-green: #a8cda4; --desk-note-ink: #25271f; --desk-badge: #365f79; --desk-led: #68a94e; --desk-lamp: #334f43; --desk-mug: #712e32;
   --paper: #111113; --ink: #eeeef0; --surface: #19191c; --surface-soft: #212124;
   --muted: #a5a5ac; --border: #343439; --accent: #75c696; --backdrop: #000000bd;
-  --desk-world: #292a27; --desk-board: #574437; --desk-frame: #41413c;
+  --desk-world: #292a27; --desk-wall: #3b3c35; --desk-board: #574437; --desk-frame: #41413c;
   --desk-hardware-black: #151619; --desk-hardware-edge: #303237; --desk-hardware-detail: #72757d;
   --desk-display-glass: #11151b; --desk-purple-led: #8e47e6; --desk-key-legend: #aaa1ba;
   --desk-object-dark: #1a1b1a; --desk-screen: #151617; --desk-key: #202125; --desk-accent: #ad7852; --desk-paper: #f0e9df;
   --grain-opacity: 0.04; color-scheme: dark;
-  --font-body: 'Figtree', system-ui, sans-serif; --font-display: 'Space Grotesk', var(--font-body);
+  --font-body: Tahoma, 'Segoe UI', Verdana, sans-serif; --font-display: var(--font-body);
   --type-label: 0.8125rem; --type-small: 0.875rem; --type-body: 1rem; --type-lead: 1.125rem;
   --type-case-body: 0.9375rem; --type-card-title: 1rem;
   --type-title: 1.25rem; --type-section: 1.25rem;
@@ -25,7 +25,7 @@
   --space-5: 20px; --space-6: 24px; --space-7: 32px; --space-8: 40px;
   --space-9: 48px; --space-10: 56px; --space-11: 64px;
   --space-detail-gap: 28px; --space-detail-gap-mobile: 24px;
-  --radius-control: 10px; --radius-frame: 12px; --radius-dialog: 16px; --radius-shell: 18px;
+  --radius-control: 0; --radius-frame: 0; --radius-dialog: 0; --radius-shell: 0;
   --motion-short: 160ms; --motion-click: 180ms;
   --ease-precise: cubic-bezier(.2, .7, .25, 1);
   --content-measure: 65ch; --content-width: 780px;
@@ -37,18 +37,18 @@
 :root[data-theme='dark'] {
   --paper: #111113; --ink: #eeeef0; --surface: #19191c; --surface-soft: #212124;
   --muted: #a5a5ac; --border: #343439; --accent: #75c696; --backdrop: #000000bd;
-  --desk-world: #292a27; --desk-board: #574437; --desk-frame: #41413c;
+  --desk-world: #292a27; --desk-wall: #3b3c35; --desk-board: #574437; --desk-frame: #41413c;
   --desk-object-dark: #1a1b1a; --desk-screen: #151617; --desk-key: #202125; --desk-accent: #ad7852; --desk-paper: #f0e9df;
   --grain-opacity: 0.04; color-scheme: dark;
 }
 :root[data-theme='light'] {
-  --retro-chrome: #c0c0c0; --retro-ink: #161616; --retro-highlight: #ffffff; --retro-edge: #555555;
+  --retro-chrome: #c0c0c0; --retro-ink: #161616; --retro-highlight: #ffffff; --retro-edge: #555555; --retro-etch: #808080;
   --retro-title: #000080; --retro-inactive-title: #707070;
   --retro-wallpaper-0: #008080; --retro-wallpaper-1: #255273; --retro-wallpaper-2: #574264;
   --retro-icon-ink: #fff0c3;
   --paper: #faf9f6; --ink: #242426; --surface: #ffffff; --surface-soft: #f1f0ed;
   --muted: #626267; --border: #deddda; --accent: #247348; --backdrop: #141416b8;
-  --desk-world: #e7e5de; --desk-board: #80644f; --desk-frame: #5f5a52;
+  --desk-world: #e7e5de; --desk-wall: #d8d4ca; --desk-board: #80644f; --desk-frame: #5f5a52;
   --desk-object-dark: #302d29; --desk-screen: #f4f1e9; --desk-key: #202125; --desk-accent: #9f6949; --desk-paper: #f0e9df;
   --grain-opacity: 0.03; color-scheme: light;
 }

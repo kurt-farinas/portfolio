@@ -25,7 +25,7 @@
 .studio-project-detail-highlights { display: grid; gap: var(--space-3); padding-left: 22px; }
 .studio-project-detail-highlights li { padding-left: 4px; line-height: 1.6; }
 .studio-project-detail-stack { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
-.studio-project-detail-stack li { padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: var(--type-small); }
+.studio-project-detail-stack li { padding: 6px 10px; border: 1px solid var(--border); border-radius: 0; font-size: var(--type-small); }
 .studio-project-detail-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .studio-project-detail-access { color: var(--muted); font-size: var(--type-small); }
 @media (max-width: 1099px) { .studio-project-page { padding-top: 112px; } }

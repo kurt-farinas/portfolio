@@ -10,11 +10,18 @@
 .desktop-brand-mark { border: 1px solid var(--retro-edge); background: var(--retro-highlight); color: var(--retro-edge); font-family: Tahoma, sans-serif; }
 .desktop-toolbar-button, .desktop-taskbar-item, .desktop-taskbar-home,
 .retro-extra-app button, .retro-terminal-app button, .retro-mail-form button,
-.retro-start-items > button, .retro-monitor-off button, .retro-monitor-off a {
+.retro-start-items > button, .retro-monitor-off button, .retro-monitor-off a,
+.studio-action, .studio-icon-button, .btn, .code-link-btn, .screenshot-product-btn, .modal-close, .screenshot-modal-close, .carousel-arrow {
   min-width: 44px; min-height: 44px; padding: 8px 12px; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); border-radius: 0; background: var(--retro-chrome); color: var(--retro-ink); font: 600 13px/1.3 Tahoma, 'Segoe UI', sans-serif;
 }
-.desktop-toolbar-button:hover, .desktop-taskbar-item:hover, .desktop-taskbar-home:hover, .retro-start-items > button:hover { background: var(--retro-highlight); color: var(--retro-edge); }
-.desktop-toolbar-button:active, .desktop-taskbar-item.is-active, .desktop-taskbar-home[aria-expanded='true'] { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+.desktop-toolbar-button:hover, .desktop-taskbar-item:hover, .desktop-taskbar-home:hover, .retro-start-items > button:hover,
+:is(.studio-action, .studio-icon-button, .btn, .code-link-btn, .screenshot-product-btn, .modal-close, .screenshot-modal-close, .carousel-arrow):hover { background: var(--retro-highlight); color: var(--retro-edge); border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+.desktop-toolbar-button:active, .desktop-taskbar-item.is-active, .desktop-taskbar-home[aria-expanded='true'],
+:is(.studio-action, .studio-icon-button, .btn, .code-link-btn, .screenshot-product-btn, .modal-close, .screenshot-modal-close, .carousel-arrow):active { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+/* Win98 buttons press in instead of lifting; this overrides studio-motion.css. */
+:is(.studio-action, .studio-text-action, .studio-icon-button, .btn, .code-link-btn, .screenshot-product-btn, .cmd-palette-item, .studio-project):is(:hover, :active) { transform: none; }
+.carousel-arrow:is(:hover, :active) { transform: translateY(-50%); }
+:is(.studio-text-action, .desk-text-action):hover { background: transparent; text-decoration: underline dotted; }
 .desktop-toolbar-button kbd { border-radius: 0; color: inherit; }
 .retro-icon { flex: 0 0 auto; shape-rendering: crispEdges; }
 .desktop-launcher { width: 172px; grid-template-columns: repeat(2, 1fr); grid-auto-rows: minmax(74px, auto); gap: 8px 2px; }
@@ -34,7 +41,8 @@
 .desktop-window-controls button { border-radius: 0; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); color: var(--retro-ink); }
 .retro-window-address { position: absolute; inset: 54px 0 auto; height: 36px; margin: 0; padding: 7px 12px; border-bottom: 1px solid var(--retro-edge); color: var(--retro-ink); background: var(--retro-chrome); font: 400 13px/20px Tahoma, sans-serif; }
 .desktop-app-scroll { top: 90px; font-family: var(--font-body); }
-.desktop-window-resize-handle { border-radius: 0; background: var(--retro-chrome); color: var(--retro-ink); }
+.desktop-window-resize-handle { place-items: end; padding: 4px; border-radius: 0; background: transparent; color: var(--ink); }
+.desktop-window-resize-handle:is(:hover, :active, :focus-visible) { background: var(--retro-chrome); color: var(--retro-ink); }
 .desktop-taskbar-home { flex: 0 0 auto; }
 .desktop-taskbar-apps { flex: 1; min-width: 0; overflow-x: auto; }
 .desktop-taskbar-item { gap: 6px; }
@@ -53,9 +61,27 @@
 .desk-projection-overview, .desk-projection-overview * { pointer-events: none !important; }
 .retro-monitor-off { position: absolute; z-index: 60; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; background: var(--retro-boot-bg); color: var(--retro-boot-ink); }
 .retro-monitor-off p { text-align: center; }
-.desk-welcome-copy { border-radius: 2px; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
-.desk-projection-frame { border-radius: 0; }
-.immersive-portfolio-shell :is(.studio-action,.studio-proof,.tech-pill,.studio-project-preview-status,.modal-close) { border-radius: 0; }
+/* Short-text panels become raised gray chrome; local tokens keep their text readable on it. */
+.desk-welcome-copy, .desk-loading, .toast, .cmd-palette-card, .desktop-fallback-note, .desktop-window-keyboard-help {
+  --ink: var(--retro-ink); --muted: var(--retro-ink); --surface: var(--retro-chrome); --surface-soft: var(--retro-highlight); --border: var(--retro-edge);
+  background: var(--retro-chrome); color: var(--retro-ink); border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight);
+}
+/* Reading dialogs keep a paper client area inside a gray window frame. */
+.modal-card, .screenshot-modal-content { border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); box-shadow: inset 0 0 0 4px var(--retro-chrome); }
+.cmd-palette-input { min-height: 44px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--paper); color: var(--ink); }
+.cmd-palette-item.selected { background: var(--retro-title); color: var(--retro-title-ink); }
+/* Win98 scrollbars: ::-webkit-scrollbar for Chromium/Safari, scrollbar-color only for Firefox (Chromium ignores the pseudo-elements when it is set). */
+::-webkit-scrollbar { width: 16px; height: 16px; background: var(--retro-chrome); }
+::-webkit-scrollbar-thumb { background: var(--retro-chrome); border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+::-webkit-scrollbar-corner { background: var(--retro-chrome); }
+@supports (-moz-appearance: none) { * { scrollbar-color: var(--retro-highlight) var(--retro-chrome); } }
+/* App content reads like a Win98 program: etched dividers, group boxes, sunken pictures, raised tags. Text sizes stay readable. */
+:is(.desktop-app-scroll, .modal-card) { --border: var(--retro-etch); }
+:is(.desktop-app-scroll, .modal-card) :is(h1, h2, h3, h4) { letter-spacing: 0; font-weight: 700; }
+:is(.desktop-app-scroll, .modal-card) :is(.studio-project-detail, .studio-project-case-item) { padding: 16px 20px 20px; border: 2px groove var(--retro-etch); }
+.desktop-app-scroll .studio-project-detail-list { gap: 20px; }
+:is(.desktop-app-scroll, .modal-card) :is(.studio-project-detail-preview, .studio-project-preview, .gear-media-box, .studio-portrait-frame, .case-study-item, .deck-photo-card) { border: 2px inset var(--retro-etch); }
+:is(.desktop-app-scroll, .modal-card) :is(.studio-proof, .tech-pill, .role-tag, .stamp, .modal-badge, .studio-stack-item, .studio-project-detail-stack li, .studio-project-preview-label) { border: 2px outset var(--retro-etch); background: var(--retro-chrome); color: var(--retro-ink); }
 .retro-profile-facts { display: grid; gap: 8px; padding: 0 32px 32px; font-size: 16px; }
 .retro-profile-facts dt { font-weight: 600; }
 .retro-profile-facts dd { margin: 0 0 12px; color: var(--muted); }
@@ -109,7 +135,7 @@
 .retro-boot::backdrop { background: var(--retro-boot-bg); }
 .retro-boot-header { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-bottom: 1px solid var(--retro-boot-accent); padding-bottom: 16px; font-size: 13px; }
 .retro-boot-kicker { margin: 24px 0 0; color: var(--retro-boot-accent); font-size: 13px; }
-.retro-boot h1 { font: 600 clamp(28px,5vw,48px)/1.2 var(--font-display); margin: 0; }
+.retro-boot h1 { font: 600 clamp(28px,5vw,48px)/1.2 monospace; margin: 0; }
 .retro-boot p { max-width: 65ch; margin: 0; }
 .retro-boot-log { padding: 20px 0; color: var(--retro-boot-accent); }
 .retro-boot-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }

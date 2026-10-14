@@ -19,7 +19,7 @@
 .modal-close, .screenshot-modal-close { position: absolute; top: 12px; right: 12px; display: inline-flex; justify-content: center; align-items: center; width: 44px; height: 44px; }
 .modal-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-right: 52px; min-height: 44px; margin-bottom: 16px; }
 .modal-badge, .role-tag, .stamp { font-size: var(--type-small); }
-.role-tag, .stamp { display: inline-block; padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; }
+.role-tag, .stamp { display: inline-block; padding: 4px 8px; border: 1px solid var(--border); border-radius: 0; }
 .modal-heading-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
 .modal-title { font-size: var(--type-section); line-height: 1.25; }
 .modal-status-wrap { margin-top: 16px; }
@@ -47,7 +47,7 @@
 .modal-list { padding-left: 24px; }
 .modal-list li + li { margin-top: 12px; }
 .stack-row, .modal-links-row { display: flex; flex-wrap: wrap; gap: 12px; }
-.studio-stack-item { padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; font-size: var(--type-small); }
+.studio-stack-item { padding: 4px 8px; border: 1px solid var(--border); border-radius: 0; font-size: var(--type-small); }
 .resume-modal-card { display: flex; flex-direction: column; max-width: 1100px; height: calc(100dvh - 48px); }
 .resume-modal-header, .resume-modal-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .resume-modal-header { justify-content: space-between; padding-bottom: 20px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
@@ -86,7 +86,7 @@
 .cmd-palette-footer { display: flex; flex-wrap: wrap; gap: 12px; padding: 16px; border-top: 1px solid var(--border); font-size: var(--type-small); }
 .cmd-footer-keys { display: flex; flex-wrap: wrap; gap: 12px; }
 #toastLayer { position: fixed; z-index: 1300; right: 24px; bottom: 24px; width: min(360px, calc(100vw - 48px)); display: grid; gap: 12px; pointer-events: none; }
-.toast { display: flex; align-items: start; gap: 12px; padding: 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--ink); }
+.toast { display: flex; align-items: start; gap: 12px; padding: 16px; border: 1px solid var(--border); border-radius: 0; background: var(--surface); color: var(--ink); }
 .toast.hide { display: none; }
 .toast-title { font-weight: 700; font-size: var(--type-small); }
 .toast-body { overflow-wrap: anywhere; }

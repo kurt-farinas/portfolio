@@ -8,10 +8,10 @@ The workstation uses simple reusable Three.js geometry with a low-power, demand-
 
 ## Visual system
 
-- Keep Figtree for body text and Space Grotesk for display text. Keep the self-hosted fonts and existing font license.
+- Use the Win98 system font stack (Tahoma, Segoe UI, Verdana) for body and display text. The self-hosted Figtree/Space Grotesk files and license remain but are no longer loaded.
 - Keep the saved dark/light theme, default to dark, and use src/styles/variables.css for interface and workstation material colors.
 - The desktop has a compact top bar, a left app launcher on capable desktop screens, movable/resizable application windows, and a bottom taskbar. Reuse the app manager in the monitor and expanded 2D views.
-- Use Windows 98-inspired solid gray chrome, navy active title bars, beveled borders, square controls, period-style SVG icons, and visible text labels. OS chrome uses a system font; content retains Figtree and Space Grotesk. Avoid gradients, blur, soft shadows, card-heavy presentation, and automatic decorative motion.
+- Use Windows 98-inspired solid gray chrome, navy active title bars, beveled borders, square controls, period-style SVG icons, and visible text labels. The same chrome covers buttons, dialogs, toasts, panels, and scrollbars; reading dialogs keep a paper client area. App content uses etched dividers, groove group boxes for project entries, sunken picture frames, and raised tags; text stays 16px. No rounded corners except avatars and status dots. Avoid gradients, blur, soft shadows, card-heavy presentation, and automatic decorative motion.
 - Keep controls at least 44px tall with a visible 3px focus outline. Preserve native text entry, touch, drag, zoom, and pointer behavior. Respect reduced motion.
 - Keep desktop window dragging on the title bar, resizing on the corner handle, and keyboard Move/Resize controls in the title bar. Keep one window per app, maintain window bounds after viewport changes, and save app scroll and gallery selection while changing views.
 - On mobile or coarse-pointer devices, show one full-screen app at a time with the app launcher available from the top bar. Do not load the scene module or its Three.js dependencies.

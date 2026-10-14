@@ -70,6 +70,7 @@ function DeskObjects({ onOpenDesktop, onOpenApp, colors }) {
         <mesh position={[0, 0, 0.008]}><boxGeometry args={[0.45, 0.014, 0.01]} /><meshStandardMaterial color={colors.frame} /></mesh>
       </group>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.52, 0]} receiveShadow><planeGeometry args={[80, 80]} /><meshStandardMaterial color={colors.world} roughness={0.92} /></mesh>
+      <mesh position={[0, 6, -5]}><planeGeometry args={[80, 30]} /><meshStandardMaterial color={colors.wall} roughness={0.95} /></mesh>
     </group>
   );
 }
@@ -124,6 +125,7 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
   const ContextBridge = useContextBridge(DesktopWorkspaceContext, ModalContext, RetroOSContext);
   const palette = useMemo(() => ({
     world: readColor('--desk-world', '#292a27'),
+    wall: readColor('--desk-wall', '#3b3c35'),
     board: readColor('--desk-board', '#544136'),
     frame: readColor('--desk-frame', '#393936'),
     objectDark: readColor('--desk-object-dark', '#1a1b1a'),
