@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const DESKTOP_APPS = [
+  { id: 'my-computer', label: 'My Computer', glyph: 'C', description: 'Browse the portfolio as drives' },
   { id: 'about', label: 'About', glyph: 'K', description: 'Profile and background' },
   { id: 'projects', label: 'Projects', glyph: '▧', description: 'Six projects and case studies' },
   { id: 'experience', label: 'Experience', glyph: '◷', description: 'Career and education' },
@@ -28,7 +29,7 @@ const ROUTE_TO_APP = {
 function appFromLocation(pathname, hash) {
   if (ROUTE_TO_APP[pathname]) return ROUTE_TO_APP[pathname];
   const anchor = (hash || '').replace(/^#/, '').split('&')[0];
-  if (['kurtordle', 'bughunter', 'terminal', 'credits'].includes(anchor)) return anchor;
+  if (['my-computer', 'kurtordle', 'bughunter', 'terminal', 'credits'].includes(anchor)) return anchor;
   if (anchor === 'timeline') return 'experience';
   if (anchor === 'skills') return 'stack';
   if (anchor === 'awards') return 'recognition';

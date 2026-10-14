@@ -1,6 +1,8 @@
 import React from 'react';
 
 const paths = {
+  'my-computer': 'M3 3h18v12H3z M6 6h12v6H6z M9 15v3 M15 15v3 M5 18h14v3H5z',
+  drive: 'M2 8h20v8H2z M5 12h6 M17 12h1',
   about: 'M4 3h16v18H4z M8 7h8 M8 11h8 M8 15h5',
   projects: 'M2 7h8l2 3h10v10H2z M2 7V4h8l2 3',
   experience: 'M3 7h18v14H3z M8 7V3h8v4 M3 12h18 M10 12v3h4v-3',

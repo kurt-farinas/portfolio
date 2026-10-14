@@ -4,7 +4,7 @@
 
 The portfolio is an interactive workstation. The first desktop view shows an original 3D desk; its monitor contains the same React desktop that opens in full-screen mode. Narrow screens, coarse pointers, and WebGL failures use that desktop in 2D. Portfolio claims and project evidence remain factual and recruiter-facing.
 
-The workstation uses simple reusable Three.js geometry with a low-power, demand-rendered React Three Fiber scene. Its screen content is a real React interface projected with Drei HTML. Camera changes happen only after user input and become instant when reduced motion is enabled. No automatic scene motion runs. A dynamic import keeps Three.js and the scene bundle out of the mobile path.
+The workstation uses simple reusable Three.js geometry with a low-power, demand-rendered React Three Fiber scene. Its screen content is a real React interface projected with Drei HTML. Camera changes, including the scroll-to-lock onto the monitor, glide smoothly and happen after user input, plus one pull-back from the monitor to the whole desk when the boot splash ends; all become instant when reduced motion is enabled. No other automatic scene motion runs. Desk meshes cast hard-edged shadow-map shadows. Clickable desk objects show a pale-yellow Win98 tooltip and an accent tint on hover; a desk clock and the taskbar show local time, redrawn once per minute. A dynamic import keeps Three.js and the scene bundle out of the mobile path.
 
 ## Visual system
 

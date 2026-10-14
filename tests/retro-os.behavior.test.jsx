@@ -76,6 +76,11 @@ describe('retro portfolio apps', () => {
     await click('Enter desktop');expect(host.querySelector('.retro-boot').open).toBe(false);expect(sessionStorage.getItem('kurt-os-boot-seen')).toBe('true');
     expect(host.querySelector('.desktop-window.is-active').dataset.appId).toBe('projects');
   });
+  it('plays the four-note boot chime when the boot finishes with sound on',async()=>{
+    await mount('/');const oscillators=vi.spyOn(window.AudioContext.prototype,'createOscillator');
+    await click('Sound: Off');const afterToggle=oscillators.mock.calls.length;
+    await click('Enter desktop');expect(oscillators.mock.calls.length-afterToggle).toBe(4);
+  });
   it('shows an immediately usable first-visit boot and keeps audio off',async()=>{
     await mount('/');expect(host.querySelector('.retro-boot').open).toBe(true);
     await click('Enter desktop');expect(host.querySelector('.retro-boot').open).toBe(false);expect(audioConstructor).not.toHaveBeenCalled();

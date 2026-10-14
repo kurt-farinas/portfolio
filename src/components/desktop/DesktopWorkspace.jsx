@@ -4,6 +4,12 @@ import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { useModal } from '../../context/ModalContext';
 import { useRetroOS } from '../../context/RetroOSContext';
 import RetroIcon from './RetroIcon';
+import useMinuteClock, { formatClock } from './useMinuteClock';
+
+function TaskbarClock() {
+  const now = useMinuteClock();
+  return <time className="desktop-taskbar-clock" dateTime={now.toISOString()}>{formatClock(now)}</time>;
+}
 
 function DesktopIcon({ app, openApplication, compact = false }) {
   return (
@@ -186,7 +192,7 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
           <div className="desktop-taskbar-apps">{windows.map(item => {
             const app = appById.get(item.appId);
             return app ? <button type="button" key={item.appId} className={'desktop-taskbar-item' + (activeAppId === item.appId && !item.minimized ? ' is-active' : '')} onClick={() => { retro.powerOn(); item.minimized || activeAppId !== item.appId ? restoreApplication(item.appId) : setActiveAppId(item.appId); }} aria-pressed={activeAppId === item.appId && !item.minimized} aria-label={(item.minimized ? 'Restore ' : 'Focus ') + app.label} title={app.label}><RetroIcon id={app.id} /><span className="desktop-taskbar-label">{app.label}</span></button> : null;
-          })}</div><span className="desktop-taskbar-clock">Portfolio / 2026</span>
+          })}</div><TaskbarClock />
         </nav>
         {retro.crtEffects && <svg className="retro-scanlines" width="100%" height="100%" aria-hidden="true"><defs><pattern id={'scanlines-' + presentation} width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0H4" stroke="var(--retro-scanline)" strokeWidth="1" /></pattern></defs><rect width="100%" height="100%" fill={'url(#scanlines-' + presentation + ')'} /></svg>}
       </div>

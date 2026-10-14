@@ -13,6 +13,17 @@ import { useModal } from '../../context/ModalContext';
 import { portfolioProfile } from '../../data/portfolioFacts';
 import PortfolioContactForm from './PortfolioContactForm';
 import { BugHunterApp, CreditsApp, KurtOrdleApp, TerminalApp } from './RetroExtraApps';
+import RetroIcon from './RetroIcon';
+
+const DRIVES = [['C', 'projects'], ['D', 'experience'], ['E', 'stack'], ['F', 'recognition'], ['G', 'resume'], ['H', 'contact']];
+
+// Win98-style drive list; each drive opens an existing app with its existing label and description.
+function MyComputerApp() {
+  const { apps, openApplication } = useDesktopWorkspace();
+  return <section className="retro-extra-app retro-my-computer"><p className="desktop-eyebrow">MY COMPUTER</p><h1>Kurt-OS drives</h1>
+    <ul className="retro-drive-list">{DRIVES.map(([letter, id]) => { const app = apps.find(item => item.id === id); return app && <li key={id}><button type="button" onClick={() => openApplication(id)}><RetroIcon id="drive" /><span><strong>{app.label} ({letter}:)</strong><span>{app.description}</span></span></button></li>; })}</ul>
+  </section>;
+}
 
 function AboutApp() {
   return <div className="desktop-about-app"><Hero /><AboutSection /><dl className="retro-profile-facts"><dt>Education</dt><dd>{portfolioProfile.education}<br />{portfolioProfile.educationDates}</dd><dt>Current role</dt><dd>{portfolioProfile.employer}<br />Since {portfolioProfile.roleStarted}</dd></dl></div>;
@@ -73,6 +84,7 @@ function AppBody({ appId }) {
     case 'bughunter': return <BugHunterApp />;
     case 'terminal': return <TerminalApp />;
     case 'credits': return <CreditsApp />;
+    case 'my-computer': return <MyComputerApp />;
     default: return <AboutApp />;
   }
 }

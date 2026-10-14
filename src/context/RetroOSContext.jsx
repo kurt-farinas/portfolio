@@ -7,7 +7,7 @@ import { portfolioProfile } from '../data/portfolioFacts';
 export const RetroOSContext = createContext(null);
 const noop = () => {};
 const EMPTY_DRAFT = { name: '', email: '', message: '' };
-const defaults = { theme: 'dark', bootOpen: false, soundEnabled: false, soundError: '', crtEffects: false, warmLamp: false, wallpaper: 0, monitorOn: true, pressedKey: '', contactDraft: EMPTY_DRAFT, contactStatus: { kind: '', message: '' }, sending: false, toggleSound: noop, toggleCrt: noop, toggleLamp: noop, cycleWallpaper: noop, togglePower: noop, powerOn: noop, replayBoot: noop, finishBoot: noop, playSound: noop, pressKey: noop, setContactDraft: noop, sendContact: noop };
+const defaults = { theme: 'dark', bootOpen: false, introKey: 0, soundEnabled: false, soundError: '', crtEffects: false, warmLamp: false, wallpaper: 0, monitorOn: true, pressedKey: '', contactDraft: EMPTY_DRAFT, contactStatus: { kind: '', message: '' }, sending: false, toggleSound: noop, toggleCrt: noop, toggleLamp: noop, cycleWallpaper: noop, togglePower: noop, powerOn: noop, replayBoot: noop, finishBoot: noop, playSound: noop, pressKey: noop, setContactDraft: noop, sendContact: noop };
 
 export function RetroOSProvider({ children }) {
   const location = useLocation();
@@ -17,6 +17,7 @@ export function RetroOSProvider({ children }) {
     try { return location.pathname === '/' && !location.hash && sessionStorage.getItem('kurt-os-boot-seen') !== 'true'; }
     catch { return location.pathname === '/' && !location.hash; }
   });
+  const [introKey, setIntroKey] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [soundError, setSoundError] = useState('');
   const [crtEffects, setCrtEffects] = useState(false);
@@ -46,12 +47,13 @@ export function RetroOSProvider({ children }) {
     if (!audioEnabled.current || !audio.current) return;
     const context = audio.current;
     context.resume?.().catch?.(() => {});
-    const notes = kind === 'startup' ? [262, 330, 392] : [kind === 'key' ? 420 : 880];
+    // 'boot' is an original C-E-G-C arpeggio whose last note rings out; 'startup' is the short toggle blip.
+    const notes = kind === 'boot' ? [262, 330, 392, 523] : kind === 'startup' ? [262, 330, 392] : [kind === 'key' ? 420 : 880];
     notes.forEach((frequency, index) => {
       const oscillator = context.createOscillator();
       const gain = context.createGain();
-      const start = context.currentTime + index * 0.08;
-      const duration = kind === 'startup' ? 0.1 : 0.025;
+      const start = context.currentTime + index * (kind === 'boot' ? 0.11 : 0.08);
+      const duration = kind === 'boot' ? (index === notes.length - 1 ? 0.6 : 0.14) : kind === 'startup' ? 0.1 : 0.025;
       oscillator.type = 'sine'; oscillator.frequency.value = frequency;
       gain.gain.setValueAtTime(0.025, start);
       gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
@@ -77,9 +79,9 @@ export function RetroOSProvider({ children }) {
   }, [playSound, reducedMotion]);
   const finishBoot = useCallback(mode => {
     try { sessionStorage.setItem('kurt-os-boot-seen', 'true'); } catch { /* Session storage is optional. */ }
-    setBootOpen(false); setMonitorOn(true); playSound('startup');
+    setBootOpen(false); setMonitorOn(true); playSound('boot');
     if (mode === '2d') expandDesktop();
-    else if (canUse3D) showDesk();
+    else if (canUse3D) { showDesk(); setIntroKey(key => key + 1); }
     else focusMonitor();
   }, [canUse3D, expandDesktop, showDesk, focusMonitor, playSound]);
 
@@ -103,6 +105,6 @@ export function RetroOSProvider({ children }) {
     } finally { postGate.current = false; setSending(false); }
   }, [contactDraft]);
 
-  return <RetroOSContext.Provider value={{ theme, bootOpen, soundEnabled, soundError, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => !value), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower: () => setMonitorOn(value => !value), powerOn: () => setMonitorOn(true), setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
+  return <RetroOSContext.Provider value={{ theme, bootOpen, introKey, soundEnabled, soundError, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => !value), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower: () => setMonitorOn(value => !value), powerOn: () => setMonitorOn(true), setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
 }
 export function useRetroOS() { return useContext(RetroOSContext) || defaults; }

@@ -175,7 +175,7 @@ try {
       await expect(page.locator('[data-testid="desktop-workspace"]')).toHaveCount(1);
       await expect(page.getByRole('button', { name: 'Open application list' })).toBeVisible();
       await page.getByRole('button', { name: 'Open application list' }).click();
-      await expect(page.locator('#desktop-launcher .desktop-icon')).toHaveCount(13);
+      await expect(page.locator('#desktop-launcher .desktop-icon')).toHaveCount(14);
 
       const apps = [
         ['about', 'About'],

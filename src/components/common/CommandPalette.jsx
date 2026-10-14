@@ -34,7 +34,7 @@ export default function CommandPalette() {
   const dialogRef = useDialogFocus(commandPaletteOpen);
 
   const commands = useMemo(() => [
-    ...(desktopWorkspace?.apps.filter(app => ['kurtordle', 'bughunter', 'terminal', 'credits'].includes(app.id)).map(app => ({ id: 'app-' + app.id, group: 'Portfolio extras', title: 'Open ' + app.label, subtitle: app.description, icon: 'code', handler: () => openApplication(app.id) })) || []),
+    ...(desktopWorkspace?.apps.filter(app => ['my-computer', 'kurtordle', 'bughunter', 'terminal', 'credits'].includes(app.id)).map(app => ({ id: 'app-' + app.id, group: 'Portfolio extras', title: 'Open ' + app.label, subtitle: app.description, icon: 'code', handler: () => openApplication(app.id) })) || []),
     {
       id: 'jump-experience',
       group: 'Navigation',

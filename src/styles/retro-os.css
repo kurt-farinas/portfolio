@@ -39,13 +39,14 @@
 .desktop-window-glyph .retro-icon { width: 19px; height: 19px; }
 .desktop-window-controls { gap: 3px; }
 .desktop-window-controls button { border-radius: 0; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); color: var(--retro-ink); }
-.retro-window-address { position: absolute; inset: 54px 0 auto; height: 36px; margin: 0; padding: 7px 12px; border-bottom: 1px solid var(--retro-edge); color: var(--retro-ink); background: var(--retro-chrome); font: 400 13px/20px Tahoma, sans-serif; }
+.retro-window-address { position: absolute; inset: 54px 0 auto; max-width: none; height: 36px; margin: 0; padding: 7px 12px; border-bottom: 1px solid var(--retro-edge); color: var(--retro-ink); background: var(--retro-chrome); font: 400 13px/20px Tahoma, sans-serif; }
 .desktop-app-scroll { top: 90px; font-family: var(--font-body); }
 .desktop-window-resize-handle { place-items: end; padding: 4px; border-radius: 0; background: transparent; color: var(--ink); }
 .desktop-window-resize-handle:is(:hover, :active, :focus-visible) { background: var(--retro-chrome); color: var(--retro-ink); }
 .desktop-taskbar-home { flex: 0 0 auto; }
 .desktop-taskbar-apps { flex: 1; min-width: 0; overflow-x: auto; }
-.desktop-taskbar-item { gap: 6px; }
+.desktop-taskbar-item { flex: 0 1 160px; gap: 6px; overflow: hidden; }
+.desktop-taskbar-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .desktop-taskbar-item .retro-icon { width: 20px; height: 20px; }
 .desktop-taskbar-clock { color: var(--retro-ink); font-family: Tahoma, sans-serif; }
 .retro-start-menu { position: absolute; z-index: 30; left: 8px; bottom: 70px; width: 320px; max-width: calc(100% - 16px); max-height: calc(100% - 140px); display: flex; overflow: hidden; }
@@ -58,6 +59,7 @@
 .retro-start-items .desktop-icon:hover :is(.desktop-icon-label,.desktop-icon-glyph) { color: var(--retro-title-ink); }
 .retro-start-items > button[aria-pressed='true'] { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
 .retro-scanlines { position: absolute; z-index: 35; inset: 0; pointer-events: none; opacity: 0.12; }
+.desk-tooltip { display: block; padding: 3px 7px; border: 1px solid var(--retro-tooltip-ink); background: var(--retro-tooltip-bg); color: var(--retro-tooltip-ink); font: 400 13px/1.3 var(--font-body); white-space: nowrap; }
 .desk-projection-overview, .desk-projection-overview * { pointer-events: none !important; }
 .retro-monitor-off { position: absolute; z-index: 60; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; background: var(--retro-boot-bg); color: var(--retro-boot-ink); }
 .retro-monitor-off p { text-align: center; }
@@ -119,6 +121,10 @@
 .retro-terminal-app label { flex: 1; min-width: 140px; }
 .retro-terminal-app input { font-family: monospace; }
 .retro-credits ul { padding-left: 24px; }
+.retro-drive-list { display: grid; gap: 8px; padding: 0; list-style: none; }
+.retro-drive-list button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 8px 12px; text-align: left; }
+.retro-drive-list button > span { display: grid; gap: 2px; }
+.retro-drive-list button > span > span { font-weight: 400; }
 .retro-credits li { margin: 0 0 12px; }
 .retro-mail-form { display: grid; gap: 16px; width: 100%; }
 .retro-mail-form > p { margin: 0; }
@@ -130,18 +136,25 @@
 .retro-mail-status.is-error { border-left: 4px solid var(--word-present); }
 .retro-mail-status.is-success { border-left: 4px solid var(--word-correct); }
 
-.retro-boot { position: fixed; inset: 0; width: 100vw; height: 100svh; max-width: none; max-height: none; margin: 0; padding: clamp(20px,4vw,48px); border: 0; background: var(--retro-boot-bg); color: var(--retro-boot-ink); font: 400 16px/1.6 monospace; overflow: auto; }
-.retro-boot[open] { display: flex; flex-direction: column; gap: 12px; }
-.retro-boot::backdrop { background: var(--retro-boot-bg); }
-.retro-boot-header { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-bottom: 1px solid var(--retro-boot-accent); padding-bottom: 16px; font-size: 13px; }
-.retro-boot-kicker { margin: 24px 0 0; color: var(--retro-boot-accent); font-size: 13px; }
-.retro-boot h1 { font: 600 clamp(28px,5vw,48px)/1.2 monospace; margin: 0; }
+.retro-boot { position: fixed; inset: 0; width: 100vw; height: 100svh; max-width: none; max-height: none; margin: 0; padding: clamp(20px,4vw,48px); border: 0; background: var(--retro-title); color: var(--retro-title-ink); font: 400 16px/1.5 var(--font-body); overflow: auto; }
+.retro-boot[open] { display: flex; flex-direction: column; gap: 24px; }
+.retro-boot::backdrop { background: var(--retro-title); }
+.retro-boot-splash { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; }
+.retro-boot-mark { display: grid; place-items: center; width: 72px; height: 72px; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); color: var(--retro-ink); font: 700 28px/1 var(--font-body); }
+.retro-boot h1 { margin: 0; font: 700 clamp(34px,6vw,56px)/1.1 var(--font-body); }
+.retro-boot h1 span { display: block; margin-top: 6px; font-size: 0.4em; font-weight: 400; letter-spacing: 0.08em; }
 .retro-boot p { max-width: 65ch; margin: 0; }
-.retro-boot-log { padding: 20px 0; color: var(--retro-boot-accent); }
-.retro-boot-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
-.retro-boot button, .retro-boot a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 10px 16px; border: 2px solid var(--retro-boot-accent); background: var(--retro-boot-bg); color: var(--retro-boot-ink); font: 600 14px/1.4 monospace; text-decoration: none; border-radius: 0; }
-.retro-boot-sound { align-self: flex-start; }
-.retro-boot-footer { margin-top: auto !important; padding-top: 28px; font-size: 13px; }
+.retro-boot-progress { width: min(320px, 100%); height: 22px; margin-top: 12px; padding: 2px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--retro-chrome); }
+.retro-boot-progress span { display: block; width: 100%; height: 100%; background: var(--retro-title); }
+.retro-boot-note { font-size: 13px; }
+.retro-boot-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.retro-boot button, .retro-boot a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 8px 12px; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); border-radius: 0; background: var(--retro-chrome); color: var(--retro-ink); font: 600 13px/1.3 var(--font-body); text-decoration: none; }
+.retro-boot :is(button, a):active { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+.retro-boot-footer { align-self: flex-end; font-size: 13px; }
+@media (prefers-reduced-motion: no-preference) {
+  .retro-boot[open] .retro-boot-progress span { animation: retro-boot-fill var(--boot-ms, 3000ms) steps(12, end) both; }
+}
+@keyframes retro-boot-fill { from { width: 0; } to { width: 100%; } }
 
 @media (max-width:1099px), (pointer:coarse) {
   .desktop-launcher, .desktop-launcher.is-open { display: none; }
