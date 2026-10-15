@@ -62,8 +62,8 @@
   position: absolute;
   left: clamp(20px, 5vw, 72px);
   top: clamp(20px, 4vh, 48px);
-  width: min(400px, calc(100vw - 40px));
-  padding: 18px 20px;
+  width: min(360px, calc(100vw - 40px));
+  padding: 14px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius-shell);
   background: var(--surface);
@@ -77,18 +77,12 @@
   text-transform: uppercase;
 }
 .desk-welcome-copy h1 {
-  max-width: 14ch;
   color: var(--ink);
-  font: 600 clamp(26px, 2.4vw, 34px)/1.06 var(--font-display);
+  font: 600 22px/1.15 var(--font-display);
   letter-spacing: -.035em;
 }
-.desk-welcome-copy > p:not(.desktop-eyebrow) {
-  margin-top: 12px;
-  color: var(--muted);
-  font-size: 16px;
-}
-/* On narrower 3D screens the monitor sits higher in the frame; drop the description so the card stays on the wall. */
-@media (max-width: 1279px) { .desk-welcome-copy { top: 14px; width: min(360px, calc(100vw - 40px)); } .desk-welcome-copy > p:not(.desktop-eyebrow) { display: none; } }
+/* On narrower 3D screens the monitor sits higher in the frame; lift the card so it stays on the wall. */
+@media (max-width: 1279px) { .desk-welcome-copy { top: 14px; } }
 .desk-welcome-actions,
 .desk-welcome-toolbar,
 .desktop-action-row,
@@ -98,7 +92,9 @@
   flex-wrap: wrap;
   gap: 8px;
 }
-.desk-welcome-actions { margin-top: 18px; }
+.desk-welcome-actions { margin-top: 12px; }
+.desk-welcome-resume { margin: 4px 0 -8px -10px; }
+.desk-icon-button { width: 44px; padding: 0; }
 .desk-welcome-toolbar {
   position: absolute;
   top: 16px;
@@ -554,10 +550,7 @@
   .desktop-taskbar { height: 62px; padding: 6px 4px; }
   .desktop-taskbar-item { min-width: 44px; padding-inline: 7px; }
   .desktop-taskbar-home { padding-inline: 7px; }
-  .desk-welcome-copy { padding: 18px; }
-  .desk-welcome-copy h1 { font-size: 30px; }
   .desk-welcome-toolbar { top: 8px; right: 8px; }
-  .desk-welcome-toolbar .desktop-toolbar-button { padding-inline: 8px; }
   .desk-scene-hint { right: 12px; bottom: 8px; max-width: 38%; font-size: 11px; }
   .desktop-action-row > * { width: 100%; }
   .desktop-resume-preview { min-height: 300px; height: 58vh; }

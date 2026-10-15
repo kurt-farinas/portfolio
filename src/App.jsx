@@ -107,17 +107,21 @@ function ImmersivePortfolio() {
               <div className="desk-welcome-copy">
                 <p className="desktop-eyebrow">KURT FARIÑAS · PORTFOLIO</p>
                 <h1>A closer look at how I work.</h1>
-                <p>Open the desktop to explore my projects, experience, and workbench.</p>
                 <div className="desk-welcome-actions">
                   <button type="button" className="studio-action" onClick={focusMonitor}>Open desktop</button>
-                  <button type="button" className="studio-action studio-action-outline" onClick={() => openApplication('projects')}>View projects</button>
-                  <button type="button" className="desk-text-action" onClick={() => openApplication('resume')}>Résumé app <span aria-hidden="true">↗</span></button>
-                  <a className="desk-text-action" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Open PDF directly <span aria-hidden="true">↗</span></a>
+                  <button type="button" className="studio-action studio-action-outline" onClick={() => openApplication('projects')}>Projects</button>
                 </div>
+                <a className="desk-text-action desk-welcome-resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé PDF <span aria-hidden="true">↗</span></a>
               </div>
               <div className="desk-welcome-toolbar">
-                <button type="button" className="desktop-toolbar-button" onClick={toggleCommandPalette} aria-label="Search portfolio apps">Search <kbd>Ctrl K</kbd></button>
-                <button type="button" className="desktop-toolbar-button" onClick={toggleTheme} aria-label={'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' theme'}>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</button>
+                <button type="button" className="desktop-toolbar-button desk-icon-button" onClick={toggleCommandPalette} aria-label="Search portfolio apps (Ctrl K)" title="Search  Ctrl K">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                </button>
+                <button type="button" className="desktop-toolbar-button desk-icon-button" onClick={toggleTheme} aria-label={'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' theme'} title={theme === 'dark' ? 'Light mode' : 'Dark mode'}>
+                  {theme === 'dark'
+                    ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+                    : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>}
+                </button>
               </div>
               <p className="desk-scene-hint">Drag to look around · Click an object to open its app</p>
             </main>

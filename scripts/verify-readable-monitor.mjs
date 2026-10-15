@@ -8,7 +8,7 @@ try {
   const context=await browser.newContext({viewport:{width,height}, reducedMotion:'reduce'});
   await context.addInitScript(theme=>{localStorage.setItem('portfolio-theme',theme);sessionStorage.setItem('kurt-os-boot-seen','true');},theme);
   const page=await context.newPage();await page.goto(base);
-  await page.getByRole('main').getByRole('button',{name:'View projects',exact:true}).click();
+  await page.getByRole('main').getByRole('button',{name:'Projects',exact:true}).click();
   const win=page.locator('[data-app-id="projects"]');
   await expect(win).toHaveClass(/is-maximized/);
   await expect(page.locator('.desktop-workspace-screen')).toBeVisible();
