@@ -239,6 +239,10 @@ function deskPose(aspect) {
   const position = DESK_CAMERA_POSITION.map((value, index) => DESK_CAMERA_TARGET[index] + (value - DESK_CAMERA_TARGET[index]) * k);
   return [...position, ...DESK_CAMERA_TARGET];
 }
+// The boot intro begins 25% farther back along the desk view's own line of sight.
+function introPose([px, py, pz, tx, ty, tz]) {
+  return [tx + (px - tx) * 1.25, ty + (py - ty) * 1.25, tz + (pz - tz) * 1.25, tx, ty, tz];
+}
 const SMOOTH_TIME = 0.30;
 // Scrolling closer than this locks onto the monitor; scrolling the monitor view out past UNLOCK returns to the desk.
 const LOCK_DISTANCE = 5.5;
@@ -272,7 +276,8 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
     // A request to read an app takes precedence over an unfinished boot introduction.
     if (view !== 'desk') claimIntro(introKey);
     if (ready && view === 'desk' && claimIntro(introKey)) {
-      controls.current?.setLookAt(...SCREEN_POSE, false);
+      // Start a little wider than the desk view and settle in. Starting on the monitor read as a flash of the zoomed-in screen.
+      if (!reducedMotion) controls.current?.setLookAt(...introPose(DESK_POSE), false);
       move(DESK_POSE, !reducedMotion, 0.45);
       return;
     }
