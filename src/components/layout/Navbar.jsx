@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import useDialogFocus from '../common/useDialogFocus';
 import { useModal } from '../../context/ModalContext';
 import { ContourCluster } from '../common/TopographicAccents';
 import { scrollBehavior } from '../../utils/motion';
+import { DesktopWorkspaceContext } from '../../context/DesktopWorkspaceContext';
 
 const CONTACT_EMAIL = 'kurtfarinas2022@gmail.com';
 
@@ -132,20 +133,24 @@ export default function Navbar() {
     <button className="studio-action" type="button" onClick={() => { setMobileMenuOpen(false); openContactModal(); }}>Contact me</button>
   </div>;
 
+  // In Classic mode the top of the sidebar is the way back to the OS; the name stays in the profile intro.
+  const exitClassic = useContext(DesktopWorkspaceContext)?.exitClassic;
+  const backToOs = exitClassic && <button type="button" className="studio-logo studio-back-to-os" onClick={() => { setMobileMenuOpen(false); exitClassic(); }}>← Back to Kurt-OS</button>;
+
   return <>
     <nav className="studio-navbar" aria-label="Main navigation">
       <div className="studio-nav-inner">
-        <Link to="/" className="studio-logo" aria-label="Kurt Fariñas Home" onClick={() => {
+        {backToOs || <Link to="/" className="studio-logo" aria-label="Kurt Fariñas Home" onClick={() => {
           setMobileMenuOpen(false);
           if (location.pathname === '/') window.scrollTo({ top: 0, behavior: scrollBehavior() });
-        }}>Kurt Fariñas</Link>
+        }}>Kurt Fariñas</Link>}
         <div className="studio-mobile-actions">{themeControl}<button type="button" className="studio-icon-button studio-menu-toggle" onClick={() => setMobileMenuOpen(true)} aria-label="Toggle navigation" aria-expanded={mobileMenuOpen} aria-controls="mobileMenu"><NavIcon path="M4 6h16M4 12h16M4 18h16" /></button></div>
       </div>
       <div className="studio-nav-desktop">{actions}<p className="studio-nav-label">Portfolio</p>{navigation}<div className="studio-sidebar-utilities"><ContourFidget />{themeRow}</div></div>
     </nav>
     {mobileMenuOpen && <dialog ref={nativeDialogRef} className="studio-drawer-backdrop" aria-label="Portfolio navigation" onCancel={event => { event.preventDefault(); setMobileMenuOpen(false); }} onClick={event => { if (event.target === event.currentTarget) setMobileMenuOpen(false); }}>
       <div ref={drawerRef} className="studio-mobile-menu" id="mobileMenu">
-        <div className="studio-drawer-header"><strong>Kurt Fariñas</strong><button className="studio-icon-button" type="button" aria-label="Close navigation" onClick={() => setMobileMenuOpen(false)}><NavIcon path="m6 6 12 12M6 18 18 6" /></button></div>
+        <div className="studio-drawer-header">{backToOs || <strong>Kurt Fariñas</strong>}<button className="studio-icon-button" type="button" aria-label="Close navigation" onClick={() => setMobileMenuOpen(false)}><NavIcon path="m6 6 12 12M6 18 18 6" /></button></div>
         {actions}<nav aria-label="Mobile navigation">{navigation}</nav><div className="studio-sidebar-utilities">{themeRow}</div>
       </div>
     </dialog>}

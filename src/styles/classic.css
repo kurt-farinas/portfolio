@@ -41,8 +41,8 @@
 :root[data-mode='classic'] kbd { border-radius: 4px; }
 :root[data-mode='classic'] .studio-nav-links [aria-current]::before { border-radius: 3px; }
 
-.classic-back-to-os {
-  position: fixed; z-index: 40; right: 16px; bottom: 16px; min-height: 44px; padding: 10px 16px;
-  border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface); color: var(--ink); font: 600 var(--type-small)/1.2 var(--font-body);
+.studio-back-to-os {
+  min-height: 44px; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-control);
+  background: var(--surface); color: var(--ink); font: 600 var(--type-small)/1.2 var(--font-body); cursor: pointer;
 }
-.classic-back-to-os:hover { background: var(--surface-soft); border-color: var(--muted); }
+.studio-back-to-os:hover { background: var(--surface-soft); border-color: var(--muted); }

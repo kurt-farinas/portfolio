@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { useDesktopWorkspace } from '../context/DesktopWorkspaceContext';
 import CustomCursor from '../components/common/CustomCursor';
 import ScrollReveals from '../components/common/ScrollReveals';
 import Navbar from '../components/layout/Navbar';
@@ -20,7 +19,6 @@ import { scrollBehavior } from '../utils/motion';
 // The editorial portfolio, kept as a "Classic Portfolio" view next to Kurt-OS.
 export default function ClassicPortfolio() {
   const location = useLocation();
-  const { exitClassic } = useDesktopWorkspace();
   useEffect(() => {
     if (!location.hash) return;
     document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: scrollBehavior() });
@@ -39,7 +37,6 @@ export default function ClassicPortfolio() {
         <Route path="*" element={<HomePage />} />
       </Routes>
       <Footer />
-      <button type="button" className="classic-back-to-os" onClick={exitClassic}>← Back to Kurt-OS</button>
       <ProjectModal />
       <ResumeModal />
       <ScreenshotLightbox />
