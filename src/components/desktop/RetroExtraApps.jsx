@@ -132,9 +132,9 @@ export function BugHunterApp() {
     } else setGame(current => ({ ...current, player: moveBugPlayer(current.player, key) }));
   };
   return <section className="retro-extra-app"><p className="desktop-eyebrow">PORTFOLIO MINI-GAME · FICTIONAL ARENA</p><h1>BugHunter 3D</h1>
-    <p>Focus the arena. Use WASD or arrow keys to move and turn; Space fires. Touch controls are below.</p>
+    <p className="retro-game-instructions"><strong>Move:</strong> <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> · <strong>Shoot:</strong> <kbd>Space</kbd></p>
     <p role="status">Bugs squashed: {game.score}. {ready ? 'Ready.' : 'Paused.'}</p>
-    <div className="retro-bug-arena"><canvas ref={canvasRef} width={size.width} height={size.height} tabIndex={0} role="img" aria-label="BugHunter game arena. Arrow keys or WASD to move; Space to fire." data-game-active={ready} onPointerDown={event => { event.currentTarget.focus(); input('fire'); }} onKeyDown={event => {
+    <div className="retro-bug-arena"><canvas ref={canvasRef} width={size.width} height={size.height} tabIndex={0} role="img" aria-label="BugHunter game arena. W A S D to move; Space to shoot." data-game-active={ready} onPointerDown={event => { event.currentTarget.focus(); input('fire'); }} onKeyDown={event => {
       if (!ready) return;
       if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','w','a','s','d','W','A','S','D',' '].includes(event.key)) { event.preventDefault(); input(event.key === ' ' ? 'fire' : event.key.length === 1 ? event.key.toLowerCase() : event.key); }
     }} /></div>
