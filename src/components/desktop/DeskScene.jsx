@@ -307,43 +307,6 @@ function AmbientDriver({ active }) {
   return null;
 }
 
-// Shadow casters only sway slightly, so redrawing the shadow map every 4th frame (or after an idle gap) looks the same and skips most shadow passes.
-function ShadowRefresh({ refreshKey }) {
-  const gl = useThree(state => state.gl);
-  const invalidate = useThree(state => state.invalidate);
-  const frame = useRef(0);
-  useLayoutEffect(() => {
-    gl.shadowMap.autoUpdate = false;
-    gl.shadowMap.needsUpdate = true;
-    invalidate();
-    return () => { gl.shadowMap.autoUpdate = true; };
-  }, [gl, invalidate, refreshKey]);
-  useFrame((_, delta) => {
-    frame.current += 1;
-    if (frame.current % 4 === 0 || delta > 0.1) gl.shadowMap.needsUpdate = true;
-  });
-  return null;
-}
-
-// While ambient motion requests ~30 fps, a median frame gap above 50 ms means the device cannot keep up; report it once.
-function SlowDeviceProbe({ active, onSlow }) {
-  const gaps = useRef([]);
-  const last = useRef(0);
-  const done = useRef(false);
-  useEffect(() => { last.current = 0; }, [active]);
-  useFrame(() => {
-    if (!active || done.current) return;
-    const now = performance.now();
-    if (last.current) gaps.current.push(now - last.current);
-    last.current = now;
-    if (gaps.current.length < 20) return;
-    const sorted = [...gaps.current].sort((a, b) => a - b);
-    gaps.current = [];
-    if (sorted[10] > 50) { done.current = true; onSlow(); }
-  });
-  return null;
-}
-
 function usePageVisible() {
   const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden');
   useEffect(() => {
@@ -407,8 +370,6 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
   const light = ROOM_LIGHT[phase];
   const pageVisible = usePageVisible();
   const animate = ready && view === 'desk' && !motionReduced && pageVisible;
-  const [maxDpr, setMaxDpr] = useState(1.25);
-  const lowerResolution = useCallback(() => setMaxDpr(1), []);
 
   useEffect(() => () => contextLostCleanup.current?.(), []);
 
@@ -417,7 +378,7 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
     <Canvas
       className="desk-canvas"
       data-room-phase={phase}
-      dpr={[1, maxDpr]}
+      dpr={[1, 1.25]}
       frameloop="demand"
       events={desktopSceneEvents}
       shadows
@@ -427,14 +388,13 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
         const onContextLost = event => { event.preventDefault(); onSceneFailure(); };
         gl.domElement.addEventListener('webglcontextlost', onContextLost);
         contextLostCleanup.current = () => gl.domElement.removeEventListener('webglcontextlost', onContextLost);
+        gl.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
       }}
     >
       <ContextBridge>
         <color attach="background" args={[palette.world]} />
         <ambientLight intensity={light.ambient} color={phase === 'night' ? palette.nightWarm : palette.daylight} />
         <AmbientDriver active={animate} />
-        <ShadowRefresh refreshKey={String(ready) + phase + theme} />
-        {maxDpr > 1 && <SlowDeviceProbe active={animate} onSlow={lowerResolution} />}
         <directionalLight position={[-4, 7, 3]} intensity={light.key} color={palette.keyLight} castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-camera-near={1} shadow-camera-far={25} />
         <directionalLight position={[0, 3, 6]} intensity={light.fill} color={palette.daylight} />
         <directionalLight position={[6, 5, -4]} intensity={light.window} color={phase === 'dusk' ? palette.accent : palette.skyDay} />

@@ -8,8 +8,7 @@ const BOOT_MS = 3000;
 
 export default function BootScreen() {
   const { bootOpen, finishBoot, toggleSound, soundEnabled, soundError } = useRetroOS();
-  const { canUse3D, softwareGL, openApplication } = useDesktopWorkspace();
-  const start3D = canUse3D && !softwareGL;
+  const { canUse3D, openApplication } = useDesktopWorkspace();
   const dialogRef = useDialogFocus(bootOpen);
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -19,9 +18,9 @@ export default function BootScreen() {
   // The splash continues on its own; any button or Escape finishes it sooner and clears this timer.
   useEffect(() => {
     if (!bootOpen) return undefined;
-    const timer = setTimeout(() => finishBoot(start3D ? '3d' : '2d'), BOOT_MS);
+    const timer = setTimeout(() => finishBoot(canUse3D ? '3d' : '2d'), BOOT_MS);
     return () => clearTimeout(timer);
-  }, [bootOpen, start3D, finishBoot]);
+  }, [bootOpen, canUse3D, finishBoot]);
   return <dialog ref={dialogRef} className="retro-boot" aria-labelledby="retro-boot-title" style={{ '--boot-ms': BOOT_MS + 'ms' }} onCancel={event => { event.preventDefault(); finishBoot('2d'); }}>
     <div className="retro-boot-splash">
       <span className="retro-boot-mark" aria-hidden="true">KF</span>
@@ -31,9 +30,8 @@ export default function BootScreen() {
       <p className="retro-boot-note">A playful portfolio interface, not a real operating system.</p>
     </div>
     <div className="retro-boot-actions">
-      <button type="button" onClick={() => finishBoot(start3D ? '3d' : '2d')}>{start3D ? 'Enter 3D workstation' : 'Enter desktop'}</button>
-      {start3D && <button type="button" onClick={() => finishBoot('2d')}>Enter 2D desktop</button>}
-      {softwareGL && <button type="button" onClick={() => finishBoot('3d')}>Try 3D desk</button>}
+      <button type="button" onClick={() => finishBoot(canUse3D ? '3d' : '2d')}>{canUse3D ? 'Enter 3D workstation' : 'Enter desktop'}</button>
+      {canUse3D && <button type="button" onClick={() => finishBoot('2d')}>Enter 2D desktop</button>}
       <button type="button" onClick={() => { finishBoot('2d'); openApplication('projects'); }}>Go straight to Projects</button>
       <a href={portfolioProfile.resume} target="_blank" rel="noopener noreferrer">Open résumé PDF</a>
       <button className="retro-boot-sound" type="button" onClick={toggleSound} aria-pressed={soundEnabled}>Sound: {soundEnabled ? 'On' : 'Off'}</button>

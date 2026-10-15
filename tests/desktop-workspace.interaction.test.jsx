@@ -218,19 +218,6 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelector('[data-testid="failure"]').textContent).toBe('true');
   });
 
-  it('starts software-rendered visitors in 2D and lets them try the 3D desk', async () => {
-    HTMLCanvasElement.prototype.getContext.mockReturnValue({
-      getExtension: name => name === 'WEBGL_debug_renderer_info' ? { UNMASKED_RENDERER_WEBGL: 1 } : { loseContext: vi.fn() },
-      getParameter: () => 'ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero)))'
-    });
-    await renderWorkspace('/', 1440);
-    expect(host.querySelector('[data-testid="view"]').textContent).toBe('workspace');
-    expect(host.querySelector('[data-testid="fallback"]').textContent).toBe('false');
-    const tryButton = [...host.querySelectorAll('button')].find(button => button.textContent === 'Try 3D desk');
-    await act(async () => tryButton.click());
-    expect(host.querySelector('[data-testid="view"]').textContent).toBe('desk');
-  });
-
   it('closes the image lightbox before the project dialog when Escape is pressed', async () => {
     await act(async () => root.render(<MemoryRouter><ThemeProvider><ModalProvider><OverlayHarness /></ModalProvider></ThemeProvider></MemoryRouter>));
     await act(async () => host.querySelector('button').click());

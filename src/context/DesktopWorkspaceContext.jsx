@@ -86,19 +86,6 @@ function canUseWebGL() {
   }
 }
 
-// Software WebGL (no hardware acceleration) renders the room at a few frames a second, so those visitors start in 2D and can opt in.
-function usesSoftwareRenderer() {
-  try {
-    const gl = document.createElement('canvas').getContext('webgl');
-    const info = gl?.getExtension('WEBGL_debug_renderer_info');
-    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
-    gl?.getExtension('WEBGL_lose_context')?.loseContext();
-    return /swiftshader|llvmpipe|softpipe|basic render|software/i.test(renderer);
-  } catch {
-    return false;
-  }
-}
-
 export const DesktopWorkspaceContext = createContext(null);
 
 const initialWindow = {
@@ -113,9 +100,8 @@ export function DesktopWorkspaceProvider({ children }) {
   const navigate = useNavigate();
   const [windows, setWindows] = useState([initialWindow]);
   const [activeAppId, setActiveAppId] = useState('about');
+  const [view, setView] = useState(() => canUseWebGL() && location.pathname === '/' && !location.hash ? 'desk' : 'workspace');
   const [canUse3D, setCanUse3D] = useState(() => canUseWebGL());
-  const [softwareGL] = useState(() => canUse3D && usesSoftwareRenderer());
-  const [view, setView] = useState(() => canUse3D && !softwareGL && location.pathname === '/' && !location.hash ? 'desk' : 'workspace');
   const [sceneFailed, setSceneFailed] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const scrollPositions = useRef(new Map());
@@ -220,7 +206,7 @@ export function DesktopWorkspaceProvider({ children }) {
       const available = largeQuery.matches && canUseWebGL();
       setCanUse3D(available);
       if (!available) setView('workspace');
-      else if (!wasAvailable && !softwareGL && window.location.pathname === '/' && !window.location.hash) setView('desk');
+      else if (!wasAvailable && window.location.pathname === '/' && !window.location.hash) setView('desk');
       wasAvailable = available;
     };
     const updateMotion = () => setReducedMotion(motionQuery.matches);
@@ -266,11 +252,11 @@ export function DesktopWorkspaceProvider({ children }) {
   const setAppState = useCallback((key, state) => appStates.current.set(key, state), []);
 
   const value = useMemo(() => ({
-    apps: DESKTOP_APPS, windows, activeAppId, view, canUse3D, softwareGL, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic,
+    apps: DESKTOP_APPS, windows, activeAppId, view, canUse3D, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic,
     openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication,
     updateWindowRect, setActiveAppId, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene,
     saveScrollPosition, getScrollPosition, getAppState, setAppState
-  }), [windows, activeAppId, view, canUse3D, softwareGL, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic, openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication, updateWindowRect, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene, saveScrollPosition, getScrollPosition, getAppState, setAppState]);
+  }), [windows, activeAppId, view, canUse3D, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic, openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication, updateWindowRect, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene, saveScrollPosition, getScrollPosition, getAppState, setAppState]);
 
   return <DesktopWorkspaceContext.Provider value={value}>{children}</DesktopWorkspaceContext.Provider>;
 }
