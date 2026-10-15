@@ -32,6 +32,7 @@
   zoom: 2;
 }
 .desk-projection-frame {
+  position: relative;
   width: 1280px;
   height: 760px;
   overflow: hidden;

@@ -18,11 +18,13 @@ export const ACHIEVEMENTS = [
 const ACHIEVEMENT_KEY = 'kurt-os-achievements';
 const SOUND_KEY = 'kurt-os-sound';
 const CRT_KEY = 'kurt-os-crt';
+// Length of the 3D monitor power-on shown during the room intro (matches the CSS animation in retro-os.css).
+export const SCREEN_BOOT_MS = 2800;
 
 export const RetroOSContext = createContext(null);
 const noop = () => {};
 const EMPTY_DRAFT = { name: '', email: '', message: '' };
-const defaults = { theme: 'dark', bootOpen: false, introKey: 0, claimIntro: () => false, achievements: [], unlock: noop, noteDeskOpen: noop, soundEnabled: false, soundError: '', crtEffects: false, warmLamp: false, wallpaper: 0, monitorOn: true, pressedKey: '', contactDraft: EMPTY_DRAFT, contactStatus: { kind: '', message: '' }, sending: false, toggleSound: noop, toggleCrt: noop, toggleLamp: noop, cycleWallpaper: noop, togglePower: noop, powerOn: noop, replayBoot: noop, finishBoot: noop, playSound: noop, pressKey: noop, setContactDraft: noop, sendContact: noop };
+const defaults = { theme: 'dark', bootOpen: false, introKey: 0, claimIntro: () => false, achievements: [], unlock: noop, noteDeskOpen: noop, soundEnabled: false, soundError: '', screenBooting: false, endScreenBoot: noop, crtEffects: false, warmLamp: false, wallpaper: 0, monitorOn: true, pressedKey: '', contactDraft: EMPTY_DRAFT, contactStatus: { kind: '', message: '' }, sending: false, toggleSound: noop, toggleCrt: noop, toggleLamp: noop, cycleWallpaper: noop, togglePower: noop, powerOn: noop, replayBoot: noop, finishBoot: noop, playSound: noop, pressKey: noop, setContactDraft: noop, sendContact: noop };
 
 export function RetroOSProvider({ children }) {
   const location = useLocation();
@@ -55,6 +57,8 @@ export function RetroOSProvider({ children }) {
   const kit = useRef(null);
   const audioEnabled = useRef(soundEnabled);
   const keyTimer = useRef(null);
+  const [screenBooting, setScreenBooting] = useState(false);
+  const bootTimers = useRef([]);
   const postGate = useRef(false);
   const requestController = useRef(null);
 
@@ -63,6 +67,7 @@ export function RetroOSProvider({ children }) {
   }, [location.pathname, location.hash]);
   useEffect(() => () => {
     clearTimeout(keyTimer.current);
+    bootTimers.current.forEach(clearTimeout);
     requestController.current?.abort();
     audio.current?.close?.().catch?.(() => {});
   }, []);
@@ -129,11 +134,18 @@ export function RetroOSProvider({ children }) {
   const togglePower = useCallback(() => { if (!monitorOn) playSound('power'); setMonitorOn(value => !value); }, [monitorOn, playSound]);
   const finishBoot = useCallback(mode => {
     try { sessionStorage.setItem('kurt-os-boot-seen', 'true'); } catch { /* Session storage is optional. */ }
-    setBootOpen(false); setMonitorOn(true); playSound('boot');
+    setBootOpen(false); setMonitorOn(true);
+    bootTimers.current.forEach(clearTimeout);
+    if (mode !== '2d' && canUse3D && !reducedMotion) {
+      // The room's monitor powers on during the intro: CRT thunk first, then the POST beep as the BIOS text appears.
+      setScreenBooting(true); playSound('power');
+      bootTimers.current = [setTimeout(() => playSound('boot'), 800), setTimeout(() => setScreenBooting(false), SCREEN_BOOT_MS)];
+    } else playSound('boot');
     if (mode === '2d') expandDesktop();
     else if (canUse3D) { showDesk(); setIntroKey(key => key + 1); }
     else focusMonitor();
-  }, [canUse3D, expandDesktop, showDesk, focusMonitor, playSound]);
+  }, [canUse3D, reducedMotion, expandDesktop, showDesk, focusMonitor, playSound]);
+  const endScreenBoot = useCallback(() => { bootTimers.current.forEach(clearTimeout); bootTimers.current = []; setScreenBooting(false); }, []);
 
   const sendContact = useCallback(async form => {
     if (postGate.current || !form.reportValidity()) return;
@@ -155,6 +167,6 @@ export function RetroOSProvider({ children }) {
     } finally { postGate.current = false; setSending(false); }
   }, [contactDraft]);
 
-  return <RetroOSContext.Provider value={{ theme, bootOpen, introKey, claimIntro, achievements, unlock, noteDeskOpen, soundEnabled, soundError, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => { try { localStorage.setItem(CRT_KEY, value ? 'off' : 'on'); } catch { /* Storage is optional. */ } return !value; }), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower, powerOn: () => { setMonitorOn(true); playSound('power'); }, setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
+  return <RetroOSContext.Provider value={{ theme, bootOpen, introKey, claimIntro, achievements, unlock, noteDeskOpen, soundEnabled, soundError, screenBooting, endScreenBoot, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => { try { localStorage.setItem(CRT_KEY, value ? 'off' : 'on'); } catch { /* Storage is optional. */ } return !value; }), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower, powerOn: () => { setMonitorOn(true); playSound('power'); }, setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
 }
 export function useRetroOS() { return useContext(RetroOSContext) || defaults; }

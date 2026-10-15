@@ -210,3 +210,17 @@
   .desk-loading-bar i.is-next { animation: retro-block-blink 700ms steps(1, end) infinite; }
 }
 @keyframes retro-block-blink { 50% { background: var(--retro-title); } }
+
+/* 3D monitor power-on during the room intro (2.8 s, matches SCREEN_BOOT_MS). Only rendered when motion is allowed. */
+.desk-screen-boot { position: absolute; z-index: 60; inset: 0; display: grid; place-items: center; background: var(--retro-crt-off); animation: desk-screen-reveal 2.8s steps(1, end) both; }
+.desk-screen-boot-beam { position: absolute; left: 0; right: 0; top: 50%; height: 4px; margin-top: -2px; background: var(--retro-crt-beam); box-shadow: 0 0 24px var(--retro-crt-beam); animation: desk-screen-beam 2.8s ease-out both; }
+.desk-screen-boot-text { position: absolute; inset: 56px 64px auto; margin: 0; color: var(--retro-boot-ink); font: 400 34px/1.45 var(--font-pixel); white-space: pre-wrap; }
+.desk-screen-boot-text span { animation: desk-screen-line 2.8s steps(1, end) forwards; animation-delay: calc(0.75s + var(--line) * 0.22s); visibility: hidden; }
+@keyframes desk-screen-beam {
+  0%, 8% { transform: scaleX(0); opacity: 1; }
+  16% { transform: scaleX(1); height: 4px; margin-top: -2px; opacity: 1; }
+  26% { top: 0; height: 100%; margin-top: 0; opacity: .85; }
+  34%, 100% { top: 0; height: 100%; margin-top: 0; opacity: 0; }
+}
+@keyframes desk-screen-line { 0% { visibility: visible; } 100% { visibility: visible; } }
+@keyframes desk-screen-reveal { 0%, 92% { opacity: 1; } 96% { opacity: .5; } 100% { opacity: 0; } }

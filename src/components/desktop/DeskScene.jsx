@@ -3,6 +3,7 @@ import { Canvas, events, useFrame, useThree } from '@react-three/fiber';
 import { CameraControls, Html, PerspectiveCamera, RoundedBox, useContextBridge, useCursor, useTexture } from '@react-three/drei';
 import { Box3, CanvasTexture, Color, SRGBColorSpace, Spherical, Vector3 } from 'three';
 import DesktopWorkspace from './DesktopWorkspace';
+import { POST_LINES } from './BootScreen';
 import { createDeskCameraMotion } from './deskCameraMotion';
 import { bindDesktopCameraInput, computeDesktopScenePointer } from './desktopCameraInput';
 import { DesktopWorkspaceContext } from '../../context/DesktopWorkspaceContext';
@@ -197,6 +198,7 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
 }
 
 function ScreenProjection({ view, theme, onOpenResume, toggleTheme, onBackToDesk, ContextBridge, portal }) {
+  const { screenBooting } = useRetroOS();
   const invalidate = useThree(state => state.invalidate);
   const controls = useThree(state => state.controls);
   const inputCleanup = useRef(null);
@@ -222,6 +224,8 @@ function ScreenProjection({ view, theme, onOpenResume, toggleTheme, onBackToDesk
         <ContextBridge>
           <DesktopWorkspace presentation={view === 'desk' ? 'preview' : 'screen'} theme={theme} toggleTheme={toggleTheme} onBackToDesk={onBackToDesk} />
         </ContextBridge>
+        {/* CRT power-on during the room intro: a bright line opens to full height, BIOS text prints, then the desktop shows through. */}
+        {screenBooting && <div className="desk-screen-boot" aria-hidden="true"><div className="desk-screen-boot-beam" /><pre className="desk-screen-boot-text">{POST_LINES.map((line, index) => <span key={line} style={{ '--line': index }}>{line + '\n'}</span>)}</pre></div>}
       </div>
     </Html>
   );
@@ -239,9 +243,12 @@ function deskPose(aspect) {
   const position = DESK_CAMERA_POSITION.map((value, index) => DESK_CAMERA_TARGET[index] + (value - DESK_CAMERA_TARGET[index]) * k);
   return [...position, ...DESK_CAMERA_TARGET];
 }
-// The boot intro begins 25% farther back along the desk view's own line of sight.
+// The boot intro starts high on the left of the room and orbits round to the desk view (inside the controls' distance and angle limits).
+const INTRO_SMOOTH_TIME = 1.0;
 function introPose([px, py, pz, tx, ty, tz]) {
-  return [tx + (px - tx) * 1.25, ty + (py - ty) * 1.25, tz + (pz - tz) * 1.25, tx, ty, tz];
+  const radius = Math.min(17.5, Math.hypot(px - tx, py - ty, pz - tz) * 1.08);
+  const azimuth = -0.6, polar = 1.12;
+  return [tx + radius * Math.sin(polar) * Math.sin(azimuth), ty + radius * Math.cos(polar), tz + radius * Math.sin(polar) * Math.cos(azimuth), tx, ty, tz];
 }
 const SMOOTH_TIME = 0.30;
 // Scrolling closer than this locks onto the monitor; scrolling the monitor view out past UNLOCK returns to the desk.
@@ -249,7 +256,7 @@ const LOCK_DISTANCE = 5.5;
 const UNLOCK_DISTANCE = 6;
 
 function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, onSceneFailure }) {
-  const { introKey, claimIntro } = useRetroOS();
+  const { introKey, claimIntro, endScreenBoot } = useRetroOS();
   const controls = useRef(null);
   const camera = useThree(state => state.camera);
   const canvas = useThree(state => state.gl.domElement);
@@ -260,6 +267,7 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
   const SCREEN_POSE = useMemo(() => screenPose(aspect), [aspect]);
   const previous = useRef(null);
   const handoff = useRef(null);
+  const introActive = useRef(false);
   const motion = useMemo(() => createDeskCameraMotion(() => controls.current, clock, setFrameloop), [clock, setFrameloop]);
   useEffect(() => () => motion.dispose(), [motion]);
   useEffect(() => {
@@ -276,14 +284,31 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
     // A request to read an app takes precedence over an unfinished boot introduction.
     if (view !== 'desk') claimIntro(introKey);
     if (ready && view === 'desk' && claimIntro(introKey)) {
-      // Start a little wider than the desk view and settle in. Starting on the monitor read as a flash of the zoomed-in screen.
-      if (!reducedMotion) controls.current?.setLookAt(...introPose(DESK_POSE), false);
-      move(DESK_POSE, !reducedMotion, 0.45);
+      // A slow orbit into the desk while the monitor powers on. Starting on the monitor read as a flash of the zoomed-in screen.
+      if (reducedMotion) { move(DESK_POSE, false); return; }
+      controls.current?.setLookAt(...introPose(DESK_POSE), false);
+      introActive.current = true;
+      void motion.move(DESK_POSE, true, INTRO_SMOOTH_TIME).then(() => {
+        introActive.current = false;
+        if (handoff.current === transition) handoff.current = null;
+      }).catch(onSceneFailure);
       return;
     }
     const animate = ready && !reducedMotion && prior?.camera === camera && prior.view !== view && prior.aspect === aspect;
     move(pose, animate);
   }, [camera, view, ready, aspect, reducedMotion, introKey, claimIntro, motion, DESK_POSE, SCREEN_POSE, onSceneFailure]);
+  // Any click, scroll or key press during the intro skips straight to the finished desk view.
+  useEffect(() => {
+    const skip = () => {
+      if (!introActive.current) return;
+      introActive.current = false;
+      endScreenBoot();
+      void motion.move(DESK_POSE, false).catch(onSceneFailure);
+    };
+    const options = { capture: true, passive: true };
+    ['pointerdown', 'wheel', 'keydown'].forEach(type => window.addEventListener(type, skip, options));
+    return () => ['pointerdown', 'wheel', 'keydown'].forEach(type => window.removeEventListener(type, skip, options));
+  }, [motion, DESK_POSE, endScreenBoot, onSceneFailure]);
   const spherical = useMemo(() => new Spherical(), []);
   useEffect(() => {
     const host = canvas.parentElement;

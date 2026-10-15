@@ -6,7 +6,7 @@ import { portfolioProfile } from '../../data/portfolioFacts';
 
 const BOOT_MS = 3000;
 // A playful BIOS power-on self test shown above the splash; the lines appear one by one (all at once with reduced motion).
-const POST_LINES = ['KURT-BIOS 4.20  Retro Portfolio Systems', 'CPU: React 19 @ Vite ........... OK', 'Memory test: 640K ............... OK', 'Detecting drives: Projects, Résumé, After Hours', 'Booting Kurt-OS...'];
+export const POST_LINES = ['KURT-BIOS 4.20  Retro Portfolio Systems', 'CPU: React 19 @ Vite ........... OK', 'Memory test: 640K ............... OK', 'Detecting drives: Projects, Résumé, After Hours', 'Booting Kurt-OS...'];
 const PROGRESS_BLOCKS = 14;
 
 export default function BootScreen() {
