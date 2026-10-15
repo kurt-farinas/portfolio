@@ -51,7 +51,8 @@ try {
       await expect.poll(() => scroll.evaluate(el => el.scrollTop)).toBe(saved);
       await page.setViewportSize({ width, height: width === 375 ? 812 : 900 });
       if (width === 1440) {
-        await page.getByRole('button', { name: 'Maximize About window', exact: true }).click();
+        // About opens maximized on the desktop; Restore below checks the windowed layout.
+        await expect(page.locator('[data-app-id="about"]')).toHaveClass(/is-maximized/);
         await scroll.press('Control+Home');
         await page.screenshot({ path: `${output}/${width}-${theme}-maximized.png` });
         await page.getByRole('button', { name: 'Restore About window', exact: true }).click();

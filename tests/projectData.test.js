@@ -72,10 +72,11 @@ describe('React Project Data Integrity', () => {
     expect(titles).toContain('Gym Management System | Thesis Defense (Defended)');
   });
 
-  it('verifies 4 curated honors and certifications from resume', () => {
-    expect(awardsData).toHaveLength(4);
+  it('verifies 5 curated honors, certifications, and leadership roles', () => {
+    expect(awardsData).toHaveLength(5);
     const titles = awardsData.map(a => a.title);
     expect(titles).toContain('ThinkQuest Champion | Tagisan ng Talino');
+    expect(titles).toContain('Alumni President | Batch 2026 Graduates');
     expect(titles).toContain('DepEd SIPP OJT Certificate of Completion');
     expect(titles).toContain('Introduction to Cybersecurity');
     expect(titles).toContain('Java Fundamentals | Terms 1 & 2');

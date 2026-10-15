@@ -8,8 +8,8 @@
 .studio-project-detail-header { max-width: var(--content-measure); }
 .studio-project-detail-kicker { color: var(--muted); font-size: var(--type-small); }
 .studio-project-detail-header h2 { margin-top: 8px; font: 600 var(--type-section)/1.3 var(--font-display); }
-.studio-project-detail-role { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; font-size: var(--type-small); font-weight: 600; }
-.studio-project-detail-role span + span { color: var(--muted); }
+.studio-project-detail-role { margin-top: 12px; font-size: var(--type-small); font-weight: 600; }
+.studio-project-detail-role span { color: var(--muted); }
 .studio-project-detail-summary { margin-top: 16px; line-height: 1.6; }
 .studio-project-detail-preview { margin-top: var(--space-6); overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-frame); background: var(--surface); }
 .studio-project-detail-preview img { display: block; width: 100%; height: auto; max-height: 360px; object-fit: contain; object-position: top center; }

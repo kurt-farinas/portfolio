@@ -292,6 +292,8 @@
 .desktop-app-scroll .desktop-about-app .studio-container { width: 100%; max-width: none; padding: 0; }
 .desktop-about-app .studio-profile-row { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 12px; }
 .desktop-about-app .studio-profile-resume { margin: 0; }
+/* The mobile workstation's Résumé shortcut sits directly above, so the profile button would repeat it. */
+.desktop-about-app:has(.mobile-workbench) .studio-profile-resume { display: none; }
 .desktop-about-app .studio-hero-name { max-width: none; margin-top: 16px; font-size: var(--type-mobile-heading); line-height: 1.25; }
 .desktop-about-app .studio-hero-actions { margin-top: 16px; }
 .desktop-about-app .studio-about-copy { display: grid; gap: 16px; }

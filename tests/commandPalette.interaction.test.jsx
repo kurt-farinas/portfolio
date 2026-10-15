@@ -80,6 +80,13 @@ describe('Command palette keyboard navigation', () => {
     expect(document.querySelector('[aria-selected="true"]').id).toBe('command-jump-about');
   });
 
+  it('matches commands regardless of accents', async () => {
+    for (const value of ['Résumé', 'resume']) {
+      await search(value);
+      expect(document.querySelector('#command-action-resume')).not.toBeNull();
+    }
+  });
+
   it('closes on Escape and restores the opening button focus', async () => {
     const opener = host.querySelector('button');
     await press('Escape');

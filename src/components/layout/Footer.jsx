@@ -19,7 +19,7 @@ export default function Footer() {
       <div className="studio-container studio-footer-inner">
         <div className="footer-left-info">
           <Link to="/" className="studio-logo" aria-label="Kurt Fariñas Home" onClick={scrollToTop}>
-            <span className="studio-monogram" aria-hidden="true">kf.</span><span>kurt.dev</span>
+            <span className="studio-monogram" aria-hidden="true">kf.</span><span>Kurt Fariñas</span>
           </Link>
           <span className="footer-copy-text">© 2026 Kurt Fariñas</span>
         </div>

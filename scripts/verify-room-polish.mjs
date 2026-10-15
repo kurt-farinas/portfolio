@@ -118,7 +118,7 @@ try {
   expect(frame.x + frame.width).toBeLessThanOrEqual(1440); expect(frame.y + frame.height).toBeLessThanOrEqual(900);
   await page.getByRole('button', { name: 'Open Projects', exact: true }).click();
   // Tab backwards into About: keyboard focus must raise the previously covered app.
-  await page.getByRole('button', { name: 'Move Projects window', exact: true }).focus();
+  await page.getByRole('button', { name: 'Minimize Projects window', exact: true }).focus();
   await page.keyboard.press('Shift+Tab'); await page.keyboard.press('Shift+Tab');
   await expect(page.locator('.desktop-window.is-active')).toHaveAttribute('data-app-id', 'about');
   await page.getByRole('button', { name: 'Open Projects', exact: true }).click();

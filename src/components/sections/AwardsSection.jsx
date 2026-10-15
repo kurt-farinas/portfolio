@@ -1,5 +1,5 @@
 /* ========================================
-   AWARDS SECTION  |  Honors & Recognition (4 Curated Entries)
+   AWARDS SECTION  |  Honors & Recognition (5 Curated Entries)
    ======================================== */
 
 import React from 'react';

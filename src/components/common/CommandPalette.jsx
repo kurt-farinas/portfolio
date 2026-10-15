@@ -38,7 +38,7 @@ export default function CommandPalette() {
     {
       id: 'jump-experience',
       group: 'Navigation',
-      title: 'Jump to Experience & Timeline',
+      title: 'Open Experience',
       subtitle: 'DepEd OJT 342 hrs, thesis defense, graduation',
       icon: 'briefcase',
       shortcut: 'E',
@@ -47,7 +47,7 @@ export default function CommandPalette() {
     {
       id: 'jump-about',
       group: 'Navigation',
-      title: 'Jump to About Me',
+      title: 'Open About',
       subtitle: 'Full-stack background, OJT experience, and career goals',
       icon: 'user',
       shortcut: 'B',
@@ -65,7 +65,7 @@ export default function CommandPalette() {
     {
       id: 'jump-skills',
       group: 'Navigation',
-      title: 'Jump to Tech Stack',
+      title: 'Open Stack',
       subtitle: 'React, Inertia.js, Laravel, PHP, MySQL, Tailwind',
       icon: 'code',
       shortcut: 'S',
@@ -74,8 +74,8 @@ export default function CommandPalette() {
     {
       id: 'jump-awards',
       group: 'Navigation',
-      title: 'Jump to Honors & Recognition',
-      subtitle: 'ThinkQuest Champion, Oracle Java, Alumni President',
+      title: 'Open Recognition',
+      subtitle: 'ThinkQuest Champion, Alumni President, Cisco, Oracle Java',
       icon: 'award',
       shortcut: 'W',
       handler: () => openApplication('recognition')
@@ -83,8 +83,8 @@ export default function CommandPalette() {
     {
       id: 'action-email-direct',
       group: 'Actions & Utilities',
-      title: 'Email Kurt Directly',
-      subtitle: 'Open a message to kurtfarinas2022@gmail.com',
+      title: 'Open Contact',
+      subtitle: 'Send a message to kurtfarinas2022@gmail.com',
       icon: 'mail',
       shortcut: 'C',
       handler: () => openApplication('contact')
@@ -92,7 +92,7 @@ export default function CommandPalette() {
     {
       id: 'open-hris',
       group: 'Project Deep Dive',
-      title: 'Open: CS Form No. 6 Digitalization System',
+      title: 'Open CS Form No. 6 Digitalization System',
       subtitle: 'DepEd OJT · 98/100 Rating · 3-Tier RBAC & PDF Engine',
       icon: 'layers',
       shortcut: '1',
@@ -101,7 +101,7 @@ export default function CommandPalette() {
     {
       id: 'open-gym',
       group: 'Project Deep Dive',
-      title: "Open: Boiyet's Gym Management System",
+      title: "Open Boiyet's Gym Management System",
       subtitle: 'Solo Rebuild · Laravel 12 & Inertia.js · 119 Pest Tests',
       icon: 'layers',
       shortcut: '2',
@@ -110,8 +110,8 @@ export default function CommandPalette() {
     {
       id: 'action-resume',
       group: 'Actions & Utilities',
-      title: 'View Resume (PDF Preview)',
-      subtitle: 'Open integrated CV modal viewer',
+      title: 'Open Résumé',
+      subtitle: 'Preview, open, or download the PDF',
       icon: 'file-text',
       shortcut: 'R',
       handler: () => openResumeModal()
@@ -156,16 +156,18 @@ export default function CommandPalette() {
 
   const filteredCommands = useMemo(() => {
     if (!query.trim()) return commands;
-    const q = query.toLowerCase().trim();
+    // Fold accents so "resume" matches "Résumé" and vice versa.
+    const fold = text => text.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+    const q = fold(query.trim());
     const matches = commands.filter(c =>
-      c.title.toLowerCase().includes(q) ||
-      c.subtitle.toLowerCase().includes(q) ||
-      c.group.toLowerCase().includes(q)
+      fold(c.title).includes(q) ||
+      fold(c.subtitle).includes(q) ||
+      fold(c.group).includes(q)
     );
 
     return matches.sort((a, b) => {
-      const aTitle = a.title.toLowerCase().includes(q);
-      const bTitle = b.title.toLowerCase().includes(q);
+      const aTitle = fold(a.title).includes(q);
+      const bTitle = fold(b.title).includes(q);
       if (aTitle && !bTitle) return -1;
       if (!aTitle && bTitle) return 1;
       return 0;
@@ -293,7 +295,7 @@ export default function CommandPalette() {
             <span><kbd className="keycap">↵</kbd> select</span>
             <span><kbd className="keycap">esc</kbd> close</span>
           </div>
-          <span className="cmd-footer-brand">kurt.dev · React SPA</span>
+          <span className="cmd-footer-brand">Kurt-OS · React SPA</span>
         </div>
       </div>
     </div>

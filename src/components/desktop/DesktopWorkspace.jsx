@@ -119,8 +119,9 @@ function DesktopWindow({ appId, app, item, active, areaRef }) {
           {app.label}
         </h2>
         <div className="desktop-window-controls" aria-label={app.label + ' window controls'}>
-          <button type="button" onPointerDown={event => event.stopPropagation()} onClick={() => setOperation('move')} aria-label={'Move ' + app.label + ' window'} title="Move with arrow keys">↕</button>
-          <button type="button" onPointerDown={event => event.stopPropagation()} onClick={() => setOperation('resize')} aria-label={'Resize ' + app.label + ' window'} title="Resize with arrow keys">⤢</button>
+          {/* Move and Resize only apply to a restored window. */}
+          {!item.maximized && <button type="button" onPointerDown={event => event.stopPropagation()} onClick={() => setOperation('move')} aria-label={'Move ' + app.label + ' window'} title="Move with arrow keys">↕</button>}
+          {!item.maximized && <button type="button" onPointerDown={event => event.stopPropagation()} onClick={() => setOperation('resize')} aria-label={'Resize ' + app.label + ' window'} title="Resize with arrow keys">⤢</button>}
           <button type="button" onPointerDown={event => event.stopPropagation()} onClick={() => minimizeApplication(appId)} aria-label={'Minimize ' + app.label + ' window'} title="Minimize">−</button>
           <button type="button" onPointerDown={event => event.stopPropagation()} onClick={() => maximizeApplication(appId)} aria-label={(item.maximized ? 'Restore ' : 'Maximize ') + app.label + ' window'} title={item.maximized ? 'Restore' : 'Maximize'}>{item.maximized ? '❐' : '□'}</button>
           <button type="button" onPointerDown={event => event.stopPropagation()} onClick={() => closeApplication(appId)} aria-label={'Close ' + app.label + ' window'} title="Close">×</button>

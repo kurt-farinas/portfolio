@@ -22,6 +22,8 @@ export const DESKTOP_APPS = [
 
 // Games always open full-window so they are playable straight away.
 const GAME_APPS = ['kurtordle', 'bugsweeper', 'bughunter'];
+// Reading apps open maximized on the desktop so windows don't pile up; Restore keeps each rectangle.
+const READING_APPS = ['about', 'projects', 'experience', 'stack', 'recognition', 'resume', 'contact'];
 
 // Matches the <title> in index.html.
 const BASE_TITLE = 'Kurt Fariñas | Junior Full-Stack Developer';
@@ -101,7 +103,7 @@ const initialWindow = {
 export function DesktopWorkspaceProvider({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [windows, setWindows] = useState([initialWindow]);
+  const [windows, setWindows] = useState(() => [{ ...initialWindow, maximized: canUseWebGL() }]);
   const [activeAppId, setActiveAppId] = useState('about');
   const [view, setView] = useState(() => canUseWebGL() && location.pathname === '/' && !location.hash ? 'desk' : 'workspace');
   const [canUse3D, setCanUse3D] = useState(() => canUseWebGL());
@@ -140,10 +142,12 @@ export function DesktopWorkspaceProvider({ children }) {
   const openApplication = useCallback((appId, options = {}) => {
     if (appId === 'classic') { enterClassic(); return; }
     if (!DESKTOP_APPS.some(app => app.id === appId)) return;
-    const maximize = GAME_APPS.includes(appId) || (appId === 'projects' && canUse3D && !sceneFailed && (view === 'desk' || view === 'screen'));
+    const maximize = GAME_APPS.includes(appId) || (READING_APPS.includes(appId) && canUse3D);
+    // Reopening from the room or monitor maximizes again; the expanded desktop keeps a restored window as the visitor left it.
+    const remaximize = maximize && (GAME_APPS.includes(appId) || view === 'desk' || view === 'screen');
     setWindows(current => {
       const found = current.find(windowItem => windowItem.appId === appId);
-      if (found) return current.map(windowItem => windowItem.appId === appId ? { ...windowItem, minimized: false, maximized: maximize || windowItem.maximized } : windowItem);
+      if (found) return current.map(windowItem => windowItem.appId === appId ? { ...windowItem, minimized: false, maximized: remaximize || windowItem.maximized } : windowItem);
       const offset = current.length % 6;
       const windowItem = {
         appId,
@@ -159,7 +163,7 @@ export function DesktopWorkspaceProvider({ children }) {
       const nextPath = options.path || pathForApp(appId, location.pathname);
       if (nextPath !== location.pathname + location.hash) navigate(nextPath, { state: { desktopApp: appId } });
     }
-  }, [location.pathname, location.hash, navigate, enterClassic, canUse3D, sceneFailed, view]);
+  }, [location.pathname, location.hash, navigate, enterClassic, canUse3D, view]);
 
   useEffect(() => {
     if (classicMode) return;
@@ -173,7 +177,7 @@ export function DesktopWorkspaceProvider({ children }) {
     setWindows(current => {
       const found = current.find(item => item.appId === nextApp);
       if (found) return current.map(item => item.appId === nextApp ? { ...item, minimized: false } : item);
-      return [...current, { appId: nextApp, rect: { x: 10, y: 6, width: 78, height: 86 }, minimized: false, maximized: GAME_APPS.includes(nextApp) }];
+      return [...current, { appId: nextApp, rect: { x: 10, y: 6, width: 78, height: 86 }, minimized: false, maximized: GAME_APPS.includes(nextApp) || (READING_APPS.includes(nextApp) && canUse3D) }];
     });
     setActiveAppId(nextApp);
     if (view === 'desk') setView('screen');

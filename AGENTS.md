@@ -48,7 +48,7 @@ The Classic Portfolio app and direct /classic links switch to classic mode for t
 - Keep Job Hunt Ledger labelled local-only with no hosted demo. Do not invent stats, dates, releases, or responsibilities.
 - Keep the supplied portrait, project screenshots, After Hours photos, gear photos and image fallbacks, original image dimensions, and public asset paths.
 - PortfolioImage serves WebP copies from public/optimized/ and falls back to the original path. After adding or replacing images, run node scripts/prepare-portfolio-assets.mjs, then npm run images.
-- Use the Win98 system font stack (Tahoma) for all text, keeping sizes and weights from variables.css. No rounded corners except avatars and status dots. Keep typography and color variables in src/styles/variables.css. Preserve the saved dark/light choice and dark default.
+- Use the Win98 system font stack (Tahoma) for content text and headings; window chrome, title bars, buttons, the taskbar, and the boot screen keep the pixel font (--font-pixel), keeping sizes and weights from variables.css. No rounded corners except avatars and status dots. Keep typography and color variables in src/styles/variables.css. Preserve the saved dark/light choice and dark default.
 - Keep /resume.pdf unchanged in the hero/app/modal links. The Résumé app must retain open-in-tab, download, and accessible preview actions.
 
 ## Accessibility and behavior
@@ -93,7 +93,7 @@ Desktop-origin events also skip scene raycasting so buttons cannot activate the 
 
 ## Readable monitor Projects
 
-Opening Projects from the room or projected desktop maximizes its existing window, including reopening a minimized window. Restore remains available and retains the previous window rectangle. Other apps and fullscreen/mobile opening behavior stay unchanged. The focused camera fits the monitor glass with a narrow bezel margin according to the viewport aspect ratio; Expand desktop remains available. Preserve desktop input isolation and instant reduced-motion transitions.
+On the 3D-capable desktop, reading apps (About, Projects, Experience, Stack, Recognition, Résumé, Contact) open maximized, and About starts maximized. Reopening one from the room or monitor maximizes it again, including a minimized window; in the expanded desktop a restored window stays restored. Restore remains available and retains the previous window rectangle. Games stay full-window; My Computer, After Hours, Gear & Collections, Terminal, and Credits open as windows. Mobile and 2D-fallback opening behavior stay unchanged. Move/Resize title-bar controls appear only on restored windows. The focused camera fits the monitor glass with a narrow bezel margin according to the viewport aspect ratio; Expand desktop remains available. Preserve desktop input isolation and instant reduced-motion transitions.
 
 ## Workstation art direction and project reading
 
@@ -101,7 +101,7 @@ The room follows a late-1990s home-workstation palette: ivory hardware, a walnut
 
 The Kurt-OS Projects app presents each of the same six projects in the existing order as screenshot, role/status, Decision, Result, and the existing case-study action. Complete narratives, contributions, technology lists, release caveats, and original screenshots remain in the project dialog. Classic Portfolio keeps its detailed page layout. Keep the OJT 98/100 rating and 342 hours visible in the compact result. A separate Kurt-OS build-notes section after the six projects documents projection, shared state, camera input, fallback, accessibility, and rendering trade-offs; it is not another client project.
 
-On small screens and coarse pointers, the About app starts with a lightweight inline-SVG workstation and three keyboard-accessible Projects, Résumé, and Contact shortcuts. It shares room palette tokens and adds no 3D imports or external assets. Other app layouts remain fullscreen and scrollable. Validate both schemes at 375px and coarse-pointer fallback as well as the desktop monitor.
+On small screens and coarse pointers, the About app starts with a lightweight inline-SVG workstation and three keyboard-accessible Projects, Résumé, and Contact shortcuts. It shares room palette tokens and adds no 3D imports or external assets. Because its Résumé shortcut sits directly above, the profile Resume button is hidden there; desktop About keeps it. Other app layouts remain fullscreen and scrollable. Validate both schemes at 375px and coarse-pointer fallback as well as the desktop monitor.
 
 ## Room and transition polish
 
@@ -144,3 +144,8 @@ Mobile mirrors the shelf decor in inline SVG, without miniature targets or 3D im
 A compact gray 4:3 CRT sits beside the decorative PlayStation on the widened, slightly lower 4.8-unit shelf, framed by existing books, trailing greenery, and four cover cases. Keep the entire CRT below the welcome panel at all desktop breakpoints and secondary to the portfolio monitor. The screen shows an original silent PS1-inspired fighting vignette: polygonal figures, perspective arena, small health bars, slow exchanges, retreat, and reset over 12 seconds. No actual game footage, recognizable characters, tiny text, flashes, app launch, hover feedback, or interactions.
 
 One reusable 160x120 canvas texture uses nearest-neighbor sampling and updates at most 12 times per second through the existing overview frame driver. Advance only during the visible, motion-enabled desk overview. Freeze for monitor view, hidden tabs, and reduced motion; do not catch up after pauses. Keep the phase in the existing in-memory room state across expanded-view scene unmounts. The console power indicator stays lit and brightens gently once per reset. Dispose the generated texture on replacement/unmount. Add no lights, external models, dependencies, audio, timers, or rendering loops. Mirror a static CRT fighting pose in the mobile SVG without loading 3D. Preserve camera input isolation, window/scroll state, original covers, and Credits attribution. Run node scripts/verify-playstation-corner.mjs and node scripts/verify-gaming-crt.mjs with the existing browser suites; capture idle, exchange, and reset frames and check rendering sleep.
+
+
+## Recruiter-facing polish
+
+The desk welcome card labels Kurt Fariñas and Junior Full-Stack Developer on two eyebrow lines. Sticky notes show one large label (Projects, Contact); the hover tooltip names the action. The bottom-right scene hint sits on a solid surface chip so it stays readable over the room in both themes. Recognition lists five entries, including Alumni President for the STI College San Jose Batch 2026 graduates (no date shown). Command-palette search ignores accents, its entries use one "Open …" verb pattern, and its footer reads Kurt-OS · React SPA; the classic footer shows Kurt Fariñas. Project cards show role and release status as one sentence-case line. On desktop the Kurt-OS Projects column widens to --content-width-wide with screenshots up to 420px tall, and the first project screenshot loads eagerly. Case-study badges use raised-tag padding, with space above the contribution period.

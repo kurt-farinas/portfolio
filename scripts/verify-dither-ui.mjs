@@ -115,7 +115,7 @@ try {
     await page.keyboard.press('Escape'); await expect(resume).toBeFocused();
     await page.keyboard.press('Control+k'); await expect(page.getByRole('combobox')).toBeVisible();
     await scan(page,width+' '+scheme+' commands');
-    await page.getByRole('combobox').fill('Open: Boiyet'); await page.keyboard.press('ArrowDown'); await page.keyboard.press('Enter');
+    await page.getByRole('combobox').fill('Boiyet'); await page.keyboard.press('ArrowDown'); await page.keyboard.press('Enter');
     await expect(page.locator('#projectModal')).toBeVisible(); await page.keyboard.press('Escape');
     await page.locator('button.studio-skill').filter({hasText:'React'}).first().click();
     await expect(page.locator('#skillFilterBanner')).toBeVisible();

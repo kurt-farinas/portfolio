@@ -27,6 +27,7 @@ function StateHarness() {
       <button onClick={workspace.focusMonitor}>Focus monitor</button>
       <button onClick={() => workspace.openApplication('bugsweeper')}>Open bugsweeper</button>
       <button onClick={() => workspace.openApplication('my-computer')}>Open my computer</button>
+      <button onClick={() => workspace.openApplication('experience')}>Open experience</button>
       <DesktopWorkspace presentation="workspace" theme="dark" />
     </div>
   );
@@ -129,7 +130,7 @@ describe('portfolio desktop workspace', () => {
     expect(projectWindow().classList.contains('is-maximized')).toBe(true);
     await act(async () => host.querySelector('[aria-label="Restore Projects window"]').click());
     expect(projectWindow().getAttribute('style')).toBe(restoredStyle);
-    expect(host.querySelector('#desktop-window-title-about').closest('.desktop-window').classList.contains('is-maximized')).toBe(false);
+    expect(host.querySelector('#desktop-window-title-about').closest('.desktop-window').classList.contains('is-maximized')).toBe(true);
   });
 
   it('keeps mobile Projects opening behavior unchanged', async () => {
@@ -140,6 +141,8 @@ describe('portfolio desktop workspace', () => {
 
   it('provides keyboard move and resize controls and restores minimized windows', async () => {
     await renderWorkspace();
+    // About starts maximized on the desktop; restore it before moving and resizing.
+    await act(async () => host.querySelector('[aria-label="Restore About window"]').click());
     const title = host.querySelector('#desktop-window-title-about');
     const initialLeft = host.querySelector('.desktop-window').style.left;
     await act(async () => host.querySelector('[aria-label="Move About window"]').click());
@@ -171,7 +174,7 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelector('.studio-project-detail-highlights')).toBeNull();
     expect(host.querySelector('#hris').textContent).toContain('98/100');
     expect(host.querySelector('#hris').textContent).toContain('342');
-    expect(host.querySelector('#pmpc-workforce').textContent).toContain('DEPLOYED + LOCAL WORK');
+    expect(host.querySelector('#pmpc-workforce').textContent).toContain('Deployed + local work');
     expect(host.querySelector('#pmpc-workforce').textContent).toContain('workflows locally');
     expect(host.querySelectorAll('.studio-project-detail-actions button')).toHaveLength(6);
     expect(host.querySelector('.portfolio-engineering-details summary').textContent).toBe('How this portfolio works');
@@ -230,6 +233,15 @@ describe('portfolio desktop workspace', () => {
       await click(label);
       expect(host.querySelector('[data-testid="active"]').textContent).toBe(appId);
     }
+  });
+
+  it('opens reading apps maximized on the desktop but not as extras', async () => {
+    await renderWorkspace('/', 1440);
+    const click = async label => act(async () => [...host.querySelectorAll('button')].find(button => button.textContent === label).click());
+    await click('Open experience');
+    expect(host.querySelector('[data-app-id="experience"]').classList.contains('is-maximized')).toBe(true);
+    await click('Open my computer');
+    expect(host.querySelector('[data-app-id="my-computer"]').classList.contains('is-maximized')).toBe(false);
   });
 
   it('opens games full-window', async () => {

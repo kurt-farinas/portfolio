@@ -253,6 +253,13 @@ export const awardsData = [
     isChampion: true
   },
   {
+    id: "alumni-president",
+    title: "Alumni President | Batch 2026 Graduates",
+    issuer: "STI College San Jose · Batch 2026",
+    category: "Leadership",
+    isChampion: false
+  },
+  {
     id: "cisco-cyber",
     title: "Introduction to Cybersecurity",
     issuer: "Cisco Networking Academy · Sep 2025",

@@ -1,5 +1,5 @@
 import PortfolioImage from './PortfolioImage';
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useModal } from '../../context/ModalContext';
 import { useOptionalDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 
@@ -16,6 +16,9 @@ export default function PhotoDeckShuffler({ photos = [] }) {
   const isPointerDownRef = useRef(false);
   const hasMovedRef = useRef(false);
   const currentDragOffsetRef = useRef({ x: 0, y: 0 });
+  // A single click shuffles only after the double-click window, so a double-click opens the photo it started on.
+  const clickTimerRef = useRef(0);
+  useEffect(() => () => clearTimeout(clickTimerRef.current), []);
 
   const setDeck = useCallback(update => setDeckInternal(current => {
     const next = typeof update === 'function' ? update(current) : update;
@@ -97,8 +100,12 @@ export default function PhotoDeckShuffler({ photos = [] }) {
               onPointerMove={isTop ? onPointerMove : undefined}
               onPointerUp={isTop ? onPointerUp : undefined}
               onPointerCancel={isTop ? onPointerUp : undefined}
-              onClick={isTop ? () => { if (!hasMovedRef.current) handleNextCard(); } : undefined}
-              onDoubleClick={isTop ? (event) => { event.stopPropagation(); openLightbox(card.src, card.caption || card.title); } : undefined}
+              onClick={isTop ? (event) => {
+                if (hasMovedRef.current || event.detail > 1) return;
+                clearTimeout(clickTimerRef.current);
+                clickTimerRef.current = setTimeout(handleNextCard, 250);
+              } : undefined}
+              onDoubleClick={isTop ? (event) => { event.stopPropagation(); clearTimeout(clickTimerRef.current); openLightbox(card.src, card.caption || card.title); } : undefined}
             >
               {!imgErrors[card.id] ? (
                 <PortfolioImage

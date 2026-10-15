@@ -17,8 +17,9 @@ function StickyNote({ label, color, position, rotation, colors, onClick }) {
     const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 256;
     const context = canvas.getContext('2d');
     context.fillStyle = color; context.fillRect(0, 0, 256, 256);
-    context.fillStyle = colors.noteInk; context.font = '700 32px monospace'; context.fillText(label, 18, 72);
-    context.font = '22px monospace'; context.fillText('click to open', 18, 119);
+    // One large label stays legible from the overview; the hover tooltip names the action.
+    context.fillStyle = colors.noteInk; context.font = '700 46px monospace'; context.textAlign = 'center'; context.textBaseline = 'middle';
+    context.fillText(label, 128, 128);
     const value = new CanvasTexture(canvas); value.colorSpace = SRGBColorSpace; return value;
   }, [label, color, colors.noteInk]);
   useEffect(() => () => texture.dispose(), [texture]);
