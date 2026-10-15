@@ -283,7 +283,8 @@ try {
       await expect(page.locator('.photo-deck-stack')).toHaveCount(1);
       const photoStack = page.locator('.photo-deck-stack');
       const firstPhoto = await photoStack.locator('.deck-stack-level-0 img').getAttribute('src');
-      await page.getByRole('button', { name: 'Next photo' }).click();
+      await photoStack.focus();
+      await page.keyboard.press('ArrowRight');
       await expect(photoStack.locator('.deck-stack-level-0 img')).not.toHaveAttribute('src', firstPhoto);
       await page.getByRole('button', { name: 'View photo' }).click();
       await expect(page.locator('#screenshotModal')).toBeVisible();

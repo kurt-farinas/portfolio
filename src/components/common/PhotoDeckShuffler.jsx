@@ -114,7 +114,6 @@ export default function PhotoDeckShuffler({ photos = [] }) {
         })}
       </div>
       <div className="studio-photo-controls">
-        <button type="button" onClick={handleNextCard}>Next photo</button>
         <button type="button" onClick={() => openLightbox(deck[0].src, deck[0].caption || deck[0].title)}>View photo</button>
       </div>
     </div>

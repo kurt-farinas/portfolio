@@ -627,5 +627,32 @@ export const snapshotsDeckData = [
     src: "/images/outside/9.jpg",
     alt: "A development and gaming setup",
     caption: "After Hours snapshot 09"
+  },
+  {
+    id: "deck-photo-10",
+    title: "After Hours Snapshot 10",
+    subtitle: "Between sets at the gym",
+    date: "Snapshot 10",
+    src: "/images/outside/10.jpg",
+    alt: "Kurt taking a mirror selfie at the gym, framed by a weight machine",
+    caption: "After Hours snapshot 10"
+  },
+  {
+    id: "deck-photo-11",
+    title: "After Hours Snapshot 11",
+    subtitle: "A gaming café session with friends",
+    date: "Snapshot 11",
+    src: "/images/outside/11.jpg",
+    alt: "Kurt and three friends wearing headsets at a gaming café",
+    caption: "After Hours snapshot 11"
+  },
+  {
+    id: "deck-photo-12",
+    title: "After Hours Snapshot 12",
+    subtitle: "Another round at the gaming café",
+    date: "Snapshot 12",
+    src: "/images/outside/12.jpg",
+    alt: "Kurt and three friends with headsets at gaming café computers",
+    caption: "After Hours snapshot 12"
   }
 ];

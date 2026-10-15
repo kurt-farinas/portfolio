@@ -128,7 +128,7 @@ describe('React Project Data Integrity', () => {
   });
 
   it('verifies snapshotsDeckData for card deck shuffler', () => {
-    expect(snapshotsDeckData).toHaveLength(9);
+    expect(snapshotsDeckData).toHaveLength(12);
     expect(snapshotsDeckData.map((s) => s.src)).toEqual([
       '/images/outside/1.jpg',
       '/images/outside/2.jpg',
@@ -138,7 +138,10 @@ describe('React Project Data Integrity', () => {
       '/images/outside/6.jpg',
       '/images/outside/7.jpg',
       '/images/outside/8.jpg',
-      '/images/outside/9.jpg'
+      '/images/outside/9.jpg',
+      '/images/outside/10.jpg',
+      '/images/outside/11.jpg',
+      '/images/outside/12.jpg'
     ]);
   });
 });
