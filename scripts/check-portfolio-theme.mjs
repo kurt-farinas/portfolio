@@ -25,7 +25,7 @@ const scene = await fs.readFile(path.join(root, 'src/components/desktop/DeskScen
 if (!scene.includes('frameloop="demand"')) failures.push('3D scene does not sleep between interactions');
 if (!/<Html\b[^>]*\btransform(?:\s|=|>)/.test(scene)) failures.push('Monitor does not project the React desktop');
 const workspace = await fs.readFile(path.join(root, 'src/context/DesktopWorkspaceContext.jsx'), 'utf8');
-if (!workspace.includes('window.innerWidth >= 1100') || !workspace.includes("'(pointer: fine)'")) failures.push('3D eligibility does not exclude small/coarse-pointer screens');
+if (!workspace.includes('window.innerWidth >= DESK_MIN_WIDTH') || !workspace.includes("'(pointer: fine)'")) failures.push('3D eligibility does not exclude small/coarse-pointer screens');
 for (const directory of ['src/components/sections', 'src/components/common']) {
   for (const name of await fs.readdir(path.join(root, directory))) {
     if (!name.endsWith('.jsx') || ['DitherImage.jsx', 'HeroDither.jsx'].includes(name)) continue;
