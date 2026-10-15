@@ -67,16 +67,13 @@ function pathForApp(appId, currentPath) {
   return paths[appId] || '/';
 }
 
-// 3D desk eligibility: wide enough window with a mouse or trackpad. Software-rendered WebGL is allowed so visitors without hardware acceleration still get the room.
-const DESK_MIN_WIDTH = 900;
-
 function canUseWebGL() {
   if (typeof window === 'undefined' || !window.matchMedia) return false;
-  const largeFine = window.innerWidth >= DESK_MIN_WIDTH && window.matchMedia('(pointer: fine)').matches;
+  const largeFine = window.innerWidth >= 1100 && window.matchMedia('(pointer: fine)').matches;
   if (!largeFine) return false;
   try {
     const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+    const gl = canvas.getContext('webgl2', { failIfMajorPerformanceCaveat: true }) || canvas.getContext('webgl', { failIfMajorPerformanceCaveat: true });
     if (!gl) return false;
     const lose = gl.getExtension('WEBGL_lose_context');
     if (lose) lose.loseContext();
@@ -199,7 +196,7 @@ export function DesktopWorkspaceProvider({ children }) {
   }, [location.pathname, location.hash, activeAppId, openWindowApps, reducedMotion]);
 
   useEffect(() => {
-    const largeQuery = window.matchMedia('(min-width: ' + DESK_MIN_WIDTH + 'px) and (pointer: fine)');
+    const largeQuery = window.matchMedia('(min-width: 1100px) and (pointer: fine)');
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     let wasAvailable = canUse3D;
     const updateDisplay = () => {

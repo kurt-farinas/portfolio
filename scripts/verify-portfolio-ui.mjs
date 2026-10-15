@@ -162,7 +162,7 @@ try {
       await expect(page.locator('.immersive-portfolio-shell')).toBeVisible();
       await expect(page.locator('html')).toHaveAttribute('data-theme', scheme);
 
-      if (width >= 900) {
+      if (width >= 1100) {
         await page.waitForTimeout(1800);
         await page.screenshot({ path: path.join(output, width + '-' + scheme + '-desk.png'), fullPage: true });
         if (await page.getByRole('button', { name: 'Open desktop', exact: true }).count()) {
@@ -175,7 +175,7 @@ try {
       }
 
       await expect(page.locator('[data-testid="desktop-workspace"]')).toHaveCount(1);
-      if (width < 900) {
+      if (width < 1100) {
         const shortcuts = page.getByRole('navigation', { name: 'Workstation shortcuts' });
         await expect(shortcuts).toBeVisible();
         await page.screenshot({ path: path.join(output, width + '-' + scheme + '-workstation.png'), fullPage: true });
@@ -344,11 +344,11 @@ try {
       await scan(page, width + ' ' + scheme + ' theme change');
       scanCount += 1;
 
-      if (width < 900) {
+      if (width < 1100) {
         expect(sceneRequests.filter(item => item.width === width)).toEqual([]);
       }
 
-      if (width >= 900 && sceneRequests.some(item => item.width === width)) {
+      if (width >= 1100 && sceneRequests.some(item => item.width === width)) {
         await page.goto(base + '/', { waitUntil: 'networkidle' });
         await page.getByRole('button', { name: 'Open desktop', exact: true }).click();
         await page.locator('[data-testid="desktop-workspace"]').waitFor({ timeout: 20000 });

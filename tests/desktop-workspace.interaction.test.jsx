@@ -59,7 +59,7 @@ describe('portfolio desktop workspace', () => {
       configurable: true,
       value: query => ({
         media: query,
-        matches: query.includes('prefers-reduced-motion') ? false : query.includes('pointer: fine') || (query.includes('min-width') && window.innerWidth >= 900),
+        matches: query.includes('prefers-reduced-motion') ? false : query.includes('pointer: fine') || (query.includes('min-width') && window.innerWidth >= 1100),
         addEventListener: vi.fn(),
         removeEventListener: vi.fn(),
         addListener: vi.fn(),
