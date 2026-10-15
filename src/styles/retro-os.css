@@ -249,6 +249,7 @@
   .desktop-app-scroll .studio-project-detail.is-compact > .studio-project-detail-preview { margin-bottom: 16px; }
   .desktop-app-scroll .studio-project-detail.is-compact .studio-project-detail-content { margin-top: 16px; gap: 16px; }
   .desktop-workspace :is(button, a, [role='button']) { touch-action: manipulation; }
+  /* 2px offset keeps the full outline inside the compact mobile title bar and toolbar. */
   .desktop-workspace :is(button, a, [role='button']):focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   .desktop-workspace :is(.desktop-toolbar-button, .desktop-taskbar-item, .desktop-taskbar-home, .retro-start-items > button, .studio-action):active,
   .desktop-workspace :is(.desktop-taskbar-item[aria-pressed='true'], .desktop-taskbar-home[aria-expanded='true']) {

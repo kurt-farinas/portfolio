@@ -101,7 +101,8 @@ async function scan(page, label) {
       const style = getComputedStyle(element);
       return {
         name: element.getAttribute('aria-label') || element.textContent.trim().slice(0, 48),
-        visible: element.matches(':focus-visible') && style.outlineStyle === 'solid' && style.outlineWidth === '3px' && style.outlineOffset === '3px'
+        // Mobile Kurt-OS chrome uses a 2px offset so outlines fit the compact title bar and toolbar.
+        visible: element.matches(':focus-visible') && style.outlineStyle === 'solid' && style.outlineWidth === '3px' && (style.outlineOffset === '3px' || (window.matchMedia('(max-width: 1099px), (pointer: coarse)').matches && style.outlineOffset === '2px' && Boolean(element.closest('.desktop-workspace'))))
       };
     });
     if (check && !check.visible) focusFailures.push(check.name);
