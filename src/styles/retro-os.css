@@ -196,7 +196,7 @@
 }
 
 /* 3D room loader: a small Win98 dialog over the wallpaper, with an hourglass cursor while it works. */
-.desk-loading { background: var(--retro-wallpaper-0); cursor: url('/cursors/hourglass.svg') 10 14, progress; }
+.desk-loading { background: var(--retro-wallpaper-0); cursor: url('/cursors/hourglass.svg') 11 16, progress; }
 .desk-loading-dialog { width: min(380px, calc(100vw - 32px)); border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); color: var(--retro-ink); text-align: left; }
 .desk-loading-title { display: flex; align-items: center; gap: 8px; margin: 0; padding: 4px 6px; background: var(--retro-title); color: var(--retro-title-ink); font: 700 14px/1.3 var(--font-pixel); }
 .desk-loading-title .desk-loading-mark { flex-basis: 22px; width: 22px; height: 22px; font: 700 10px/1 var(--font-pixel); }
@@ -224,3 +224,11 @@
 }
 @keyframes desk-screen-line { 0% { visibility: visible; } 100% { visibility: visible; } }
 @keyframes desk-screen-reveal { 0%, 92% { opacity: 1; } 96% { opacity: .5; } 100% { opacity: 0; } }
+
+/* Win98-style pixel cursors for Kurt-OS (mouse/trackpad only). The Classic Portfolio keeps its own cursors from reset.css. */
+@media (hover: hover) and (pointer: fine) {
+  :root:not([data-mode='classic']) body { cursor: url('/cursors/retro-arrow.svg') 1 1, auto; }
+  :root:not([data-mode='classic']) :is(button:not(:disabled), a:not([aria-disabled='true']), [role='button']:not([aria-disabled='true']), [role='option']:not([aria-disabled='true']), select:not(:disabled)) {
+    cursor: url('/cursors/retro-hand.svg') 11 1, pointer;
+  }
+}
