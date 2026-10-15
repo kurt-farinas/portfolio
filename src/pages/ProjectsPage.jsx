@@ -28,9 +28,7 @@ export function ProjectsContent({ compact = false }) {
     <main id="projects" className={"studio-project-page desktop-projects-content" + (compact ? " compact-projects" : "")}>
       <div className="studio-container">
         <header className="studio-project-page-header">
-          <p className="desktop-eyebrow">WORK SAMPLES</p>
           <h1>Projects</h1>
-          <p>What I worked on, how I contributed, and what each preview shows.</p>
         </header>
 
         <div className="studio-project-detail-list">

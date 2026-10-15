@@ -40,7 +40,6 @@ function ResumeApp() {
   return (
     <section className="desktop-document-app">
       <div className="desktop-app-intro">
-        <p className="desktop-eyebrow">CURRICULUM VITAE</p>
         <h1>Kurt Fariñas</h1>
         <p>{portfolioProfile.role}</p>
         <div className="desktop-action-row">
@@ -59,7 +58,6 @@ function ContactApp() {
   const { copyEmail } = useModal();
   return (
     <section className="desktop-contact-app">
-      <p className="desktop-eyebrow">GET IN TOUCH</p>
       <div className="desktop-contact-profile">
         <PortfolioImage src="/images/kurt-farinas-profile.png" alt="Kurt Fariñas" loading="eager" />
         <div><h1>Kurt Fariñas</h1><p>{portfolioProfile.role}</p></div>

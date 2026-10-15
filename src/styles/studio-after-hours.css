@@ -3,11 +3,10 @@
 .studio-archive-section { padding-bottom: var(--section-space); }
 .outside-page-nav-bar-top { margin-bottom: var(--space-6); }
 .studio-archive-header { margin-bottom: var(--section-space); }
-.studio-archive-header h1 { font: 500 var(--type-archive)/1.1 var(--font-display); margin-block: 12px; }
+.studio-archive-header h1 { font: 500 var(--type-archive)/1.1 var(--font-display); margin-block: 0; }
 .studio-archive-header > p { font-size: var(--type-body); }
 .gear-catalog-container { display: flex; flex-direction: column; gap: var(--section-space); }
-.after-hours-photo-section { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); align-items: center; gap: var(--space-8); }
-.studio-photo-intro h2 { font: 600 var(--type-section)/1.2 var(--font-display); margin-block: 16px 12px; }
+.after-hours-photo-section { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: var(--space-8); }
 .photo-deck-wrapper { display: flex; flex-direction: column; align-items: center; gap: var(--space-5); padding: 20px 8px; min-width: 0; }
 .photo-deck-stack { position: relative; width: min(260px, 100%); aspect-ratio: 1; touch-action: pan-y; }
 .deck-photo-card { position: absolute; inset: 0; overflow: hidden; border: 0; border-radius: 0; background: transparent; padding: 0; cursor: grab; user-select: none; }

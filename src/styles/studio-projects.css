@@ -1,7 +1,7 @@
 /* Dedicated project detail page. */
 .studio-project-page { padding-block: var(--page-space-top) var(--page-space-bottom); }
 .studio-project-page-header { margin-bottom: var(--section-space); }
-.studio-project-page-header h1 { margin-top: 20px; font: 600 var(--type-hero)/1.2 var(--font-display); }
+.studio-project-page-header h1 { margin-top: 0; font: 600 var(--type-hero)/1.2 var(--font-display); }
 .studio-project-page-header > p { margin-top: 10px; color: var(--muted); }
 .studio-project-detail-list { display: grid; gap: var(--space-detail-gap); }
 .studio-project-detail { padding-top: var(--space-6); border-top: 1px solid var(--border); scroll-margin-top: 88px; }

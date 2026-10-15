@@ -18,7 +18,6 @@ export function GearContent() {
       <div className="studio-archive-section">
         <div className="studio-container">
           <header className="studio-archive-header">
-            <p className="desktop-eyebrow">PERSONAL COLLECTION</p>
             <h1>Gear &amp; Collections</h1>
           </header>
 

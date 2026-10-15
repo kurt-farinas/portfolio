@@ -100,6 +100,10 @@ The entire gaming corner is decorative: no click handlers, hover labels or highl
 Mobile mirrors the shelf decor in inline SVG, without miniature targets or 3D imports. Preserve the classic portfolio, project order, camera/input isolation, fragrance tray, and surrounding shortcuts. Run node scripts/verify-playstation-corner.mjs alongside the portfolio, retro-app, room, desktop-input, and camera checks. Verify that hovering/clicking the console, controller, and cases opens nothing, shows no tooltip, and preserves the active app and camera view. Review all desktop widths in both themes and day/dusk/night.
 
 
+## Section headers
+
+Section headers keep their titles without generic category labels or explanatory taglines. Projects, After Hours, and Gear & Collections begin directly with their titles; After Hours centers its photo stack in a single column after removing the duplicate introduction. Résumé and Contact retain name/role and functional content without generic eyebrow text. The shared pages use this treatment in both Kurt-OS and Classic Portfolio.
+
 ## PMPC contribution coverage
 
 The PIS, WorkForce/DTR, and General Merchandise cards remain compact Decision/Result summaries. Their existing case-study dialogs group the September 16–October 15, 2026 contribution period without introducing a changelog interface. PIS includes September accounting work and subsequently deployed request, notification, and portal improvements. WorkForce and General Merchandise distinguish confirmed releases from local additions; no blanket unreleased label or proposed-only wording obscures completed implementation. Keep inherited ownership, original project order, screenshots, links, and classic layout. See docs/pmpc-contribution-audit.md for evidence and limits.
