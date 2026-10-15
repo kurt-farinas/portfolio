@@ -195,6 +195,68 @@
 }
 
 /* 3D room loader: a small Win98 dialog over the wallpaper, with an hourglass cursor while it works. */
+/* Phone and touch layouts retain one app menu and reserve safe areas outside the controls. */
+@media (max-width: 1099px), (pointer: coarse) {
+  .immersive-portfolio-shell,
+  .desktop-workspace-workspace,
+  .desktop-workspace-expanded { height: 100dvh; min-height: 0; }
+  .desktop-workspace {
+    --mobile-safe-top: env(safe-area-inset-top, 0px);
+    --mobile-safe-bottom: env(safe-area-inset-bottom, 0px);
+    --mobile-safe-left: env(safe-area-inset-left, 0px);
+    --mobile-safe-right: env(safe-area-inset-right, 0px);
+  }
+  .desktop-apps-button { display: none; }
+  .desktop-menubar {
+    height: calc(52px + var(--mobile-safe-top));
+    padding: calc(2px + var(--mobile-safe-top)) calc(6px + var(--mobile-safe-right)) 2px calc(6px + var(--mobile-safe-left));
+  }
+  .desktop-window-area {
+    inset: calc(52px + var(--mobile-safe-top)) calc(5px + var(--mobile-safe-right)) calc(56px + var(--mobile-safe-bottom)) calc(5px + var(--mobile-safe-left));
+  }
+  .desktop-window-titlebar { height: 50px; min-height: 50px; padding-block: 3px; }
+  .desktop-app-scroll { top: 50px; }
+  .desktop-taskbar {
+    height: calc(56px + var(--mobile-safe-bottom));
+    padding: 4px calc(4px + var(--mobile-safe-right)) calc(4px + var(--mobile-safe-bottom)) calc(4px + var(--mobile-safe-left));
+  }
+  .desktop-taskbar-apps { flex: 1; }
+  .desktop-taskbar-apps .desktop-taskbar-item { flex: 0 0 auto; min-width: 44px; max-width: 160px; }
+  .desktop-taskbar-label { max-width: 100px; }
+  .desktop-taskbar-sound { min-width: 44px; }
+  .retro-start-menu {
+    left: calc(5px + var(--mobile-safe-left));
+    bottom: calc(60px + var(--mobile-safe-bottom));
+    max-width: calc(100% - 10px - var(--mobile-safe-left) - var(--mobile-safe-right));
+    max-height: calc(100% - 116px - var(--mobile-safe-top) - var(--mobile-safe-bottom));
+  }
+  .desktop-app-scroll { font-size: var(--type-body); line-height: 1.6; }
+  .desktop-app-scroll h1 { font-size: var(--type-mobile-heading); line-height: 1.25; }
+  .desktop-app-scroll .studio-container { width: min(100%, var(--content-width)); padding-inline: 12px; }
+  .desktop-app-scroll :is(.studio-project-page-header h1, .studio-archive-header h1) { font-size: var(--type-mobile-heading); }
+  .desktop-app-scroll :is(.studio-hero, .studio-after-hours, .studio-project-page) { padding-top: 16px; }
+  .desktop-app-scroll .studio-archive-section { padding-top: 0; }
+  .desktop-app-scroll .studio-profile-row { gap: 12px; }
+  .desktop-app-scroll .studio-profile-resume { margin-left: 0; }
+  .desktop-app-scroll .studio-hero-name { margin-top: 16px; }
+  .desktop-app-scroll .studio-hero-actions { margin-top: 16px; }
+  .desktop-app-scroll .studio-hero { padding-bottom: 20px; }
+  .desktop-app-scroll .studio-about { padding-block: 8px 20px; }
+  .desktop-app-scroll .studio-about-lead { font-size: var(--type-body); line-height: 1.6; }
+  .desktop-app-scroll :is(.desktop-contact-app, .desktop-document-app, .retro-extra-app) { padding-inline: 12px; }
+  .desktop-app-scroll .retro-profile-facts { padding-inline: 12px; }
+  .desktop-app-scroll .studio-project-detail.is-compact .studio-project-detail-preview img { max-height: 160px; object-fit: contain; }
+  .desktop-app-scroll .studio-project-detail.is-compact > .studio-project-detail-preview { margin-bottom: 16px; }
+  .desktop-app-scroll .studio-project-detail.is-compact .studio-project-detail-content { margin-top: 16px; gap: 16px; }
+  .desktop-workspace :is(button, a, [role='button']) { touch-action: manipulation; }
+  .desktop-workspace :is(button, a, [role='button']):focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .desktop-workspace :is(.desktop-toolbar-button, .desktop-taskbar-item, .desktop-taskbar-home, .retro-start-items > button, .studio-action):active,
+  .desktop-workspace :is(.desktop-taskbar-item[aria-pressed='true'], .desktop-taskbar-home[aria-expanded='true']) {
+    border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge);
+    background: var(--retro-chrome);
+  }
+}
+
 .desk-loading { background: var(--retro-wallpaper-0); cursor: url('/cursors/hourglass.svg') 11 16, progress; }
 .desk-loading-dialog { width: min(380px, calc(100vw - 32px)); border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); color: var(--retro-ink); text-align: left; }
 .desk-loading-title { display: flex; align-items: center; gap: 8px; margin: 0; padding: 4px 6px; background: var(--retro-title); color: var(--retro-title-ink); font: 700 14px/1.3 var(--font-pixel); }

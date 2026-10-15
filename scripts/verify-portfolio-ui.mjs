@@ -183,7 +183,7 @@ try {
           await shortcuts.getByRole('button', { name: label, exact: true }).focus();
           await page.keyboard.press('Enter');
           await expect(page.locator('.desktop-window.is-active')).toHaveAttribute('data-app-id', appId);
-          await page.getByRole('button', { name: 'Open About app' }).click();
+          await page.getByRole('button', { name: 'Home: Open About app', exact: true }).click();
         }
       }
       await expect(page.getByRole('button', { name: 'Open application list' })).toBeVisible();

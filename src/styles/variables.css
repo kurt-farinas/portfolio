@@ -27,6 +27,7 @@
   --type-label: 0.8125rem; --type-small: 0.875rem; --type-body: 1rem; --type-lead: 1.125rem;
   --type-case-body: 0.9375rem; --type-card-title: 1rem;
   --type-title: 1.25rem; --type-section: 1.25rem;
+  --type-mobile-heading: 1.5rem;
   --type-hero: 2rem; --type-archive: var(--type-hero);
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-5: 20px; --space-6: 24px; --space-7: 32px; --space-8: 40px;

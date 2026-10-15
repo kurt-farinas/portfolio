@@ -100,6 +100,12 @@ The entire gaming corner is decorative: no click handlers, hover labels or highl
 Mobile mirrors the shelf decor in inline SVG, without miniature targets or 3D imports. Preserve the classic portfolio, project order, camera/input isolation, fragrance tray, and surrounding shortcuts. Run node scripts/verify-playstation-corner.mjs alongside the portfolio, retro-app, room, desktop-input, and camera checks. Verify that hovering/clicking the console, controller, and cases opens nothing, shows no tooltip, and preserves the active app and camera view. Review all desktop widths in both themes and day/dusk/night.
 
 
+## Mobile navigation and visual polish
+
+Mobile and coarse-pointer Kurt-OS retains the fullscreen app model, static workstation, and bottom app switcher. Start is the sole app-menu trigger; the upper toolbar keeps Home, theme, and search. The toolbar/title bar/taskbar measure 52/50/56px before safe-area additions, with matching content/menu offsets and 44px targets. Dynamic viewport sizing removes the old 520/560px floor in landscape and short viewports. Open-app buttons retain usable minimum widths and scroll horizontally instead of shrinking as more apps open.
+
+Primary app headings use the 24px mobile typography token, body text remains 16px, and content uses 12px horizontal padding. Contained project previews are capped at 160px without changing captions or ownership/status information. Profile, shortcut, introduction, and project spacing are refined using existing tokens. Beveled active/selected states and visible 3px keyboard focus remain consistent. Saved theme/effect preferences are unchanged. These rules affect only Kurt-OS touch/narrow layouts; desktop and Classic retain their presentation. Verify with scripts/verify-mobile-polish.mjs and before/after captures under test-results/mobile-polish/.
+
 ## Section headers
 
 Kurt-OS windows omit the redundant Portfolio address row and reclaim its 36px for content without changing window rectangles. Project actions use View project with specific accessible names, and inherited ownership stays in the card attribution/modal badge rather than repeated prose. Contact starts with identity and the form; build notes retain their technical introduction and expandable details without a category eyebrow or architecture overview. Modal labels are Contributions and Technologies.

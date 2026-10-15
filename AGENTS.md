@@ -51,6 +51,8 @@ The Classic Portfolio app and direct /classic links switch to classic mode for t
 
 ## Accessibility and behavior
 
+- Mobile/coarse-pointer Kurt-OS uses Start as its only visible app-menu trigger; retain Home, theme, search, app switching, minimize/close, and 44px targets. Its toolbar/title bar/taskbar are 52/50/56px before safe-area additions, and content offsets must match. Use a dynamic viewport without a fixed minimum height so landscape and keyboard-sized viewports remain usable. Primary app headings use the 24px mobile token, body text stays 16px, content padding is 12px, and contained project previews are at most 160px tall. Keep these changes scoped away from desktop/Classic, preserve saved preferences and native zoom/scroll, and run node scripts/verify-mobile-polish.mjs for mobile navigation, simulated safe areas, short viewports, and 3D exclusion. Browser keyboard resizing is a simulation, not physical-device keyboard verification.
+
 - Preserve semantic HTML, labels, keyboard navigation, 3px visible focus outlines, 44px interactive targets, and focus containment/restoration in dialogs.
 - Respect prefers-reduced-motion; camera view changes become instant, ambient scene motion stops, and app windows open without the zoom-in.
 - Preserve native touch, text selection, drag, zoom, and text-entry behavior.

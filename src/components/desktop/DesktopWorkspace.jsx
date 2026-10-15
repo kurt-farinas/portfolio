@@ -154,7 +154,7 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
       <svg className="retro-wallpaper-dither" width="100%" height="100%" aria-hidden="true"><defs><pattern id={'dither-' + presentation} width="4" height="4" patternUnits="userSpaceOnUse"><rect width="1" height="1" fill="var(--retro-dither-light)" /><rect x="2" y="2" width="1" height="1" fill="var(--retro-dither-light)" /><rect x="2" width="1" height="1" fill="var(--retro-dither-dark)" /><rect y="2" width="1" height="1" fill="var(--retro-dither-dark)" /></pattern></defs><rect width="100%" height="100%" fill={'url(#dither-' + presentation + ')'} /></svg>
       <div className="retro-desktop-content" inert={!retro.monitorOn ? true : undefined}>
         <header className="desktop-menubar">
-          <button type="button" className="desktop-brand" onClick={() => chooseApp('about')} aria-label="Open About app"><span className="desktop-brand-mark">KF</span><span>Kurt-OS</span></button>
+          <button type="button" className="desktop-brand" onClick={() => chooseApp('about')} aria-label="Home: Open About app"><span className="desktop-brand-mark">KF</span><span>Kurt-OS</span></button>
           <button type="button" className="desktop-toolbar-button desktop-apps-button" onClick={() => setAppsOpen(value => !value)} aria-expanded={appsOpen} aria-controls="retro-start-menu">Apps</button>
           <div className="desktop-menubar-context">Portfolio desktop</div>
           <div className="desktop-menubar-actions">
@@ -190,7 +190,7 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
           </div>
         </nav>}
         <nav className="desktop-taskbar" aria-label="Open applications">
-          <button ref={startRef} type="button" className="desktop-taskbar-home" onClick={() => setAppsOpen(value => !value)} aria-label="Open application list" aria-expanded={appsOpen}>Start</button>
+          <button ref={startRef} type="button" className="desktop-taskbar-home" onClick={() => setAppsOpen(value => !value)} aria-label="Open application list" aria-expanded={appsOpen} aria-controls="retro-start-menu">Start</button>
           <div className="desktop-taskbar-apps">{windows.map(item => {
             const app = appById.get(item.appId);
             return app ? <button type="button" key={item.appId} className={'desktop-taskbar-item' + (activeAppId === item.appId && !item.minimized ? ' is-active' : '')} onClick={() => { retro.powerOn(); item.minimized || activeAppId !== item.appId ? restoreApplication(item.appId) : setActiveAppId(item.appId); }} aria-pressed={activeAppId === item.appId && !item.minimized} aria-label={(item.minimized ? 'Restore ' : 'Focus ') + app.label} title={app.label}><RetroIcon id={app.id} /><span className="desktop-taskbar-label">{app.label}</span></button> : null;
