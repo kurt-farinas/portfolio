@@ -7,7 +7,11 @@ const browser = await chromium.launch();
 try {
   for (const theme of ['dark','light']) {
     const context = await browser.newContext({viewport:{width:375,height:812}});
-    await context.addInitScript(theme => localStorage.setItem('portfolio-theme',theme),theme);
+    await context.addInitScript(theme => {
+      localStorage.setItem('portfolio-theme', theme);
+      // Exercise the saved sound-off preference independently of the current default.
+      localStorage.setItem('kurt-os-sound', 'off');
+    },theme);
     const page = await context.newPage();
     const scenes = []; page.on('request',r=>{if(/DeskScene/.test(r.url())) scenes.push(r.url());});
     await page.goto(base+'/');

@@ -92,9 +92,9 @@
 .desktop-app-scroll .studio-project-detail-list { gap: 20px; }
 :is(.desktop-app-scroll, .modal-card) :is(.studio-project-detail-preview, .studio-project-preview, .gear-media-box, .studio-portrait-frame, .case-study-item, .deck-photo-card) { border: 2px inset var(--retro-etch); }
 :is(.desktop-app-scroll, .modal-card) :is(.studio-proof, .tech-pill, .role-tag, .stamp, .modal-badge, .studio-stack-item, .studio-project-detail-stack li, .studio-project-preview-label) { border: 2px outset var(--retro-etch); background: var(--retro-chrome); color: var(--retro-ink); }
-.retro-profile-facts { display: grid; gap: 8px; padding: 0 32px 32px; font-size: 16px; }
+.retro-profile-facts { display: grid; gap: 16px; font-size: var(--type-body); }
 .retro-profile-facts dt { font-weight: 600; }
-.retro-profile-facts dd { margin: 0 0 12px; color: var(--muted); }
+.retro-profile-facts dd { margin: 0; color: var(--muted); }
 
 .retro-extra-app { max-width: 780px; margin: 0 auto; padding: 24px; font: 400 16px/1.6 var(--font-body); }
 .retro-extra-app h1 { margin: 0 0 12px; font: 600 32px/1.2 var(--font-pixel); }
@@ -285,6 +285,29 @@
 }
 @keyframes desk-screen-line { 0% { visibility: visible; } 100% { visibility: visible; } }
 @keyframes desk-screen-reveal { 0%, 92% { opacity: 1; } 96% { opacity: .5; } 100% { opacity: 0; } }
+
+/* One shared inset prevents nested editorial containers from misaligning the profile. */
+.desktop-about-app { display: flex; flex-direction: column; gap: 16px; padding: 24px; container-type: inline-size; }
+.desktop-app-scroll .desktop-about-app :is(.studio-hero, .studio-about) { padding: 0; }
+.desktop-app-scroll .desktop-about-app .studio-container { width: 100%; max-width: none; padding: 0; }
+.desktop-about-app .studio-profile-row { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 12px; }
+.desktop-about-app .studio-profile-resume { margin: 0; }
+.desktop-about-app .studio-hero-name { max-width: none; margin-top: 16px; font-size: var(--type-mobile-heading); line-height: 1.25; }
+.desktop-about-app .studio-hero-actions { margin-top: 16px; }
+.desktop-about-app .studio-about-copy { display: grid; gap: 16px; }
+.desktop-about-app .studio-about-lead { font-size: var(--type-body); line-height: 1.6; }
+.desktop-about-app .retro-profile-facts { margin: 0; padding: 16px 0 0; border-top: 1px solid var(--border); }
+.desktop-about-app .retro-profile-facts > div { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 16px; }
+.desktop-about-app .mobile-workbench { margin: 0; }
+@container (max-width: 480px) {
+  .desktop-about-app .studio-profile-row { grid-template-columns: 64px minmax(0, 1fr); }
+  .desktop-about-app .studio-profile-photo { width: 64px; height: 64px; }
+  .desktop-about-app .studio-profile-resume { grid-column: 1 / -1; justify-self: start; }
+  .desktop-about-app .retro-profile-facts > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+@media (max-width: 1099px), (pointer: coarse) {
+  .desktop-about-app { padding: 12px; }
+}
 
 /* Win98-style pixel cursors for Kurt-OS (mouse/trackpad only). The Classic Portfolio keeps its own cursors from reset.css. */
 @media (hover: hover) and (pointer: fine) {

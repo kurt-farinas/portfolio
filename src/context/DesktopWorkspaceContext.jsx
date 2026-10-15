@@ -182,7 +182,9 @@ export function DesktopWorkspaceProvider({ children }) {
   const openWindowApps = windows.map(item => item.appId).join('|');
   useEffect(() => {
     const anchor = location.hash.replace(/^#/, '');
-    if (!anchor) return undefined;
+    // About is an app entry, not a biography anchor. Its scroller starts at zero
+    // and restores its saved position without re-scrolling on window changes.
+    if (!anchor || anchor === 'about') return undefined;
     const appId = appFromLocation(location.pathname, location.hash);
     if (!['about', 'projects', 'experience', 'stack', 'recognition'].includes(appId)) return undefined;
     let frame = 0;

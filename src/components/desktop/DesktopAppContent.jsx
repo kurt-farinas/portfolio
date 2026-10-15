@@ -32,7 +32,17 @@ function MyComputerApp() {
 }
 
 function AboutApp() {
-  return <div className="desktop-about-app"><MobileWorkbench /><Hero /><AboutSection /><dl className="retro-profile-facts"><dt>Education</dt><dd>{portfolioProfile.education}<br />{portfolioProfile.educationDates}</dd><dt>Current role</dt><dd>{portfolioProfile.employer}<br />Since {portfolioProfile.roleStarted}</dd></dl></div>;
+  return (
+    <div className="desktop-about-app" id="about">
+      <MobileWorkbench />
+      <Hero />
+      <AboutSection compact />
+      <dl className="retro-profile-facts">
+        <div><dt>Education</dt><dd>{portfolioProfile.education}<br />{portfolioProfile.educationDates}</dd></div>
+        <div><dt>Current role</dt><dd>{portfolioProfile.employer}<br />Since {portfolioProfile.roleStarted}</dd></div>
+      </dl>
+    </div>
+  );
 }
 
 function ResumeApp() {

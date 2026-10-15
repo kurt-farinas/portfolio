@@ -238,6 +238,23 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelector('[data-app-id="bugsweeper"]').classList.contains('is-maximized')).toBe(true);
   });
 
+  it('starts About at the profile and preserves its scroll through app switches and remounts', async () => {
+    await renderWorkspace('/#about', 375);
+    await act(async () => new Promise(resolve => requestAnimationFrame(resolve)));
+    const scroll = () => host.querySelector('[data-app-scroll="about"]');
+    expect(scroll().scrollTop).toBe(0);
+    expect(scroll().querySelector('#about').className).toBe('desktop-about-app');
+    expect(scroll().querySelectorAll('.studio-about-lead')).toHaveLength(2);
+    await act(async () => {
+      scroll().scrollTop = 120;
+      scroll().dispatchEvent(new Event('scroll', { bubbles: true }));
+    });
+    await act(async () => [...host.querySelectorAll('button')].find(button => button.textContent === 'Open projects').click());
+    await act(async () => [...host.querySelectorAll('button')].find(button => button.textContent === 'Browser back').click());
+    expect(scroll().scrollTop).toBe(120);
+    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+  });
+
   it('closes the image lightbox before the project dialog when Escape is pressed', async () => {
     await act(async () => root.render(<MemoryRouter><ThemeProvider><ModalProvider><OverlayHarness /></ModalProvider></ThemeProvider></MemoryRouter>));
     await act(async () => host.querySelector('button').click());

@@ -24,6 +24,8 @@ The workstation uses simple reusable Three.js geometry with a low-power, demand-
 
 ## Content and routes
 
+- Kurt-OS About is a compact profile: portrait/name/role and wrapping résumé action, a 24px statement, two biography paragraphs, and paired Education/Current role rows. A single 24px inset (12px mobile) aligns all content with 16px gaps. Container queries stack actions and facts below 480px of app content width. Classic keeps the original editorial presentation. `#about` belongs to the app root; route entry starts at the profile while app/view changes preserve scroll. Validate using `scripts/verify-about-layout.mjs`.
+
 The single source of portfolio facts remains src/data/projectData.js with current React section components and public assets. Keep all six projects in this order: PMPC PIS, WorkForce/DTR, General Merchandise, CS Form No. 6, Gym Management System, Job Hunt Ledger. Preserve ownership wording, release caveats, project screenshots, website/code links, the OJT 98/100 rating and 342 hours, current job and education dates, and the local-only Job Hunt Ledger label.
 
 The apps are About, Projects, Experience, Stack, Recognition, After Hours, Gear & Collections, Résumé, Contact, KurtOrdle, BugHunter 3D, Terminal, and Credits. About opens first. Do not invent project claims or change employment/ownership statements. Keep After Hours swipe, drag, keyboard, next, view, and lightbox behavior. Keep gear product links and image galleries. Keep résumé preview, direct open, and download paths.
