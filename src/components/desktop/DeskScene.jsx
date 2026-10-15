@@ -204,26 +204,7 @@ function ScreenProjection({ view, theme, onOpenResume, toggleTheme, onBackToDesk
   const controls = useThree(state => state.controls);
   const inputCleanup = useRef(null);
   const scrollCleanup = useRef(null);
-  const frameNode = useRef(null);
-  const settling = useRef(0);
-  // Switching desk <-> monitor resizes and rescales this page; for one paint the new size showed with the old 3D transform
-  // (an oversized desktop flash). Hide it until the projection has re-rendered for the new view and drei has re-positioned it.
-  // Direct style write on purpose: the Html subtree renders in its own root, so React state here can't time it to the frame.
-  useLayoutEffect(() => {
-    settling.current = 1;
-    if (frameNode.current) frameNode.current.style.visibility = 'hidden';
-    invalidate();
-  }, [view, invalidate]);
-  useFrame(() => {
-    if (!settling.current) return;
-    const node = frameNode.current;
-    const rendered = node && node.classList.contains('desk-projection-overview') === (view === 'desk');
-    if (rendered) settling.current -= 1;
-    if (settling.current === 0 && node) node.style.visibility = '';
-    else invalidate();
-  });
   const screenReady = useCallback(node => {
-    frameNode.current = node;
     inputCleanup.current?.();
     inputCleanup.current = node && view === 'screen' && controls ? bindDesktopCameraInput(node, controls) : null;
     scrollCleanup.current?.();
@@ -238,8 +219,9 @@ function ScreenProjection({ view, theme, onOpenResume, toggleTheme, onBackToDesk
     if (node) invalidate();
   }, [view, controls, invalidate]);
   useEffect(() => () => { inputCleanup.current?.(); scrollCleanup.current?.(); }, []);
+  // One fixed size and scale in both views: switching them made the page repaint at the new size before drei re-placed it (a zoom flash).
   return (
-    <Html portal={portal} transform scale={view === 'desk' ? 0.5 : 1} position={[0, MONITOR_CENTER_Y, MONITOR_SCREEN_Z]} distanceFactor={1.2} style={{ width: view === 'desk' ? '2560px' : '1280px', height: view === 'desk' ? '1520px' : '760px', overflow: 'hidden', pointerEvents: view === 'desk' ? 'none' : 'auto' }} wrapperClass="desk-projected-html" prepend>
+    <Html portal={portal} transform scale={1} position={[0, MONITOR_CENTER_Y, MONITOR_SCREEN_Z]} distanceFactor={1.2} style={{ width: '1280px', height: '760px', overflow: 'hidden', pointerEvents: view === 'desk' ? 'none' : 'auto' }} wrapperClass="desk-projected-html" prepend>
       <div ref={screenReady} className={'desk-projection-frame' + (view === 'desk' ? ' desk-projection-overview' : '')} inert={view === 'desk' ? true : undefined} aria-hidden={view === 'desk' || undefined}>
         <ContextBridge>
           <DesktopWorkspace presentation={view === 'desk' ? 'preview' : 'screen'} theme={theme} toggleTheme={toggleTheme} onBackToDesk={onBackToDesk} />
