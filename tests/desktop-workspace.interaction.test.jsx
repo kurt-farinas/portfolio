@@ -171,7 +171,8 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelector('.studio-project-detail-highlights')).toBeNull();
     expect(host.querySelector('#hris').textContent).toContain('98/100');
     expect(host.querySelector('#hris').textContent).toContain('342');
-    expect(host.querySelector('#pmpc-workforce').textContent).toContain('unreleased');
+    expect(host.querySelector('#pmpc-workforce').textContent).toContain('DEPLOYED + LOCAL WORK');
+    expect(host.querySelector('#pmpc-workforce').textContent).toContain('workflows locally');
     expect(host.querySelectorAll('.studio-project-detail-actions button')).toHaveLength(6);
     expect(host.querySelector('.portfolio-engineering-details summary').textContent).toBe('How this portfolio works');
   });

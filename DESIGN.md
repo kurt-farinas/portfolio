@@ -100,6 +100,10 @@ The entire gaming corner is decorative: no click handlers, hover labels or highl
 Mobile mirrors the shelf decor in inline SVG, without miniature targets or 3D imports. Preserve the classic portfolio, project order, camera/input isolation, fragrance tray, and surrounding shortcuts. Run node scripts/verify-playstation-corner.mjs alongside the portfolio, retro-app, room, desktop-input, and camera checks. Verify that hovering/clicking the console, controller, and cases opens nothing, shows no tooltip, and preserves the active app and camera view. Review all desktop widths in both themes and day/dusk/night.
 
 
+## PMPC contribution coverage
+
+The PIS, WorkForce/DTR, and General Merchandise cards remain compact Decision/Result summaries. Their existing case-study dialogs group the September 16–October 15, 2026 contribution period without introducing a changelog interface. PIS includes September accounting work and subsequently deployed request, notification, and portal improvements. WorkForce and General Merchandise distinguish confirmed releases from local additions; no blanket unreleased label or proposed-only wording obscures completed implementation. Keep inherited ownership, original project order, screenshots, links, and classic layout. See docs/pmpc-contribution-audit.md for evidence and limits.
+
 ## Quiet gaming CRT
 
 A compact gray 4:3 CRT sits beside the decorative PlayStation on the widened, slightly lower 4.8-unit shelf, framed by existing books, trailing greenery, and four cover cases. Keep the entire CRT below the welcome panel at all desktop breakpoints and secondary to the portfolio monitor. The screen shows an original silent PS1-inspired fighting vignette: polygonal figures, perspective arena, small health bars, slow exchanges, retreat, and reset over 12 seconds. No actual game footage, recognizable characters, tiny text, flashes, app launch, hover feedback, or interactions.

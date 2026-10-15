@@ -34,6 +34,8 @@ The Classic Portfolio app and direct /classic links switch to classic mode for t
 
 ## Content safeguards
 
+- The three PMPC case studies summarize verified contributions from September 16–October 15, 2026 in grouped highlights. Keep inherited attribution, concise cards, and separate confirmed deployed work from local implementation or unverified deployment. Evidence and superseded claims are recorded in docs/pmpc-contribution-audit.md; dates, commits, and an Unreleased heading alone do not establish authorship or deployment.
+
 - Keep all six projects in their current order: PIS, WorkForce/DTR, General Merchandise, CS Form No. 6, Gym Management System, Job Hunt Ledger.
 - Preserve contribution, ownership, release status, screenshot captions, and link distinctions already in projectData.js. PIS is inherited work; DepEd wording is frontend ownership and Denver Ballesteros developed the Laravel backend; the gym platform was solo-built and defended.
 - Keep the current Junior Full-Stack Developer role at People's Multi-Purpose Cooperative from September 16, 2026, and retain the OJT 98/100 rating and 342 hours.

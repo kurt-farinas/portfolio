@@ -6,24 +6,27 @@ export const featuredProjectIds = ['pmpcPis', 'pmpcWorkforce', 'pmpcGenMdse', 'h
 
 export const projectDetails = {
   pmpcPis: {
-    decisionSummary: "Preserve reviewer decisions and original/proposed values when improving financial correction workflows.",
-    resultSummary: "Delivered improvements to inherited Finance and Operations workflows; newer request-table changes remain local.",
+    decisionSummary: "Extend inherited financial workflows with traceable corrections, review controls, and clearer staff interfaces.",
+    resultSummary: "Deployed accounting safeguards, request queues, notifications, and public/member/staff interface improvements.",
     id: "pmpc-pis",
     title: "PMPC People's Information System",
     ticketId: "PMPC · Inherited System",
     roleTag: "Maintenance & Improvements",
     browserStatus: "DEPLOYED IMPROVEMENTS",
     badge: "Inherited System · Contributor",
-    cardSummary: "Manage and improve an inherited cooperative system, including Finance and Operations interfaces, approval workflows, and private supporting documents.",
+    cardSummary: "Maintain and extend an inherited cooperative system with audited accounting workflows, document controls, reporting, and responsive portals.",
     websiteUrl: "https://peoplesmpcoop.com/",
     browserLabel: "peoplesmpcoop.com",
-    desc: "An inherited cooperative information system. My work focuses on maintaining and improving existing workflows rather than claiming original authorship.",
+    desc: "Contributions: September 16–October 15, 2026. I maintain and extend this inherited cooperative information system, improving financial operations, review safeguards, and public, member, and staff interfaces.",
     highlights: [
-      "Portal usability: improved Finance and Operations navigation, review rows, member filters, forms, and shared dialogs, with desktop and mobile checks.",
-      "Supporting documents: added eligible Petty Cash document reuse, private previews, and Remove/Undo controls.",
-      "Financial corrections: strengthened reason capture, original/proposed values, reviewer decisions, and private audit evidence.",
-      "Monthly controls: added financial month locks and audited correction safeguards within existing permissions.",
-      "Release scope: October 7–9 deployment records document these improvements. Live UI checks did not include financial submissions; newer request-table changes remain local."
+      "Petty Cash and daily reporting: introduced separately tracked fund, loan, and collection balances, opening entries, bank deposits and reconciliation, and branded A4 disbursement reports with role-based signatories; refined allocation routing and date-aware balance checks.",
+      "Accounting corrections: implemented pending Debit/Credit edits, posted-amount review, account-title change requests, and reversal/rebooking safeguards. Original/proposed values, reasons, reviewer decisions, and atomic audit history protect journal and General Ledger consistency.",
+      "Review and traceability: added member-accounting tracking and manual matching, audited moves for eligible unjournaled Petty Cash entries, approval-based archive/restore, selected-batch journal approval, and scope-aware General Ledger totals.",
+      "Request and document workflows: delivered the Petty Cash requests table, submission-day filters, pagination, and review dialogs; added same-category supporting-document reuse, private previews, Remove/Undo controls, and immutable evidence for saved financial changes.",
+      "Monthly and access controls: added financial month locks with a five-working-day grace period and audited locked-period corrections. Refined role and office authorization while preserving existing approval and administration boundaries.",
+      "Member operations and security: added reviewed member-import staging, provenance, conflict handling, and approval before commit; improved savings-withdrawal tracking, unassigned-member saves and balance checks, private profile/signature delivery, and password-reset handling.",
+      "Portals and notifications: improved Finance/Operations navigation, forms, filters, dashboards, and shared feedback; refreshed the public site, original photographs, account-access screens, and member/staff portals; added personal notification history, current-status links, and opt-in staff sound controls.",
+      "Reliability and release scope: repaired Journal Review navigation, source-link errors, and member-detail routes. These contribution groups have deployment records; historical ledger reconciliation, OCR, and unstarted report work are not claimed as completed. Notification controls were verified live; audible playback across devices remains unverified."
     ],
     stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS", "MySQL"],
     previewCallout: {
@@ -33,22 +36,22 @@ export const projectDetails = {
     slides: [{ src: "/images/projects/pmpc-pis-landing.webp", label: "People's MPC public landing page with membership, loan calculator, and member login navigation", tab: "Landing page" }]
   },
   pmpcGenMdse: {
-    decisionSummary: "Improve the existing mobile workflows while keeping proposed inventory and reporting work separate.",
-    resultSummary: "An October 1 release improved navigation, dashboards, products, and reports. Proposed additions remain local.",
+    decisionSummary: "Improve mobile retail workflows and build inventory reporting with explicit data-completeness checks.",
+    resultSummary: "Deployed mobile improvements; implemented inventory valuation and monthly financial reports locally.",
     id: "pmpc-gen-mdse",
     title: "PMPC General Merchandise",
     ticketId: "PMPC · Inherited Website",
-    roleTag: "Website Management",
-    browserStatus: "ONGOING MANAGEMENT",
+    roleTag: "Maintenance & Development",
+    browserStatus: "DEPLOYED + LOCAL WORK",
     badge: "Inherited Website · Management",
-    cardSummary: "Manage the existing General Merchandise website and propose workflow fixes, while preserving its established retail operations.",
+    cardSummary: "Improve an inherited retail application's mobile workflows and implement local inventory valuation and monthly financial reporting.",
     browserLabel: "genmdse.peoplesmpcoop.com",
-    desc: "Website management for an inherited retail system. Current proposed fixes are separate from previously delivered maintenance work.",
+    desc: "Contributions: September 16–October 15, 2026. I maintain and improve this inherited retail application. Mobile interface improvements are deployed; inventory valuation and monthly financial reporting are implemented locally.",
     highlights: [
-      "Website management: maintain the inherited application and review proposed improvements to existing workflows.",
-      "Completed mobile work: an October 1 release improved navigation and dashboard, product, and report layouts, with larger touch controls and readable mobile inputs.",
-      "Verification: the recorded mobile release was checked at 320, 390, 768, and 1024 pixels without live transactions or form submissions.",
-      "Proposed work: inventory valuation and monthly-report additions remain local and are not presented as deployed features."
+      "Deployed mobile interfaces: improved sidebar navigation, shell spacing, dashboards, product cards/forms, and profit/inventory report layouts, with larger touch targets, readable inputs, and preserved POS-specific cart behavior.",
+      "Local inventory counts: implemented saved cost × quantity valuation, explicit zero-versus-uncounted entries, role/branch controls, stale-stock recount checks, protected count history, and safeguards against repeated stock adjustments.",
+      "Local monthly reports: added one selected complete closing count per branch/month, inventory valuation, sales, verified purchases, recorded sale costs, expenses, and profit figures with printable output. Missing counts and unknown purchase sources remain visibly incomplete; inventory reconciliation is a separate cross-check.",
+      "Release scope: the mobile release was verified at 320, 390, 768, and 1024 pixels without live transactions. Inventory/reporting work was tested locally with synthetic data, including concurrency and print checks; it has not been deployed."
     ],
     stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS", "Vite"],
     previewCallout: {
@@ -61,23 +64,26 @@ export const projectDetails = {
     ]
   },
   pmpcWorkforce: {
-    decisionSummary: "Keep employee ownership checks and HR review in attendance and account workflows.",
-    resultSummary: "Improved inherited attendance workflows. Latest payroll, exports, and account-setup additions remain unreleased.",
+    decisionSummary: "Extend attendance and payroll workflows while preserving employee ownership, HR review, and saved financial history.",
+    resultSummary: "Deployed attendance and payslip reliability fixes; implemented further schedule, payroll, export, and HR workflows locally.",
     id: "pmpc-workforce",
     title: "PMPC WorkForce / DTR",
     ticketId: "PMPC · Inherited System",
     roleTag: "Maintenance & Improvements",
-    browserStatus: "LATEST WORK UNRELEASED",
+    browserStatus: "DEPLOYED + LOCAL WORK",
     badge: "Inherited System · Contributor",
-    cardSummary: "Maintain and improve employee and admin attendance workflows, permissions, and payroll review. Latest payroll and account-setup additions remain unreleased.",
+    cardSummary: "Extend an inherited workforce system with attendance corrections, personal schedules, payroll review, management exports, and HR-verified account setup.",
     browserLabel: "peoplescoopdtr.online",
-    desc: "An inherited attendance and workforce system. Contributions focus on operational usability, reliability, and controlled payroll preparation; original system authorship is not claimed.",
+    desc: "Contributions: September 16–October 15, 2026. I maintain and extend this inherited attendance and workforce system. Delivered fixes and locally implemented additions are distinguished below.",
     highlights: [
-      "Attendance workflows: improved employee/admin interfaces and attendance correction requests with permission and employee ownership checks.",
-      "Reliability: addressed navigation/loading issues, payroll validation, and multi-record data consistency.",
-      "Local account setup: implemented HR-reviewed identity and office confirmation, private signatures, and preserved existing account and attendance links.",
-      "Local payroll work: added verified office preparation, reviewed exceptions and deductions, management Excel exports, and finalized-only employee payslip access.",
-      "Release boundary: latest payroll, exports, and account-setup changes are documented as Unreleased. They are not claimed as live or independently certified payroll compliance."
+      "Attendance and self-service: improved employee/admin dashboards, mobile punch controls, four-punch timelines, attendance filters, correction requests, task-planner/profile/notification interfaces, and responsive navigation. Strengthened employee ownership and reviewer permissions and reduced unnecessary clock-driven page rendering.",
+      "Confirmed live fixes: repaired individual and bulk payslip PDFs and applied an effective-dated employee shift correction while preserving recorded punches, hours, saved payroll figures, and draft status.",
+      "Local schedules and attendance: added personal workdays and shifts, full Sunday–Saturday attendance weeks with subtotals, upcoming-day labels, elapsed-workday absence detection, rest-day handling, holiday calendars, and an always-present workday setting.",
+      "Local final DTR review: added a configured reviewer's full-month correction workflow for recorded, missing, and absent days, with required reasons, before/after history, recalculated status/hours, and pending-request protection.",
+      "Local payroll preparation: built an office-grouped Excel-style input table for paid days, absences, overtime, holiday pay, late minutes, and reviewed deductions, with one batch confirmation. Added verified office assignment, DTR mismatch flags, rate-change checks, peso-cent rounding, saved calculation snapshots, and server-side 13th-month draft recalculation.",
+      "Local management exports: implemented monthly Excel workbooks with office/cutoff sections, deduction details, names-only signatories, accounting-review cross-checks, and layout/capacity safeguards; expanded the Main Office template to four employees and corrected workbook formatting and voucher balance.",
+      "Local HR and payslip controls: implemented employee identity confirmation, HR approval/return and office transfers, pre-setup payroll-office assignment, required private signature uploads, and finalized-only employee payslip access while retaining existing credentials, attendance links, and historical payroll.",
+      "Reliability and release scope: improved request validation, atomic payroll persistence, loading/navigation behavior, and keyboard/form accessibility. Deployment of the newer schedule, final-review, payroll-table, export, and account-setup additions is unverified; an Unreleased changelog heading alone does not establish production status. Payroll compliance is not independently certified."
     ],
     stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS"],
     previewCallout: {
