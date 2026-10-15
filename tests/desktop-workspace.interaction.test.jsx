@@ -25,6 +25,8 @@ function StateHarness() {
       <button onClick={() => navigate(-1)}>Browser back</button>
       <button onClick={workspace.failScene}>Simulate 3D failure</button>
       <button onClick={workspace.focusMonitor}>Focus monitor</button>
+      <button onClick={() => workspace.openApplication('bugsweeper')}>Open bugsweeper</button>
+      <button onClick={() => workspace.openApplication('my-computer')}>Open my computer</button>
       <DesktopWorkspace presentation="workspace" theme="dark" />
     </div>
   );
@@ -216,6 +218,23 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelector('[data-testid="view"]').textContent).toBe('workspace');
     expect(host.querySelector('[data-testid="fallback"]').textContent).toBe('true');
     expect(host.querySelector('[data-testid="failure"]').textContent).toBe('true');
+  });
+
+  it('keeps the clicked app active instead of jumping back to About', async () => {
+    await renderWorkspace('/', 1440);
+    const click = async label => act(async () => [...host.querySelectorAll('button')].find(button => button.textContent === label).click());
+    for (const [label, appId] of [['Open bugsweeper', 'bugsweeper'], ['Open my computer', 'my-computer']]) {
+      await click('Open projects');
+      expect(host.querySelector('[data-testid="active"]').textContent).toBe('projects');
+      await click(label);
+      expect(host.querySelector('[data-testid="active"]').textContent).toBe(appId);
+    }
+  });
+
+  it('opens games full-window', async () => {
+    await renderWorkspace('/', 1440);
+    await act(async () => [...host.querySelectorAll('button')].find(button => button.textContent === 'Open bugsweeper').click());
+    expect(host.querySelector('[data-app-id="bugsweeper"]').classList.contains('is-maximized')).toBe(true);
   });
 
   it('closes the image lightbox before the project dialog when Escape is pressed', async () => {

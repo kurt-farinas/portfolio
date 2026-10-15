@@ -20,6 +20,9 @@ export const DESKTOP_APPS = [
   { id: 'credits', label: 'Credits', glyph: 'i', description: 'Verified profile and interface credits' }
 ];
 
+// Games always open full-window so they are playable straight away.
+const GAME_APPS = ['kurtordle', 'bugsweeper', 'bughunter'];
+
 // Matches the <title> in index.html.
 const BASE_TITLE = 'Kurt Fariñas | Junior Full-Stack Developer';
 
@@ -43,12 +46,14 @@ function appFromLocation(pathname, hash) {
   if (anchor === 'after-hours') return 'after-hours';
   if (anchor === 'gear') return 'gear';
   if (anchor === 'projects' || anchor.startsWith('pmpc-') || anchor === 'hris' || anchor === 'gym' || anchor === 'job-hunt-ledger') return 'projects';
-  return 'about';
+  // Only a bare "/" or #about means About; any other in-page anchor leaves the active window alone.
+  return anchor === '' || anchor === 'about' ? 'about' : null;
 }
 
 function pathForApp(appId, currentPath) {
   const paths = {
     about: '/#about',
+    'my-computer': '/#my-computer',
     projects: '/projects',
     experience: '/#timeline',
     stack: '/#skills',
@@ -58,6 +63,7 @@ function pathForApp(appId, currentPath) {
     resume: '/#resume',
     contact: '/#contact',
     kurtordle: '/#kurtordle',
+    bugsweeper: '/#bugsweeper',
     bughunter: '/#bughunter',
     terminal: '/#terminal',
     credits: '/#credits'
@@ -134,16 +140,16 @@ export function DesktopWorkspaceProvider({ children }) {
   const openApplication = useCallback((appId, options = {}) => {
     if (appId === 'classic') { enterClassic(); return; }
     if (!DESKTOP_APPS.some(app => app.id === appId)) return;
-    const maximizeProjects = appId === 'projects' && canUse3D && !sceneFailed && (view === 'desk' || view === 'screen');
+    const maximize = GAME_APPS.includes(appId) || (appId === 'projects' && canUse3D && !sceneFailed && (view === 'desk' || view === 'screen'));
     setWindows(current => {
       const found = current.find(windowItem => windowItem.appId === appId);
-      if (found) return current.map(windowItem => windowItem.appId === appId ? { ...windowItem, minimized: false, maximized: maximizeProjects || windowItem.maximized } : windowItem);
+      if (found) return current.map(windowItem => windowItem.appId === appId ? { ...windowItem, minimized: false, maximized: maximize || windowItem.maximized } : windowItem);
       const offset = current.length % 6;
       const windowItem = {
         appId,
         rect: { x: Math.min(8 + offset * 2, 18), y: Math.min(4 + offset * 2, 12), width: 78, height: 86 },
         minimized: false,
-        maximized: maximizeProjects
+        maximized: maximize
       };
       return [...current, windowItem];
     });
@@ -163,10 +169,11 @@ export function DesktopWorkspaceProvider({ children }) {
       return;
     }
     didSyncRoute.current = true;
+    if (!nextApp) return;
     setWindows(current => {
       const found = current.find(item => item.appId === nextApp);
       if (found) return current.map(item => item.appId === nextApp ? { ...item, minimized: false } : item);
-      return [...current, { appId: nextApp, rect: { x: 10, y: 6, width: 78, height: 86 }, minimized: false, maximized: false }];
+      return [...current, { appId: nextApp, rect: { x: 10, y: 6, width: 78, height: 86 }, minimized: false, maximized: GAME_APPS.includes(nextApp) }];
     });
     setActiveAppId(nextApp);
     if (view === 'desk') setView('screen');
@@ -229,11 +236,11 @@ export function DesktopWorkspaceProvider({ children }) {
 
   const closeApplication = useCallback(appId => {
     setWindows(current => current.filter(item => item.appId !== appId));
-    setActiveAppId(current => current === appId ? (windows.find(item => item.appId !== appId && !item.minimized)?.appId || null) : current);
+    setActiveAppId(current => current === appId ? (windows.findLast(item => item.appId !== appId && !item.minimized)?.appId || null) : current);
   }, [windows]);
   const minimizeApplication = useCallback(appId => {
     setWindows(current => current.map(item => item.appId === appId ? { ...item, minimized: true } : item));
-    setActiveAppId(current => current === appId ? (windows.find(item => item.appId !== appId && !item.minimized)?.appId || null) : current);
+    setActiveAppId(current => current === appId ? (windows.findLast(item => item.appId !== appId && !item.minimized)?.appId || null) : current);
   }, [windows]);
   const restoreApplication = useCallback(appId => openApplication(appId), [openApplication]);
   const maximizeApplication = useCallback(appId => {
