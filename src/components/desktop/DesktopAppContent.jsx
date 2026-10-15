@@ -15,6 +15,7 @@ import PortfolioContactForm from './PortfolioContactForm';
 import { BugHunterApp, BugsweeperApp, CreditsApp, KurtOrdleApp, TerminalApp } from './RetroExtraApps';
 import { ACHIEVEMENTS, useRetroOS } from '../../context/RetroOSContext';
 import RetroIcon from './RetroIcon';
+import MobileWorkbench from './MobileWorkbench';
 
 const DRIVES = [['C', 'projects'], ['D', 'experience'], ['E', 'stack'], ['F', 'recognition'], ['G', 'resume'], ['H', 'contact']];
 
@@ -31,7 +32,7 @@ function MyComputerApp() {
 }
 
 function AboutApp() {
-  return <div className="desktop-about-app"><Hero /><AboutSection /><dl className="retro-profile-facts"><dt>Education</dt><dd>{portfolioProfile.education}<br />{portfolioProfile.educationDates}</dd><dt>Current role</dt><dd>{portfolioProfile.employer}<br />Since {portfolioProfile.roleStarted}</dd></dl></div>;
+  return <div className="desktop-about-app"><MobileWorkbench /><Hero /><AboutSection /><dl className="retro-profile-facts"><dt>Education</dt><dd>{portfolioProfile.education}<br />{portfolioProfile.educationDates}</dd><dt>Current role</dt><dd>{portfolioProfile.employer}<br />Since {portfolioProfile.roleStarted}</dd></dl></div>;
 }
 
 function ResumeApp() {
@@ -77,7 +78,7 @@ function ContactApp() {
 function AppBody({ appId }) {
   switch (appId) {
     case 'about': return <AboutApp />;
-    case 'projects': return <ProjectsContent />;
+    case 'projects': return <ProjectsContent compact />;
     case 'experience': return <TimelineSection />;
     case 'stack': return <SkillsSection />;
     case 'recognition': return <AwardsSection />;

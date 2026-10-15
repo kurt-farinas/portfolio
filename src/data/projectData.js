@@ -6,6 +6,8 @@ export const featuredProjectIds = ['pmpcPis', 'pmpcWorkforce', 'pmpcGenMdse', 'h
 
 export const projectDetails = {
   pmpcPis: {
+    decisionSummary: "Preserve reviewer decisions and original/proposed values when improving financial correction workflows.",
+    resultSummary: "Delivered improvements to inherited Finance and Operations workflows; newer request-table changes remain local.",
     id: "pmpc-pis",
     title: "PMPC People's Information System",
     ticketId: "PMPC · Inherited System",
@@ -31,6 +33,8 @@ export const projectDetails = {
     slides: [{ src: "/images/projects/pmpc-pis-landing.webp", label: "People's MPC public landing page with membership, loan calculator, and member login navigation", tab: "Landing page" }]
   },
   pmpcGenMdse: {
+    decisionSummary: "Improve the existing mobile workflows while keeping proposed inventory and reporting work separate.",
+    resultSummary: "An October 1 release improved navigation, dashboards, products, and reports. Proposed additions remain local.",
     id: "pmpc-gen-mdse",
     title: "PMPC General Merchandise",
     ticketId: "PMPC · Inherited Website",
@@ -57,6 +61,8 @@ export const projectDetails = {
     ]
   },
   pmpcWorkforce: {
+    decisionSummary: "Keep employee ownership checks and HR review in attendance and account workflows.",
+    resultSummary: "Improved inherited attendance workflows. Latest payroll, exports, and account-setup additions remain unreleased.",
     id: "pmpc-workforce",
     title: "PMPC WorkForce / DTR",
     ticketId: "PMPC · Inherited System",
@@ -81,6 +87,8 @@ export const projectDetails = {
     slides: [{ src: "/images/projects/pmpc-workforce.png", label: "PMPC WorkForce sign-in screen with empty employee ID and password fields; no employee or payroll data shown", tab: "Sign-in screen" }]
   },
   jobHuntLedger: {
+    decisionSummary: "Use structured sources and deterministic matching, with deliberate manual application tracking.",
+    resultSummary: "A working local dashboard with saved views, CSV export, backups, and tracking. No hosted demo.",
     id: "job-hunt-ledger",
     title: "Job Hunt Ledger",
     ticketId: "Personal Developer Tool",
@@ -113,6 +121,8 @@ export const projectDetails = {
     ]
   },
   hris: {
+    decisionSummary: "Build the React approval and print interfaces on Denver Ballesteros’s Laravel backend.",
+    resultSummary: "Delivered the three-role leave workflow; earned a 98/100 OJT rating across 342 logged hours. Frontend ownership only.",
     id: "hris",
     title: "CS Form No. 6 Digitalization System",
     ticketId: "DepEd OJT Project",
@@ -149,6 +159,8 @@ export const projectDetails = {
     ]
   },
   gym: {
+    decisionSummary: "Rebuild the tightly coupled PHP platform on Laravel rather than patching its security issues individually.",
+    resultSummary: "Solo-built and defended the gym platform; the Laravel rebuild includes 119 passing Pest tests.",
     id: "gym",
     title: "Boiyet's Fitness Gym Management System",
     ticketId: "Thesis Project & Client Platform",

@@ -1,4 +1,5 @@
 import React from 'react';
+import PortfolioBuildNotes from '../components/desktop/PortfolioBuildNotes';
 import PortfolioImage from '../components/common/PortfolioImage';
 import { useModal } from '../context/ModalContext';
 import { featuredProjectIds, projectDetails } from '../data/projectData';
@@ -11,11 +12,20 @@ const caseStudySections = [
   ['result', 'Result']
 ];
 
-export function ProjectsContent() {
+function ProjectPreview({ project }) {
+  const preview = project.slides?.[0];
+  if (!preview) return null;
+  return <figure className="studio-project-detail-preview">
+    <PortfolioImage src={preview.src} alt={preview.label} loading="lazy" onError={event => { event.currentTarget.style.display = 'none'; }} />
+    {project.previewCallout && <figcaption><strong>{project.previewCallout.label}</strong><span>{project.previewCallout.note}</span></figcaption>}
+  </figure>;
+}
+
+export function ProjectsContent({ compact = false }) {
   const { openProjectModal } = useModal();
 
   return (
-    <main id="projects" className="studio-project-page desktop-projects-content">
+    <main id="projects" className={"studio-project-page desktop-projects-content" + (compact ? " compact-projects" : "")}>
       <div className="studio-container">
         <header className="studio-project-page-header">
           <p className="desktop-eyebrow">WORK SAMPLES</p>
@@ -26,10 +36,10 @@ export function ProjectsContent() {
         <div className="studio-project-detail-list">
           {featuredProjectIds.map(projectKey => {
             const project = projectDetails[projectKey];
-            const preview = project.slides?.[0];
 
             return (
-              <article className="studio-project-detail" id={project.id} key={project.id}>
+              <article className={"studio-project-detail" + (compact ? " is-compact" : "")} id={project.id} key={project.id}>
+                {compact && <ProjectPreview project={project} />}
                 <header className="studio-project-detail-header">
                   <p className="studio-project-detail-kicker">{project.ticketId}</p>
                   <h2>{project.title}</h2>
@@ -37,22 +47,17 @@ export function ProjectsContent() {
                     <span>{project.roleTag}</span>
                     {project.browserStatus && <span>{project.browserStatus}</span>}
                   </p>
-                  <p className="studio-project-detail-summary">{project.cardSummary}</p>
+                  {!compact && <p className="studio-project-detail-summary">{project.cardSummary}</p>}
                 </header>
 
-                {preview && (
-                  <figure className="studio-project-detail-preview">
-                    <PortfolioImage src={preview.src} alt={preview.label} loading="lazy" onError={event => { event.currentTarget.style.display = 'none'; }} />
-                    {project.previewCallout && (
-                      <figcaption>
-                        <strong>{project.previewCallout.label}</strong>
-                        <span>{project.previewCallout.note}</span>
-                      </figcaption>
-                    )}
-                  </figure>
-                )}
+                {!compact && <ProjectPreview project={project} />}
 
                 <div className="studio-project-detail-content">
+                  {compact && <dl className="project-quick-read">
+                    <div><dt>Decision</dt><dd>{project.decisionSummary}</dd></div>
+                    <div><dt>Result</dt><dd>{project.resultSummary}</dd></div>
+                  </dl>}
+                  {!compact && <>
                   {project.caseStudy ? (
                     <section aria-label={project.title + ' case study'}>
                       <h3>Case study</h3>
@@ -81,6 +86,7 @@ export function ProjectsContent() {
                     </ul>
                   </section>
 
+                  </>}
                   <div className="studio-project-detail-actions">
                     <button type="button" className="studio-action" onClick={() => openProjectModal(projectKey)}>
                       View screenshots and case study
@@ -95,6 +101,7 @@ export function ProjectsContent() {
             );
           })}
         </div>
+        {compact && <PortfolioBuildNotes />}
       </div>
     </main>
   );

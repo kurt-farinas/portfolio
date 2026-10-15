@@ -9,8 +9,8 @@ import { portfolioProfile } from '../../data/portfolioFacts';
 
 export const MONITOR_CENTER_Y = 2.54;
 export const MONITOR_SCREEN_Z = -0.86;
-export const DESK_CAMERA_POSITION = [0, 4.3, 11.2];
-export const DESK_CAMERA_TARGET = [0, 2.45, 0];
+export const DESK_CAMERA_POSITION = [2.0, 4.2, 11.5];
+export const DESK_CAMERA_TARGET = [0, 2.5, 0];
 
 function StickyNote({ label, color, position, rotation, colors, onClick }) {
   const texture = useMemo(() => {
@@ -30,7 +30,7 @@ export function RetroMonitor({ colors, onOpenDesktop, onOpenApp }) {
   return <group userData={{ label: 'Open desktop' }} onClick={event => { event.stopPropagation(); onOpenDesktop(); }}>
     <RoundedBox args={[1.58, 0.13, 1.08]} radius={0.05} smoothness={3} position={[0, 0.845, -1.5]}><meshStandardMaterial color={colors.retroShell} roughness={0.7} /></RoundedBox>
     <RoundedBox args={[0.52, 0.48, 0.42]} radius={0.07} smoothness={3} position={[0, 1.09, -1.5]}><meshStandardMaterial color={colors.retroEdge} roughness={0.75} /></RoundedBox>
-    <RoundedBox args={[4.92, 3.18, 1.06]} radius={0.16} smoothness={3} position={[0, 2.48, -1.5]}><meshStandardMaterial color={colors.retroShell} roughness={0.73} /></RoundedBox>
+    <RoundedBox args={[4.92, 3.18, 1.06]} radius={0.1} smoothness={3} position={[0, 2.48, -1.5]}><meshStandardMaterial color={colors.retroShell} roughness={0.66} /></RoundedBox>
     <RoundedBox args={[4.5, 2.74, 0.11]} radius={0.045} smoothness={3} position={[0, MONITOR_CENTER_Y, -0.925]}><meshStandardMaterial color={colors.retroRecess} roughness={0.8} /></RoundedBox>
     <RoundedBox args={[4.22, 2.48, 0.025]} radius={0.01} smoothness={3} position={[0, MONITOR_CENTER_Y, -0.882]}><meshStandardMaterial color={colors.displayGlass} roughness={0.3} /></RoundedBox>
     {[0,1,2].map(index => <mesh key={index} position={[-1.96 + index * 0.055, 1.095, -0.958]}><boxGeometry args={[0.034,0.08,0.024]} /><meshStandardMaterial color={colors.badge} roughness={0.6} /></mesh>)}
@@ -48,7 +48,7 @@ const KEYS = ROWS.flatMap((row,r) => { let x=-7*0.174; return row.map((units,c) 
 export function RetroKeyboard({ colors, onOpenProjects }) {
   const { pressedKey } = useRetroOS();
   return <group position={[0,0.81,1.28]} rotation={[0.055,0,0]} userData={{ label: 'Projects' }} onClick={event => { event.stopPropagation(); onOpenProjects(); }}>
-    <RoundedBox args={[2.91,0.15,1.09]} radius={0.05} smoothness={3} position={[0,0.06,0]}><meshStandardMaterial color={colors.retroShell} roughness={0.77} /></RoundedBox>
+    <RoundedBox args={[2.91,0.15,1.09]} radius={0.035} smoothness={3} position={[0,0.06,0]}><meshStandardMaterial color={colors.retroShell} roughness={0.72} /></RoundedBox>
     <RoundedBox args={[2.66,0.025,0.92]} radius={0.01} smoothness={2} position={[0,0.14,0]}><meshStandardMaterial color={colors.retroEdge} roughness={0.8} /></RoundedBox>
     <Instances limit={KEYS.length} range={KEYS.length}><RoundedBoxGeometry args={[0.15,0.075,0.13]} radius={0.015} smoothness={2} bevelSegments={2} /><meshStandardMaterial color={colors.retroKey} roughness={0.78} />
       {KEYS.map(key => <Instance key={key.id} position={[key.x,0.176-(pressedKey===key.label?0.012:0),key.z]} scale={[key.width/0.15,1,1]} />)}
@@ -115,7 +115,7 @@ export function DeskLamp({ colors, night }) {
   </group>;
 }
 export function CoffeeMug({ colors }) {
-  return <group position={[3.4,0.79,1.28]}>
+  return <group position={[3.55,0.79,1.65]}>
     <mesh position={[0,0.24,0]}><cylinderGeometry args={[0.24,0.22,0.46,40,1,true]} /><meshStandardMaterial color={colors.mug} roughness={0.35} side={2} /></mesh>
     <mesh position={[0,0.015,0]}><cylinderGeometry args={[0.22,0.22,0.03,40]} /><meshStandardMaterial color={colors.mug} roughness={0.35} /></mesh>
     <mesh position={[0,0.47,0]} rotation={[Math.PI/2,0,0]}><torusGeometry args={[0.226,0.016,10,48]} /><meshStandardMaterial color={colors.mug} roughness={0.3} /></mesh>
@@ -177,7 +177,7 @@ export function DeskPrinter({ colors, onPrinted }) {
     if (reducedMotion) { onPrinted(); return; }
     progress.current = 0; setPrinted(true); setPrinting(true); playSound('print'); invalidate();
   };
-  return <group position={[4.35,0.78,-1.9]} rotation={[0,-0.35,0]} userData={{ label: 'Print résumé' }} onClick={print}>
+  return <group position={[4.65,0.78,-2.15]} rotation={[0,-0.35,0]} userData={{ label: 'Print résumé' }} onClick={print}>
     <RoundedBox args={[1.2,0.32,0.72]} radius={0.05} smoothness={3} position={[0,0.16,0]}><meshStandardMaterial color={colors.retroShell} roughness={0.72} /></RoundedBox>
     <mesh position={[0,0.325,-0.12]}><boxGeometry args={[0.92,0.02,0.07]} /><meshStandardMaterial color={colors.retroRecess} roughness={0.9} /></mesh>
     <mesh position={[0,0.06,-0.56]}><boxGeometry args={[0.95,0.12,0.36]} /><meshStandardMaterial color={colors.paper} roughness={0.95} /></mesh>

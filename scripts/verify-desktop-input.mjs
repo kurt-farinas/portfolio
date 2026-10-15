@@ -30,6 +30,8 @@ try {
     await scroller.getByRole('heading',{name:'Projects',exact:true,level:1}).click({clickCount:3});
     expect(await page.evaluate(()=>getSelection()?.toString()),'native text selection must remain usable').toContain('Projects');
     expect(await pose(),'text selection must not move camera').toBe(initial);
+    await expect(page.locator('.desktop-window.is-active')).toHaveClass(/is-maximized/);
+    await page.getByRole('button',{name:'Restore Projects window',exact:true}).click();
     const title=page.locator('.desktop-window.is-active .desktop-window-titlebar h2');
     const window=page.locator('.desktop-window.is-active');const before=await window.getAttribute('style');
     const box=await title.boundingBox();

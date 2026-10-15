@@ -1,7 +1,11 @@
 // Native capture runs before CameraControls' container listeners without
 // consuming the event that React and native scrolling still need.
 export function computeDesktopScenePointer(event, state, previous, compute) {
-  if (event.target?.closest?.('.desk-projection-frame')) {
+  // A view-changing button can detach before the click reaches the canvas listener.
+  // Keep its original event path; a keyboard click has no scene pointer coordinates.
+  const path = (event.nativeEvent || event).composedPath?.() || [];
+  const keyboardClick = event.type === 'click' && event.detail === 0;
+  if (keyboardClick || event.target?.closest?.('.desk-projection-frame') || path.some(node => node?.classList?.contains('desk-projection-frame'))) {
     state.raycaster.camera = null;
     return;
   }

@@ -24,6 +24,7 @@ function StateHarness() {
       <button onClick={() => navigate('/gear')}>Navigate to gear route</button>
       <button onClick={() => navigate(-1)}>Browser back</button>
       <button onClick={workspace.failScene}>Simulate 3D failure</button>
+      <button onClick={workspace.focusMonitor}>Focus monitor</button>
       <DesktopWorkspace presentation="workspace" theme="dark" />
     </div>
   );
@@ -113,6 +114,28 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelectorAll('.desktop-window[aria-labelledby]')).toHaveLength(3);
   });
 
+  it('maximizes Projects in the monitor and preserves its restore rectangle on reopening', async () => {
+    await renderWorkspace();
+    await act(async () => host.querySelector('[data-testid="active"]').parentNode.querySelector('button').click());
+    const projectWindow = () => host.querySelector('#desktop-window-title-projects').closest('.desktop-window');
+    expect(projectWindow().classList.contains('is-maximized')).toBe(true);
+    await act(async () => host.querySelector('[aria-label="Restore Projects window"]').click());
+    const restoredStyle = projectWindow().getAttribute('style');
+    expect(projectWindow().classList.contains('is-maximized')).toBe(false);
+    await act(async () => host.querySelector('[aria-label="Minimize Projects window"]').click());
+    await act(async () => host.querySelector('[aria-label="Restore Projects"]').click());
+    expect(projectWindow().classList.contains('is-maximized')).toBe(true);
+    await act(async () => host.querySelector('[aria-label="Restore Projects window"]').click());
+    expect(projectWindow().getAttribute('style')).toBe(restoredStyle);
+    expect(host.querySelector('#desktop-window-title-about').closest('.desktop-window').classList.contains('is-maximized')).toBe(false);
+  });
+
+  it('keeps mobile Projects opening behavior unchanged', async () => {
+    await renderWorkspace('/', 375);
+    await act(async () => host.querySelector('button').click());
+    expect(host.querySelector('#desktop-window-title-projects').closest('.desktop-window').classList.contains('is-maximized')).toBe(false);
+  });
+
   it('provides keyboard move and resize controls and restores minimized windows', async () => {
     await renderWorkspace();
     const title = host.querySelector('#desktop-window-title-about');
@@ -132,6 +155,43 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelector('.desktop-window')).toBeNull();
     await act(async () => host.querySelector('[aria-label="Restore About"]').click());
     expect(host.querySelector('.desktop-window')).not.toBeNull();
+  });
+
+  it('opens compact project evidence from the mobile workstation without dropping credibility or details access', async () => {
+    await renderWorkspace('/', 375);
+    const shortcut = host.querySelector('.mobile-workbench-shortcuts button');
+    await act(async () => shortcut.click());
+    expect(host.querySelector('[data-testid="active"]').textContent).toBe('projects');
+    const entries = host.querySelectorAll('.studio-project-detail');
+    expect(entries).toHaveLength(6);
+    expect(entries[0].firstElementChild.tagName).toBe('FIGURE');
+    expect(host.querySelectorAll('.project-quick-read')).toHaveLength(6);
+    expect(host.querySelector('.studio-project-detail-highlights')).toBeNull();
+    expect(host.querySelector('#hris').textContent).toContain('98/100');
+    expect(host.querySelector('#hris').textContent).toContain('342');
+    expect(host.querySelector('#pmpc-workforce').textContent).toContain('unreleased');
+    expect(host.querySelectorAll('.studio-project-detail-actions button')).toHaveLength(6);
+    expect(host.querySelector('.portfolio-engineering-details summary').textContent).toBe('How this portfolio works');
+  });
+
+  it('keeps the monitor view while resizing within desktop eligibility', async () => {
+    await renderWorkspace();
+    await act(async () => [...host.querySelectorAll('button')].find(button => button.textContent === 'Focus monitor').click());
+    expect(host.querySelector('[data-testid="view"]').textContent).toBe('screen');
+    await act(async () => {
+      Object.defineProperty(window, 'innerWidth', { configurable: true, writable: true, value: 1366 });
+      window.dispatchEvent(new Event('resize'));
+    });
+    expect(host.querySelector('[data-testid="view"]').textContent).toBe('screen');
+  });
+
+  it('raises a covered window when keyboard focus enters its content', async () => {
+    await renderWorkspace();
+    await act(async () => host.querySelector('button').click());
+    expect(host.querySelector('[data-testid="active"]').textContent).toBe('projects');
+    await act(async () => host.querySelector('[data-app-id="about"] a').focus());
+    expect(host.querySelector('[data-testid="active"]').textContent).toBe('about');
+    expect(host.querySelector('[data-app-id="about"]').classList.contains('is-active')).toBe(true);
   });
 
   it('switches to 2D at mobile width and recovers to 2D after a 3D failure', async () => {

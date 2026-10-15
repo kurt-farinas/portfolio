@@ -111,6 +111,7 @@ function DesktopWindow({ appId, app, item, active, areaRef }) {
       aria-hidden={item.minimized || undefined}
       hidden={item.minimized}
       onPointerDown={() => setActiveAppId(appId)}
+      onFocusCapture={() => setActiveAppId(appId)}
     >
       <header className="desktop-window-titlebar" onPointerDown={event => beginPointerOperation(event, 'move')}>
         <h2 id={'desktop-window-title-' + appId} ref={titleRef} tabIndex={0} onKeyDown={runKeyboardOperation} aria-describedby={keyboardMode ? 'desktop-window-keyboard-help' : undefined}>

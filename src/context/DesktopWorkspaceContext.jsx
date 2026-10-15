@@ -134,15 +134,16 @@ export function DesktopWorkspaceProvider({ children }) {
   const openApplication = useCallback((appId, options = {}) => {
     if (appId === 'classic') { enterClassic(); return; }
     if (!DESKTOP_APPS.some(app => app.id === appId)) return;
+    const maximizeProjects = appId === 'projects' && canUse3D && !sceneFailed && (view === 'desk' || view === 'screen');
     setWindows(current => {
       const found = current.find(windowItem => windowItem.appId === appId);
-      if (found) return current.map(windowItem => windowItem.appId === appId ? { ...windowItem, minimized: false } : windowItem);
+      if (found) return current.map(windowItem => windowItem.appId === appId ? { ...windowItem, minimized: false, maximized: maximizeProjects || windowItem.maximized } : windowItem);
       const offset = current.length % 6;
       const windowItem = {
         appId,
         rect: { x: Math.min(8 + offset * 2, 18), y: Math.min(4 + offset * 2, 12), width: 78, height: 86 },
         minimized: false,
-        maximized: false
+        maximized: maximizeProjects
       };
       return [...current, windowItem];
     });
@@ -152,7 +153,7 @@ export function DesktopWorkspaceProvider({ children }) {
       const nextPath = options.path || pathForApp(appId, location.pathname);
       if (nextPath !== location.pathname + location.hash) navigate(nextPath, { state: { desktopApp: appId } });
     }
-  }, [location.pathname, location.hash, navigate, enterClassic]);
+  }, [location.pathname, location.hash, navigate, enterClassic, canUse3D, sceneFailed, view]);
 
   useEffect(() => {
     if (classicMode) return;
@@ -197,11 +198,13 @@ export function DesktopWorkspaceProvider({ children }) {
   useEffect(() => {
     const largeQuery = window.matchMedia('(min-width: 1100px) and (pointer: fine)');
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let wasAvailable = canUse3D;
     const updateDisplay = () => {
       const available = largeQuery.matches && canUseWebGL();
       setCanUse3D(available);
       if (!available) setView('workspace');
-      else if (window.location.pathname === '/' && !window.location.hash) setView('desk');
+      else if (!wasAvailable && window.location.pathname === '/' && !window.location.hash) setView('desk');
+      wasAvailable = available;
     };
     const updateMotion = () => setReducedMotion(motionQuery.matches);
     largeQuery.addEventListener('change', updateDisplay);

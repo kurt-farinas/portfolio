@@ -24,7 +24,8 @@
   height: 100%;
 }
 .desk-scene-stage { z-index: 0; }
-.desk-canvas { display: block; }
+/* Contain projected HTML so it cannot intercept the loading panel's controls. */
+.desk-canvas { display: block; z-index: 0; }
 .desk-projected-html { pointer-events: auto !important; }
 .desk-projection-frame {
   width: 1280px;
@@ -563,4 +564,48 @@
   .desktop-app-scroll .studio-project-detail-list > .studio-project-detail { padding: 12px 12px 16px; }
   .desktop-taskbar-item { flex: 1 1 0; min-width: 0; overflow: hidden; }
   .desktop-taskbar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+/* Compact project evidence keeps the complete narrative in the existing dialog. */
+.desktop-app-scroll .studio-project-detail.is-compact > .studio-project-detail-preview { margin-top: 0; margin-bottom: 20px; }
+.desktop-app-scroll .studio-project-detail.is-compact .studio-project-detail-content { margin-top: 20px; gap: 20px; }
+.project-quick-read { display: grid; gap: 16px; }
+.project-quick-read dt { margin-bottom: 4px; font-weight: 700; }
+.project-quick-read dd { margin: 0; color: var(--muted); line-height: 1.6; }
+.portfolio-build-notes { margin-top: 36px; padding-top: 24px; border-top: 2px groove var(--retro-etch); }
+.portfolio-build-notes > h2 { margin: 12px 0; font-size: var(--type-section); }
+.portfolio-build-notes p { line-height: 1.6; }
+.portfolio-architecture { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 0; margin: 24px 0; list-style: none; }
+.portfolio-architecture li { min-width: 0; padding: 12px; border: 2px inset var(--retro-etch); }
+.portfolio-architecture strong, .portfolio-architecture span { display: block; }
+.portfolio-architecture span { margin-top: 6px; color: var(--muted); font-size: var(--type-small); line-height: 1.5; }
+.portfolio-engineering-details { border: 2px groove var(--retro-etch); }
+.portfolio-engineering-details > summary { padding: 12px; min-height: 44px; cursor: pointer; font-weight: 700; }
+.portfolio-engineering-grid { display: grid; gap: 24px; padding: 12px 16px 20px; }
+.portfolio-engineering-grid h3 { margin-bottom: 8px; font-size: var(--type-card-title); }
+.portfolio-engineering-grid p { color: var(--muted); }
+.mobile-workbench { display: none; }
+@media (max-width: 1099px), (pointer: coarse) {
+  .mobile-workbench { display: block; margin: 12px; border: 2px inset var(--retro-etch); }
+  .mobile-workbench-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; padding: 8px; font-size: var(--type-label); background: var(--retro-title); color: var(--retro-title-ink); }
+  .mobile-workbench-heading > span:first-child { font-weight: 700; }
+  .mobile-workbench > svg { display: block; width: 100%; height: auto; max-height: 140px; background: var(--desk-wall); }
+  .mobile-workbench-shortcuts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; background: var(--retro-chrome); }
+  .mobile-workbench-shortcuts button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-width: 0; min-height: 64px; padding: 6px 2px; font-size: var(--type-label); }
+  .mobile-workbench-shortcuts svg { width: 22px; height: 22px; }
+}
+@media (max-width: 480px) {
+  .portfolio-architecture { grid-template-columns: 1fr; }
+  .portfolio-architecture li { display: grid; grid-template-columns: 75px 1fr; gap: 8px; align-items: center; }
+  .portfolio-architecture span { margin: 0; }
+}
+
+.portfolio-engineering-details > summary:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+.desktop-app-scroll .compact-projects .studio-project-page-header { margin-bottom: 24px; }
+.desktop-app-scroll .compact-projects .studio-project-page-header h1 { margin-top: 8px; }
+.desktop-app-scroll .studio-project-detail.is-compact .studio-project-detail-preview img { max-height: 240px; }
+@media (max-width: 760px) {
+  .desktop-app-scroll .studio-project-detail.is-compact .studio-project-detail-preview img { max-height: 180px; }
+  .desktop-app-scroll .studio-project-detail.is-compact figcaption { padding: 8px; }
 }

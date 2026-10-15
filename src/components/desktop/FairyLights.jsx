@@ -23,7 +23,7 @@ function Polaroid({ photo, texture, index, colors, animate, onOpen }) {
   useFrame(({ clock }) => {
     if (!swing.current) return;
     const amount = hovered.current ? 0.09 : 0.025;
-    swing.current.rotation.z = TILT[index] + (animate || hovered.current ? Math.sin(clock.getElapsedTime() * 1.1 + index * 1.9) * amount : 0);
+    swing.current.rotation.z = TILT[index] + (animate ? Math.sin(clock.getElapsedTime() * 1.1 + index * 1.9) * amount : 0);
   });
   return <group position={[anchor.x, anchor.y, WALL_Z + 0.03]}>
     <group ref={swing} rotation={[0, 0, TILT[index]]} userData={{ label: 'Photo: ' + photo.subtitle }}

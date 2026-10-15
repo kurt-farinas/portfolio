@@ -19,7 +19,7 @@ const ACHIEVEMENT_KEY = 'kurt-os-achievements';
 export const RetroOSContext = createContext(null);
 const noop = () => {};
 const EMPTY_DRAFT = { name: '', email: '', message: '' };
-const defaults = { theme: 'dark', bootOpen: false, introKey: 0, achievements: [], unlock: noop, noteDeskOpen: noop, soundEnabled: false, soundError: '', crtEffects: false, warmLamp: false, wallpaper: 0, monitorOn: true, pressedKey: '', contactDraft: EMPTY_DRAFT, contactStatus: { kind: '', message: '' }, sending: false, toggleSound: noop, toggleCrt: noop, toggleLamp: noop, cycleWallpaper: noop, togglePower: noop, powerOn: noop, replayBoot: noop, finishBoot: noop, playSound: noop, pressKey: noop, setContactDraft: noop, sendContact: noop };
+const defaults = { theme: 'dark', bootOpen: false, introKey: 0, claimIntro: () => false, achievements: [], unlock: noop, noteDeskOpen: noop, soundEnabled: false, soundError: '', crtEffects: false, warmLamp: false, wallpaper: 0, monitorOn: true, pressedKey: '', contactDraft: EMPTY_DRAFT, contactStatus: { kind: '', message: '' }, sending: false, toggleSound: noop, toggleCrt: noop, toggleLamp: noop, cycleWallpaper: noop, togglePower: noop, powerOn: noop, replayBoot: noop, finishBoot: noop, playSound: noop, pressKey: noop, setContactDraft: noop, sendContact: noop };
 
 export function RetroOSProvider({ children }) {
   const location = useLocation();
@@ -30,6 +30,12 @@ export function RetroOSProvider({ children }) {
     catch { return location.pathname === '/' && !location.hash; }
   });
   const [introKey, setIntroKey] = useState(0);
+  const playedIntro = useRef(0);
+  const claimIntro = useCallback(key => {
+    if (!key || key <= playedIntro.current) return false;
+    playedIntro.current = key;
+    return true;
+  }, []);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [soundError, setSoundError] = useState('');
   const [crtEffects, setCrtEffects] = useState(false);
@@ -135,6 +141,6 @@ export function RetroOSProvider({ children }) {
     } finally { postGate.current = false; setSending(false); }
   }, [contactDraft]);
 
-  return <RetroOSContext.Provider value={{ theme, bootOpen, introKey, achievements, unlock, noteDeskOpen, soundEnabled, soundError, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => !value), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower: () => setMonitorOn(value => !value), powerOn: () => setMonitorOn(true), setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
+  return <RetroOSContext.Provider value={{ theme, bootOpen, introKey, claimIntro, achievements, unlock, noteDeskOpen, soundEnabled, soundError, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => !value), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower: () => setMonitorOn(value => !value), powerOn: () => setMonitorOn(true), setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
 }
 export function useRetroOS() { return useContext(RetroOSContext) || defaults; }

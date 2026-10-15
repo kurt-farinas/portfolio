@@ -34,25 +34,39 @@ class SceneErrorBoundary extends React.Component {
   }
 }
 
-function DeskLoading({ openApplication, showActions }) {
+function DeskLoading({ stage, onUse2D }) {
   return (
-    <div className="desk-loading" role="status" aria-live="polite">
+    <div className="desk-loading" data-loading-stage={stage}>
       <span className="desk-loading-mark" aria-hidden="true">KF</span>
-      <p>Setting up the workstation…</p>
-      {showActions && <div className="desk-loading-actions">
-        <button type="button" className="studio-action" onClick={() => openApplication('projects')}>Open projects</button>
-        <button type="button" className="studio-action studio-action-outline" onClick={() => openApplication('about')}>Open desktop</button>
+      <p role="status" aria-live="polite">{stage === 'module' ? 'Loading the 3D room…' : 'Preparing room photos and materials…'}</p>
+      <div className="desk-loading-actions">
+        <button type="button" className="studio-action" onClick={onUse2D}>Use 2D desktop</button>
         <a className="studio-action studio-action-outline" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Open résumé PDF</a>
-      </div>}
+      </div>
     </div>
   );
+}
+
+// This session persists between room/monitor views, and resets when the canvas remounts.
+function RoomScene({ onUse2D, ...props }) {
+  const [stage, setStage] = useState('module');
+  const onLoading = useCallback(() => setStage('assets'), []);
+  const onReady = useCallback(() => setStage('ready'), []);
+  return <>
+    <Suspense fallback={null}>
+      <SceneErrorBoundary onFailure={props.onSceneFailure}>
+        <LazyDeskScene {...props} onLoading={onLoading} onReady={onReady} />
+      </SceneErrorBoundary>
+    </Suspense>
+    {stage !== 'ready' && <DeskLoading stage={stage} onUse2D={onUse2D} />}
+  </>;
 }
 
 function ImmersivePortfolio() {
   const retro = useRetroOS();
   const { theme, toggleTheme } = useTheme();
   const {
-    view, canUse3D, sceneFailed, reducedMotion, openApplication, focusMonitor, showDesk, failScene
+    view, canUse3D, sceneFailed, reducedMotion, openApplication, focusMonitor, showDesk, expandDesktop, failScene
   } = useDesktopWorkspace();
   const { openResumeModal, toggleCommandPalette } = useModal();
   const [sceneRetryKey, setSceneRetryKey] = useState(0);
@@ -73,22 +87,19 @@ function ImmersivePortfolio() {
       {renderScene && (
         <>
           <div className="desk-scene-stage" aria-label={view === 'desk' ? 'Interactive 3D desk. Click the monitor or use Open desktop.' : 'Focused view of the portfolio desktop on the monitor.'}>
-            {/* The desk welcome card already offers these actions and covers the loader's buttons. */}
-            <Suspense fallback={<DeskLoading openApplication={openApplication} showActions={view !== 'desk'} />}>
-              <SceneErrorBoundary key={sceneRetryKey} onFailure={onSceneFailure}>
-                <LazyDeskScene
-                  view={view}
-                  theme={theme}
-                  reducedMotion={reducedMotion}
-                  onOpenDesktop={focusMonitor}
-                  onOpenApp={appId => openApplication(appId)}
-                  onOpenResume={openResumeModal}
-                  toggleTheme={toggleTheme}
-                  onBackToDesk={showDesk}
-                  onSceneFailure={onSceneFailure}
-                />
-              </SceneErrorBoundary>
-            </Suspense>
+            <RoomScene
+              key={sceneRetryKey}
+              onUse2D={expandDesktop}
+              view={view}
+              theme={theme}
+              reducedMotion={reducedMotion}
+              onOpenDesktop={focusMonitor}
+              onOpenApp={appId => openApplication(appId)}
+              onOpenResume={openResumeModal}
+              toggleTheme={toggleTheme}
+              onBackToDesk={showDesk}
+              onSceneFailure={onSceneFailure}
+            />
           </div>
 
           {view === 'desk' && (

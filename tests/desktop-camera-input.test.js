@@ -17,6 +17,19 @@ describe('projected desktop input ownership', () => {
     cleanup=bindDesktopCameraInput(frame,controls);
   });
   afterEach(()=>{cleanup();container.remove();vi.restoreAllMocks();});
+  it('retains desktop ownership when a view change detaches the click target', () => {
+    frame.removeChild(field);
+    const compute = vi.fn(); const state = { raycaster: { camera: {} } };
+    computeDesktopScenePointer({ target: field, type: 'click', detail: 1, composedPath: () => [field, frame, container] }, state, null, compute);
+    expect(state.raycaster.camera).toBeNull(); expect(compute).not.toHaveBeenCalled();
+  });
+  it('does not reuse stale pointer coordinates for keyboard clicks, while retaining scene pointer clicks', () => {
+    const compute = vi.fn(); const state = { raycaster: { camera: {} } };
+    computeDesktopScenePointer({ target: outside, type: 'click', detail: 0 }, state, null, compute);
+    expect(compute).not.toHaveBeenCalled();
+    computeDesktopScenePointer({ target: outside, type: 'click', detail: 1 }, state, null, compute);
+    expect(compute).toHaveBeenCalledOnce();
+  });
   it('locks on hover and restores camera input outside',()=>{
     pointer(frame,'pointerenter');expect(controls.enabled).toBe(false);
     pointer(frame,'pointerleave');expect(controls.enabled).toBe(true);

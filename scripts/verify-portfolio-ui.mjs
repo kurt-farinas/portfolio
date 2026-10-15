@@ -175,6 +175,17 @@ try {
       }
 
       await expect(page.locator('[data-testid="desktop-workspace"]')).toHaveCount(1);
+      if (width < 1100) {
+        const shortcuts = page.getByRole('navigation', { name: 'Workstation shortcuts' });
+        await expect(shortcuts).toBeVisible();
+        await page.screenshot({ path: path.join(output, width + '-' + scheme + '-workstation.png'), fullPage: true });
+        for (const [label, appId] of [['Projects', 'projects'], ['Résumé', 'resume'], ['Contact', 'contact']]) {
+          await shortcuts.getByRole('button', { name: label, exact: true }).focus();
+          await page.keyboard.press('Enter');
+          await expect(page.locator('.desktop-window.is-active')).toHaveAttribute('data-app-id', appId);
+          await page.getByRole('button', { name: 'Open About app' }).click();
+        }
+      }
       await expect(page.getByRole('button', { name: 'Open application list' })).toBeVisible();
       await page.getByRole('button', { name: 'Open application list' }).click();
       await expect(page.locator('#desktop-launcher .desktop-icon')).toHaveCount(16);
@@ -232,6 +243,9 @@ try {
       await expect(page.locator('#pmpc-gen-mdse').getByRole('link', { name: /Visit website/ })).toHaveCount(0);
       await expect(page.locator('#hris')).toContainText('98/100');
       await expect(page.locator('#hris')).toContainText('342');
+      await expect(page.locator('.project-quick-read')).toHaveCount(6);
+      await expect(page.locator('.studio-project-detail-highlights')).toHaveCount(0);
+      expect(await projectRows.first().evaluate(el => el.firstElementChild.tagName)).toBe('FIGURE');
       await page.locator('.desktop-window.is-active .studio-project-detail img').first().scrollIntoViewIfNeeded();
       await settleImages(page);
       const projectScan = await scan(page, width + ' ' + scheme + ' projects');
@@ -253,6 +267,16 @@ try {
       await page.keyboard.press('Escape');
       await expect(page.locator('#projectModal')).toHaveCount(0);
       await expect(opener).toBeFocused();
+      const buildNotes = page.locator('.portfolio-engineering-details');
+      await buildNotes.locator('summary').focus();
+      await page.keyboard.press('Enter');
+      await expect(buildNotes).toHaveAttribute('open', '');
+      await expect(buildNotes).toContainText('Scene raycasts skip desktop events');
+      const focusOutline = await buildNotes.locator('summary').evaluate(el => getComputedStyle(el).outlineWidth);
+      expect(focusOutline).toBe('3px');
+      await scan(page, width + ' ' + scheme + ' portfolio build notes');
+      scanCount += 1;
+      await page.screenshot({ path: path.join(output, width + '-' + scheme + '-build-notes.png'), fullPage: true });
 
       await page.goto(base + '/after-hours', { waitUntil: 'networkidle' });
       await expect(page.locator('.desktop-window.is-active')).toHaveAttribute('data-app-id', 'after-hours');

@@ -1,7 +1,8 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
 import { DoubleSide, PlaneGeometry } from 'three';
+import RoomSurroundings from './RoomSurroundings';
 
 // Room dressing around the desk. Motion runs only while `animate` is true (desk overview, tab visible, motion allowed);
 // DeskScene's ambient driver supplies the frames, so the demand-rendered scene still sleeps otherwise.
@@ -16,6 +17,7 @@ function foldedPanel(width, height) {
 
 function Curtains({ colors, animate }) {
   const panel = useMemo(() => foldedPanel(0.85, 2.9), []);
+  useEffect(() => () => panel.dispose(), [panel]);
   const left = useRef(null);
   const right = useRef(null);
   useFrame(({ clock }) => {
@@ -44,7 +46,7 @@ function Plant({ colors, animate }) {
     <group ref={leaves} position={[0, 0.4, 0]}>
       {LEAVES.map(([tilt, height, turn]) => (
         <group key={turn} rotation={[0, turn, tilt * 0.35]}>
-          <mesh position={[0, height, 0]} rotation={[0.25, 0, 0]}><planeGeometry args={[0.2, height * 2]} /><meshStandardMaterial color={colors.plant} roughness={0.7} side={DoubleSide} /></mesh>
+          <mesh position={[0, height, 0]} rotation={[0.25, 0, -0.22]} scale={[0.3, 1, 0.12]}><sphereGeometry args={[height, 8, 6]} /><meshStandardMaterial color={turn > 1 ? colors.leafLight : colors.plant} roughness={0.85} /></mesh>
         </group>
       ))}
     </group>
@@ -54,14 +56,21 @@ function Plant({ colors, animate }) {
 const BOOKS = [[0.12, 0.42, 0], [0.09, 0.36, 1], [0.14, 0.46, 2], [0.1, 0.4, 0], [0.13, 0.33, 1]];
 function WallShelf({ colors }) {
   let x = -0.55;
-  return <group position={[-5.0, 2.0, -4.8]}>
+  return <group position={[-4.9, 2.4, -4.8]}>
     <mesh><boxGeometry args={[1.5, 0.06, 0.32]} /><meshStandardMaterial color={colors.board} roughness={0.75} /></mesh>
     {BOOKS.map(([width, height, color], index) => {
-      const book = <mesh key={index} position={[x + width / 2, 0.03 + height / 2, 0]}><boxGeometry args={[width, height, 0.24]} /><meshStandardMaterial color={colors.books[color]} roughness={0.8} /></mesh>;
+      const book = <group key={index} position={[x + width / 2, 0.03 + height / 2, 0]}>
+        <mesh><boxGeometry args={[width, height, 0.24]} /><meshStandardMaterial color={colors.books[color]} roughness={0.8} /></mesh>
+        {[-0.3, 0.3].map(y => <mesh key={y} position={[0, height * y, 0.122]}><planeGeometry args={[width * 0.8, 0.015]} /><meshStandardMaterial color={colors.rugEdge} /></mesh>)}
+      </group>;
       x += width + 0.015;
       return book;
     })}
     <mesh position={[0.45, 0.2, 0]} rotation={[0, 0, -0.35]}><boxGeometry args={[0.12, 0.38, 0.24]} /><meshStandardMaterial color={colors.books[2]} roughness={0.8} /></mesh>
+    {[-0.5, 0.5].map(x => <group key={x} position={[x, -0.14, -0.06]}>
+      <mesh><boxGeometry args={[0.055, 0.25, 0.05]} /><meshStandardMaterial color={colors.curtainRod} /></mesh>
+      <mesh position={[0, 0.04, 0.07]} rotation={[0.7, 0, 0]}><boxGeometry args={[0.055, 0.26, 0.04]} /><meshStandardMaterial color={colors.curtainRod} /></mesh>
+    </group>)}
   </group>;
 }
 
@@ -69,6 +78,9 @@ function Rug({ colors }) {
   return <group position={[0, -1.5, 0.6]}>
     <RoundedBox args={[9.6, 0.03, 5.6]} radius={0.01} smoothness={2}><meshStandardMaterial color={colors.rugEdge} roughness={1} /></RoundedBox>
     <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[9.1, 5.1]} /><meshStandardMaterial color={colors.rug} roughness={1} /></mesh>
+    <mesh position={[0, 0.022, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[8.75, 4.75]} /><meshStandardMaterial color={colors.rugEdge} roughness={1} /></mesh>
+    <mesh position={[0, 0.024, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[8.65, 4.65]} /><meshStandardMaterial color={colors.rug} roughness={1} /></mesh>
+    {[-3.3, -1.65, 0, 1.65, 3.3].map(x => <mesh key={x} position={[x, 0.026, 1.85]} rotation={[-Math.PI / 2, 0, Math.PI / 4]}><planeGeometry args={[0.25, 0.25]} /><meshStandardMaterial color={colors.rugEdge} roughness={1} /></mesh>)}
   </group>;
 }
 
@@ -98,7 +110,7 @@ function Steam({ colors, animate }) {
     });
   });
   if (!animate) return null;
-  return <group position={[3.4, 0.79, 1.28]}>
+  return <group position={[3.55, 0.79, 1.65]}>
     {[0, 1, 2].map(index => <mesh key={index} ref={node => { puffs.current[index] = node; }}>
       <planeGeometry args={[0.12, 0.28]} /><meshBasicMaterial color={colors.paper} transparent opacity={0} depthWrite={false} />
     </mesh>)}
@@ -129,6 +141,7 @@ function DustMotes({ colors, animate }) {
 
 export default function DeskRoom({ colors, animate, lampOn }) {
   return <>
+    <RoomSurroundings colors={colors} />
     <Curtains colors={colors} animate={animate} />
     <Plant colors={colors} animate={animate} />
     <WallShelf colors={colors} />
