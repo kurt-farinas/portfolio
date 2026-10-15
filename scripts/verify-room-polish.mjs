@@ -59,7 +59,7 @@ try {
     const context = await contextFor(); const page = await context.newPage();
     const errors = []; page.on('pageerror', error => errors.push(error.message));
     let release; const held = new Promise(resolve => { release = resolve; });
-    const pattern = stage === 'module' ? '**/assets/DeskScene-*.js' : '**/images/outside/1.jpg';
+    const pattern = stage === 'module' ? '**/assets/DeskScene-*.js' : '**/images/outside/10.jpg*';
     await page.route(pattern, async route => { await held; await route.continue().catch(() => {}); });
     try {
       await page.goto(base, { waitUntil: 'domcontentloaded' });
@@ -75,7 +75,7 @@ try {
   }
   {
     const context = await contextFor(); const page = await context.newPage();
-    await page.route('**/images/outside/1.jpg', route => route.abort());
+    await page.route('**/images/outside/10.jpg*', route => route.abort());
     await page.goto(base, { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.desktop-workspace')).toBeVisible({ timeout: 30000 });
     await expect(page.locator('.desk-canvas')).toHaveCount(0);

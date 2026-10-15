@@ -13,6 +13,7 @@ import useMinuteClock from './useMinuteClock';
 import DeskRoom, { CorkBoard } from './DeskRoom';
 import { WindowLandscape } from './RoomSurroundings';
 import FairyLights from './FairyLights';
+import optimized from '../../data/optimizedImageManifest.json';
 import FragranceTray from './FragranceTray';
 import { CoffeeMug, DeskClock, DeskLamp, DeskPrinter, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
 
@@ -25,9 +26,20 @@ function desktopSceneEvents(store) {
   return { ...manager, compute: (event, state, previous) => computeDesktopScenePointer(event, state, previous, manager.compute) };
 }
 
-function PhotoPrint({ onClick, paper }) {
-  const texture = useTexture('/images/outside/1.jpg');
-  texture.colorSpace = SRGBColorSpace;
+const PRINT_ASPECT = 0.66 / 0.82;
+function PhotoPrint({ src, onClick, paper }) {
+  const source = useTexture(optimized[src] || src);
+  // Clone before cropping: useTexture shares one cached texture per URL with the wall polaroids.
+  const texture = useMemo(() => {
+    const value = source.clone();
+    value.colorSpace = SRGBColorSpace;
+    const aspect = source.image.width / source.image.height;
+    if (aspect > PRINT_ASPECT) { value.repeat.set(PRINT_ASPECT / aspect, 1); value.offset.set((1 - PRINT_ASPECT / aspect) / 2, 0); }
+    else { value.repeat.set(1, aspect / PRINT_ASPECT); value.offset.set(0, (1 - aspect / PRINT_ASPECT) / 2); }
+    value.needsUpdate = true;
+    return value;
+  }, [source]);
+  useEffect(() => () => texture.dispose(), [texture]);
   return (
     <group onClick={event => { event.stopPropagation(); onClick(); }}>
       <mesh position={[0, 0, -0.008]}><boxGeometry args={[0.74, 0.9, 0.025]} /><meshStandardMaterial color={paper} roughness={0.9} /></mesh>
@@ -152,11 +164,11 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
       </group>
       <group position={[-3.9, 0.81, 0.4]} rotation={[-Math.PI / 2, 0, 0]} userData={{ label: 'After Hours' }} onClick={event => { event.stopPropagation(); photoClick(); }}>
         <mesh position={[0.02, 0, -0.025]}><boxGeometry args={[0.82, 1.02, 0.04]} /><meshStandardMaterial color={colors.frame} /></mesh>
-        <PhotoPrint onClick={photoClick} paper={colors.paper} />
+        <PhotoPrint src="/images/outside/10.jpg" onClick={photoClick} paper={colors.paper} />
       </group>
       <group position={[-3.3, 0.83, 0.36]} rotation={[-Math.PI / 2, 0, 0.16]} userData={{ label: 'After Hours' }} onClick={photoClick}>
         <mesh position={[0, 0, -0.02]}><boxGeometry args={[0.8, 1, 0.04]} /><meshStandardMaterial color={colors.frame} /></mesh>
-        <PhotoPrint onClick={photoClick} paper={colors.paper} />
+        <PhotoPrint src="/images/outside/11.jpg" onClick={photoClick} paper={colors.paper} />
       </group>
       <group position={[0.92, 0.82, 0.55]} rotation={[-Math.PI / 2, 0, -0.12]} userData={{ label: 'Résumé' }} onClick={event => { event.stopPropagation(); openFromDesk('resume'); }}>
         <mesh position={[0, 0, -0.025]}><boxGeometry args={[0.74, 1.02, 0.04]} /><meshStandardMaterial color={colors.frame} /></mesh>

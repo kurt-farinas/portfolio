@@ -11,7 +11,8 @@ const WALL_Z = -4.88;
 const CURVE = new CatmullRomCurve3([[-2.6, 5.65], [-1.5, 5.12], [-0.4, 5.6], [0.7, 5.06], [1.8, 5.6]].map(([x, y]) => new Vector3(x, y, WALL_Z)));
 const BULB_COUNT = 14;
 const BULBS = Array.from({ length: BULB_COUNT }, (_, i) => CURVE.getPointAt((i + 0.5) / BULB_COUNT));
-const PHOTOS = [0, 2, 4, 6, 8].map(index => snapshotsDeckData[index]).filter(Boolean);
+// Newest snapshots (10-12) alternate with two earlier ones along the string.
+const PHOTOS = [9, 0, 10, 4, 11].map(index => snapshotsDeckData[index]).filter(Boolean);
 const PHOTO_AT = [0.13, 0.31, 0.5, 0.69, 0.87];
 const TILT = [0.07, -0.05, 0.04, -0.08, 0.05];
 const GLOW_LIGHTS = [-1.5, 0.1, 1.3];
