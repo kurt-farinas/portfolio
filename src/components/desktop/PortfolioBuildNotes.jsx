@@ -11,14 +11,8 @@ const engineeringNotes = [
 
 export default function PortfolioBuildNotes() {
   return <section className="portfolio-build-notes" aria-labelledby="portfolio-build-title">
-    <p className="desktop-eyebrow">THE SITE YOU ARE USING</p>
     <h2 id="portfolio-build-title">Kurt-OS: an interactive portfolio</h2>
     <p>A Windows 98-inspired workstation built with React, Three.js, React Three Fiber, and Drei. The design challenge is to keep a playful room usable as a portfolio.</p>
-    <ol className="portfolio-architecture" aria-label="Portfolio architecture">
-      <li><strong>Room</strong><span>3D scene and camera</span></li>
-      <li><strong>Desktop</strong><span>Shared React window state</span></li>
-      <li><strong>Apps</strong><span>Projects, résumé, and contact</span></li>
-    </ol>
     <details className="portfolio-engineering-details">
       <summary>How this portfolio works</summary>
       <div className="portfolio-engineering-grid">{engineeringNotes.map(([title, description]) => <section key={title}><h3>{title}</h3><p>{description}</p></section>)}</div>

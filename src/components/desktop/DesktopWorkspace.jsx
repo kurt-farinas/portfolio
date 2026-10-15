@@ -127,7 +127,6 @@ function DesktopWindow({ appId, app, item, active, areaRef }) {
         </div>
       </header>
       {keyboardMode && <p id="desktop-window-keyboard-help" className="desktop-window-keyboard-help" role="status">{keyboardMode === 'move' ? 'Move' : 'Resize'} with arrow keys. Shift moves farther. Enter or Escape ends keyboard control.</p>}
-      <p className="retro-window-address">Portfolio / {app.label}</p>
       <DesktopAppContent appId={appId} />
       {!item.maximized && <button type="button" className="desktop-window-resize-handle" aria-label={'Resize ' + app.label + ' window'} onPointerDown={event => beginPointerOperation(event, 'resize')} onKeyDown={runKeyboardOperation} title="Drag to resize. Choose Resize for keyboard controls.">⤡</button>}
     </section>

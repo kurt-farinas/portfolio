@@ -197,14 +197,14 @@ export default function ProjectModal() {
           </>
         )}
 
-        <div className="modal-section-title">Key Development Highlights</div>
+        <div className="modal-section-title">Contributions</div>
         <ul className="modal-list">
           {project.highlights?.map((hl, idx) => (
             <li key={idx}>{hl}</li>
           ))}
         </ul>
 
-        <div className="modal-section-title">Tech Stack &amp; Tools</div>
+        <div className="modal-section-title">Technologies</div>
         <div className="stack-row">
           {project.stack?.map((tech, idx) => (
             <span key={idx} className="studio-stack-item">{tech}</span>

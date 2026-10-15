@@ -6,7 +6,7 @@ export const featuredProjectIds = ['pmpcPis', 'pmpcWorkforce', 'pmpcGenMdse', 'h
 
 export const projectDetails = {
   pmpcPis: {
-    decisionSummary: "Extend inherited financial workflows with traceable corrections, review controls, and clearer staff interfaces.",
+    decisionSummary: "Extend financial workflows with traceable corrections, review controls, and clearer staff interfaces.",
     resultSummary: "Deployed accounting safeguards, request queues, notifications, and public/member/staff interface improvements.",
     id: "pmpc-pis",
     title: "PMPC People's Information System",
@@ -14,10 +14,10 @@ export const projectDetails = {
     roleTag: "Maintenance & Improvements",
     browserStatus: "DEPLOYED IMPROVEMENTS",
     badge: "Inherited System · Contributor",
-    cardSummary: "Maintain and extend an inherited cooperative system with audited accounting workflows, document controls, reporting, and responsive portals.",
+    cardSummary: "Improve cooperative operations with audited accounting workflows, document controls, reporting, and responsive portals.",
     websiteUrl: "https://peoplesmpcoop.com/",
     browserLabel: "peoplesmpcoop.com",
-    desc: "Contributions: September 16–October 15, 2026. I maintain and extend this inherited cooperative information system, improving financial operations, review safeguards, and public, member, and staff interfaces.",
+    desc: "Contributions: September 16–October 15, 2026. My work improves financial operations, review safeguards, and public, member, and staff interfaces.",
     highlights: [
       "Petty Cash and daily reporting: introduced separately tracked fund, loan, and collection balances, opening entries, bank deposits and reconciliation, and branded A4 disbursement reports with role-based signatories; refined allocation routing and date-aware balance checks.",
       "Accounting corrections: implemented pending Debit/Credit edits, posted-amount review, account-title change requests, and reversal/rebooking safeguards. Original/proposed values, reasons, reviewer decisions, and atomic audit history protect journal and General Ledger consistency.",
@@ -44,9 +44,9 @@ export const projectDetails = {
     roleTag: "Maintenance & Development",
     browserStatus: "DEPLOYED + LOCAL WORK",
     badge: "Inherited Website · Management",
-    cardSummary: "Improve an inherited retail application's mobile workflows and implement local inventory valuation and monthly financial reporting.",
+    cardSummary: "Improve mobile retail workflows and implement local inventory valuation and monthly financial reporting.",
     browserLabel: "genmdse.peoplesmpcoop.com",
-    desc: "Contributions: September 16–October 15, 2026. I maintain and improve this inherited retail application. Mobile interface improvements are deployed; inventory valuation and monthly financial reporting are implemented locally.",
+    desc: "Contributions: September 16–October 15, 2026. Mobile interface improvements are deployed; inventory valuation and monthly financial reporting are implemented locally.",
     highlights: [
       "Deployed mobile interfaces: improved sidebar navigation, shell spacing, dashboards, product cards/forms, and profit/inventory report layouts, with larger touch targets, readable inputs, and preserved POS-specific cart behavior.",
       "Local inventory counts: implemented saved cost × quantity valuation, explicit zero-versus-uncounted entries, role/branch controls, stale-stock recount checks, protected count history, and safeguards against repeated stock adjustments.",
@@ -72,9 +72,9 @@ export const projectDetails = {
     roleTag: "Maintenance & Improvements",
     browserStatus: "DEPLOYED + LOCAL WORK",
     badge: "Inherited System · Contributor",
-    cardSummary: "Extend an inherited workforce system with attendance corrections, personal schedules, payroll review, management exports, and HR-verified account setup.",
+    cardSummary: "Improve attendance corrections, personal schedules, payroll review, management exports, and HR-verified account setup.",
     browserLabel: "peoplescoopdtr.online",
-    desc: "Contributions: September 16–October 15, 2026. I maintain and extend this inherited attendance and workforce system. Delivered fixes and locally implemented additions are distinguished below.",
+    desc: "Contributions: September 16–October 15, 2026. Delivered fixes and locally implemented additions are distinguished below.",
     highlights: [
       "Attendance and self-service: improved employee/admin dashboards, mobile punch controls, four-punch timelines, attendance filters, correction requests, task-planner/profile/notification interfaces, and responsive navigation. Strengthened employee ownership and reviewer permissions and reduced unnecessary clock-driven page rendering.",
       "Confirmed live fixes: repaired individual and bulk payslip PDFs and applied an effective-dated employee shift correction while preserving recorded punches, hours, saved payroll figures, and draft status.",

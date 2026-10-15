@@ -253,7 +253,7 @@ try {
       await page.screenshot({ path: path.join(output, width + '-' + scheme + '-projects.png'), fullPage: true });
       expect(projectScan.images.length).toBeGreaterThan(0);
 
-      const opener = page.locator('.desktop-window.is-active').getByRole('button', { name: 'View screenshots and case study' }).nth(3);
+      const opener = page.locator('.desktop-window.is-active').getByRole('button', { name: 'View project: CS Form No. 6 Digitalization System', exact: true });
       await opener.click();
       await expect(page.locator('#projectModal')).toBeVisible();
       await expect(page.locator('#projectModal')).toContainText('CS Form No. 6');

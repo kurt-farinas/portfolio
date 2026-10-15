@@ -43,8 +43,7 @@
 .desktop-window-glyph .retro-icon { width: 19px; height: 19px; }
 .desktop-window-controls { gap: 3px; }
 .desktop-window-controls button { border-radius: 0; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); color: var(--retro-ink); }
-.retro-window-address { position: absolute; inset: 54px 0 auto; max-width: none; height: 36px; margin: 0; padding: 7px 12px; border-bottom: 1px solid var(--retro-edge); color: var(--retro-ink); background: var(--retro-chrome); font: 400 13px/20px var(--font-pixel); }
-.desktop-app-scroll { top: 90px; font-family: var(--font-body); }
+.desktop-app-scroll { top: 54px; font-family: var(--font-body); }
 .desktop-window-resize-handle { place-items: end; padding: 4px; border-radius: 0; background: transparent; color: var(--ink); }
 .desktop-window-resize-handle:is(:hover, :active, :focus-visible) { background: var(--retro-chrome); color: var(--retro-ink); }
 .desktop-taskbar-home { flex: 0 0 auto; }

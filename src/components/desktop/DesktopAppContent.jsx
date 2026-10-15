@@ -62,7 +62,6 @@ function ContactApp() {
         <PortfolioImage src="/images/kurt-farinas-profile.png" alt="Kurt Fariñas" loading="eager" />
         <div><h1>Kurt Fariñas</h1><p>{portfolioProfile.role}</p></div>
       </div>
-      <p>I work on interfaces and workflow systems for cooperative and education settings.</p>
       <PortfolioContactForm />
       <button type="button" className="studio-action studio-action-outline desktop-copy-email" onClick={copyEmail}>Copy email address</button>
       <div className="desktop-social-links">

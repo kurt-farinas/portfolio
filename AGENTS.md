@@ -34,6 +34,8 @@ The Classic Portfolio app and direct /classic links switch to classic mode for t
 
 ## Content safeguards
 
+- Keep window chrome free of the non-interactive Portfolio address strip; app content starts below the 54px title bar. Project actions read View project with project-specific accessible names. Preserve inherited attribution in each card's context and each modal badge without repeating it in prose. Contact omits the repeated professional introduction; build notes retain the technical introduction and expandable details without the eyebrow or architecture overview. Modal sections are Contributions and Technologies.
+
 - Keep section introductions title-only: Projects, After Hours, and Gear & Collections omit generic eyebrow labels and explanatory subtitles. After Hours places the photo stack in one centered column without the duplicate Life outside the IDE heading. Résumé and Contact omit their generic eyebrow labels while retaining identity, role, actions, and useful instructions. Apply shared changes to Classic Portfolio too; preserve functional instructions, captions, and project evidence.
 
 - The three PMPC case studies summarize verified contributions from September 16–October 15, 2026 in grouped highlights. Keep inherited attribution, concise cards, and separate confirmed deployed work from local implementation or unverified deployment. Evidence and superseded claims are recorded in docs/pmpc-contribution-audit.md; dates, commits, and an Unreleased heading alone do not establish authorship or deployment.

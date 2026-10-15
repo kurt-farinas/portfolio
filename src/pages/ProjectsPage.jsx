@@ -86,8 +86,8 @@ export function ProjectsContent({ compact = false }) {
 
                   </>}
                   <div className="studio-project-detail-actions">
-                    <button type="button" className="studio-action" onClick={() => openProjectModal(projectKey)}>
-                      View screenshots and case study
+                    <button type="button" className="studio-action" aria-label={'View project: ' + project.title} onClick={() => openProjectModal(projectKey)}>
+                      View project
                     </button>
                     {project.websiteUrl && <a className="studio-text-action" href={project.websiteUrl} target="_blank" rel="noopener noreferrer">Visit website ↗</a>}
                     {project.demoUrl && <a className="studio-text-action" href={project.demoUrl} target="_blank" rel="noopener noreferrer">Live demo ↗</a>}
