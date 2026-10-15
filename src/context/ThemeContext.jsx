@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useLayoutEffect, useState } from 'react';
 const ThemeContext = createContext();
 export function ThemeProvider({ children }) {
   const [preference, setPreference] = useState(() => {
@@ -6,7 +6,8 @@ export function ThemeProvider({ children }) {
     catch { return null; }
   });
   const theme = preference || 'dark';
-  useEffect(() => {
+  // Layout effect: the attribute must change before children's effects read theme CSS variables.
+  useLayoutEffect(() => {
     document.documentElement.dataset.theme = theme;
     if (preference) { try { localStorage.setItem('portfolio-theme', preference); } catch { /* Storage may be unavailable. */ } }
   }, [theme, preference]);

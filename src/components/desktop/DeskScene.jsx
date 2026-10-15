@@ -323,14 +323,8 @@ function SceneReady({ onReady }) {
   return null;
 }
 
-export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, onOpenApp, onOpenResume, toggleTheme, onBackToDesk, onSceneFailure, onLoading, onReady }) {
-  const contextLostCleanup = useRef(null);
-  const screenPortal = useRef(null);
-  const [ready, setReady] = useState(false);
-  const markReady = useCallback(() => { setReady(true); onReady(); }, [onReady]);
-  useLayoutEffect(() => { onLoading(); }, [onLoading]);
-  const ContextBridge = useContextBridge(DesktopWorkspaceContext, ModalContext, RetroOSContext);
-  const palette = useMemo(() => ({
+function readPalette() {
+  return {
     world: readColor('--desk-world', '#292a27'),
     wall: readColor('--desk-wall', '#3b3c35'),
     wainscot: readColor('--desk-wainscot'), trim: readColor('--desk-trim'),
@@ -364,7 +358,21 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
     books: [readColor('--desk-book-a'), readColor('--desk-book-b'), readColor('--desk-book-c')], nightWarm: readColor('--desk-night-warm'),
     daylight: readColor('--desk-daylight'), keyLight: readColor('--desk-key-light'),
     fairyBulb: readColor('--desk-fairy-bulb'), fairyWire: readColor('--desk-fairy-wire')
-  }), [theme]);
+  };
+}
+
+export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, onOpenApp, onOpenResume, toggleTheme, onBackToDesk, onSceneFailure, onLoading, onReady }) {
+  const contextLostCleanup = useRef(null);
+  const screenPortal = useRef(null);
+  const [ready, setReady] = useState(false);
+  const markReady = useCallback(() => { setReady(true); onReady(); }, [onReady]);
+  useLayoutEffect(() => { onLoading(); }, [onLoading]);
+  const ContextBridge = useContextBridge(DesktopWorkspaceContext, ModalContext, RetroOSContext);
+  // Read after ThemeProvider's layout effect has switched data-theme, so the room never shows the previous theme's colors.
+  const [palette, setPalette] = useState(readPalette);
+  useEffect(() => {
+    setPalette(current => { const next = readPalette(); return JSON.stringify(next) === JSON.stringify(current) ? current : next; });
+  }, [theme]);
   const motionReduced = Boolean(reducedMotion);
   const phase = roomPhase(useMinuteClock());
   const light = ROOM_LIGHT[phase];

@@ -53,7 +53,9 @@
   --retro-icon-ink: #fff0c3;
   --paper: #faf9f6; --ink: #242426; --surface: #ffffff; --surface-soft: #f1f0ed;
   --muted: #626267; --border: #deddda; --accent: #247348; --backdrop: #141416b8;
-  --desk-world: #b8b9a8; --desk-wall: #c8c8b2; --desk-board: #906547; --desk-frame: #514737;
+  --desk-world: #cfc8b8; --desk-wall: #e2d9c6; --desk-board: #906547; --desk-frame: #514737;
+  --desk-wainscot: #bfb299; --desk-trim: #8c7d69; --desk-floor: #9c7a5a; --desk-floor-alternate: #a5815f;
+  --desk-curtain: #5d8781; --desk-rug: #5d8781; --desk-rug-edge: #e3d3ae; --desk-book-a: #4f7f78;
   --desk-object-dark: #302d29; --desk-screen: #f4f1e9; --desk-key: #202125; --desk-accent: #9f6949; --desk-paper: #f0e9df;
   --grain-opacity: 0.03; color-scheme: light;
 }
