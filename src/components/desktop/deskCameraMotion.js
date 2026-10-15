@@ -10,13 +10,13 @@ export function createDeskCameraMotion(getControls, clock, setFrameloop) {
     controls.setFocalOffset(...offset, false);
   };
   return {
-    move(pose, animate, smoothTime = 0.22) {
+    move(pose, animate, smoothTime = 0.30) {
       const run = ++generation;
       const controls = getControls();
       if (!controls) return Promise.resolve();
       freeze(controls);
       if (!animate) {
-        controls.smoothTime = 0.22;
+        controls.smoothTime = 0.30;
         controls.setLookAt(...pose, false);
         setFrameloop('demand');
         return Promise.resolve();
@@ -27,8 +27,8 @@ export function createDeskCameraMotion(getControls, clock, setFrameloop) {
       const current = () => run === generation && controls === getControls();
       return controls.setLookAt(...pose, true).then(() => {
         if (!current()) return;
-        controls.setLookAt(...pose, false);
-        controls.smoothTime = 0.22;
+        // `rest` means almost still, not finished. Drei's update invalidations
+        // keep the remaining damping rendering in demand mode until sleep.
         setFrameloop('demand');
       }, error => {
         if (!current()) return;

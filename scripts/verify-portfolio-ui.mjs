@@ -353,6 +353,13 @@ try {
         await page.getByRole('button', { name: 'Open desktop', exact: true }).click();
         await page.locator('[data-testid="desktop-workspace"]').waitFor({ timeout: 20000 });
         await page.waitForTimeout(1800);
+        // Camera damping finishes naturally; wait for actual idle rather than
+        // assuming that a fixed wall-clock delay means the last frame rendered.
+        await expect.poll(async () => {
+          const count = await page.evaluate(() => window.__portfolioRafCount);
+          await page.waitForTimeout(300);
+          return await page.evaluate(() => window.__portfolioRafCount) - count;
+        }, { timeout: 12000 }).toBe(0);
         const before = await page.evaluate(() => window.__portfolioRafCount);
         await page.waitForTimeout(1200);
         const after = await page.evaluate(() => window.__portfolioRafCount);

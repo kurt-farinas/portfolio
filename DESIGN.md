@@ -71,3 +71,35 @@ Keep the overview at a gentle three-quarter angle while the reading view faces t
 The app shell distinguishes actual module loading from scene photos/material preparation. Both stages retain Use 2D desktop and direct /resume.pdf actions. The three-second boot stays immediately skippable. Intro ownership lives with the existing boot context so returning from an expanded view does not replay it. Camera moves freeze the visible pose before retargeting and only the latest transition may finish or report an error; resize and reduced-motion updates snap instantly. Ordinary desktop resizing preserves the current view. Keyboard focus entering an app window raises that window.
 
 Run node scripts/verify-room-polish.mjs against the production preview for fixed-time day/dusk/night screenshots, responsive composition, slow loading and 2D escape, rapid transition interruptions, resize, keyboard window activation, and screenshot comparison artifacts. Keep the existing portfolio, desktop-input, retro-app, and monitor-framing verifiers.
+
+## Smooth camera zoom
+
+Ordinary camera smoothing is 0.30, pointer-drag smoothing is 0.18, and wheel dolly speed is 0.75; the intro retains 0.45 smoothing. A wheel handoff runs once at a time: further wheel input in the same direction cannot retrigger or overshoot it, while opposite input retargets from the visible pose. This guard applies only to camera input outside the projected desktop and leaves desktop scrolling and browser zoom untouched. Keep the 5.5/6-unit thresholds, zoom limits, camera framing and instant reduced-motion/resize behavior. At rest, stop forcing an exact final pose; Drei continues invalidating residual camera updates in demand mode until natural sleep. Retain generation checks so stale moves cannot stop a newer transition.
+
+Run node scripts/verify-camera-zoom.mjs against the local production preview to sample projected-screen motion during entry, exit, wheel thresholds and reversals, check damping tails and idle rendering, and save motion traces/screenshots under test-results/camera-zoom/.
+
+## Hawas Ice desk bottle
+
+The Hawas Ice model on the fragrance tray is a stylized Rasasi Hawas Ice bottle, based on the existing Gear & Collections photo: rounded blue/violet glass, white HAWAS / ICE lettering and an ivory ridged cap. Its small procedural color map is a product-material detail, not an interface gradient. Use the product name for each bottle tooltip and open its photo directly. The tray rim retains the Gear & Collections action. Dispose generated textures and mirror all four bottles in the mobile illustration. Keep the original gallery image and product data unchanged.
+
+## Personal fragrance tray
+
+A compact walnut tray in the existing right-hand perfume area displays Hawas Ice, Afnan Supremacy Collector's Edition, Liquid Brun, then Jaguar Classic Red, using the existing collection data for names, photos, captions and links. Bottle silhouettes follow the supplied photos: ivory-capped blue/violet Hawas, speckled pale Afnan with a black ring cap, brown/gold Liquid Brun, and red/silver Jaguar. Each bottle highlights independently and opens the existing lightbox; Escape returns to the same camera pose. Stop bottle events from also activating the tray. The tray rim opens Gear & Collections, and existing galleries provide keyboard/touch access. Keep surrounding shortcuts unobstructed and mirror the tray in the decorative mobile SVG. No additional lights, ambient loops, external models or dependencies; dispose procedural textures.
+
+The printer sits slightly back and left of the fragrance tray so its résumé action remains visible. Run node scripts/verify-fragrance-tray.mjs for all four bottle photos/product links, dialog focus, tray and adjacent shortcuts, both themes, day/dusk/night at 1440/1366/1100px, and mobile/coarse-pointer scene exclusion. Comparison captures are saved under test-results/fragrance-tray/.
+
+
+## Decorative PlayStation corner
+
+The expanded left background shelf combines existing books and a trailing plant with a stylized original gray PlayStation, circular disc lid, wired controller, memory card, continuously lit power indicator, and four game cases. Keep the upper-left welcome panel clear and the monitor dominant. The games selected by Kurt are Tekken 3, the original Resident Evil, Final Fantasy VII, and Metal Gear Solid; do not invent ownership, playtime, ratings, or personal stories.
+
+The entire gaming corner is decorative: no click handlers, hover labels or highlights, hand cursor, controller-button response, collection app, launcher entry, or app hash. Keep the console, controller, and cases static while preserving the existing room ambience. Cover metadata and source links remain in the shared collection definition, with optimized local North American cover artwork attributed in Credits. Optional cover textures must not fail the room and must be disposed on unmount. No emulator, ROMs, extra audio, lights, dependencies, or independent rendering loops.
+
+Mobile mirrors the shelf decor in inline SVG, without miniature targets or 3D imports. Preserve the classic portfolio, project order, camera/input isolation, fragrance tray, and surrounding shortcuts. Run node scripts/verify-playstation-corner.mjs alongside the portfolio, retro-app, room, desktop-input, and camera checks. Verify that hovering/clicking the console, controller, and cases opens nothing, shows no tooltip, and preserves the active app and camera view. Review all desktop widths in both themes and day/dusk/night.
+
+
+## Quiet gaming CRT
+
+A compact gray 4:3 CRT sits beside the decorative PlayStation on the widened, slightly lower 4.8-unit shelf, framed by existing books, trailing greenery, and four cover cases. Keep the entire CRT below the welcome panel at all desktop breakpoints and secondary to the portfolio monitor. The screen shows an original silent PS1-inspired fighting vignette: polygonal figures, perspective arena, small health bars, slow exchanges, retreat, and reset over 12 seconds. No actual game footage, recognizable characters, tiny text, flashes, app launch, hover feedback, or interactions.
+
+One reusable 160x120 canvas texture uses nearest-neighbor sampling and updates at most 12 times per second through the existing overview frame driver. Advance only during the visible, motion-enabled desk overview. Freeze for monitor view, hidden tabs, and reduced motion; do not catch up after pauses. Keep the phase in the existing in-memory room state across expanded-view scene unmounts. The console power indicator stays lit and brightens gently once per reset. Dispose the generated texture on replacement/unmount. Add no lights, external models, dependencies, audio, timers, or rendering loops. Mirror a static CRT fighting pose in the mobile SVG without loading 3D. Preserve camera input isolation, window/scroll state, original covers, and Credits attribution. Run node scripts/verify-playstation-corner.mjs and node scripts/verify-gaming-crt.mjs with the existing browser suites; capture idle, exchange, and reset frames and check rendering sleep.

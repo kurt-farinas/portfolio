@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
 import { DoubleSide, PlaneGeometry } from 'three';
 import RoomSurroundings from './RoomSurroundings';
+import PlayStationCorner from './PlayStationCorner';
 
 // Room dressing around the desk. Motion runs only while `animate` is true (desk overview, tab visible, motion allowed);
 // DeskScene's ambient driver supplies the frames, so the demand-rendered scene still sleeps otherwise.
@@ -55,9 +56,9 @@ function Plant({ colors, animate }) {
 
 const BOOKS = [[0.12, 0.42, 0], [0.09, 0.36, 1], [0.14, 0.46, 2], [0.1, 0.4, 0], [0.13, 0.33, 1]];
 function WallShelf({ colors }) {
-  let x = -0.55;
-  return <group position={[-4.9, 2.4, -4.8]}>
-    <mesh><boxGeometry args={[1.5, 0.06, 0.32]} /><meshStandardMaterial color={colors.board} roughness={0.75} /></mesh>
+  let x = -2.32;
+  return <group position={[-6, 1.62, -4.35]}>
+    <mesh><boxGeometry args={[4.8, 0.08, 1.1]} /><meshStandardMaterial color={colors.board} roughness={0.75} /></mesh>
     {BOOKS.map(([width, height, color], index) => {
       const book = <group key={index} position={[x + width / 2, 0.03 + height / 2, 0]}>
         <mesh><boxGeometry args={[width, height, 0.24]} /><meshStandardMaterial color={colors.books[color]} roughness={0.8} /></mesh>
@@ -66,8 +67,14 @@ function WallShelf({ colors }) {
       x += width + 0.015;
       return book;
     })}
-    <mesh position={[0.45, 0.2, 0]} rotation={[0, 0, -0.35]}><boxGeometry args={[0.12, 0.38, 0.24]} /><meshStandardMaterial color={colors.books[2]} roughness={0.8} /></mesh>
-    {[-0.5, 0.5].map(x => <group key={x} position={[x, -0.14, -0.06]}>
+    <group position={[-2.24, 0.17, 0.38]}>
+      <mesh><cylinderGeometry args={[0.12, 0.09, 0.25, 10]} /><meshStandardMaterial color={colors.pot} roughness={0.9} /></mesh>
+      {[0, 1, 2].map(vine => <group key={vine} position={[-0.04 + vine * 0.045, 0.07, 0.1]}>
+        {[0, 1, 2, 3, 4].map(i => <mesh key={i} position={[Math.sin(i + vine) * 0.07, -i * 0.15, i * 0.025]} rotation={[0.1, 0, (i % 2 ? 1 : -1) * 0.6]} scale={[0.55, 1, 0.25]}><sphereGeometry args={[0.09, 6, 5]} /><meshStandardMaterial color={i % 2 ? colors.plant : colors.leafLight} roughness={0.9} /></mesh>)}
+      </group>)}
+    </group>
+    <mesh position={[2.18, 0.2, -0.34]} rotation={[0, 0, -0.35]}><boxGeometry args={[0.12, 0.38, 0.24]} /><meshStandardMaterial color={colors.books[2]} roughness={0.8} /></mesh>
+    {[-1.9, 1.9].map(x => <group key={x} position={[x, -0.14, -0.06]}>
       <mesh><boxGeometry args={[0.055, 0.25, 0.05]} /><meshStandardMaterial color={colors.curtainRod} /></mesh>
       <mesh position={[0, 0.04, 0.07]} rotation={[0.7, 0, 0]}><boxGeometry args={[0.055, 0.26, 0.04]} /><meshStandardMaterial color={colors.curtainRod} /></mesh>
     </group>)}
@@ -145,6 +152,7 @@ export default function DeskRoom({ colors, animate, lampOn }) {
     <Curtains colors={colors} animate={animate} />
     <Plant colors={colors} animate={animate} />
     <WallShelf colors={colors} />
+    <PlayStationCorner colors={colors} animate={animate} />
     <Rug colors={colors} />
     <Steam colors={colors} animate={animate} />
     {lampOn && <DustMotes colors={colors} animate={animate} />}

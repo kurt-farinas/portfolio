@@ -177,7 +177,7 @@ export function DeskPrinter({ colors, onPrinted }) {
     if (reducedMotion) { onPrinted(); return; }
     progress.current = 0; setPrinted(true); setPrinting(true); playSound('print'); invalidate();
   };
-  return <group position={[4.65,0.78,-2.15]} rotation={[0,-0.35,0]} userData={{ label: 'Print résumé' }} onClick={print}>
+  return <group position={[3.65,0.78,-2.5]} rotation={[0,-0.35,0]} userData={{ label: 'Print résumé' }} onClick={print}>
     <RoundedBox args={[1.2,0.32,0.72]} radius={0.05} smoothness={3} position={[0,0.16,0]}><meshStandardMaterial color={colors.retroShell} roughness={0.72} /></RoundedBox>
     <mesh position={[0,0.325,-0.12]}><boxGeometry args={[0.92,0.02,0.07]} /><meshStandardMaterial color={colors.retroRecess} roughness={0.9} /></mesh>
     <mesh position={[0,0.06,-0.56]}><boxGeometry args={[0.95,0.12,0.36]} /><meshStandardMaterial color={colors.paper} roughness={0.95} /></mesh>

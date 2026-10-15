@@ -13,6 +13,7 @@ import useMinuteClock from './useMinuteClock';
 import DeskRoom, { CorkBoard } from './DeskRoom';
 import { WindowLandscape } from './RoomSurroundings';
 import FairyLights from './FairyLights';
+import FragranceTray from './FragranceTray';
 import { CoffeeMug, DeskClock, DeskLamp, DeskPrinter, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
 
 function readColor(name, fallback) {
@@ -95,6 +96,11 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
   const openFromDesk = appId => { noteDeskOpen(appId); onOpenApp(appId); };
   const { openLightbox } = useModal();
   const openPhoto = photo => { noteDeskOpen('after-hours'); openLightbox(photo.src, photo.caption); };
+  const openFragrance = item => {
+    noteDeskOpen('gear');
+    const photo = item.images[0];
+    openLightbox(photo.src, photo.caption, item.url, 'View product');
+  };
   const photoClick = () => openFromDesk('after-hours');
   // A small deterministic wood map gives the existing desk a material identity without another asset request.
   const wood = useMemo(() => {
@@ -136,12 +142,7 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
       <RetroMouse colors={colors} onOpenProjects={() => openFromDesk('projects')} />
       <DeskLamp colors={colors} night={phase === 'night'} /><CoffeeMug colors={colors} /><DeskClock colors={colors} />
       <DeskPrinter colors={colors} onPrinted={() => { unlock('paper-trail'); openFromDesk('resume'); }} />
-      <group position={[4.45, 0.78, 0.05]} userData={{ label: 'Gear & Collections' }} onClick={event => { event.stopPropagation(); openFromDesk('gear'); }}>
-        <RoundedBox args={[0.52, 0.7, 0.3]} radius={0.06} smoothness={4} position={[0, 0.35, 0]}><meshPhysicalMaterial color={colors.accent} roughness={0.12} clearcoat={1} clearcoatRoughness={0.08} /></RoundedBox>
-        <mesh position={[0, 0.34, 0.152]}><planeGeometry args={[0.3, 0.2]} /><meshStandardMaterial color={colors.paper} roughness={0.9} /></mesh>
-        <mesh position={[0, 0.74, 0]}><cylinderGeometry args={[0.07, 0.09, 0.08, 24]} /><meshStandardMaterial color={colors.frame} roughness={0.25} metalness={0.85} /></mesh>
-        <mesh position={[0, 0.87, 0]}><cylinderGeometry args={[0.15, 0.15, 0.2, 32]} /><meshStandardMaterial color={colors.objectDark} roughness={0.35} metalness={0.4} /></mesh>
-      </group>
+      <FragranceTray colors={colors} onOpenCollection={() => openFromDesk('gear')} onOpenPhoto={openFragrance} />
       <group position={[3.05, 0.78, -1.15]} rotation={[0, -0.4, 0]} userData={{ label: 'Contact' }} onClick={event => { event.stopPropagation(); openFromDesk('contact'); }}>
         <mesh position={[0, 0.025, 0]}><cylinderGeometry args={[0.26, 0.28, 0.05, 32]} /><meshStandardMaterial color={colors.objectDark} roughness={0.5} metalness={0.3} /></mesh>
         <mesh position={[0, 0.23, 0]}><cylinderGeometry args={[0.03, 0.03, 0.38, 12]} /><meshStandardMaterial color={colors.objectDark} roughness={0.4} metalness={0.5} /></mesh>
@@ -226,7 +227,7 @@ function deskPose(aspect) {
   const position = DESK_CAMERA_POSITION.map((value, index) => DESK_CAMERA_TARGET[index] + (value - DESK_CAMERA_TARGET[index]) * k);
   return [...position, ...DESK_CAMERA_TARGET];
 }
-const SMOOTH_TIME = 0.22;
+const SMOOTH_TIME = 0.30;
 // Scrolling closer than this locks onto the monitor; scrolling the monitor view out past UNLOCK returns to the desk.
 const LOCK_DISTANCE = 5.5;
 const UNLOCK_DISTANCE = 6;
@@ -235,37 +236,64 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
   const { introKey, claimIntro } = useRetroOS();
   const controls = useRef(null);
   const camera = useThree(state => state.camera);
+  const canvas = useThree(state => state.gl.domElement);
   const setFrameloop = useThree(state => state.setFrameloop);
   const clock = useThree(state => state.clock);
   const aspect = useThree(state => state.size.width / Math.max(1, state.size.height));
   const DESK_POSE = useMemo(() => deskPose(aspect), [aspect]);
   const SCREEN_POSE = useMemo(() => screenPose(aspect), [aspect]);
   const previous = useRef(null);
+  const handoff = useRef(null);
   const motion = useMemo(() => createDeskCameraMotion(() => controls.current, clock, setFrameloop), [clock, setFrameloop]);
   useEffect(() => () => motion.dispose(), [motion]);
   useEffect(() => {
     const prior = previous.current;
     previous.current = { camera, view, aspect };
     const pose = view === 'screen' ? SCREEN_POSE : DESK_POSE;
+    const transition = { view };
+    handoff.current = transition;
+    const move = (destination, animate, smoothing = SMOOTH_TIME) => {
+      void motion.move(destination, animate, smoothing).then(() => {
+        if (handoff.current === transition) handoff.current = null;
+      }).catch(onSceneFailure);
+    };
     // A request to read an app takes precedence over an unfinished boot introduction.
     if (view !== 'desk') claimIntro(introKey);
     if (ready && view === 'desk' && claimIntro(introKey)) {
       controls.current?.setLookAt(...SCREEN_POSE, false);
-      void motion.move(DESK_POSE, !reducedMotion, 0.45).catch(onSceneFailure);
+      move(DESK_POSE, !reducedMotion, 0.45);
       return;
     }
     const animate = ready && !reducedMotion && prior?.camera === camera && prior.view !== view && prior.aspect === aspect;
-    void motion.move(pose, animate).catch(onSceneFailure);
+    move(pose, animate);
   }, [camera, view, ready, aspect, reducedMotion, introKey, claimIntro, motion, DESK_POSE, SCREEN_POSE, onSceneFailure]);
   const spherical = useMemo(() => new Spherical(), []);
+  useEffect(() => {
+    const host = canvas.parentElement;
+    if (!host) return undefined;
+    const wheel = event => {
+      if (!handoff.current || !controls.current?.enabled || !event.deltaY || event.ctrlKey || event.target.closest?.('.desk-projection-frame')) return;
+      // Consume only room zoom during a handoff. Desktop scrolling remains native.
+      event.preventDefault();
+      event.stopPropagation();
+      const next = event.deltaY < 0 ? 'screen' : 'desk';
+      if (next === handoff.current.view) return;
+      handoff.current = { view: next };
+      if (next === 'screen') onOpenDesktop(); else onBackToDesk();
+    };
+    host.addEventListener('wheel', wheel, { capture: true, passive: false });
+    return () => host.removeEventListener('wheel', wheel, true);
+  }, [canvas, onOpenDesktop, onBackToDesk]);
   // Wheel input fires 'control' before the smoothed camera moves, so compare the destination distance.
   // Passed as a prop because drei recreates the controls instance once the default camera is set.
   const onControl = useCallback(() => {
+    if (handoff.current) return;
+    if (controls.current) controls.current.smoothTime = SMOOTH_TIME;
     const distance = controls.current?.getSpherical(spherical, true).radius;
-    if (view === 'desk' && distance < LOCK_DISTANCE) onOpenDesktop();
-    else if (view === 'screen' && distance > UNLOCK_DISTANCE) onBackToDesk();
+    if (view === 'desk' && distance < LOCK_DISTANCE) { handoff.current = { view: 'screen' }; onOpenDesktop(); }
+    else if (view === 'screen' && distance > UNLOCK_DISTANCE) { handoff.current = { view: 'desk' }; onBackToDesk(); }
   }, [view, onOpenDesktop, onBackToDesk, spherical]);
-  return <><PerspectiveCamera makeDefault position={DESK_CAMERA_POSITION} fov={38} /><CameraControls ref={controls} makeDefault onControl={onControl} smoothTime={SMOOTH_TIME} restThreshold={0.05} minDistance={3.5} maxDistance={18} minPolarAngle={0.65} maxPolarAngle={1.42} maxAzimuthAngle={0.8} minAzimuthAngle={-0.8} /></>;
+  return <><PerspectiveCamera makeDefault position={DESK_CAMERA_POSITION} fov={38} /><CameraControls ref={controls} makeDefault onControl={onControl} smoothTime={SMOOTH_TIME} draggingSmoothTime={0.18} dollySpeed={0.75} restThreshold={0.01} minDistance={3.5} maxDistance={18} minPolarAngle={0.65} maxPolarAngle={1.42} maxAzimuthAngle={0.8} minAzimuthAngle={-0.8} /></>;
 }
 
 // Requests ~30 frames a second only while ambient motion is active; otherwise the demand-rendered scene sleeps.
@@ -312,6 +340,10 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
     board: readColor('--desk-board', '#544136'),
     frame: readColor('--desk-frame', '#393936'),
     objectDark: readColor('--desk-object-dark', '#1a1b1a'),
+    hawasTop: readColor('--desk-hawas-top'), hawasBlue: readColor('--desk-hawas-blue'), hawasBase: readColor('--desk-hawas-base'),
+    hawasCap: readColor('--desk-hawas-cap'), hawasInk: readColor('--desk-hawas-ink'),
+    fragranceStone: readColor('--desk-fragrance-stone'), fragranceBrown: readColor('--desk-fragrance-brown'), fragranceGold: readColor('--desk-fragrance-gold'),
+    fragranceRed: readColor('--desk-fragrance-red'), fragranceSilver: readColor('--desk-fragrance-silver'),
     screen: readColor('--desk-screen', '#151617'),
     key: readColor('--desk-key', '#202125'),
     accent: readColor('--desk-accent', '#ad7852'),

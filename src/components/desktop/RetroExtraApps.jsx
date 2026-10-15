@@ -1,3 +1,4 @@
+import { playstationCollection } from '../../data/playstationCollection';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { useRetroOS } from '../../context/RetroOSContext';
@@ -166,6 +167,8 @@ export function CreditsApp() {
     <p>{portfolioProjects.find(project => project.id === 'hris').caseStudy.decision}</p>
     <p>Project contribution and release details:</p><ul>{portfolioProjects.slice(0,3).map(project => <li key={project.id}>{project.title}: {project.cardSummary}</li>)}</ul>
     <ul>{awardsData.map(award => <li key={award.id}>{award.title} · {award.issuer}</li>)}</ul>
+    <h2>PlayStation cover artwork</h2><p>Original North American PS1 covers, sourced from the Libretro thumbnails archive. Artwork and trademarks belong to their respective owners; the shelf is a stylized scene.</p>
+    <ul>{playstationCollection.map(game => <li key={game.id}><a href={game.source} target="_blank" rel="noopener noreferrer">{game.title} cover source</a></li>)}</ul>
     <p>3D portfolio concept inspiration: <a href="https://henryheffernan.com/" target="_blank" rel="noopener noreferrer">Henry Heffernan</a>.</p>
     <a href={p.resume} target="_blank" rel="noopener noreferrer">Open actual résumé PDF</a>
   </section>;
