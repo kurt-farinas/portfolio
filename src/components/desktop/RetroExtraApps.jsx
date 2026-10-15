@@ -140,7 +140,7 @@ export function BugHunterApp() {
   const input = key => {
     if (!ready) return;
     if (key === 'fire') {
-      playSound('key');
+      playSound('zap');
       if (!reducedMotion) { clearTimeout(flashTimer.current); setFlash(true); flashTimer.current = setTimeout(() => setFlash(false), 100); }
       setGame(current => bugCanBeHit(current.player, current.target) ? { ...current, score: current.score + 1, target: nextBugTarget(current.player) } : current);
     } else setGame(current => ({ ...current, player: moveBugPlayer(current.player, key) }));

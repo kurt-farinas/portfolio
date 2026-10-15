@@ -150,7 +150,9 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
     if (event.key === 'Escape' && appsOpen) { event.preventDefault(); event.stopPropagation(); setAppsOpen(false); startRef.current?.focus(); }
   };
   return (
-    <section className={'desktop-workspace desktop-workspace-' + presentation} aria-label="Kurt Fariñas portfolio desktop" data-testid="desktop-workspace" data-wallpaper={retro.wallpaper} onKeyDown={closeMenu}>
+    <section className={'desktop-workspace desktop-workspace-' + presentation} aria-label="Kurt Fariñas portfolio desktop" data-testid="desktop-workspace" data-wallpaper={retro.wallpaper} data-crt={retro.crtEffects || undefined} onKeyDown={closeMenu}>
+      {/* Ordered-dither texture over the wallpaper colour, like a 256-colour desktop. */}
+      <svg className="retro-wallpaper-dither" width="100%" height="100%" aria-hidden="true"><defs><pattern id={'dither-' + presentation} width="4" height="4" patternUnits="userSpaceOnUse"><rect width="1" height="1" fill="var(--retro-dither-light)" /><rect x="2" y="2" width="1" height="1" fill="var(--retro-dither-light)" /><rect x="2" width="1" height="1" fill="var(--retro-dither-dark)" /><rect y="2" width="1" height="1" fill="var(--retro-dither-dark)" /></pattern></defs><rect width="100%" height="100%" fill={'url(#dither-' + presentation + ')'} /></svg>
       <div className="retro-desktop-content" inert={!retro.monitorOn ? true : undefined}>
         <header className="desktop-menubar">
           <button type="button" className="desktop-brand" onClick={() => chooseApp('about')} aria-label="Open About app"><span className="desktop-brand-mark">KF</span><span>Kurt-OS</span></button>
@@ -193,9 +195,15 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
           <div className="desktop-taskbar-apps">{windows.map(item => {
             const app = appById.get(item.appId);
             return app ? <button type="button" key={item.appId} className={'desktop-taskbar-item' + (activeAppId === item.appId && !item.minimized ? ' is-active' : '')} onClick={() => { retro.powerOn(); item.minimized || activeAppId !== item.appId ? restoreApplication(item.appId) : setActiveAppId(item.appId); }} aria-pressed={activeAppId === item.appId && !item.minimized} aria-label={(item.minimized ? 'Restore ' : 'Focus ') + app.label} title={app.label}><RetroIcon id={app.id} /><span className="desktop-taskbar-label">{app.label}</span></button> : null;
-          })}</div><TaskbarClock />
+          })}</div>
+          <button type="button" className="desktop-taskbar-item desktop-taskbar-sound" onClick={retro.toggleSound} aria-pressed={retro.soundEnabled} aria-label={retro.soundEnabled ? 'Mute sound' : 'Turn sound on'} title={retro.soundEnabled ? 'Sound on' : 'Sound off'}>
+            <svg width="18" height="18" viewBox="0 0 16 16" shapeRendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M2 6h3l4-3v10l-4-3H2z" />{retro.soundEnabled ? <path fill="currentColor" d="M11 5h1v6h-1zM13 3h1v10h-1z" /> : <path fill="currentColor" d="M11 6h1v1h-1zM12 7h1v1h-1zM13 8h1v1h-1zM14 9h1v1h-1zM14 6h1v1h-1zM13 7h1v1h-1zM12 8h1v1h-1zM11 9h1v1h-1z" />}</svg>
+          </button><TaskbarClock />
         </nav>
-        {retro.crtEffects && <svg className="retro-scanlines" width="100%" height="100%" aria-hidden="true"><defs><pattern id={'scanlines-' + presentation} width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0H4" stroke="var(--retro-scanline)" strokeWidth="1" /></pattern></defs><rect width="100%" height="100%" fill={'url(#scanlines-' + presentation + ')'} /></svg>}
+        {retro.crtEffects && <>
+          <svg className="retro-scanlines" width="100%" height="100%" aria-hidden="true"><defs><pattern id={'scanlines-' + presentation} width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0 0H3" stroke="var(--retro-scanline)" strokeWidth="1" /></pattern></defs><rect width="100%" height="100%" fill={'url(#scanlines-' + presentation + ')'} /></svg>
+          <div className="retro-crt-vignette" aria-hidden="true" />
+        </>}
       </div>
       {!retro.monitorOn && <div className="retro-monitor-off"><p>Monitor is off. Your apps are preserved.</p><button type="button" onClick={retro.powerOn}>Power on monitor</button>{canUse3D && <button type="button" onClick={onBackToDesk}>Back to desk</button>}<a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Open résumé PDF</a></div>}
     </section>

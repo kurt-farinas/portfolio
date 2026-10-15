@@ -34,14 +34,22 @@ class SceneErrorBoundary extends React.Component {
   }
 }
 
+const LOADER_BLOCKS = 12;
+// A Win98-style "copying files" dialog; blocks fill by stage and the next one blinks while it works.
 function DeskLoading({ stage, onUse2D }) {
+  const lit = stage === 'module' ? 4 : 9;
   return (
     <div className="desk-loading" data-loading-stage={stage}>
-      <span className="desk-loading-mark" aria-hidden="true">KF</span>
-      <p role="status" aria-live="polite">{stage === 'module' ? 'Loading the 3D room…' : 'Preparing room photos and materials…'}</p>
-      <div className="desk-loading-actions">
-        <button type="button" className="studio-action" onClick={onUse2D}>Use 2D desktop</button>
-        <a className="studio-action studio-action-outline" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Open résumé PDF</a>
+      <div className="desk-loading-dialog">
+        <p className="desk-loading-title"><span className="desk-loading-mark" aria-hidden="true">KF</span>Kurt-OS Setup</p>
+        <div className="desk-loading-body">
+          <p role="status" aria-live="polite">{stage === 'module' ? 'Loading the 3D room…' : 'Preparing room photos and materials…'}</p>
+          <div className="desk-loading-bar" aria-hidden="true">{Array.from({ length: LOADER_BLOCKS }, (_, index) => <i key={index} className={index < lit ? 'is-lit' : index === lit ? 'is-next' : undefined} />)}</div>
+          <div className="desk-loading-actions">
+            <button type="button" className="desktop-toolbar-button" onClick={onUse2D}>Use 2D desktop</button>
+            <a className="desktop-toolbar-button" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Open résumé PDF</a>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -81,7 +89,7 @@ function ImmersivePortfolio() {
   return (
     <div className={'immersive-portfolio-shell theme-' + theme} data-view={view} onPointerDownCapture={() => retro.playSound('click')} onKeyDownCapture={event => {
       if (retro.bootOpen && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); event.stopPropagation(); return; }
-      retro.pressKey(event.key);
+      retro.pressKey(event);
     }}>
       <CustomCursor />
       {renderScene && (

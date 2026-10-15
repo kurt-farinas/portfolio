@@ -41,6 +41,9 @@ function Harness() {
   return <><button onClick={() => workspace.openApplication('kurtordle')}>Launch word game</button><button onClick={() => workspace.openApplication('bughunter')}>Launch bug game</button><button onClick={() => workspace.openApplication('terminal')}>Launch terminal</button><button onClick={() => workspace.openApplication('about')}>Launch about</button><button onClick={() => modal.openResumeModal()}>Test open modal</button><button onClick={modal.closeResumeModal}>Test close modal</button><button onClick={() => retro.setContactDraft({ name:'Recruiter', email:'recruiter@example.com', message:'A test portfolio inquiry.' })}>Fill test draft</button><button onClick={retro.replayBoot}>Replay test boot</button><DesktopWorkspace presentation="workspace" theme="dark" /><BootScreen /></>;
 }
 
+const param=()=>({value:0,setValueAtTime:vi.fn(),exponentialRampToValueAtTime:vi.fn(),cancelScheduledValues:vi.fn()});
+const makeAudioNode=()=>({gain:param(),frequency:param(),Q:param(),connect:vi.fn(),disconnect:vi.fn(),start:vi.fn(),stop:vi.fn()});
+
 describe('retro portfolio apps', () => {
   let host, root, originalMedia, originalWidth, originalAudio, oldShow, oldClose;
   const typeGuess=async word=>{const input=host.querySelector('[aria-label="Five-letter guess"]');for(const key of [...word,'Enter']) await act(async()=>input.dispatchEvent(new KeyboardEvent('keydown',{key,bubbles:true})));};
@@ -59,7 +62,7 @@ describe('retro portfolio apps', () => {
     oldShow=HTMLDialogElement.prototype.showModal; oldClose=HTMLDialogElement.prototype.close;
     HTMLDialogElement.prototype.showModal=function(){this.open=true;}; HTMLDialogElement.prototype.close=function(){this.open=false;};
     audioConstructor.mockClear();
-    window.AudioContext=class { constructor(){audioConstructor();this.currentTime=0;this.destination={};} resume(){return Promise.resolve();} close(){return Promise.resolve();} createOscillator(){return{frequency:{value:0},connect:vi.fn(),disconnect:vi.fn(),start:vi.fn(),stop:vi.fn()};} createGain(){return{gain:{setValueAtTime:vi.fn(),exponentialRampToValueAtTime:vi.fn()},connect:vi.fn(),disconnect:vi.fn()};} };
+    window.AudioContext=class { constructor(){audioConstructor();this.currentTime=0;this.sampleRate=8000;this.destination={};} resume(){return Promise.resolve();} close(){return Promise.resolve();} createOscillator(){return makeAudioNode();} createGain(){return makeAudioNode();} createBiquadFilter(){return makeAudioNode();} createBufferSource(){return makeAudioNode();} createBuffer(channels,length){const data=new Float32Array(length);return{getChannelData:()=>data};} };
     host=document.createElement('div'); document.body.append(host); root=createRoot(host); sessionStorage.clear();
   });
   afterEach(async()=>{
@@ -71,20 +74,20 @@ describe('retro portfolio apps', () => {
   const mount=async(path='/#terminal')=>act(async()=>root.render(<MemoryRouter initialEntries={[path]}><ThemeProvider><ModalProvider><DesktopWorkspaceProvider><RetroOSProvider><Harness /></RetroOSProvider></DesktopWorkspaceProvider></ModalProvider></ThemeProvider></MemoryRouter>));
   const click=async text=>act(async()=>{const button=[...host.querySelectorAll('button')].find(element=>element.textContent===text);expect(button,'button '+text).toBeTruthy();button.click();});
 
-  it('bypasses boot on direct routes and starts audio only after explicit opt-in',async()=>{
+  it('bypasses boot on direct routes and starts audio only when the visitor interacts',async()=>{
     await mount('/projects');expect(host.querySelector('.retro-boot').open).toBe(false);expect(audioConstructor).not.toHaveBeenCalled();
     await click('Replay test boot');expect(host.querySelector('.retro-boot').open).toBe(true);
-    await click('Sound: Off');expect(audioConstructor).toHaveBeenCalledTimes(1);
-    await click('Enter desktop');expect(host.querySelector('.retro-boot').open).toBe(false);expect(sessionStorage.getItem('kurt-os-boot-seen')).toBe('true');
+    expect(audioConstructor).not.toHaveBeenCalled();
+    await click('Enter desktop');expect(audioConstructor).toHaveBeenCalledTimes(1);expect(host.querySelector('.retro-boot').open).toBe(false);expect(sessionStorage.getItem('kurt-os-boot-seen')).toBe('true');
     expect(host.querySelector('.desktop-window.is-active').dataset.appId).toBe('projects');
   });
-  it('plays the four-note boot chime when the boot finishes with sound on',async()=>{
+  it('plays the POST beep when the boot finishes with sound on',async()=>{
     await mount('/');const oscillators=vi.spyOn(window.AudioContext.prototype,'createOscillator');
-    await click('Sound: Off');const afterToggle=oscillators.mock.calls.length;
-    await click('Enter desktop');expect(oscillators.mock.calls.length-afterToggle).toBe(4);
+    await click('Enter desktop');expect(oscillators).toHaveBeenCalled();
   });
-  it('shows an immediately usable first-visit boot and keeps audio off',async()=>{
+  it('remembers a mute chosen on the boot screen and stays silent',async()=>{
     await mount('/');expect(host.querySelector('.retro-boot').open).toBe(true);
+    await click('Sound: On');expect(localStorage.getItem('kurt-os-sound')).toBe('off');
     await click('Enter desktop');expect(host.querySelector('.retro-boot').open).toBe(false);expect(audioConstructor).not.toHaveBeenCalled();
   });
   it('unlocks the Wordsmith achievement once, for this session only',async()=>{

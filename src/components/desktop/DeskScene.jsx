@@ -390,6 +390,13 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
   const light = ROOM_LIGHT[phase];
   const pageVisible = usePageVisible();
   const animate = ready && view === 'desk' && !motionReduced && pageVisible;
+  // The desk clock ticks softly while the whole room is in view.
+  const { playSound } = useRetroOS();
+  useEffect(() => {
+    if (!ready || view !== 'desk' || !pageVisible) return undefined;
+    const id = window.setInterval(() => playSound('tick'), 1000);
+    return () => window.clearInterval(id);
+  }, [ready, view, pageVisible, playSound]);
 
   useEffect(() => () => contextLostCleanup.current?.(), []);
 

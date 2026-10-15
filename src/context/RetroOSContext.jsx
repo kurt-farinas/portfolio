@@ -5,6 +5,7 @@ import { useDesktopWorkspace } from './DesktopWorkspaceContext';
 import { useModal } from './ModalContext';
 import { portfolioProfile } from '../data/portfolioFacts';
 import { featuredProjectIds } from '../data/projectData';
+import { createSoundKit, keySoundFor } from '../utils/retroSound';
 
 // Session-only achievements: stored in sessionStorage, never sent anywhere.
 export const ACHIEVEMENTS = [
@@ -15,6 +16,8 @@ export const ACHIEVEMENTS = [
   { id: 'paper-trail', label: 'Paper trail', hint: 'Print the résumé from the desk printer' }
 ];
 const ACHIEVEMENT_KEY = 'kurt-os-achievements';
+const SOUND_KEY = 'kurt-os-sound';
+const CRT_KEY = 'kurt-os-crt';
 
 export const RetroOSContext = createContext(null);
 const noop = () => {};
@@ -36,9 +39,11 @@ export function RetroOSProvider({ children }) {
     playedIntro.current = key;
     return true;
   }, []);
-  const [soundEnabled, setSoundEnabled] = useState(false);
+  // Sound is on by default and remembered; the browser only lets audio start inside the visitor's first click or key press.
+  const [soundEnabled, setSoundEnabled] = useState(() => { try { return localStorage.getItem(SOUND_KEY) !== 'off'; } catch { return true; } });
+  const [audioReady, setAudioReady] = useState(false);
   const [soundError, setSoundError] = useState('');
-  const [crtEffects, setCrtEffects] = useState(false);
+  const [crtEffects, setCrtEffects] = useState(() => { try { return localStorage.getItem(CRT_KEY) !== 'off'; } catch { return true; } });
   const [warmLamp, setWarmLamp] = useState(false);
   const [wallpaper, setWallpaper] = useState(0);
   const [monitorOn, setMonitorOn] = useState(true);
@@ -47,7 +52,8 @@ export function RetroOSProvider({ children }) {
   const [contactStatus, setContactStatus] = useState({ kind: '', message: '' });
   const [sending, setSending] = useState(false);
   const audio = useRef(null);
-  const audioEnabled = useRef(false);
+  const kit = useRef(null);
+  const audioEnabled = useRef(soundEnabled);
   const keyTimer = useRef(null);
   const postGate = useRef(false);
   const requestController = useRef(null);
@@ -61,36 +67,38 @@ export function RetroOSProvider({ children }) {
     audio.current?.close?.().catch?.(() => {});
   }, []);
 
-  const playSound = useCallback((kind = 'click') => {
-    if (!audioEnabled.current || !audio.current) return;
-    const context = audio.current;
-    context.resume?.().catch?.(() => {});
-    // 'boot' is an original C-E-G-C arpeggio whose last note rings out; 'startup' is the short toggle blip.
-    const notes = kind === 'print' ? Array(10).fill(1480) : kind === 'boot' ? [262, 330, 392, 523] : kind === 'startup' ? [262, 330, 392] : [kind === 'key' ? 420 : 880];
-    notes.forEach((frequency, index) => {
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-      const start = context.currentTime + index * (kind === 'boot' ? 0.11 : kind === 'print' ? 0.06 : 0.08);
-      const duration = kind === 'boot' ? (index === notes.length - 1 ? 0.6 : 0.14) : kind === 'startup' ? 0.1 : 0.025;
-      oscillator.type = 'sine'; oscillator.frequency.value = frequency;
-      gain.gain.setValueAtTime(0.025, start);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-      oscillator.connect(gain); gain.connect(context.destination);
-      oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
-      oscillator.start(start); oscillator.stop(start + duration);
-    });
-  }, []);
-  const toggleSound = useCallback(() => {
-    if (audioEnabled.current) { audioEnabled.current = false; setSoundEnabled(false); return; }
+  // Created lazily from the first sound request, which comes from a click or key press.
+  const ensureAudio = useCallback(() => {
+    if (kit.current) { audio.current.resume?.().catch?.(() => {}); return true; }
     try {
       const Constructor = window.AudioContext || window.webkitAudioContext;
-      if (!Constructor) throw new Error('Audio is unavailable in this browser.');
-      if (!audio.current) audio.current = new Constructor();
-      audioEnabled.current = true; setSoundEnabled(true); setSoundError(''); playSound('startup');
-    } catch { setSoundError('Audio is unavailable in this browser.'); }
+      if (!Constructor) throw new Error('unavailable');
+      audio.current = new Constructor();
+      kit.current = createSoundKit(audio.current);
+      setAudioReady(true);
+      return true;
+    } catch { setSoundError('Audio is unavailable in this browser.'); return false; }
+  }, []);
+  const playSound = useCallback((kind = 'click') => {
+    if (!kind || !audioEnabled.current || !ensureAudio()) return;
+    kit.current.play(kind);
+  }, [ensureAudio]);
+  const toggleSound = useCallback(() => {
+    const next = !audioEnabled.current;
+    audioEnabled.current = next; setSoundEnabled(next);
+    try { localStorage.setItem(SOUND_KEY, next ? 'on' : 'off'); } catch { /* Storage is optional. */ }
+    if (next) { setSoundError(''); playSound('startup'); }
   }, [playSound]);
-  const pressKey = useCallback(key => {
-    playSound('key');
+  // Ambient PC fan + CRT hum while sound is on, the monitor is powered and the tab is visible.
+  const [pageVisible, setPageVisible] = useState(() => typeof document === 'undefined' || !document.hidden);
+  useEffect(() => {
+    const change = () => setPageVisible(!document.hidden);
+    document.addEventListener('visibilitychange', change);
+    return () => document.removeEventListener('visibilitychange', change);
+  }, []);
+  const pressKey = useCallback(event => {
+    playSound(keySoundFor(event));
+    const key = event.key;
     if (reducedMotion || !/^[a-z ]$/i.test(key)) return;
     clearTimeout(keyTimer.current); setPressedKey(key.toUpperCase());
     keyTimer.current = setTimeout(() => setPressedKey(''), 120);
@@ -113,6 +121,12 @@ export function RetroOSProvider({ children }) {
     // Project dialogs are keyed by featuredProjectIds (e.g. 'pmpcPis'), not by each project's id field.
     if (featuredProjectIds.every(id => projectsRead.current.has(id))) unlock('reader');
   }, [selectedProjectId, unlock]);
+  useEffect(() => {
+    if (!kit.current) return;
+    if (soundEnabled && audioReady && monitorOn && pageVisible) kit.current.startAmbient();
+    else kit.current.stopAmbient();
+  }, [soundEnabled, audioReady, monitorOn, pageVisible]);
+  const togglePower = useCallback(() => { if (!monitorOn) playSound('power'); setMonitorOn(value => !value); }, [monitorOn, playSound]);
   const finishBoot = useCallback(mode => {
     try { sessionStorage.setItem('kurt-os-boot-seen', 'true'); } catch { /* Session storage is optional. */ }
     setBootOpen(false); setMonitorOn(true); playSound('boot');
@@ -141,6 +155,6 @@ export function RetroOSProvider({ children }) {
     } finally { postGate.current = false; setSending(false); }
   }, [contactDraft]);
 
-  return <RetroOSContext.Provider value={{ theme, bootOpen, introKey, claimIntro, achievements, unlock, noteDeskOpen, soundEnabled, soundError, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => !value), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower: () => setMonitorOn(value => !value), powerOn: () => setMonitorOn(true), setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
+  return <RetroOSContext.Provider value={{ theme, bootOpen, introKey, claimIntro, achievements, unlock, noteDeskOpen, soundEnabled, soundError, crtEffects, warmLamp, wallpaper, monitorOn, pressedKey, contactDraft, contactStatus, sending, toggleSound, playSound, pressKey, finishBoot, replayBoot: () => setBootOpen(true), toggleCrt: () => setCrtEffects(value => { try { localStorage.setItem(CRT_KEY, value ? 'off' : 'on'); } catch { /* Storage is optional. */ } return !value; }), toggleLamp: () => setWarmLamp(value => !value), cycleWallpaper: () => setWallpaper(value => (value + 1) % 3), togglePower, powerOn: () => { setMonitorOn(true); playSound('power'); }, setContactDraft, sendContact }}>{children}</RetroOSContext.Provider>;
 }
 export function useRetroOS() { return useContext(RetroOSContext) || defaults; }

@@ -3,10 +3,13 @@ import { useFrame } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
 import { CanvasTexture, NearestFilter, SRGBColorSpace } from 'three';
 import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
+import { useRetroOS } from '../../context/RetroOSContext';
 import { createFightingClock, drawFightingDemo, fightingPose } from './fightingDemo';
 
 export default function GamingCRT({ colors, animate, indicator }) {
   const { getAppState, setAppState } = useDesktopWorkspace();
+  const { playSound } = useRetroOS();
+  const lastBeat = useRef(null);
   const clock = useRef(null);
   if (!clock.current) clock.current = createFightingClock(getAppState('room:gaming-crt', 0));
   const display = useMemo(() => {
@@ -24,6 +27,10 @@ export default function GamingCRT({ colors, animate, indicator }) {
     const time = clock.current.step(delta, animate && document.visibilityState !== 'hidden');
     if (time === null) return;
     const pose = fightingPose(time);
+    // A chiptune hit each time a fighter lands a strike (the 12 s loop peaks at 4.5 s and 9.5 s).
+    const beat = ((time % 12) + 12) % 12;
+    if (lastBeat.current !== null && [4.5, 9.5].some(peak => lastBeat.current < peak && beat >= peak)) playSound('chip');
+    lastBeat.current = beat;
     drawFightingDemo(display.context, colors, pose); display.texture.needsUpdate = true;
     indicator.current?.color.set(colors.led).multiplyScalar(pose.indicator);
   });

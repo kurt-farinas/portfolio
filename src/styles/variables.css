@@ -3,7 +3,8 @@
   --retro-tooltip-bg: #ffffe1; --retro-tooltip-ink: #161616; --retro-chrome: #42464c; --retro-ink: #f1f0ea; --retro-highlight: #747b84; --retro-edge: #1b1e22; --retro-etch: #747b84;
   --retro-title: #132a7a; --retro-title-ink: #ffffff; --retro-inactive-title: #4c525b;
   --retro-wallpaper-0: #123b3c; --retro-wallpaper-1: #18314f; --retro-wallpaper-2: #392c48;
-  --retro-icon-ink: #e8dec1; --retro-scanline: #000000; --retro-boot-bg: #090d0c; --retro-boot-ink: #d5e5d9; --retro-boot-accent: #80bf96;
+  --retro-icon-ink: #e8dec1; --retro-scanline: #000000; --retro-dither-light: #ffffff1f; --retro-dither-dark: #0000002e; --retro-crt-shade: #000000a6; --retro-crt-bezel: #00000059; --retro-phosphor: #9fe8c066; --retro-boot-bg: #090d0c; --retro-boot-ink: #d5e5d9; --retro-boot-accent: #80bf96;
+  --pix-k: #141414; --pix-w: #ffffff; --pix-g: #c3c3c3; --pix-d: #7d7d7d; --pix-b: #1d3fb8; --pix-c: #2bb3c6; --pix-l: #8fd0f2; --pix-y: #f2c94c; --pix-o: #b4702a; --pix-r: #c43a2f; --pix-n: #3fa553;
   --retro-terminal-bg: #101512; --retro-terminal-ink: #c1dfc8;
   --game-ceiling: #202633; --game-floor: #292a27; --game-wall: #57758b; --game-target: #b83443; --game-ink: #ffffff; --game-crosshair: #a8d7b4;
   --word-correct: #325f44; --word-present: #6a5b2e; --word-absent: #41474c; --word-ink: #ffffff;
@@ -22,6 +23,7 @@
   --desk-object-dark: #1a1b1a; --desk-screen: #151617; --desk-key: #202125; --desk-accent: #ad7852; --desk-paper: #f0e9df;
   --grain-opacity: 0.04; color-scheme: dark;
   --font-body: Tahoma, 'Segoe UI', Verdana, sans-serif; --font-display: var(--font-body);
+  --font-pixel: 'VT323', Tahoma, 'Segoe UI', sans-serif;
   --type-label: 0.8125rem; --type-small: 0.875rem; --type-body: 1rem; --type-lead: 1.125rem;
   --type-case-body: 0.9375rem; --type-card-title: 1rem;
   --type-title: 1.25rem; --type-section: 1.25rem;

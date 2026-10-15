@@ -3,6 +3,12 @@
   font-family: 'Figtree'; font-style: normal; font-weight: 400 700; font-display: swap;
   src: url('/fonts/figtree-latin.woff2') format('woff2');
 }
+/* VT323 Latin for Kurt-OS chrome, licensed in public/fonts/VT323-OFL.txt. One weight, declared for 400-700 so bold
+   chrome text uses the real glyphs instead of a smeared synthetic bold; scaled up because VT323 sets small. */
+@font-face {
+  font-family: 'VT323'; font-style: normal; font-weight: 400 700; font-display: swap; size-adjust: 128%;
+  src: url('/fonts/vt323-latin.woff2') format('woff2');
+}
 /* Local preview: Space Grotesk display font, licensed in public/fonts/SPACE-GROTESK-OFL.txt. */
 @font-face {
   font-family: 'Space Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap;
