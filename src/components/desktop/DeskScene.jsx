@@ -57,7 +57,8 @@ function labelledAncestor(object) {
 // Hovering a clickable desk object tints it with the accent colour and shows a Win98 tooltip naming what it opens.
 function useDeskHover(enabled, accent) {
   const [hovered, setHovered] = useState(null);
-  useCursor(Boolean(hovered));
+  // Hovering a desk object shows the pixel hand; '' afterwards hands the cursor back to the stylesheet instead of the system arrow.
+  useCursor(Boolean(hovered), "url('/cursors/retro-hand.svg') 11 1, pointer", '');
   useEffect(() => { if (!enabled) setHovered(null); }, [enabled]);
   useEffect(() => {
     if (!hovered) return undefined;
@@ -203,7 +204,26 @@ function ScreenProjection({ view, theme, onOpenResume, toggleTheme, onBackToDesk
   const controls = useThree(state => state.controls);
   const inputCleanup = useRef(null);
   const scrollCleanup = useRef(null);
+  const frameNode = useRef(null);
+  const settling = useRef(0);
+  // Switching desk <-> monitor resizes and rescales this page; for one paint the new size showed with the old 3D transform
+  // (an oversized desktop flash). Hide it until the projection has re-rendered for the new view and drei has re-positioned it.
+  // Direct style write on purpose: the Html subtree renders in its own root, so React state here can't time it to the frame.
+  useLayoutEffect(() => {
+    settling.current = 1;
+    if (frameNode.current) frameNode.current.style.visibility = 'hidden';
+    invalidate();
+  }, [view, invalidate]);
+  useFrame(() => {
+    if (!settling.current) return;
+    const node = frameNode.current;
+    const rendered = node && node.classList.contains('desk-projection-overview') === (view === 'desk');
+    if (rendered) settling.current -= 1;
+    if (settling.current === 0 && node) node.style.visibility = '';
+    else invalidate();
+  });
   const screenReady = useCallback(node => {
+    frameNode.current = node;
     inputCleanup.current?.();
     inputCleanup.current = node && view === 'screen' && controls ? bindDesktopCameraInput(node, controls) : null;
     scrollCleanup.current?.();
