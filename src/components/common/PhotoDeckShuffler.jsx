@@ -34,6 +34,9 @@ export default function PhotoDeckShuffler({ photos = [] }) {
     if (event.key === 'ArrowRight' || event.key === ' ') {
       event.preventDefault();
       handleNextCard();
+    } else if (event.key === 'Enter' && deck[0]) {
+      event.preventDefault();
+      openLightbox(deck[0].src, deck[0].caption || deck[0].title);
     } else if (event.key === 'ArrowLeft') {
       event.preventDefault();
       setDeck((previous) => previous.length > 1 ? [previous[previous.length - 1], ...previous.slice(0, -1)] : previous);
@@ -78,7 +81,7 @@ export default function PhotoDeckShuffler({ photos = [] }) {
 
   return (
     <div className="photo-deck-wrapper">
-      <div className="photo-deck-stack" tabIndex={0} onKeyDown={handleKeyDown} role="region" aria-label="Interactive photo stack">
+      <div className="photo-deck-stack" tabIndex={0} onKeyDown={handleKeyDown} role="region" aria-label="Interactive photo stack. Drag or use arrow keys to browse; Enter or double-click opens the photo.">
         {visibleCards.map((card, stackIndex) => {
           const isTop = stackIndex === 0;
           const cardStyle = isTop && isDragging
@@ -112,9 +115,6 @@ export default function PhotoDeckShuffler({ photos = [] }) {
             </div>
           );
         })}
-      </div>
-      <div className="studio-photo-controls">
-        <button type="button" onClick={() => openLightbox(deck[0].src, deck[0].caption || deck[0].title)}>View photo</button>
       </div>
     </div>
   );

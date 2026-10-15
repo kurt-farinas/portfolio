@@ -37,13 +37,23 @@ export function KurtOrdleApp() {
     if (key === 'Enter') { enter(); return; }
     setGame(current => ({ ...current, input: key === 'Backspace' ? current.input.slice(0, -1) : /^[A-Z]$/.test(key) ? (current.input + key).slice(0, 5) : current.input }));
   };
-  return <section className="retro-extra-app retro-word-game" onKeyDown={event => {
-    if (event.target.tagName === 'INPUT' || !ready) return;
-    if (/^[a-z]$/i.test(event.key) || ['Enter', 'Backspace'].includes(event.key)) { event.preventDefault(); type(event.key.length === 1 ? event.key.toUpperCase() : event.key); }
-  }}>
-    <p className="desktop-eyebrow">PORTFOLIO MINI-GAME</p><h1>KurtOrdle</h1>
-    <p>Five letters, six tries. Any five-letter alphabetic guess is accepted.</p>
-    <div className="retro-word-grid" aria-label="Guess history">
+  const newWord = () => {
+    const words = WORD_BANK.filter(word => word !== game.target);
+    setGame({ target: words[Math.floor(Math.random() * words.length)], guesses: [], input: '', result: '', message: 'New word. Six attempts available.' });
+  };
+  // One visually hidden input takes the real keyboard (and brings up the phone keyboard when the board is tapped).
+  const captureRef = useRef(null);
+  useEffect(() => { if (ready) captureRef.current?.focus({ preventScroll: true }); }, [ready]);
+  return <section className="retro-extra-app retro-word-game">
+    <p className="desktop-eyebrow">PORTFOLIO MINI-GAME</p>
+    <div className="retro-word-header"><h1>KurtOrdle</h1><button type="button" onClick={newWord}>New word</button></div>
+    <p className="retro-game-instructions">Type a word · <kbd>Enter</kbd> to guess · <kbd>Backspace</kbd> to delete</p>
+    <input ref={captureRef} className="retro-word-capture" aria-label="Five-letter guess" autoComplete="off" autoCapitalize="characters" spellCheck={false} maxLength={5} value={game.input} disabled={Boolean(game.result)}
+      onKeyDown={event => {
+        if (/^[a-z]$/i.test(event.key) || ['Enter', 'Backspace'].includes(event.key)) { event.preventDefault(); type(event.key.length === 1 ? event.key.toUpperCase() : event.key); }
+      }}
+      onChange={event => { if (ready && !game.result) setGame(current => ({ ...current, input: event.target.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 5) })); }} />
+    <div className="retro-word-grid" aria-label="Guess history" onClick={() => captureRef.current?.focus({ preventScroll: true })}>
       {Array.from({ length: 6 }, (_, row) => {
         const guess = game.guesses[row];
         const marks = guess ? scoreGuess(guess, game.target) : [];
@@ -52,16 +62,7 @@ export function KurtOrdleApp() {
       })}
     </div>
     <p role="status" className="retro-game-message">{game.message}</p>
-    <form onSubmit={event => { event.preventDefault(); enter(); }} className="retro-word-input">
-      <label>Current guess<input autoComplete="off" autoCapitalize="characters" spellCheck={false} maxLength={5} value={game.input} onChange={event => { if (ready) setGame(current => ({ ...current, input: event.target.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 5) })); }} disabled={Boolean(game.result)} aria-label="Five-letter guess" /></label>
-      <button type="submit" disabled={Boolean(game.result)}>Enter guess</button>
-    </form>
-    <div className="retro-letter-keyboard" aria-label="Letter keyboard">{'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter => <button type="button" key={letter} aria-label={'Type ' + letter} onClick={() => type(letter)} disabled={Boolean(game.result)}>{letter}</button>)}<button type="button" onClick={() => type('Backspace')} disabled={Boolean(game.result)}>Delete</button><button type="button" onClick={enter} disabled={Boolean(game.result)}>Enter</button></div>
     <p className="retro-word-legend">Correct: right position. Present: elsewhere in the word. Absent: no remaining match.</p>
-    <button type="button" onClick={() => {
-      const words = WORD_BANK.filter(word => word !== game.target);
-      setGame({ target: words[Math.floor(Math.random() * words.length)], guesses: [], input: '', result: '', message: 'New word. Six attempts available.' });
-    }}>New word</button>
   </section>;
 }
 
@@ -77,12 +78,25 @@ export function BugHunterApp() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !ready) return undefined;
-    const observer = new ResizeObserver(entries => {
-      const width = Math.min(600, Math.max(220, Math.floor(entries[0].contentRect.width)));
+    // Fill the (maximized) window: as wide as the arena allows, but short enough that the title and instructions stay in view.
+    const scrollRoot = canvas.closest('[data-app-scroll]');
+    const section = canvas.closest('.retro-extra-app');
+    const fit = () => {
+      const style = getComputedStyle(section);
+      const byWidth = section.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - 4;
+      const byHeight = scrollRoot ? (scrollRoot.clientHeight - 170) / 0.63 : byWidth;
+      const width = Math.max(220, Math.floor(Math.min(byWidth, byHeight)));
       setSize(current => current.width === width ? current : { width, height: Math.round(width * 0.63) });
-    });
-    observer.observe(canvas.parentElement);
+    };
+    const observer = new ResizeObserver(fit);
+    observer.observe(section);
+    if (scrollRoot) observer.observe(scrollRoot);
+    fit();
     return () => observer.disconnect();
+  }, [ready]);
+  // Opening the app hands keyboard focus straight to the arena so WASD and Space work immediately.
+  useEffect(() => {
+    if (ready) canvasRef.current?.focus({ preventScroll: true });
   }, [ready]);
   useEffect(() => {
     if (!ready) { clearTimeout(flashTimer.current); setFlash(false); }
@@ -134,11 +148,10 @@ export function BugHunterApp() {
   return <section className="retro-extra-app"><p className="desktop-eyebrow">PORTFOLIO MINI-GAME · FICTIONAL ARENA</p><h1>BugHunter 3D</h1>
     <p className="retro-game-instructions"><strong>Move:</strong> <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> · <strong>Shoot:</strong> <kbd>Space</kbd></p>
     <p role="status">Bugs squashed: {game.score}. {ready ? 'Ready.' : 'Paused.'}</p>
-    <div className="retro-bug-arena"><canvas ref={canvasRef} width={size.width} height={size.height} tabIndex={0} role="img" aria-label="BugHunter game arena. W A S D to move; Space to shoot." data-game-active={ready} onPointerDown={event => { event.currentTarget.focus(); input('fire'); }} onKeyDown={event => {
+    <div className="retro-bug-arena"><canvas ref={canvasRef} width={size.width} height={size.height} style={{ width: size.width }} tabIndex={0} role="img" aria-label="BugHunter game arena. W A S D to move; Space to shoot." data-game-active={ready} onPointerDown={event => { event.currentTarget.focus(); input('fire'); }} onKeyDown={event => {
       if (!ready) return;
       if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','w','a','s','d','W','A','S','D',' '].includes(event.key)) { event.preventDefault(); input(event.key === ' ' ? 'fire' : event.key.length === 1 ? event.key.toLowerCase() : event.key); }
     }} /></div>
-    <div className="retro-game-controls"><button onClick={() => input('ArrowLeft')}>Turn left</button><button onClick={() => input('ArrowUp')}>Forward</button><button onClick={() => input('ArrowRight')}>Turn right</button><button onClick={() => input('ArrowDown')}>Backward</button><button onClick={() => input('fire')}>Fire</button><button onClick={() => setGame(INITIAL_BUG_GAME)}>Reset game</button></div>
   </section>;
 }
 
@@ -196,6 +209,8 @@ export function BugsweeperApp() {
     if (next.status === 'won' && game.status !== 'won') unlock('exterminator');
     setGame(next);
   };
+  // Opening the game puts keyboard focus on the current tile so arrows, Enter and F work immediately.
+  useEffect(() => { if (ready) cells.current[focusIndex]?.focus({ preventScroll: true }); }, [ready]);
   // Roving focus: arrow keys move between tiles, Enter/Space reveal (native button), F flags.
   const move = (event, index) => {
     const step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -game.cols, ArrowDown: game.cols }[event.key];

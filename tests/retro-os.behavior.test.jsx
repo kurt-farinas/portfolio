@@ -43,6 +43,7 @@ function Harness() {
 
 describe('retro portfolio apps', () => {
   let host, root, originalMedia, originalWidth, originalAudio, oldShow, oldClose;
+  const typeGuess=async word=>{const input=host.querySelector('[aria-label="Five-letter guess"]');for(const key of [...word,'Enter']) await act(async()=>input.dispatchEvent(new KeyboardEvent('keydown',{key,bubbles:true})));};
   const canvas = { fillRect:vi.fn(), beginPath:vi.fn(), arc:vi.fn(), fill:vi.fn(), fillText:vi.fn(), moveTo:vi.fn(), lineTo:vi.fn(), stroke:vi.fn() };
   const audioConstructor = vi.fn();
   beforeEach(() => {
@@ -88,8 +89,7 @@ describe('retro portfolio apps', () => {
   });
   it('unlocks the Wordsmith achievement once, for this session only',async()=>{
     await mount('/#kurtordle');
-    for(const letter of 'REACT') await act(async()=>host.querySelector('[aria-label="Type '+letter+'"]').click());
-    await click('Enter guess');
+    await typeGuess('REACT');
     expect(JSON.parse(sessionStorage.getItem('kurt-os-achievements'))).toEqual(['wordsmith']);
   });
   it('unlocks Exterminator after clearing a Bugsweeper board',async()=>{
@@ -106,8 +106,7 @@ describe('retro portfolio apps', () => {
   });
   it('preserves a solved word game when it is closed and reopened',async()=>{
     await mount('/#kurtordle');
-    for(const letter of 'REACT') await act(async()=>host.querySelector('[aria-label="Type '+letter+'"]').click());
-    await click('Enter guess');expect(host.querySelector('.retro-game-message').textContent).toContain('Solved: REACT');
+    await typeGuess('REACT');expect(host.querySelector('.retro-game-message').textContent).toContain('Solved: REACT');
     await act(async()=>host.querySelector('[aria-label="Close KurtOrdle window"]').click());await click('Launch word game');
     expect(host.querySelector('.retro-game-message').textContent).toContain('Solved: REACT');
   });

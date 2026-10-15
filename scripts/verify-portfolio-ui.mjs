@@ -286,7 +286,7 @@ try {
       await photoStack.focus();
       await page.keyboard.press('ArrowRight');
       await expect(photoStack.locator('.deck-stack-level-0 img')).not.toHaveAttribute('src', firstPhoto);
-      await page.getByRole('button', { name: 'View photo' }).click();
+      await photoStack.locator('.deck-stack-level-0').dblclick();
       await expect(page.locator('#screenshotModal')).toBeVisible();
       await page.keyboard.press('Escape');
 
