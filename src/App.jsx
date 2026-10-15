@@ -113,7 +113,7 @@ function ImmersivePortfolio() {
           {view === 'desk' && (
             <main className="desk-welcome">
               <div className="desk-welcome-copy">
-                <p className="desktop-eyebrow">KURT FARIÑAS · PORTFOLIO</p>
+                <p className="desktop-eyebrow">KURT FARIÑAS<br />JUNIOR FULL-STACK DEVELOPER</p>
                 <h1>A closer look at how I work.</h1>
                 <div className="desk-welcome-actions">
                   <button type="button" className="studio-action" onClick={focusMonitor}>Open desktop</button>
