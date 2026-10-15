@@ -27,6 +27,10 @@
 /* Contain projected HTML so it cannot intercept the loading panel's controls. */
 .desk-canvas { display: block; z-index: 0; }
 .desk-projected-html { pointer-events: auto !important; }
+.desk-projection-overview {
+  /* Rasterize at double density before the half-size Html projection. */
+  zoom: 2;
+}
 .desk-projection-frame {
   width: 1280px;
   height: 760px;

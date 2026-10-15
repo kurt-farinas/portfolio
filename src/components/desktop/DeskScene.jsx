@@ -205,7 +205,7 @@ function ScreenProjection({ view, theme, onOpenResume, toggleTheme, onBackToDesk
   }, [view, controls, invalidate]);
   useEffect(() => () => { inputCleanup.current?.(); scrollCleanup.current?.(); }, []);
   return (
-    <Html portal={portal} transform position={[0, MONITOR_CENTER_Y, MONITOR_SCREEN_Z]} distanceFactor={1.2} style={{ width: '1280px', height: '760px', overflow: 'hidden', pointerEvents: view === 'desk' ? 'none' : 'auto' }} wrapperClass="desk-projected-html" prepend>
+    <Html portal={portal} transform scale={view === 'desk' ? 0.5 : 1} position={[0, MONITOR_CENTER_Y, MONITOR_SCREEN_Z]} distanceFactor={1.2} style={{ width: view === 'desk' ? '2560px' : '1280px', height: view === 'desk' ? '1520px' : '760px', overflow: 'hidden', pointerEvents: view === 'desk' ? 'none' : 'auto' }} wrapperClass="desk-projected-html" prepend>
       <div ref={screenReady} className={'desk-projection-frame' + (view === 'desk' ? ' desk-projection-overview' : '')} inert={view === 'desk' ? true : undefined} aria-hidden={view === 'desk' || undefined}>
         <ContextBridge>
           <DesktopWorkspace presentation={view === 'desk' ? 'preview' : 'screen'} theme={theme} toggleTheme={toggleTheme} onBackToDesk={onBackToDesk} />
