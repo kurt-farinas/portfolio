@@ -3,6 +3,7 @@ import { RoundedBox } from '@react-three/drei';
 import { CanvasTexture, SRGBColorSpace } from 'three';
 import { gearCatalogData } from '../../data/projectData';
 import HawasIceBottle from './HawasIceBottle';
+import MergeStatic from './MergeStatic';
 
 const BOTTLES = ['hawas-ice', 'afnan-sce', 'liquid-brun', 'jaguar-red'].map(id => gearCatalogData.find(item => item.id === id));
 
@@ -59,7 +60,7 @@ function CollectionBottle({ item, colors, position, onOpen }) {
 }
 
 export default function FragranceTray({ colors, onOpenCollection, onOpenPhoto }) {
-  return <group position={[4.65, 0.79, 0.05]} userData={{ label: 'Gear & Collections' }} onClick={event => { event.stopPropagation(); onOpenCollection(); }}>
+  return <MergeStatic deps={[colors]}><group position={[4.65, 0.79, 0.05]} userData={{ label: 'Gear & Collections' }} onClick={event => { event.stopPropagation(); onOpenCollection(); }}>
     <RoundedBox args={[2.2, 0.055, 0.95]} radius={0.025} smoothness={2} position={[0, 0.025, 0]}><meshStandardMaterial color={colors.board} roughness={0.8} /></RoundedBox>
     <mesh position={[0, 0.055, 0]}><boxGeometry args={[2.06, 0.01, 0.81]} /><meshStandardMaterial color={colors.coffee} roughness={1} /></mesh>
     {[-1, 1].map(side => <React.Fragment key={side}>
@@ -72,5 +73,5 @@ export default function FragranceTray({ colors, onOpenCollection, onOpenPhoto })
         ? <HawasIceBottle key={item.id} colors={colors} position={position} scale={0.75} label={item.title} onOpen={() => onOpenPhoto(item)} />
         : <CollectionBottle key={item.id} item={item} colors={colors} position={position} onOpen={onOpenPhoto} />;
     })}
-  </group>;
+  </group></MergeStatic>;
 }

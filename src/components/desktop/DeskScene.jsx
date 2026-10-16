@@ -161,6 +161,7 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
       <DeskLamp colors={colors} night={phase === 'night'} /><CoffeeMug colors={colors} /><DeskClock colors={colors} />
       <DeskPrinter colors={colors} onPrinted={() => { unlock('paper-trail'); openFromDesk('resume'); }} />
       <FragranceTray colors={colors} onOpenCollection={() => openFromDesk('gear')} onOpenPhoto={openFragrance} />
+      <MergeStatic deps={[colors]}>
       <group position={[3.05, 0.78, -1.15]} rotation={[0, -0.4, 0]} userData={{ label: 'Contact' }} onClick={event => { event.stopPropagation(); openFromDesk('contact'); }}>
         <mesh position={[0, 0.025, 0]}><cylinderGeometry args={[0.26, 0.28, 0.05, 32]} /><meshStandardMaterial color={colors.objectDark} roughness={0.5} metalness={0.3} /></mesh>
         <mesh position={[0, 0.23, 0]}><cylinderGeometry args={[0.03, 0.03, 0.38, 12]} /><meshStandardMaterial color={colors.objectDark} roughness={0.4} metalness={0.5} /></mesh>
@@ -184,20 +185,21 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
         <mesh position={[0, 0.08, 0.008]}><boxGeometry args={[0.48, 0.014, 0.01]} /><meshStandardMaterial color={colors.frame} /></mesh>
         <mesh position={[0, 0, 0.008]}><boxGeometry args={[0.45, 0.014, 0.01]} /><meshStandardMaterial color={colors.frame} /></mesh>
       </group>
+      </MergeStatic>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.52, 0]} receiveShadow><planeGeometry args={[80, 80]} /><meshStandardMaterial color={colors.world} roughness={0.92} /></mesh>
       <mesh position={[0, 6, -5]}><planeGeometry args={[80, 30]} /><meshStandardMaterial color={colors.wall} roughness={0.95} /></mesh>
       <DeskWindow phase={phase} colors={colors} animate={animate} />
-      <DeskRoom colors={colors} animate={animate} lampOn={warmLamp || phase === 'night'} />
+      <DeskRoom colors={colors} animate={animate} />
       <CorkBoard colors={colors} onOpen={() => openFromDesk('projects')} />
       <FairyLights colors={colors} animate={animate} lit={warmLamp || phase === 'night'} onOpenPhoto={openPhoto} />
-      <group position={[2.45, 4.75, -4.94]} userData={{ label: 'Recognition' }} onClick={event => { event.stopPropagation(); openFromDesk('recognition'); }}>
+      <MergeStatic deps={[colors]}><group position={[2.45, 4.75, -4.94]} userData={{ label: 'Recognition' }} onClick={event => { event.stopPropagation(); openFromDesk('recognition'); }}>
         <mesh><boxGeometry args={[1.05, 0.8, 0.06]} /><meshStandardMaterial color={colors.frame} roughness={0.6} /></mesh>
         <mesh position={[0, 0, 0.035]}><planeGeometry args={[0.9, 0.65]} /><meshStandardMaterial color={colors.paper} roughness={0.9} /></mesh>
         <mesh position={[0, 0.18, 0.04]}><boxGeometry args={[0.5, 0.05, 0.005]} /><meshStandardMaterial color={colors.accent} /></mesh>
         <mesh position={[0, 0.04, 0.04]}><boxGeometry args={[0.62, 0.018, 0.005]} /><meshStandardMaterial color={colors.frame} /></mesh>
         <mesh position={[0, -0.04, 0.04]}><boxGeometry args={[0.5, 0.018, 0.005]} /><meshStandardMaterial color={colors.frame} /></mesh>
         <mesh position={[0.26, -0.19, 0.04]}><circleGeometry args={[0.07, 24]} /><meshStandardMaterial color={colors.accent} /></mesh>
-      </group>
+      </group></MergeStatic>
     </group>
   );
 }
@@ -374,9 +376,9 @@ function ShadowRefresh({ changeKey }) {
   return null;
 }
 
-// Slow GPUs step down once each: first to 1x pixel ratio, then without shadows. Measured only on ambient frames,
-// whose ~33 ms cadence is known; a median above 45 ms means the machine cannot keep up.
-function AdaptiveQuality({ active }) {
+// Slow GPUs step down once each: 1x pixel ratio, then no shadows, then no ambient motion. Measured only on ambient
+// frames, whose ~33 ms cadence is known; a median above 45 ms means the machine cannot keep up.
+function AdaptiveQuality({ active, onLowPower }) {
   const gl = useThree(state => state.gl);
   const scene = useThree(state => state.scene);
   const setDpr = useThree(state => state.setDpr);
@@ -384,14 +386,15 @@ function AdaptiveQuality({ active }) {
   const samples = useRef([]);
   const level = useRef(0);
   useFrame((_, delta) => {
-    if (!active || level.current >= 2) { samples.current.length = 0; return; }
+    if (!active || level.current >= 3) { samples.current.length = 0; return; }
     samples.current.push(delta);
-    if (samples.current.length < 90) return;
-    const median = samples.current.sort((a, b) => a - b)[45];
+    if (samples.current.length < 45) return;
+    const median = samples.current.sort((a, b) => a - b)[22];
     samples.current.length = 0;
     if (median <= 0.045) return;
     level.current += 1;
     if (level.current === 1) setDpr(1);
+    else if (level.current === 3) onLowPower();
     else {
       gl.shadowMap.enabled = false;
       scene.traverse(node => { if (node.material) node.material.needsUpdate = true; });
@@ -471,7 +474,9 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
   const phase = roomPhase(useMinuteClock());
   const light = ROOM_LIGHT[phase];
   const pageVisible = usePageVisible();
-  const animate = ready && view === 'desk' && !motionReduced && pageVisible;
+  const [lowPower, setLowPower] = useState(false);
+  const enterLowPower = useCallback(() => setLowPower(true), []);
+  const animate = ready && view === 'desk' && !motionReduced && pageVisible && !lowPower;
   // The desk clock ticks softly while the whole room is in view.
   const { playSound, warmLamp } = useRetroOS();
   useEffect(() => {
@@ -491,7 +496,7 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
       frameloop="demand"
       events={desktopSceneEvents}
       shadows
-      gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
+      gl={{ antialias: (window.devicePixelRatio || 1) < 1.5, alpha: false, powerPreference: 'high-performance' }}
       onCreated={({ gl }) => {
         screenPortal.current = gl.domElement.parentNode;
         const onContextLost = event => { event.preventDefault(); onSceneFailure(); };
@@ -504,7 +509,7 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
         <color attach="background" args={[palette.world]} />
         <ambientLight intensity={light.ambient} color={phase === 'night' ? palette.nightWarm : palette.daylight} />
         <AmbientDriver active={animate} />
-        <AdaptiveQuality active={animate} />
+        <AdaptiveQuality active={animate} onLowPower={enterLowPower} />
         <ShadowRefresh changeKey={[ready, phase, theme, view, animate, warmLamp].join('|')} />
         <directionalLight position={[-4, 7, 3]} intensity={light.key} color={palette.keyLight} castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-camera-near={1} shadow-camera-far={25} />
         <directionalLight position={[0, 3, 6]} intensity={light.fill} color={palette.daylight} />

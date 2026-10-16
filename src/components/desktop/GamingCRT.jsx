@@ -5,6 +5,7 @@ import { CanvasTexture, NearestFilter, SRGBColorSpace } from 'three';
 import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { useRetroOS } from '../../context/RetroOSContext';
 import { createFightingClock, drawFightingDemo, fightingPose } from './fightingDemo';
+import MergeStatic from './MergeStatic';
 
 export default function GamingCRT({ colors, animate, indicator }) {
   const { getAppState, setAppState } = useDesktopWorkspace();
@@ -34,12 +35,12 @@ export default function GamingCRT({ colors, animate, indicator }) {
     drawFightingDemo(display.context, colors, pose); display.texture.needsUpdate = true;
     indicator.current?.color.set(colors.led).multiplyScalar(pose.indicator);
   });
-  return <group position={[-7.1, 2.01, -4.35]} rotation={[0, 0.06, 0]}>
+  return <MergeStatic deps={[colors]}><group position={[-7.1, 2.01, -4.35]} rotation={[0, 0.06, 0]}>
     <RoundedBox args={[1.1, 0.7, 0.85]} radius={0.045} smoothness={2}><meshStandardMaterial color={colors.fragranceStone} roughness={0.8} /></RoundedBox>
     <RoundedBox args={[0.84, 0.6, 0.055]} radius={0.035} smoothness={2} position={[-0.055, 0.01, 0.43]}><meshStandardMaterial color={colors.hardwareEdge} roughness={0.7} /></RoundedBox>
     <mesh position={[-0.055, 0.01, 0.461]}><planeGeometry args={[0.76, 0.57]} /><meshBasicMaterial map={display.texture} toneMapped={false} /></mesh>
     {[0, 1, 2, 3, 4, 5].map(i => <mesh key={i} position={[0.455, 0.17 - i * 0.047, 0.43]}><boxGeometry args={[0.08, 0.012, 0.009]} /><meshStandardMaterial color={colors.hardwareDetail} /></mesh>)}
     {[-0.18, -0.26].map(y => <mesh key={y} rotation={[Math.PI / 2, 0, 0]} position={[0.45, y, 0.445]}><cylinderGeometry args={[0.025, 0.025, 0.024, 10]} /><meshStandardMaterial color={colors.hardwareEdge} /></mesh>)}
     {[-0.38, 0.38].map(x => <mesh key={x} position={[x, -0.36, 0]}><boxGeometry args={[0.12, 0.04, 0.53]} /><meshStandardMaterial color={colors.hardwareEdge} /></mesh>)}
-  </group>;
+  </group></MergeStatic>;
 }

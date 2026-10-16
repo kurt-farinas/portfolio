@@ -6,7 +6,7 @@ import RoomSurroundings from './RoomSurroundings';
 import PlayStationCorner from './PlayStationCorner';
 import MergeStatic from './MergeStatic';
 
-// Room dressing around the desk. Motion runs only while `animate` is true (desk overview, tab visible, motion allowed);
+// Room dressing around the desk; the curtains hang still. Motion runs only while `animate` is true (desk overview, tab visible, motion allowed);
 // DeskScene's ambient driver supplies the frames, so the demand-rendered scene still sleeps otherwise.
 
 function foldedPanel(width, height) {
@@ -17,23 +17,13 @@ function foldedPanel(width, height) {
   return geometry;
 }
 
-function Curtains({ colors, animate }) {
+function Curtains({ colors }) {
   const panel = useMemo(() => foldedPanel(0.85, 2.9), []);
   useEffect(() => () => panel.dispose(), [panel]);
-  const left = useRef(null);
-  const right = useRef(null);
-  useFrame(({ clock }) => {
-    if (!animate || !left.current) return;
-    const t = clock.getElapsedTime();
-    left.current.rotation.x = Math.sin(t * 0.7) * 0.025;
-    right.current.rotation.x = Math.sin(t * 0.7 + 1.3) * 0.025;
-  });
-  return <group position={[5.2, 6.35, -4.78]}>
+  return <MergeStatic deps={[colors]}><group position={[5.2, 6.35, -4.78]}>
     <mesh position={[0, 0.06, 0]} rotation={[0, 0, Math.PI / 2]}><cylinderGeometry args={[0.035, 0.035, 4.3, 12]} /><meshStandardMaterial color={colors.curtainRod} metalness={0.4} roughness={0.5} /></mesh>
-    {/* Each panel hangs from its top edge so the sway pivots at the rod. */}
-    <group ref={left} position={[-1.55, 0, 0]}><mesh geometry={panel} position={[0, -1.45, 0]}><meshStandardMaterial color={colors.curtain} roughness={0.95} side={DoubleSide} /></mesh></group>
-    <group ref={right} position={[1.55, 0, 0]}><mesh geometry={panel} position={[0, -1.45, 0]}><meshStandardMaterial color={colors.curtain} roughness={0.95} side={DoubleSide} /></mesh></group>
-  </group>;
+    {[-1.55, 1.55].map(x => <mesh key={x} geometry={panel} position={[x, -1.45, 0]}><meshStandardMaterial color={colors.curtain} roughness={0.95} side={DoubleSide} /></mesh>)}
+  </group></MergeStatic>;
 }
 
 const LEAVES = [[0, 0.5, 0], [0.7, 0.42, 0.9], [-0.7, 0.45, -0.6], [1.4, 0.38, 2.1], [-1.3, 0.4, 2.6], [2.2, 0.34, -2.2]];
@@ -125,36 +115,13 @@ function Steam({ colors, animate }) {
   </group>;
 }
 
-const MOTE_COUNT = 40;
-function DustMotes({ colors, animate }) {
-  const points = useRef(null);
-  const seeds = useMemo(() => Array.from({ length: MOTE_COUNT }, (_, i) => [Math.sin(i * 12.9) * 0.6, (i * 0.37) % 1, Math.cos(i * 7.3) * 0.5, 0.5 + (i % 5) * 0.12]), []);
-  const positions = useMemo(() => new Float32Array(MOTE_COUNT * 3), []);
-  useFrame(({ clock }) => {
-    if (!animate || !points.current) return;
-    const t = clock.getElapsedTime();
-    seeds.forEach(([x, y, z, speed], i) => {
-      positions[i * 3] = x + Math.sin(t * 0.3 * speed + i) * 0.12;
-      positions[i * 3 + 1] = 1.0 + ((y + t * 0.03 * speed) % 1) * 1.4;
-      positions[i * 3 + 2] = z + Math.cos(t * 0.25 * speed + i) * 0.12;
-    });
-    points.current.geometry.attributes.position.needsUpdate = true;
-  });
-  if (!animate) return null;
-  return <points ref={points} position={[-3.7, 0, 0]}>
-    <bufferGeometry><bufferAttribute attach="attributes-position" args={[positions, 3]} /></bufferGeometry>
-    <pointsMaterial color={colors.paper} size={0.03} transparent opacity={0.55} depthWrite={false} />
-  </points>;
-}
-
-export default function DeskRoom({ colors, animate, lampOn }) {
+export default function DeskRoom({ colors, animate }) {
   return <>
     <RoomSurroundings colors={colors} />
-    <Curtains colors={colors} animate={animate} />
+    <Curtains colors={colors} />
     <Plant colors={colors} animate={animate} />
     <MergeStatic deps={[colors]}><WallShelf colors={colors} /><Rug colors={colors} /></MergeStatic>
     <PlayStationCorner colors={colors} animate={animate} />
     <Steam colors={colors} animate={animate} />
-    {lampOn && <DustMotes colors={colors} animate={animate} />}
   </>;
 }

@@ -4,7 +4,8 @@ import { drawFightingDemo, fightingPose } from '../src/components/desktop/fighti
 const base = process.env.PORTFOLIO_PREVIEW_URL || 'http://127.0.0.1:4182';
 const output = 'test-results/gaming-crt';
 await fs.mkdir(output, { recursive: true });
-const browser = await chromium.launch();
+// Use the real GPU: software rendering is slow enough that the room's adaptive quality turns ambient motion off.
+const browser = await chromium.launch({ args: ['--enable-gpu', '--ignore-gpu-blocklist', ...(process.platform === 'win32' ? ['--use-angle=d3d11'] : [])] });
 async function prepare(context, theme) {
  await context.addInitScript(theme => {
   localStorage.setItem('portfolio-theme', theme); sessionStorage.setItem('kurt-os-boot-seen', 'true');

@@ -26,12 +26,14 @@
 .desk-scene-stage { z-index: 0; }
 /* Contain projected HTML so it cannot intercept the loading panel's controls. */
 .desk-canvas { display: block; z-index: 0; }
-.desk-projected-html { pointer-events: auto !important; }
+/* One composited layer: camera moves transform it without repainting the 1280x760 desktop. */
+.desk-projected-html { pointer-events: auto !important; will-change: transform; }
 .desk-projection-frame {
   position: relative;
   width: 1280px;
   height: 760px;
   overflow: hidden;
+  contain: strict;
   border: 5px solid var(--desk-object-dark);
   border-radius: 0;
   background: var(--paper);
