@@ -15,6 +15,7 @@ import DeskRoom, { CorkBoard } from './DeskRoom';
 import { WindowLandscape } from './RoomSurroundings';
 import FairyLights from './FairyLights';
 import MergeStatic from './MergeStatic';
+import fitTexture from './fitTexture';
 import optimized from '../../data/optimizedImageManifest.json';
 import FragranceTray from './FragranceTray';
 import { CoffeeMug, DeskClock, DeskLamp, DeskPrinter, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
@@ -31,10 +32,9 @@ function desktopSceneEvents(store) {
 const PRINT_ASPECT = 0.66 / 0.82;
 function PhotoPrint({ src, onClick, paper }) {
   const source = useTexture(optimized[src] || src);
-  // Clone before cropping: useTexture shares one cached texture per URL with the wall polaroids.
+  // A downscaled copy before cropping: useTexture shares one cached texture per URL with the wall polaroids.
   const texture = useMemo(() => {
-    const value = source.clone();
-    value.colorSpace = SRGBColorSpace;
+    const value = fitTexture(source);
     const aspect = source.image.width / source.image.height;
     if (aspect > PRINT_ASPECT) { value.repeat.set(PRINT_ASPECT / aspect, 1); value.offset.set((1 - PRINT_ASPECT / aspect) / 2, 0); }
     else { value.repeat.set(1, aspect / PRINT_ASPECT); value.offset.set(0, (1 - aspect / PRINT_ASPECT) / 2); }
@@ -347,18 +347,26 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
 }
 
 // Requests ~30 frames a second only while ambient motion is active; otherwise the demand-rendered scene sleeps.
+// Driven by requestAnimationFrame so frames land on display refreshes (a timer drifts against vsync and judders).
 function AmbientDriver({ active }) {
   const invalidate = useThree(state => state.invalidate);
   useEffect(() => {
     if (!active) return undefined;
-    const id = window.setInterval(() => invalidate(), 33);
-    return () => window.clearInterval(id);
+    let id = 0, last = 0;
+    const tick = now => {
+      // 2 ms slack: on a 60 Hz display every second refresh qualifies instead of alternating 2 and 3.
+      if (now - last >= 31) { last = now; invalidate(); }
+      id = requestAnimationFrame(tick);
+    };
+    id = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(id);
   }, [active, invalidate]);
   return null;
 }
 
 // Light and geometry rarely move, so the shadow map is redrawn at most ~8 times a second, and immediately when the room changes.
-function ShadowRefresh({ changeKey }) {
+// When `frozen`, only room changes redraw it: the periodic refresh mainly follows the swaying plant and polaroids.
+function ShadowRefresh({ changeKey, frozen }) {
   const gl = useThree(state => state.gl);
   const invalidate = useThree(state => state.invalidate);
   const last = useRef(0);
@@ -369,18 +377,17 @@ function ShadowRefresh({ changeKey }) {
   useEffect(() => { gl.shadowMap.needsUpdate = true; invalidate(); }, [gl, invalidate, changeKey]);
   useFrame(() => {
     const now = performance.now();
-    if (now - last.current < 125) return;
+    if (frozen || now - last.current < 125) return;
     last.current = now;
     gl.shadowMap.needsUpdate = true;
   });
   return null;
 }
 
-// Slow GPUs step down once each: 1x pixel ratio, then no shadows, then no ambient motion. Measured only on ambient
-// frames, whose ~33 ms cadence is known; a median above 45 ms means the machine cannot keep up.
-function AdaptiveQuality({ active, onLowPower }) {
-  const gl = useThree(state => state.gl);
-  const scene = useThree(state => state.scene);
+// Slow machines step down once each: 1x pixel ratio, then a frozen shadow map, then no ambient motion. None of the
+// steps recompiles shaders (switching shadows off did, freezing for seconds on exactly these machines).
+// Measured only on ambient frames, whose ~33 ms cadence is known; a median above 45 ms means the machine cannot keep up.
+function AdaptiveQuality({ active, onLevel }) {
   const setDpr = useThree(state => state.setDpr);
   const invalidate = useThree(state => state.invalidate);
   const samples = useRef([]);
@@ -394,11 +401,7 @@ function AdaptiveQuality({ active, onLowPower }) {
     if (median <= 0.045) return;
     level.current += 1;
     if (level.current === 1) setDpr(1);
-    else if (level.current === 3) onLowPower();
-    else {
-      gl.shadowMap.enabled = false;
-      scene.traverse(node => { if (node.material) node.material.needsUpdate = true; });
-    }
+    onLevel(level.current);
     invalidate();
   });
   return null;
@@ -414,9 +417,32 @@ function usePageVisible() {
   return visible;
 }
 
-// Mounts only after every suspended desk asset (e.g. the photo texture) has loaded.
+// Mounts only after every suspended desk asset (e.g. the photo texture) has loaded. Shaders are compiled and
+// textures uploaded behind the loading panel, so the first frames and first camera turns do not stall on them.
+// Shaders are compiled with the optional lamp/fairy lights both on and off, so switching them later reuses programs.
 function SceneReady({ onReady }) {
-  useEffect(onReady, [onReady]);
+  const gl = useThree(state => state.gl);
+  const scene = useThree(state => state.scene);
+  const camera = useThree(state => state.camera);
+  useEffect(() => {
+    let cancelled = false;
+    scene.traverse(node => [node.material].flat().forEach(material => {
+      if (material) Object.values(material).forEach(value => { if (value?.isTexture) gl.initTexture(value); });
+    }));
+    const optional = [];
+    scene.traverse(node => { if (node.userData.optionalLight) optional.push([node, node.visible]); });
+    const compile = async () => {
+      optional.forEach(([light]) => { light.visible = true; });
+      await gl.compileAsync(scene, camera);
+      optional.forEach(([light]) => { light.visible = false; });
+      await gl.compileAsync(scene, camera);
+    };
+    compile().catch(() => {}).finally(() => {
+      optional.forEach(([light, visible]) => { light.visible = visible; });
+      if (!cancelled) onReady();
+    });
+    return () => { cancelled = true; };
+  }, [gl, scene, camera, onReady]);
   return null;
 }
 
@@ -474,9 +500,8 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
   const phase = roomPhase(useMinuteClock());
   const light = ROOM_LIGHT[phase];
   const pageVisible = usePageVisible();
-  const [lowPower, setLowPower] = useState(false);
-  const enterLowPower = useCallback(() => setLowPower(true), []);
-  const animate = ready && view === 'desk' && !motionReduced && pageVisible && !lowPower;
+  const [qualityLevel, setQualityLevel] = useState(0);
+  const animate = ready && view === 'desk' && !motionReduced && pageVisible && qualityLevel < 3;
   // The desk clock ticks softly while the whole room is in view.
   const { playSound, warmLamp } = useRetroOS();
   useEffect(() => {
@@ -509,8 +534,8 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
         <color attach="background" args={[palette.world]} />
         <ambientLight intensity={light.ambient} color={phase === 'night' ? palette.nightWarm : palette.daylight} />
         <AmbientDriver active={animate} />
-        <AdaptiveQuality active={animate} onLowPower={enterLowPower} />
-        <ShadowRefresh changeKey={[ready, phase, theme, view, animate, warmLamp].join('|')} />
+        <AdaptiveQuality active={animate} onLevel={setQualityLevel} />
+        <ShadowRefresh changeKey={[ready, phase, theme, view, animate, warmLamp].join('|')} frozen={qualityLevel >= 2} />
         <directionalLight position={[-4, 7, 3]} intensity={light.key} color={palette.keyLight} castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-camera-near={1} shadow-camera-far={25} />
         <directionalLight position={[0, 3, 6]} intensity={light.fill} color={palette.daylight} />
         <directionalLight position={[6, 5, -4]} intensity={light.window} color={phase === 'dusk' ? palette.accent : palette.skyDay} />

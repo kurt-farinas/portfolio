@@ -7,6 +7,7 @@ import useMinuteClock, { formatClock } from './useMinuteClock';
 import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { portfolioProfile } from '../../data/portfolioFacts';
 import MergeStatic from './MergeStatic';
+import fitTexture from './fitTexture';
 
 export const MONITOR_CENTER_Y = 2.54;
 export const MONITOR_SCREEN_Z = -0.86;
@@ -78,13 +79,13 @@ for (let y = -STAMP_H / 2 + STAMP_HOLE; y < STAMP_H / 2 - 1e-6; y += STAMP_HOLE)
 function ProfileStamp({ colors }) {
   const source = useTexture('/optimized/images/kurt-farinas-profile.png.webp');
   const photo = useMemo(() => {
-    const texture = source.clone();
-    texture.colorSpace = SRGBColorSpace;
+    const texture = fitTexture(source, 256);
     texture.repeat.set(0.18 / 0.22, 1); // crop the square portrait to the stamp's portrait window
     texture.offset.set((1 - 0.18 / 0.22) / 2, 0);
     texture.needsUpdate = true;
     return texture;
   }, [source]);
+  useEffect(() => () => photo.dispose(), [photo]);
   return <group>
     <mesh><planeGeometry args={[STAMP_W, STAMP_H]} /><meshStandardMaterial color={colors.paper} roughness={0.9} /></mesh>
     <mesh position={[0, 0, 0.002]}><planeGeometry args={[0.18, 0.22]} /><meshBasicMaterial map={photo} toneMapped={false} /></mesh>
@@ -110,8 +111,8 @@ export function DeskLamp({ colors, night }) {
           {/* Faces the camera: yaw undoes the lamp's turn, pitch tips it onto the upper dome. */}
           <group position={[0,-0.12,0]} rotation={[-0.5,0.53,0.05,'YXZ']}><group position={[0,0,0.315]}><ProfileStamp colors={colors} /></group></group>
           <mesh position={[0,-0.06,0]}><sphereGeometry args={[0.09,16,10]} /><meshStandardMaterial color={colors.retroKey} emissive={colors.paper} emissiveIntensity={warmLamp?1.2:0} /></mesh>
-          {/* Always mounted: adding or removing a light recompiles every material (a visible stutter). */}
-          <pointLight position={[0,-0.3,0]} color={colors.paper} intensity={warmLamp?5:0} distance={7} decay={2} />
+          {/* Hidden rather than unmounted while off; SceneReady precompiles shaders for both states, so toggling never stutters. */}
+          <pointLight position={[0,-0.3,0]} color={colors.paper} intensity={5} distance={7} decay={2} visible={warmLamp} userData={{ optionalLight: true }} />
         </group>
       </group>
     </group>

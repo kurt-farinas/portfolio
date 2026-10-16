@@ -19,6 +19,7 @@ function ownerOf(node, root) {
 // Draws a static, non-animated subtree as one mesh per distinct material instead of one per JSX mesh.
 // The originals stay mounted (React keeps owning them) but are hidden and skipped by raycasting; the merged mesh
 // reuses the first original's material, so hover tint still works.
+// The subtree's matrices are then frozen, so three.js stops recomputing them every frame.
 // Only wrap subtrees whose meshes never move; pass every value that changes their materials in `deps`.
 export default function MergeStatic({ children, deps = [] }) {
   const group = useRef(null);
@@ -58,8 +59,16 @@ export default function MergeStatic({ children, deps = [] }) {
       added.push(merged);
       meshes.forEach(mesh => { hidden.push([mesh, mesh.raycast]); mesh.visible = false; mesh.raycast = noRaycast; });
     });
+    root.updateWorldMatrix(false, true);
+    const frozen = [];
+    root.traverse(node => {
+      if (node === root) return;
+      frozen.push(node);
+      node.matrixAutoUpdate = false; node.matrixWorldAutoUpdate = false;
+    });
     invalidate();
     return () => {
+      frozen.forEach(node => { node.matrixAutoUpdate = true; node.matrixWorldAutoUpdate = true; });
       added.forEach(mesh => { mesh.removeFromParent(); mesh.geometry.dispose(); });
       hidden.forEach(([mesh, raycast]) => { mesh.visible = true; mesh.raycast = raycast; });
     };

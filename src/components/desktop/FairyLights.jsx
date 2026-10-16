@@ -1,9 +1,10 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
-import { CatmullRomCurve3, SRGBColorSpace, Vector3 } from 'three';
+import { CatmullRomCurve3, Vector3 } from 'three';
 import { snapshotsDeckData } from '../../data/projectData';
 import optimized from '../../data/optimizedImageManifest.json';
+import fitTexture from './fitTexture';
 
 // A string of warm fairy lights in two swags across the back wall, with After Hours photos pegged on as polaroids.
 // Pinned high at both ends and the middle; sags clear of the monitor, certificate, and window.
@@ -40,8 +41,7 @@ function Polaroid({ photo, texture, index, colors, animate, onOpen }) {
 export default function FairyLights({ colors, animate, lit, onOpenPhoto }) {
   const sources = useTexture(PHOTOS.map(photo => optimized[photo.src] || photo.src));
   const textures = useMemo(() => sources.map(source => {
-    const texture = source.clone();
-    texture.colorSpace = SRGBColorSpace;
+    const texture = fitTexture(source);
     // Crop each photo to a square, centred.
     const aspect = source.image.width / source.image.height;
     if (aspect > 1) { texture.repeat.set(1 / aspect, 1); texture.offset.set((1 - 1 / aspect) / 2, 0); }
@@ -49,6 +49,7 @@ export default function FairyLights({ colors, animate, lit, onOpenPhoto }) {
     texture.needsUpdate = true;
     return texture;
   }), [sources]);
+  useEffect(() => () => textures.forEach(texture => texture.dispose()), [textures]);
   const wire = useMemo(() => CURVE, []);
   const bulbs = useRef([]);
   useFrame(({ clock }) => {
@@ -64,8 +65,8 @@ export default function FairyLights({ colors, animate, lit, onOpenPhoto }) {
       <sphereGeometry args={[0.045, 12, 10]} />
       <meshStandardMaterial color={colors.fairyBulb} emissive={colors.fairyBulb} emissiveIntensity={lit ? 1.6 : 0.05} roughness={0.3} />
     </mesh>)}
-    {/* Always mounted (intensity 0 when off): toggling the light count recompiles every material. */}
-    {GLOW_LIGHTS.map(x => <pointLight key={x} position={[x, 5.1, WALL_Z + 0.5]} color={colors.fairyBulb} intensity={lit ? 1.5 : 0} distance={3.2} decay={2} />)}
+    {/* Hidden while off so daytime frames skip their lighting math; SceneReady precompiles shaders for both states. */}
+    {GLOW_LIGHTS.map(x => <pointLight key={x} position={[x, 5.1, WALL_Z + 0.5]} color={colors.fairyBulb} intensity={1.5} distance={3.2} decay={2} visible={lit} userData={{ optionalLight: true }} />)}
     {PHOTOS.map((photo, index) => <Polaroid key={photo.id} photo={photo} texture={textures[index]} index={index} colors={colors} animate={animate} onOpen={onOpenPhoto} />)}
   </group>;
 }
