@@ -47,6 +47,10 @@ try {
     expect(await pose(),'resizing must not move camera').toBe(initial);
     await page.mouse.move(8,350);await page.mouse.down();await page.mouse.move(15,420,{steps:8});await page.mouse.up();
     await expect.poll(pose,{message:'outside camera dragging must still work'}).not.toBe(initial);
+    // Releasing a camera drag outside the screen lets hover zoom back out to the desk; hover the glass to return before expanding.
+    const glass=await page.locator('.desk-projection-frame').boundingBox();
+    await page.mouse.move(glass.x+glass.width/2,glass.y+glass.height/2,{steps:4});
+    await expect(page.locator('.immersive-portfolio-shell')).toHaveAttribute('data-view','screen');
     await page.getByRole('button',{name:'Expand desktop',exact:true}).click();
     await expect(page.locator('.desktop-workspace-expanded')).toBeVisible();
     await page.getByRole('button',{name:'Back to monitor',exact:true}).click();await page.waitForTimeout(1800);

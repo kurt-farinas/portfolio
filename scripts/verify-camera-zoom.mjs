@@ -63,9 +63,22 @@ try {
     expect(await page.evaluate(() => window.__cameraTestFrames)).toBeLessThanOrEqual(frames + 2);
     const exit = await sample(page, () => page.getByRole('button', { name: 'Back to desk', exact: true }).press('Enter'));
     await settled(page);
-    // Small repeated deltas model trackpad input; larger bursts model a mouse wheel.
+    // The camera follows the cursor: dwell on the monitor glass zooms in, leaving the desktop zooms out.
+    const frame = await page.locator('.desk-projection-frame').boundingBox();
+    const hoverEntry = await sample(page, async () => {
+      await page.mouse.move(frame.x + frame.width / 2 - 30, frame.y + frame.height / 2);
+      await page.mouse.move(frame.x + frame.width / 2, frame.y + frame.height / 2, { steps: 6 });
+      await expect(shell).toHaveAttribute('data-view', 'screen');
+    }, false);
+    await settled(page);
+    const wide = await page.locator('.desk-projection-frame').boundingBox();
+    const hoverExit = await sample(page, async () => {
+      await page.mouse.move(wide.x / 2, wide.y + wide.height / 2, { steps: 6 });
+      await expect(shell).toHaveAttribute('data-view', 'desk');
+    }, false);
+    // Scroll path: dolly past 5.5 units with the cursor off the glass (no hover dwell), then reverse past 6.
+    await page.mouse.move(1380, 650);
     const wheelEntry = await sample(page, async () => {
-      await page.mouse.move(1380, 650);
       for (let i = 0; i < 90 && await shell.getAttribute('data-view') === 'desk'; i++) {
         await page.mouse.wheel(0, -40); await page.waitForTimeout(18);
       }
@@ -83,14 +96,13 @@ try {
         await page.mouse.wheel(0, 160); await page.waitForTimeout(18);
       }
       await expect(shell).toHaveAttribute('data-view', 'desk');
-      for (let i = 0; i < 8; i++) await page.mouse.wheel(0, 120);
     }, false);
     await settled(page);
     await expect(shell).toHaveAttribute('data-view', 'desk');
-    await fs.writeFile(`${output}/${theme}-motion.json`, JSON.stringify({ entry, exit, wheelEntry, wheelExit }));
+    await fs.writeFile(`${output}/${theme}-motion.json`, JSON.stringify({ entry, exit, hoverEntry, hoverExit, wheelEntry, wheelExit }));
     await page.screenshot({ path: `${output}/${theme}-desk.png` });
     expect(errors).toEqual([]);
     await context.close();
-    console.log(`${theme}: camera tails, idle rendering, small wheel deltas, bursts and interrupted reversals passed.`);
+    console.log(`${theme}: camera tails, idle rendering, hover-dwell and wheel zoom in and out passed.`);
   }
 } finally { await browser.close(); }
