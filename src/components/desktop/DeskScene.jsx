@@ -18,7 +18,7 @@ import MergeStatic from './MergeStatic';
 import fitTexture from './fitTexture';
 import optimized from '../../data/optimizedImageManifest.json';
 import FragranceTray from './FragranceTray';
-import { cameraFocalOffset, zoomProgress } from './deskCameraFollow';
+import { cameraFollowTarget, easeToward, FOLLOW_TAU, zoomProgress } from './deskCameraFollow';
 import { CoffeeMug, DeskClock, DeskLamp, DeskPrinter, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
 
 function readColor(name, fallback) {
@@ -311,6 +311,8 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
       }).catch(onSceneFailure);
       return;
     }
+    follow.current = { x: 0, y: 0, azimuth: 0, polar: 0 };
+    followTarget.current = { x: 0, y: 0, azimuth: 0, polar: 0 };
     controls.current?.setFocalOffset(0, 0, 0, false);
     const animate = ready && !reducedMotion && prior?.camera === camera && prior.view !== view && prior.aspect === aspect;
     move(pose, animate);
@@ -329,6 +331,9 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
   }, [motion, DESK_POSE, endScreenBoot, onSceneFailure]);
   const spherical = useMemo(() => new Spherical(), []);
   const cursor = useRef([0, 0]);
+  const follow = useRef({ x: 0, y: 0, azimuth: 0, polar: 0 });
+  const followTarget = useRef({ x: 0, y: 0, azimuth: 0, polar: 0 });
+  const invalidate = useThree(state => state.invalidate);
   useEffect(() => {
     const host = canvas.parentElement;
     if (!host) return undefined;
@@ -354,12 +359,12 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
     if (view === 'desk' && !reducedMotion) {
       // Scrolling in eases the view toward the monitor before the lock.
       const deskDistance = Math.hypot(DESK_POSE[0] - DESK_POSE[3], DESK_POSE[1] - DESK_POSE[4], DESK_POSE[2] - DESK_POSE[5]);
-      const [x, y] = cameraFocalOffset(cursor.current[0], cursor.current[1], zoomProgress(distance, deskDistance, LOCK_DISTANCE), [0, MONITOR_CENTER_Y - DESK_CAMERA_TARGET[1]]);
-      controls.current.setFocalOffset(x, y, 0, true);
+      followTarget.current = cameraFollowTarget(cursor.current[0], cursor.current[1], zoomProgress(distance, deskDistance, LOCK_DISTANCE), [0, MONITOR_CENTER_Y - DESK_CAMERA_TARGET[1]]);
+      invalidate();
     }
     if (view === 'desk' && distance < LOCK_DISTANCE) { handoff.current = { view: 'screen' }; onOpenDesktop(); }
     else if (view === 'screen' && distance > UNLOCK_DISTANCE) { handoff.current = { view: 'desk' }; onBackToDesk(); }
-  }, [view, reducedMotion, DESK_POSE, onOpenDesktop, onBackToDesk, spherical]);
+  }, [view, reducedMotion, DESK_POSE, onOpenDesktop, onBackToDesk, spherical, invalidate]);
   // The camera follows the cursor: resting on the monitor glass zooms in, leaving the projected desktop zooms out.
   useEffect(() => {
     const host = canvas.parentElement;
@@ -399,25 +404,41 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
     window.addEventListener('blur', clear);
     return () => { clear(); host.removeEventListener('pointermove', move); host.removeEventListener('pointerleave', clear); window.removeEventListener('blur', clear); };
   }, [canvas, camera, view, onOpenDesktop, onBackToDesk]);
-  // The desk view drifts with the cursor; it eases back to centre when the cursor leaves.
+  // The desk view turns and drifts with the cursor, eased per frame (a ~0.1 s response); it returns to centre when the cursor leaves.
   useEffect(() => {
     const host = canvas.parentElement;
     if (!host || view !== 'desk' || reducedMotion) return undefined;
-    const settle = () => { cursor.current = [0, 0]; controls.current?.setFocalOffset(0, 0, 0, true); };
+    const zero = { x: 0, y: 0, azimuth: 0, polar: 0 };
+    const settle = () => { cursor.current = [0, 0]; followTarget.current = zero; invalidate(); };
     const move = event => {
       if (handoff.current || event.buttons || event.target.closest?.('.desk-projection-frame')) return;
       const rect = canvas.getBoundingClientRect();
       cursor.current = [((event.clientX - rect.left) / rect.width) * 2 - 1, -(((event.clientY - rect.top) / rect.height) * 2 - 1)];
       const distance = controls.current?.getSpherical(spherical, false).radius;
       const deskDistance = Math.hypot(DESK_POSE[0] - DESK_POSE[3], DESK_POSE[1] - DESK_POSE[4], DESK_POSE[2] - DESK_POSE[5]);
-      const [x, y] = cameraFocalOffset(cursor.current[0], cursor.current[1], zoomProgress(distance, deskDistance, LOCK_DISTANCE), [0, MONITOR_CENTER_Y - DESK_CAMERA_TARGET[1]]);
-      controls.current?.setFocalOffset(x, y, 0, true);
+      followTarget.current = cameraFollowTarget(cursor.current[0], cursor.current[1], zoomProgress(distance, deskDistance, LOCK_DISTANCE), [0, MONITOR_CENTER_Y - DESK_CAMERA_TARGET[1]]);
+      invalidate();
     };
     host.addEventListener('pointermove', move, { passive: true });
     host.addEventListener('pointerleave', settle);
     window.addEventListener('blur', settle);
     return () => { host.removeEventListener('pointermove', move); host.removeEventListener('pointerleave', settle); window.removeEventListener('blur', settle); settle(); };
-  }, [canvas, view, reducedMotion, DESK_POSE, spherical]);
+  }, [canvas, view, reducedMotion, DESK_POSE, spherical, invalidate]);
+  useFrame((_, delta) => {
+    const c = controls.current, f = follow.current, t = followTarget.current;
+    if (!c || (f.x === t.x && f.y === t.y && f.azimuth === t.azimuth && f.polar === t.polar)) return;
+    const dt = Math.min(delta, 0.05);
+    const next = view === 'desk' && !reducedMotion
+      ? { x: easeToward(f.x, t.x, dt, FOLLOW_TAU), y: easeToward(f.y, t.y, dt, FOLLOW_TAU), azimuth: easeToward(f.azimuth, t.azimuth, dt, FOLLOW_TAU), polar: easeToward(f.polar, t.polar, dt, FOLLOW_TAU) }
+      : { ...t };
+    // Snap the last sliver so the scene can sleep.
+    const near = Math.abs(next.x - t.x) + Math.abs(next.y - t.y) + Math.abs(next.azimuth - t.azimuth) + Math.abs(next.polar - t.polar) < 1e-3;
+    const applied = near ? { ...t } : next;
+    c.setFocalOffset(applied.x, applied.y, 0, false);
+    c.rotate(applied.azimuth - f.azimuth, applied.polar - f.polar, false);
+    follow.current = applied;
+    if (!near) invalidate();
+  });
   return <><PerspectiveCamera makeDefault position={DESK_CAMERA_POSITION} fov={38} /><CameraControls ref={controls} makeDefault onControl={onControl} smoothTime={SMOOTH_TIME} draggingSmoothTime={0.18} dollySpeed={0.75} restThreshold={0.01} minDistance={3.5} maxDistance={18} minPolarAngle={0.65} maxPolarAngle={1.42} maxAzimuthAngle={0.8} minAzimuthAngle={-0.8} /></>;
 }
 
