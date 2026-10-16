@@ -1,7 +1,7 @@
-import React, { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, events, useFrame, useThree } from '@react-three/fiber';
-import { CameraControls, Html, PerspectiveCamera, RoundedBox, useContextBridge, useCursor, useTexture } from '@react-three/drei';
-import { Box3, CanvasTexture, Color, SRGBColorSpace, Spherical, Vector3 } from 'three';
+import React, { Suspense, startTransition, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Canvas, events, useFrame, useThree, useLoader } from '@react-three/fiber';
+import { CameraControls, Html, PerspectiveCamera, RoundedBox, useContextBridge, useCursor } from '@react-three/drei';
+import { Box3, CanvasTexture, Color, SRGBColorSpace, Spherical, Vector3, TextureLoader } from 'three';
 import DesktopWorkspace from './DesktopWorkspace';
 import { POST_LINES } from './BootScreen';
 import { createDeskCameraMotion } from './deskCameraMotion';
@@ -31,8 +31,8 @@ function desktopSceneEvents(store) {
 
 const PRINT_ASPECT = 0.66 / 0.82;
 function PhotoPrint({ src, onClick, paper }) {
-  const source = useTexture(optimized[src] || src);
-  // A downscaled copy before cropping: useTexture shares one cached texture per URL with the wall polaroids.
+  const source = useLoader(TextureLoader, optimized[src] || src);
+  // A downscaled copy before cropping: useLoader shares one cached texture per URL with the wall polaroids.
   const texture = useMemo(() => {
     const value = fitTexture(source);
     const aspect = source.image.width / source.image.height;
@@ -107,7 +107,8 @@ function DeskWindow({ phase, colors, animate }) {
   </group>;
 }
 
-function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors }) {
+function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors, decor, onBaseMounted }) {
+  useEffect(onBaseMounted, [onBaseMounted]);
   const { noteDeskOpen, unlock, warmLamp } = useRetroOS();
   const openFromDesk = appId => { noteDeskOpen(appId); onOpenApp(appId); };
   const { openLightbox } = useModal();
@@ -160,7 +161,7 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
       <RetroMouse colors={colors} onOpenProjects={() => openFromDesk('projects')} />
       <DeskLamp colors={colors} night={phase === 'night'} /><CoffeeMug colors={colors} /><DeskClock colors={colors} />
       <DeskPrinter colors={colors} onPrinted={() => { unlock('paper-trail'); openFromDesk('resume'); }} />
-      <FragranceTray colors={colors} onOpenCollection={() => openFromDesk('gear')} onOpenPhoto={openFragrance} />
+      {decor && <FragranceTray colors={colors} onOpenCollection={() => openFromDesk('gear')} onOpenPhoto={openFragrance} />}
       <MergeStatic deps={[colors]}>
       <group position={[3.05, 0.78, -1.15]} rotation={[0, -0.4, 0]} userData={{ label: 'Contact' }} onClick={event => { event.stopPropagation(); openFromDesk('contact'); }}>
         <mesh position={[0, 0.025, 0]}><cylinderGeometry args={[0.26, 0.28, 0.05, 32]} /><meshStandardMaterial color={colors.objectDark} roughness={0.5} metalness={0.3} /></mesh>
@@ -188,10 +189,13 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
       </MergeStatic>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.52, 0]} receiveShadow><planeGeometry args={[80, 80]} /><meshStandardMaterial color={colors.world} roughness={0.92} /></mesh>
       <mesh position={[0, 6, -5]}><planeGeometry args={[80, 30]} /><meshStandardMaterial color={colors.wall} roughness={0.95} /></mesh>
-      <DeskWindow phase={phase} colors={colors} animate={animate} />
-      <DeskRoom colors={colors} animate={animate} />
-      <CorkBoard colors={colors} onOpen={() => openFromDesk('projects')} />
-      <FairyLights colors={colors} animate={animate} lit={warmLamp || phase === 'night'} onOpenPhoto={openPhoto} />
+      {/* Room decor mounts one frame after the desk so building the scene never blocks the page in one long task. */}
+      {decor && <>
+        <DeskWindow phase={phase} colors={colors} animate={animate} />
+        <DeskRoom colors={colors} animate={animate} />
+        <CorkBoard colors={colors} onOpen={() => openFromDesk('projects')} />
+        <FairyLights colors={colors} animate={animate} lit={warmLamp || phase === 'night'} onOpenPhoto={openPhoto} />
+      </>}
       <MergeStatic deps={[colors]}><group position={[2.45, 4.75, -4.94]} userData={{ label: 'Recognition' }} onClick={event => { event.stopPropagation(); openFromDesk('recognition'); }}>
         <mesh><boxGeometry args={[1.05, 0.8, 0.06]} /><meshStandardMaterial color={colors.frame} roughness={0.6} /></mesh>
         <mesh position={[0, 0, 0.035]}><planeGeometry args={[0.9, 0.65]} /><meshStandardMaterial color={colors.paper} roughness={0.9} /></mesh>
@@ -489,6 +493,12 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
   const screenPortal = useRef(null);
   const [ready, setReady] = useState(false);
   const markReady = useCallback(() => { setReady(true); onReady(); }, [onReady]);
+  // Decor follows the desk's first commit by a frame; a transition keeps the desk shown while decor textures load.
+  const [decor, setDecor] = useState(false);
+  const mountDecor = useCallback(() => {
+    const id = requestAnimationFrame(() => startTransition(() => setDecor(true)));
+    return () => cancelAnimationFrame(id);
+  }, []);
   useLayoutEffect(() => { onLoading(); }, [onLoading]);
   const ContextBridge = useContextBridge(DesktopWorkspaceContext, ModalContext, RetroOSContext);
   // Read after ThemeProvider's layout effect has switched data-theme, so the room never shows the previous theme's colors.
@@ -541,8 +551,8 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
         <directionalLight position={[6, 5, -4]} intensity={light.window} color={phase === 'dusk' ? palette.accent : palette.skyDay} />
         <DeskCamera view={view} ready={ready} reducedMotion={motionReduced} onOpenDesktop={onOpenDesktop} onBackToDesk={onBackToDesk} onSceneFailure={onSceneFailure} />
         <Suspense fallback={null}>
-          <DeskObjects view={view} phase={phase} animate={animate} onOpenDesktop={onOpenDesktop} onOpenApp={onOpenApp} colors={palette} />
-          <SceneReady onReady={markReady} />
+          <DeskObjects view={view} phase={phase} animate={animate} onOpenDesktop={onOpenDesktop} onOpenApp={onOpenApp} colors={palette} decor={decor} onBaseMounted={mountDecor} />
+          {decor && <SceneReady onReady={markReady} />}
         </Suspense>
         <ScreenProjection view={view} theme={theme} onOpenResume={onOpenResume} toggleTheme={toggleTheme} onBackToDesk={onBackToDesk} ContextBridge={ContextBridge} portal={screenPortal} />
       </ContextBridge>

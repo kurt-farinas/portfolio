@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
 import { CanvasTexture, NearestFilter, SRGBColorSpace } from 'three';
@@ -16,11 +16,15 @@ export default function GamingCRT({ colors, animate, indicator }) {
   const display = useMemo(() => {
     const canvas = document.createElement('canvas'); canvas.width = 160; canvas.height = 120;
     const context = canvas.getContext('2d'); context.imageSmoothingEnabled = false;
-    drawFightingDemo(context, colors, fightingPose(Math.floor(clock.current.time * 12) / 12));
     const texture = new CanvasTexture(canvas); texture.colorSpace = SRGBColorSpace;
     texture.minFilter = NearestFilter; texture.magFilter = NearestFilter; texture.generateMipmaps = false;
     return { texture, context };
   }, [colors]);
+  // Draw the first frame on commit, not during render: a render React discards (the room mounts in a transition) must not draw.
+  useLayoutEffect(() => {
+    drawFightingDemo(display.context, colors, fightingPose(Math.floor(clock.current.time * 12) / 12));
+    display.texture.needsUpdate = true;
+  }, [display, colors]);
   useEffect(() => () => display.texture.dispose(), [display]);
   // Existing in-memory room state preserves the phase if expanded view unmounts 3D.
   useEffect(() => () => setAppState('room:gaming-crt', clock.current.time), [setAppState]);

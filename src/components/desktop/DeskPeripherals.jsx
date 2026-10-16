@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Instance, Instances, RoundedBox, RoundedBoxGeometry, useTexture } from '@react-three/drei';
-import { CanvasTexture, SRGBColorSpace } from 'three';
-import { useFrame, useThree } from '@react-three/fiber';
+import { Instance, Instances, RoundedBox, RoundedBoxGeometry } from '@react-three/drei';
+import { CanvasTexture, SRGBColorSpace, TextureLoader } from 'three';
+import { useFrame, useThree, useLoader } from '@react-three/fiber';
 import { useRetroOS } from '../../context/RetroOSContext';
 import useMinuteClock, { formatClock } from './useMinuteClock';
 import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
@@ -77,7 +77,7 @@ const stampHoles = [];
 for (let x = -STAMP_W / 2; x <= STAMP_W / 2 + 1e-6; x += STAMP_HOLE) stampHoles.push([x, STAMP_H / 2], [x, -STAMP_H / 2]);
 for (let y = -STAMP_H / 2 + STAMP_HOLE; y < STAMP_H / 2 - 1e-6; y += STAMP_HOLE) stampHoles.push([STAMP_W / 2, y], [-STAMP_W / 2, y]);
 function ProfileStamp({ colors }) {
-  const source = useTexture('/optimized/images/kurt-farinas-profile.png.webp');
+  const source = useLoader(TextureLoader, '/optimized/images/kurt-farinas-profile.png.webp');
   const photo = useMemo(() => {
     const texture = fitTexture(source, 256);
     texture.repeat.set(0.18 / 0.22, 1); // crop the square portrait to the stamp's portrait window

@@ -7,7 +7,6 @@ function materialKey(material) {
   return [material.type, material.color?.getHexString(), material.emissive?.getHexString(), material.emissiveIntensity,
     material.roughness, material.metalness, material.map?.uuid, material.side, material.toneMapped].join('|');
 }
-const noRaycast = () => {};
 // Meshes merge only within their nearest interactive ancestor, so hover labels and click handlers keep their targets.
 function ownerOf(node, root) {
   for (let parent = node.parent; parent && parent !== root; parent = parent.parent) {
@@ -17,8 +16,8 @@ function ownerOf(node, root) {
 }
 
 // Draws a static, non-animated subtree as one mesh per distinct material instead of one per JSX mesh.
-// The originals stay mounted (React keeps owning them) but are hidden and skipped by raycasting; the merged mesh
-// reuses the first original's material, so hover tint still works.
+// The originals stay mounted (React keeps owning them) but are detached from the scene graph, so three.js no longer
+// walks them each frame or raycasts them; the merged mesh reuses the first original's material, so hover tint still works.
 // The subtree's matrices are then frozen, so three.js stops recomputing them every frame.
 // Only wrap subtrees whose meshes never move; pass every value that changes their materials in `deps`.
 export default function MergeStatic({ children, deps = [] }) {
@@ -39,7 +38,7 @@ export default function MergeStatic({ children, deps = [] }) {
       buckets.get(key).meshes.push(node);
     });
     const added = [];
-    const hidden = [];
+    const detached = [];
     buckets.forEach(({ owner, meshes }) => {
       if (meshes.length < 2) return;
       const inverse = new Matrix4().copy(owner.matrixWorld).invert();
@@ -57,7 +56,7 @@ export default function MergeStatic({ children, deps = [] }) {
       merged.castShadow = true; merged.receiveShadow = true;
       owner.add(merged);
       added.push(merged);
-      meshes.forEach(mesh => { hidden.push([mesh, mesh.raycast]); mesh.visible = false; mesh.raycast = noRaycast; });
+      meshes.forEach(mesh => { detached.push([mesh, mesh.parent]); mesh.removeFromParent(); });
     });
     root.updateWorldMatrix(false, true);
     const frozen = [];
@@ -70,7 +69,8 @@ export default function MergeStatic({ children, deps = [] }) {
     return () => {
       frozen.forEach(node => { node.matrixAutoUpdate = true; node.matrixWorldAutoUpdate = true; });
       added.forEach(mesh => { mesh.removeFromParent(); mesh.geometry.dispose(); });
-      hidden.forEach(([mesh, raycast]) => { mesh.visible = true; mesh.raycast = raycast; });
+      // Re-attach only meshes React still owns; one it unmounted meanwhile stays gone.
+      detached.forEach(([mesh, parent]) => { if (mesh.__r3f?.parent) parent.add(mesh); });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);

@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
-import { CatmullRomCurve3, Vector3 } from 'three';
+import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { useFrame, useLoader } from '@react-three/fiber';
+import { CatmullRomCurve3, Color, MeshStandardMaterial, Object3D, Vector3, TextureLoader } from 'three';
 import { snapshotsDeckData } from '../../data/projectData';
 import optimized from '../../data/optimizedImageManifest.json';
 import fitTexture from './fitTexture';
@@ -17,6 +16,19 @@ const PHOTOS = [9, 0, 10, 4, 11].map(index => snapshotsDeckData[index]).filter(B
 const PHOTO_AT = [0.13, 0.31, 0.5, 0.69, 0.87];
 const TILT = [0.07, -0.05, 0.04, -0.08, 0.05];
 const GLOW_LIGHTS = [-1.5, 0.1, 1.3];
+
+// All bulbs are one instanced draw. Each bulb's glow (emissive colour x intensity) is its instance colour, applied
+// to the emissive term only, so the result matches the former one-material-per-bulb look.
+function bulbMaterial(color) {
+  const material = new MeshStandardMaterial({ color, emissive: '#ffffff', roughness: 0.3 });
+  material.onBeforeCompile = shader => {
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <color_fragment>', '')
+      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance *= vColor.rgb;');
+  };
+  material.customProgramCacheKey = () => 'fairy-bulb';
+  return material;
+}
 
 function Polaroid({ photo, texture, index, colors, animate, onOpen }) {
   const swing = useRef(null);
@@ -39,7 +51,7 @@ function Polaroid({ photo, texture, index, colors, animate, onOpen }) {
 }
 
 export default function FairyLights({ colors, animate, lit, onOpenPhoto }) {
-  const sources = useTexture(PHOTOS.map(photo => optimized[photo.src] || photo.src));
+  const sources = useLoader(TextureLoader, PHOTOS.map(photo => optimized[photo.src] || photo.src));
   const textures = useMemo(() => sources.map(source => {
     const texture = fitTexture(source);
     // Crop each photo to a square, centred.
@@ -51,20 +63,30 @@ export default function FairyLights({ colors, animate, lit, onOpenPhoto }) {
   }), [sources]);
   useEffect(() => () => textures.forEach(texture => texture.dispose()), [textures]);
   const wire = useMemo(() => CURVE, []);
-  const bulbs = useRef([]);
-  useFrame(({ clock }) => {
-    if (!lit) return;
-    const t = clock.getElapsedTime();
-    bulbs.current.forEach((bulb, i) => {
-      if (bulb) bulb.material.emissiveIntensity = animate ? 1.4 + Math.sin(t * 1.3 + i * 2.4) * 0.6 : 1.6;
+  const bulbs = useRef(null);
+  const material = useMemo(() => bulbMaterial(colors.fairyBulb), [colors.fairyBulb]);
+  useEffect(() => () => material.dispose(), [material]);
+  const glow = useMemo(() => new Color(), []);
+  const setGlow = (i, intensity) => bulbs.current.setColorAt(i, glow.set(colors.fairyBulb).multiplyScalar(intensity));
+  useLayoutEffect(() => {
+    const dummy = new Object3D();
+    BULBS.forEach((point, i) => {
+      dummy.position.set(point.x, point.y - 0.04, point.z + 0.01); dummy.updateMatrix();
+      bulbs.current.setMatrixAt(i, dummy.matrix);
+      setGlow(i, lit ? 1.6 : 0.05);
     });
+    bulbs.current.instanceMatrix.needsUpdate = true; bulbs.current.instanceColor.needsUpdate = true;
+    bulbs.current.computeBoundingSphere();
+  });
+  useFrame(({ clock }) => {
+    if (!lit || !bulbs.current) return;
+    const t = clock.getElapsedTime();
+    BULBS.forEach((_, i) => setGlow(i, animate ? 1.4 + Math.sin(t * 1.3 + i * 2.4) * 0.6 : 1.6));
+    bulbs.current.instanceColor.needsUpdate = true;
   });
   return <group>
     <mesh><tubeGeometry args={[wire, 120, 0.008, 6, false]} /><meshStandardMaterial color={colors.fairyWire} roughness={0.6} /></mesh>
-    {BULBS.map((point, i) => <mesh key={i} ref={node => { bulbs.current[i] = node; }} position={[point.x, point.y - 0.04, point.z + 0.01]}>
-      <sphereGeometry args={[0.045, 12, 10]} />
-      <meshStandardMaterial color={colors.fairyBulb} emissive={colors.fairyBulb} emissiveIntensity={lit ? 1.6 : 0.05} roughness={0.3} />
-    </mesh>)}
+    <instancedMesh ref={bulbs} args={[undefined, material, BULB_COUNT]}><sphereGeometry args={[0.045, 12, 10]} /></instancedMesh>
     {/* Hidden while off so daytime frames skip their lighting math; SceneReady precompiles shaders for both states. */}
     {GLOW_LIGHTS.map(x => <pointLight key={x} position={[x, 5.1, WALL_Z + 0.5]} color={colors.fairyBulb} intensity={1.5} distance={3.2} decay={2} visible={lit} userData={{ optionalLight: true }} />)}
     {PHOTOS.map((photo, index) => <Polaroid key={photo.id} photo={photo} texture={textures[index]} index={index} colors={colors} animate={animate} onOpen={onOpenPhoto} />)}
