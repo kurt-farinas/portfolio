@@ -6,6 +6,7 @@ import { useRetroOS } from '../../context/RetroOSContext';
 import useMinuteClock, { formatClock } from './useMinuteClock';
 import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { portfolioProfile } from '../../data/portfolioFacts';
+import MergeStatic from './MergeStatic';
 
 export const MONITOR_CENTER_Y = 2.54;
 export const MONITOR_SCREEN_Z = -0.86;
@@ -28,7 +29,7 @@ function StickyNote({ label, color, position, rotation, colors, onClick }) {
 
 export function RetroMonitor({ colors, onOpenDesktop, onOpenApp }) {
   const { monitorOn, togglePower } = useRetroOS();
-  return <group userData={{ label: 'Open desktop' }} onClick={event => { event.stopPropagation(); onOpenDesktop(); }}>
+  return <MergeStatic deps={[colors, monitorOn]}><group userData={{ label: 'Open desktop' }} onClick={event => { event.stopPropagation(); onOpenDesktop(); }}>
     <RoundedBox args={[1.58, 0.13, 1.08]} radius={0.05} smoothness={3} position={[0, 0.845, -1.5]}><meshStandardMaterial color={colors.retroShell} roughness={0.7} /></RoundedBox>
     <RoundedBox args={[0.52, 0.48, 0.42]} radius={0.07} smoothness={3} position={[0, 1.09, -1.5]}><meshStandardMaterial color={colors.retroEdge} roughness={0.75} /></RoundedBox>
     <RoundedBox args={[4.92, 3.18, 1.06]} radius={0.1} smoothness={3} position={[0, 2.48, -1.5]}><meshStandardMaterial color={colors.retroShell} roughness={0.66} /></RoundedBox>
@@ -39,7 +40,7 @@ export function RetroMonitor({ colors, onOpenDesktop, onOpenApp }) {
     <mesh position={[1.73,1.095,-0.936]} rotation={[Math.PI/2,0,0]}><cylinderGeometry args={[0.018,0.018,0.018,16]} /><meshStandardMaterial color={monitorOn ? colors.led : colors.retroRecess} emissive={monitorOn ? colors.led : colors.retroRecess} emissiveIntensity={monitorOn ? 0.3 : 0} /></mesh>
     <StickyNote label="Projects" color={colors.noteYellow} position={[2.65,2.94,-0.85]} rotation={[0,0,-0.09]} colors={colors} onClick={() => onOpenApp('projects')} />
     <StickyNote label="Contact" color={colors.noteGreen} position={[-2.64,1.64,-0.85]} rotation={[0,0,0.1]} colors={colors} onClick={() => onOpenApp('contact')} />
-  </group>;
+  </group></MergeStatic>;
 }
 
 const ROWS = [[...Array(12).fill(1),2],[1.5,...Array(11).fill(1),1.5],[1.75,...Array(10).fill(1),2.25],[2.25,...Array(9).fill(1),2.75],[1.25,1.25,1.25,6.25,1,1,1,1]];
@@ -96,7 +97,7 @@ export function DeskLamp({ colors, night }) {
   const warmLamp = lampSetting || night; // the lamp switches itself on after dark
   const arm = <meshStandardMaterial color={colors.retroRecess} metalness={0.35} roughness={0.55} />;
   // Articulated arm: base, lower arm leaning toward the keyboard, upper arm reaching over, domed shade aimed down.
-  return <group position={[-4.4,0.8,-0.8]} rotation={[0,-0.55,0]}>
+  return <MergeStatic deps={[colors, warmLamp]}><group position={[-4.4,0.8,-0.8]} rotation={[0,-0.55,0]}>
     <mesh position={[0,0.05,0]}><cylinderGeometry args={[0.38,0.42,0.1,32]} /><meshStandardMaterial color={colors.lamp} roughness={0.5} metalness={0.2} /></mesh>
     <mesh position={[0,0.13,0]}><sphereGeometry args={[0.07,16,12]} />{arm}</mesh>
     <group position={[0,0.13,0]} rotation={[0,0,-0.32]}>
@@ -109,11 +110,12 @@ export function DeskLamp({ colors, night }) {
           {/* Faces the camera: yaw undoes the lamp's turn, pitch tips it onto the upper dome. */}
           <group position={[0,-0.12,0]} rotation={[-0.5,0.53,0.05,'YXZ']}><group position={[0,0,0.315]}><ProfileStamp colors={colors} /></group></group>
           <mesh position={[0,-0.06,0]}><sphereGeometry args={[0.09,16,10]} /><meshStandardMaterial color={colors.retroKey} emissive={colors.paper} emissiveIntensity={warmLamp?1.2:0} /></mesh>
-          {warmLamp && <pointLight position={[0,-0.3,0]} color={colors.paper} intensity={5} distance={7} decay={2} />}
+          {/* Always mounted: adding or removing a light recompiles every material (a visible stutter). */}
+          <pointLight position={[0,-0.3,0]} color={colors.paper} intensity={warmLamp?5:0} distance={7} decay={2} />
         </group>
       </group>
     </group>
-  </group>;
+  </group></MergeStatic>;
 }
 export function CoffeeMug({ colors }) {
   return <group position={[3.55,0.79,1.65]}>

@@ -64,7 +64,8 @@ export default function FairyLights({ colors, animate, lit, onOpenPhoto }) {
       <sphereGeometry args={[0.045, 12, 10]} />
       <meshStandardMaterial color={colors.fairyBulb} emissive={colors.fairyBulb} emissiveIntensity={lit ? 1.6 : 0.05} roughness={0.3} />
     </mesh>)}
-    {lit && GLOW_LIGHTS.map(x => <pointLight key={x} position={[x, 5.1, WALL_Z + 0.5]} color={colors.fairyBulb} intensity={1.5} distance={3.2} decay={2} />)}
+    {/* Always mounted (intensity 0 when off): toggling the light count recompiles every material. */}
+    {GLOW_LIGHTS.map(x => <pointLight key={x} position={[x, 5.1, WALL_Z + 0.5]} color={colors.fairyBulb} intensity={lit ? 1.5 : 0} distance={3.2} decay={2} />)}
     {PHOTOS.map((photo, index) => <Polaroid key={photo.id} photo={photo} texture={textures[index]} index={index} colors={colors} animate={animate} onOpen={onOpenPhoto} />)}
   </group>;
 }

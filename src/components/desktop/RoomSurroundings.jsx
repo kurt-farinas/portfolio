@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Shape } from 'three';
+import MergeStatic from './MergeStatic';
 
 // Decorative geometry uses the room's existing frame driver and introduces no extra lights or assets.
 export function WindowLandscape({ colors, phase }) {
@@ -53,7 +54,7 @@ function WorkInProgress({ colors }) {
 }
 
 export default function RoomSurroundings({ colors }) {
-  return <group>
+  return <MergeStatic deps={[colors]}>
     {/* The low dado and baseboard give the wall a floor junction without filling the welcome area. */}
     <mesh position={[0, -0.43, -4.96]}><boxGeometry args={[40, 2.15, 0.045]} /><meshStandardMaterial color={colors.wainscot} roughness={0.95} /></mesh>
     {[0.66, -1.38].map(y => <mesh key={y} position={[0, y, -4.87]}><boxGeometry args={[40, 0.1, 0.12]} /><meshStandardMaterial color={colors.trim} roughness={0.8} /></mesh>)}
@@ -62,5 +63,5 @@ export default function RoomSurroundings({ colors }) {
     <SillPlant colors={colors} />
     <WorkInProgress colors={colors} />
     <mesh position={[3.55, 0.797, 1.65]}><cylinderGeometry args={[0.37, 0.37, 0.025, 24]} /><meshStandardMaterial color={colors.cork} roughness={1} /></mesh>
-  </group>;
+  </MergeStatic>;
 }

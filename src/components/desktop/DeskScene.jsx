@@ -14,6 +14,7 @@ import useMinuteClock from './useMinuteClock';
 import DeskRoom, { CorkBoard } from './DeskRoom';
 import { WindowLandscape } from './RoomSurroundings';
 import FairyLights from './FairyLights';
+import MergeStatic from './MergeStatic';
 import optimized from '../../data/optimizedImageManifest.json';
 import FragranceTray from './FragranceTray';
 import { CoffeeMug, DeskClock, DeskLamp, DeskPrinter, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
@@ -66,7 +67,8 @@ function useDeskHover(enabled, accent) {
     const tint = new Color(accent);
     hovered.traverse(node => {
       const material = node.material;
-      if (!node.isMesh || !material?.emissive) return;
+      // Merged meshes share a material with a hidden original; save each material once so restoring cannot reapply the tint.
+      if (!node.isMesh || !material?.emissive || saved.some(([seen]) => seen === material)) return;
       saved.push([material, material.emissive.clone(), material.emissiveIntensity]);
       material.emissive.copy(tint); material.emissiveIntensity = 0.4;
     });
@@ -145,13 +147,15 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors })
     <group ref={root} {...handlers}>
       {tooltip}
       <RoundedBox args={[12, 0.28, 6.8]} radius={0.045} smoothness={2} position={[0, 0.64, 0]} receiveShadow><meshStandardMaterial map={wood} roughness={0.76} /></RoundedBox>
+      <MergeStatic deps={[colors]}>
       <mesh position={[-4.8, -0.4, -2.2]}><boxGeometry args={[0.22, 2.05, 0.22]} /><meshStandardMaterial color={colors.frame} /></mesh>
       <mesh position={[4.8, -0.4, -2.2]}><boxGeometry args={[0.22, 2.05, 0.22]} /><meshStandardMaterial color={colors.frame} /></mesh>
       <mesh position={[-4.8, -0.4, 2.1]}><boxGeometry args={[0.22, 2.05, 0.22]} /><meshStandardMaterial color={colors.frame} /></mesh>
       <mesh position={[4.8, -0.4, 2.1]}><boxGeometry args={[0.22, 2.05, 0.22]} /><meshStandardMaterial color={colors.frame} /></mesh>
-      <RetroMonitor colors={colors} onOpenDesktop={() => { noteDeskOpen('desktop'); onOpenDesktop(); }} onOpenApp={openFromDesk} />
       <RoundedBox args={[3.5, 0.02, 1.55]} radius={0.01} smoothness={2} position={[0, 0.79, 1.28]}><meshStandardMaterial color={colors.objectDark} roughness={0.95} /></RoundedBox>
       <RoundedBox args={[0.95, 0.015, 0.95]} radius={0.01} smoothness={2} position={[2.14, 0.787, 1.23]}><meshStandardMaterial color={colors.objectDark} roughness={0.95} /></RoundedBox>
+      </MergeStatic>
+      <RetroMonitor colors={colors} onOpenDesktop={() => { noteDeskOpen('desktop'); onOpenDesktop(); }} onOpenApp={openFromDesk} />
       <RetroKeyboard colors={colors} onOpenProjects={() => openFromDesk('projects')} />
       <RetroMouse colors={colors} onOpenProjects={() => openFromDesk('projects')} />
       <DeskLamp colors={colors} night={phase === 'night'} /><CoffeeMug colors={colors} /><DeskClock colors={colors} />
@@ -351,6 +355,52 @@ function AmbientDriver({ active }) {
   return null;
 }
 
+// Light and geometry rarely move, so the shadow map is redrawn at most ~8 times a second, and immediately when the room changes.
+function ShadowRefresh({ changeKey }) {
+  const gl = useThree(state => state.gl);
+  const invalidate = useThree(state => state.invalidate);
+  const last = useRef(0);
+  useLayoutEffect(() => {
+    gl.shadowMap.autoUpdate = false;
+    return () => { gl.shadowMap.autoUpdate = true; };
+  }, [gl]);
+  useEffect(() => { gl.shadowMap.needsUpdate = true; invalidate(); }, [gl, invalidate, changeKey]);
+  useFrame(() => {
+    const now = performance.now();
+    if (now - last.current < 125) return;
+    last.current = now;
+    gl.shadowMap.needsUpdate = true;
+  });
+  return null;
+}
+
+// Slow GPUs step down once each: first to 1x pixel ratio, then without shadows. Measured only on ambient frames,
+// whose ~33 ms cadence is known; a median above 45 ms means the machine cannot keep up.
+function AdaptiveQuality({ active }) {
+  const gl = useThree(state => state.gl);
+  const scene = useThree(state => state.scene);
+  const setDpr = useThree(state => state.setDpr);
+  const invalidate = useThree(state => state.invalidate);
+  const samples = useRef([]);
+  const level = useRef(0);
+  useFrame((_, delta) => {
+    if (!active || level.current >= 2) { samples.current.length = 0; return; }
+    samples.current.push(delta);
+    if (samples.current.length < 90) return;
+    const median = samples.current.sort((a, b) => a - b)[45];
+    samples.current.length = 0;
+    if (median <= 0.045) return;
+    level.current += 1;
+    if (level.current === 1) setDpr(1);
+    else {
+      gl.shadowMap.enabled = false;
+      scene.traverse(node => { if (node.material) node.material.needsUpdate = true; });
+    }
+    invalidate();
+  });
+  return null;
+}
+
 function usePageVisible() {
   const [visible, setVisible] = useState(() => document.visibilityState !== 'hidden');
   useEffect(() => {
@@ -423,7 +473,7 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
   const pageVisible = usePageVisible();
   const animate = ready && view === 'desk' && !motionReduced && pageVisible;
   // The desk clock ticks softly while the whole room is in view.
-  const { playSound } = useRetroOS();
+  const { playSound, warmLamp } = useRetroOS();
   useEffect(() => {
     if (!ready || view !== 'desk' || !pageVisible) return undefined;
     const id = window.setInterval(() => playSound('tick'), 1000);
@@ -441,7 +491,7 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
       frameloop="demand"
       events={desktopSceneEvents}
       shadows
-      gl={{ antialias: true, alpha: false, powerPreference: 'low-power' }}
+      gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
       onCreated={({ gl }) => {
         screenPortal.current = gl.domElement.parentNode;
         const onContextLost = event => { event.preventDefault(); onSceneFailure(); };
@@ -454,6 +504,8 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
         <color attach="background" args={[palette.world]} />
         <ambientLight intensity={light.ambient} color={phase === 'night' ? palette.nightWarm : palette.daylight} />
         <AmbientDriver active={animate} />
+        <AdaptiveQuality active={animate} />
+        <ShadowRefresh changeKey={[ready, phase, theme, view, animate, warmLamp].join('|')} />
         <directionalLight position={[-4, 7, 3]} intensity={light.key} color={palette.keyLight} castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-camera-near={1} shadow-camera-far={25} />
         <directionalLight position={[0, 3, 6]} intensity={light.fill} color={palette.daylight} />
         <directionalLight position={[6, 5, -4]} intensity={light.window} color={phase === 'dusk' ? palette.accent : palette.skyDay} />

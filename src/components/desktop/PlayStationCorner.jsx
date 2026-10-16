@@ -3,6 +3,7 @@ import { useThree } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
 import { CatmullRomCurve3, SRGBColorSpace, TextureLoader, Vector3 } from 'three';
 import GamingCRT from './GamingCRT';
+import MergeStatic from './MergeStatic';
 import { playstationCollection } from '../../data/playstationCollection';
 
 // Optional cover art must never make the whole room fail. Each texture is owned here.
@@ -26,7 +27,7 @@ export default function PlayStationCorner({ colors, animate }) {
     new Vector3(-0.35, 0.18, 0.36), new Vector3(-0.52, 0.08, 0.55),
     new Vector3(-0.06, 0.08, 0.64), new Vector3(0.34, 0.08, 0.47), new Vector3(0.16, 0.13, 0.35)
   ]), []);
-  return <><GamingCRT colors={colors} animate={animate} indicator={indicator} /><group position={[-5.4, 1.66, -4.35]}>
+  return <><GamingCRT colors={colors} animate={animate} indicator={indicator} /><MergeStatic deps={[colors]}><group position={[-5.4, 1.66, -4.35]}>
     {/* Compact gray console, circular lid, vents, ports, memory card and power lamp. */}
     <group position={[-0.22, 0, 0]} rotation={[0, -0.06, 0]}>
       <RoundedBox args={[1.25, 0.22, 0.85]} radius={0.045} smoothness={2} position={[0, 0.13, 0]}><meshStandardMaterial color={colors.fragranceStone} roughness={0.78} /></RoundedBox>
@@ -60,5 +61,5 @@ export default function PlayStationCorner({ colors, animate }) {
         <Cover game={game} position={standing ? [0, 0, 0.029] : [0, 0.029, 0]} rotation={standing ? [0, 0, 0] : [-Math.PI / 2, 0, 0]} />
       </group>;
     })}
-  </group></>;
+  </group></MergeStatic></>;
 }

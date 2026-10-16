@@ -4,6 +4,7 @@ import { RoundedBox } from '@react-three/drei';
 import { DoubleSide, PlaneGeometry } from 'three';
 import RoomSurroundings from './RoomSurroundings';
 import PlayStationCorner from './PlayStationCorner';
+import MergeStatic from './MergeStatic';
 
 // Room dressing around the desk. Motion runs only while `animate` is true (desk overview, tab visible, motion allowed);
 // DeskScene's ambient driver supplies the frames, so the demand-rendered scene still sleeps otherwise.
@@ -93,14 +94,14 @@ function Rug({ colors }) {
 
 const NOTES = [[-0.45, 0.12, -0.08], [0.12, 0.18, 0.06], [0.5, -0.12, -0.04], [-0.1, -0.2, 0.1]];
 export function CorkBoard({ colors, onOpen }) {
-  return <group position={[4.4, 2.75, -4.9]} userData={{ label: 'Projects' }} onClick={event => { event.stopPropagation(); onOpen(); }}>
+  return <MergeStatic deps={[colors]}><group position={[4.4, 2.75, -4.9]} userData={{ label: 'Projects' }} onClick={event => { event.stopPropagation(); onOpen(); }}>
     <mesh><boxGeometry args={[1.7, 1.0, 0.06]} /><meshStandardMaterial color={colors.frame} roughness={0.7} /></mesh>
     <mesh position={[0, 0, 0.035]}><planeGeometry args={[1.56, 0.86]} /><meshStandardMaterial color={colors.cork} roughness={1} /></mesh>
     {NOTES.map(([x, y, turn], index) => <group key={index} position={[x, y, 0.04]} rotation={[0, 0, turn]}>
       <mesh><planeGeometry args={[0.36, 0.3]} /><meshStandardMaterial color={index % 2 ? colors.noteYellow : colors.paper} roughness={0.9} /></mesh>
       <mesh position={[0, 0.11, 0.02]}><sphereGeometry args={[0.025, 10, 8]} /><meshStandardMaterial color={colors.pin} /></mesh>
     </group>)}
-  </group>;
+  </group></MergeStatic>;
 }
 
 function Steam({ colors, animate }) {
@@ -151,9 +152,8 @@ export default function DeskRoom({ colors, animate, lampOn }) {
     <RoomSurroundings colors={colors} />
     <Curtains colors={colors} animate={animate} />
     <Plant colors={colors} animate={animate} />
-    <WallShelf colors={colors} />
+    <MergeStatic deps={[colors]}><WallShelf colors={colors} /><Rug colors={colors} /></MergeStatic>
     <PlayStationCorner colors={colors} animate={animate} />
-    <Rug colors={colors} />
     <Steam colors={colors} animate={animate} />
     {lampOn && <DustMotes colors={colors} animate={animate} />}
   </>;
