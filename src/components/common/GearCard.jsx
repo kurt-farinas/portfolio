@@ -190,21 +190,34 @@ export default function GearCard({ item }) {
       <div 
         className="gear-media-box" 
       >
-        {currentPhoto && hasPortfolioImage(currentPhoto.src) && !imgLoadFailed ? (
-          <div className="gear-photo-container">
-            <PortfolioImage
-              src={currentPhoto.src}
-              alt={currentPhoto.alt || item.title}
-              className="gear-photo-img"
-              loading="lazy"
-              onError={() => setImgLoadFailed(true)}
-            />
-          </div>
-        ) : (
-          <div className="gear-schematic-frame">
-            <GearSchematic icon={item.icon} title={item.title} />
-          </div>
-        )}
+        {(() => {
+          const media = currentPhoto && hasPortfolioImage(currentPhoto.src) && !imgLoadFailed ? (
+            <div className="gear-photo-container">
+              <PortfolioImage
+                src={currentPhoto.src}
+                alt={currentPhoto.alt || item.title}
+                className="gear-photo-img"
+                loading="lazy"
+                onError={() => setImgLoadFailed(true)}
+              />
+            </div>
+          ) : (
+            <div className="gear-schematic-frame">
+              <GearSchematic icon={item.icon} title={item.title} />
+            </div>
+          );
+          return item.url ? (
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gear-media-link"
+              title={`Open ${item.title} product link`}
+            >
+              {media}
+            </a>
+          ) : media;
+        })()}
 
         {/* Multi-Photo Navigation Controls */}
         {hasMultiplePhotos && (

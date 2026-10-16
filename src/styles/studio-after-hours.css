@@ -34,6 +34,7 @@
 .gear-photo-dot::after { content: ''; position: absolute; inset: 16px; border: 2px solid currentColor; }
 .gear-photo-dot.active { background: var(--ink); color: var(--paper); }
 .gear-info-block { padding-top: 20px; }
+.gear-media-link { display: block; width: 100%; height: 100%; cursor: pointer; }
 .gear-title-link { display: flex; align-items: center; padding: 4px; }
 .gear-title { font-size: var(--type-lead); line-height: 1.6; }
 .outside-page-nav-bar-bottom { margin-top: var(--section-space); }
