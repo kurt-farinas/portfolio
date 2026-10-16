@@ -29,13 +29,13 @@ describe('easeToward', () => {
 describe('cameraFollowTarget', () => {
   it('follows the cursor at progress 0', () => {
     const t = cameraFollowTarget(1, 1, 0, [0, 1]);
-    expect(t.x).toBeCloseTo(1.2); expect(t.y).toBeCloseTo(0.6);
-    expect(t.azimuth).toBeCloseTo(-0.2); expect(t.polar).toBeCloseTo(-0.08);
+    expect(t.x).toBeCloseTo(1.2); expect(t.y).toBeCloseTo(-0.6);
+    expect(t.azimuth).toBeCloseTo(-0.2); expect(t.polar).toBeCloseTo(0.08);
   });
   it('clamps the cursor', () => {
     const t = cameraFollowTarget(5, -5, 0, [0, 1]);
-    expect(t.x).toBeCloseTo(1.2); expect(t.y).toBeCloseTo(-0.6);
-    expect(t.azimuth).toBeCloseTo(-0.2); expect(t.polar).toBeCloseTo(0.08);
+    expect(t.x).toBeCloseTo(1.2); expect(t.y).toBeCloseTo(0.6);
+    expect(t.azimuth).toBeCloseTo(-0.2); expect(t.polar).toBeCloseTo(-0.08);
   });
   it('returns +0 at the centre', () => {
     const t = cameraFollowTarget(0, 0, 0, [0, 0]);
