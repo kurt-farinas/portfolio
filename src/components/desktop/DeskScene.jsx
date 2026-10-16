@@ -263,12 +263,12 @@ function introPose([px, py, pz, tx, ty, tz]) {
   const azimuth = -0.6, polar = 1.12;
   return [tx + radius * Math.sin(polar) * Math.sin(azimuth), ty + radius * Math.cos(polar), tz + radius * Math.sin(polar) * Math.cos(azimuth), tx, ty, tz];
 }
-const SMOOTH_TIME = 0.30;
+const SMOOTH_TIME = 0.20;
 // Scrolling closer than LOCK locks onto the monitor; scrolling the monitor view out past UNLOCK returns to the desk.
 const LOCK_DISTANCE = 5.5;
 const UNLOCK_DISTANCE = 6;
 // Resting the cursor on the monitor glass (4.22x2.48, as built in RetroMonitor) this long zooms in; leaving the desktop zooms out.
-const HOVER_DWELL_MS = 250;
+const HOVER_DWELL_MS = 100;
 const GLASS_HALF_WIDTH = 2.11;
 const GLASS_HALF_HEIGHT = 1.24;
 
