@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import DesktopAppContent from './DesktopAppContent';
 import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { useModal } from '../../context/ModalContext';
@@ -135,6 +135,8 @@ function DesktopWindow({ appId, app, item, active, areaRef }) {
 }
 
 export default function DesktopWorkspace({ presentation = 'expanded', toggleTheme, theme, onBackToDesk }) {
+  // Stable per instance: an id that changed with `presentation` replaced the patterns and repainted the whole desktop on every view switch.
+  const patternId = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const { apps, windows, activeAppId, openApplication, setActiveAppId, restoreApplication, focusMonitor, backToMonitor, expandDesktop, canUse3D, sceneFailed } = useDesktopWorkspace();
   const { toggleCommandPalette } = useModal();
   const retro = useRetroOS();
@@ -152,7 +154,7 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
   return (
     <section className={'desktop-workspace desktop-workspace-' + presentation} aria-label="Kurt Fariñas portfolio desktop" data-testid="desktop-workspace" data-wallpaper={retro.wallpaper} data-crt={retro.crtEffects || undefined} onKeyDown={closeMenu}>
       {/* Ordered-dither texture over the wallpaper colour, like a 256-colour desktop. */}
-      <svg className="retro-wallpaper-dither" width="100%" height="100%" aria-hidden="true"><defs><pattern id={'dither-' + presentation} width="4" height="4" patternUnits="userSpaceOnUse"><rect width="1" height="1" fill="var(--retro-dither-light)" /><rect x="2" y="2" width="1" height="1" fill="var(--retro-dither-light)" /><rect x="2" width="1" height="1" fill="var(--retro-dither-dark)" /><rect y="2" width="1" height="1" fill="var(--retro-dither-dark)" /></pattern></defs><rect width="100%" height="100%" fill={'url(#dither-' + presentation + ')'} /></svg>
+      <svg className="retro-wallpaper-dither" width="100%" height="100%" aria-hidden="true"><defs><pattern id={'dither-' + patternId} width="4" height="4" patternUnits="userSpaceOnUse"><rect width="1" height="1" fill="var(--retro-dither-light)" /><rect x="2" y="2" width="1" height="1" fill="var(--retro-dither-light)" /><rect x="2" width="1" height="1" fill="var(--retro-dither-dark)" /><rect y="2" width="1" height="1" fill="var(--retro-dither-dark)" /></pattern></defs><rect width="100%" height="100%" fill={'url(#dither-' + patternId + ')'} /></svg>
       <div className="retro-desktop-content" inert={!retro.monitorOn ? true : undefined}>
         <header className="desktop-menubar">
           <button type="button" className="desktop-brand" onClick={() => chooseApp('about')} aria-label="Home: Open About app"><span className="desktop-brand-mark">KF</span><span>Kurt-OS</span></button>
@@ -199,7 +201,7 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
           </button><TaskbarClock />
         </nav>
         {retro.crtEffects && <>
-          <svg className="retro-scanlines" width="100%" height="100%" aria-hidden="true"><defs><pattern id={'scanlines-' + presentation} width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0 0H3" stroke="var(--retro-scanline)" strokeWidth="1" /></pattern></defs><rect width="100%" height="100%" fill={'url(#scanlines-' + presentation + ')'} /></svg>
+          <svg className="retro-scanlines" width="100%" height="100%" aria-hidden="true"><defs><pattern id={'scanlines-' + patternId} width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0 0H3" stroke="var(--retro-scanline)" strokeWidth="1" /></pattern></defs><rect width="100%" height="100%" fill={'url(#scanlines-' + patternId + ')'} /></svg>
           <div className="retro-crt-vignette" aria-hidden="true" />
         </>}
       </div>
