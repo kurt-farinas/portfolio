@@ -22,8 +22,15 @@ export const DESKTOP_APPS = [
 
 // Games always open full-window so they are playable straight away.
 const GAME_APPS = ['kurtordle', 'bugsweeper', 'bughunter'];
-// Reading apps open maximized on the desktop so windows don't pile up; Restore keeps each rectangle.
-const READING_APPS = ['about', 'projects', 'experience', 'stack', 'recognition', 'resume', 'contact'];
+// Long reading apps open maximized on the desktop; Restore keeps each rectangle.
+const READING_APPS = ['projects', 'experience', 'resume'];
+// Short apps open as windows sized to their content (percent of the window area).
+const APP_RECTS = {
+  about: { x: 14, y: 3, width: 60, height: 92 },
+  recognition: { x: 24, y: 6, width: 60, height: 88 },
+  stack: { x: 32, y: 14, width: 56, height: 64 },
+  contact: { x: 40, y: 2, width: 54, height: 94 }
+};
 
 // Matches the <title> in index.html.
 const BASE_TITLE = 'Kurt Fariñas | Junior Full-Stack Developer';
@@ -95,7 +102,7 @@ export const DesktopWorkspaceContext = createContext(null);
 
 const initialWindow = {
   appId: 'about',
-  rect: { x: 4, y: 4, width: 60, height: 86 },
+  rect: APP_RECTS.about,
   minimized: false,
   maximized: false
 };
@@ -103,7 +110,7 @@ const initialWindow = {
 export function DesktopWorkspaceProvider({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [windows, setWindows] = useState(() => [{ ...initialWindow, maximized: canUseWebGL() }]);
+  const [windows, setWindows] = useState([initialWindow]);
   const [activeAppId, setActiveAppId] = useState('about');
   const [view, setView] = useState(() => canUseWebGL() && location.pathname === '/' && !location.hash ? 'desk' : 'workspace');
   const [canUse3D, setCanUse3D] = useState(() => canUseWebGL());
@@ -151,7 +158,7 @@ export function DesktopWorkspaceProvider({ children }) {
       const offset = current.length % 6;
       const windowItem = {
         appId,
-        rect: { x: Math.min(8 + offset * 2, 18), y: Math.min(4 + offset * 2, 12), width: 78, height: 86 },
+        rect: APP_RECTS[appId] || { x: Math.min(8 + offset * 2, 18), y: Math.min(4 + offset * 2, 12), width: 78, height: 86 },
         minimized: false,
         maximized: maximize
       };
@@ -177,7 +184,7 @@ export function DesktopWorkspaceProvider({ children }) {
     setWindows(current => {
       const found = current.find(item => item.appId === nextApp);
       if (found) return current.map(item => item.appId === nextApp ? { ...item, minimized: false } : item);
-      return [...current, { appId: nextApp, rect: { x: 10, y: 6, width: 78, height: 86 }, minimized: false, maximized: GAME_APPS.includes(nextApp) || (READING_APPS.includes(nextApp) && canUse3D) }];
+      return [...current, { appId: nextApp, rect: APP_RECTS[nextApp] || { x: 10, y: 6, width: 78, height: 86 }, minimized: false, maximized: GAME_APPS.includes(nextApp) || (READING_APPS.includes(nextApp) && canUse3D) }];
     });
     setActiveAppId(nextApp);
     if (view === 'desk') setView('screen');

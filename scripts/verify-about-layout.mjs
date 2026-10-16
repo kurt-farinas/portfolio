@@ -51,8 +51,7 @@ try {
       await expect.poll(() => scroll.evaluate(el => el.scrollTop)).toBe(saved);
       await page.setViewportSize({ width, height: width === 375 ? 812 : 900 });
       if (width === 1440) {
-        // About opens maximized on the desktop; Restore below checks the windowed layout.
-        await expect(page.locator('[data-app-id="about"]')).toHaveClass(/is-maximized/);
+        await page.getByRole('button', { name: 'Maximize About window', exact: true }).click();
         await scroll.press('Control+Home');
         await page.screenshot({ path: `${output}/${width}-${theme}-maximized.png` });
         await page.getByRole('button', { name: 'Restore About window', exact: true }).click();
@@ -75,9 +74,11 @@ try {
         await page.getByRole('button', { name: 'Expand desktop', exact: true }).click();
         await expect(page.locator('.desktop-workspace-expanded')).toBeVisible();
         await expect.poll(() => scroll.evaluate((el, saved) => el.scrollTop === Math.min(saved, el.scrollHeight - el.clientHeight), monitorSaved)).toBe(true);
+        // A shorter expanded layout may clamp the position; the monitor restores whatever the visitor last saw.
+        const expandedSaved = await scroll.evaluate(el => el.scrollTop);
         await page.getByRole('button', { name: 'Back to monitor', exact: true }).click();
         await expect(page.locator('.desktop-workspace-screen')).toBeVisible({ timeout: 30000 });
-        await expect.poll(() => scroll.evaluate(el => el.scrollTop)).toBe(monitorSaved);
+        await expect.poll(() => scroll.evaluate(el => el.scrollTop)).toBe(expandedSaved);
         await scroll.press('Control+Home');
         await page.screenshot({ path: `${output}/${width}-${theme}-monitor.png` });
       }

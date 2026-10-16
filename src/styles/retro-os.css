@@ -292,7 +292,7 @@
 .desktop-about-app .studio-profile-row { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 12px; }
 .desktop-about-app .studio-profile-resume { margin: 0; }
 /* The mobile workstation's Résumé shortcut sits directly above, so the profile button would repeat it. */
-.desktop-about-app:has(.mobile-workbench) .studio-profile-resume { display: none; }
+@media (max-width: 1099px), (pointer: coarse) { .desktop-about-app:has(.mobile-workbench) .studio-profile-resume { display: none; } }
 .desktop-about-app .studio-hero-name { max-width: none; margin-top: 16px; font-size: var(--type-mobile-heading); line-height: 1.25; }
 .desktop-about-app .studio-hero-actions { margin-top: 16px; }
 .desktop-about-app .studio-about-copy { display: grid; gap: 16px; }
@@ -316,4 +316,47 @@
   :root:not([data-mode='classic']) :is(button:not(:disabled), a:not([aria-disabled='true']), [role='button']:not([aria-disabled='true']), [role='option']:not([aria-disabled='true']), select:not(:disabled)) {
     cursor: url('/cursors/retro-hand.svg') 11 1, pointer;
   }
+}
+
+/* Desktop reading apps: each window gets its own Win98 composition (group boxes, raised tags, sunken frames). Mobile and Classic are unchanged. */
+@media (min-width: 1100px) and (pointer: fine) {
+  /* About: a profile card, then the biography, then a facts group box. */
+  .desktop-about-app { gap: 20px; padding: 24px; }
+  .desktop-about-app .studio-hero > .studio-container { padding: 20px; border: 2px groove var(--retro-etch); background: var(--surface); }
+  .desktop-about-app .studio-profile-row { grid-template-columns: 96px minmax(0, 1fr) auto; align-items: center; gap: 16px; }
+  .desktop-about-app .studio-profile-photo { width: 96px; height: 96px; border: 2px inset var(--retro-etch); }
+  .desktop-about-app .studio-profile-name { font-size: 22px; font-weight: 700; }
+  .desktop-about-app .studio-hero-name { margin-top: 20px; padding-top: 16px; border-top: 2px groove var(--retro-etch); }
+  .desktop-about-app .studio-hero-actions { margin-top: 12px; }
+  .desktop-about-app .retro-profile-facts { padding: 16px 20px; border: 2px groove var(--retro-etch); }
+  .desktop-about-app .retro-profile-facts > div + div { margin-top: 12px; }
+
+  /* Experience: each entry is a group box with the date on the left. */
+  .desktop-app-scroll .studio-experience .studio-container { width: min(100% - 48px, 880px); }
+  .desktop-app-scroll .studio-timeline { display: grid; gap: 14px; }
+  .desktop-app-scroll .studio-timeline-item { grid-template-columns: 150px minmax(0, 1fr); padding: 18px 20px; border: 2px groove var(--retro-etch); }
+  .desktop-app-scroll .studio-timeline-meta p { font-weight: 700; color: var(--ink); }
+
+  /* Recognition: two columns of equal group boxes. */
+  .desktop-app-scroll .studio-recognition .studio-container { width: calc(100% - 48px); }
+  .desktop-app-scroll .studio-awards { gap: 14px; }
+  .desktop-app-scroll .studio-award { padding: 16px 18px; border: 2px groove var(--retro-etch); }
+
+  /* Stack: technologies as raised tags beside their category. */
+  .desktop-app-scroll .studio-technologies .studio-container { width: calc(100% - 48px); }
+  .desktop-app-scroll .studio-skill-row { grid-template-columns: 110px minmax(0, 1fr); padding-block: 10px; }
+  .desktop-app-scroll .studio-skill-list { gap: 8px; }
+  .desktop-app-scroll .studio-skill-list > li { min-height: 0; }
+  .desktop-app-scroll .studio-skill { min-height: 0; padding: 4px 10px; border: 2px outset var(--retro-etch); background: var(--retro-chrome); color: var(--retro-ink); font-size: 14px; }
+  .desktop-app-scroll .studio-skill-separator { display: none; }
+
+  /* Contact: header, mail lines, and form share one width; the form sits in a group box. */
+  .desktop-app-scroll .desktop-contact-app { justify-items: stretch; max-width: none; padding: 24px; }
+  .desktop-app-scroll .desktop-contact-app .retro-mail-form { padding: 18px 20px; border: 2px groove var(--retro-etch); }
+  .desktop-app-scroll .retro-mail-to { max-width: none; }
+  .desktop-app-scroll .desktop-contact-app .desktop-copy-email { justify-self: start; }
+
+  /* Résumé: intro and preview share one width; the preview is a sunken frame. */
+  .desktop-app-scroll .desktop-document-app { max-width: 980px; }
+  .desktop-app-scroll .desktop-resume-preview { border: 2px inset var(--retro-etch); }
 }

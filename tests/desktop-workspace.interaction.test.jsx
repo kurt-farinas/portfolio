@@ -130,7 +130,7 @@ describe('portfolio desktop workspace', () => {
     expect(projectWindow().classList.contains('is-maximized')).toBe(true);
     await act(async () => host.querySelector('[aria-label="Restore Projects window"]').click());
     expect(projectWindow().getAttribute('style')).toBe(restoredStyle);
-    expect(host.querySelector('#desktop-window-title-about').closest('.desktop-window').classList.contains('is-maximized')).toBe(true);
+    expect(host.querySelector('#desktop-window-title-about').closest('.desktop-window').classList.contains('is-maximized')).toBe(false);
   });
 
   it('keeps mobile Projects opening behavior unchanged', async () => {
@@ -141,8 +141,6 @@ describe('portfolio desktop workspace', () => {
 
   it('provides keyboard move and resize controls and restores minimized windows', async () => {
     await renderWorkspace();
-    // About starts maximized on the desktop; restore it before moving and resizing.
-    await act(async () => host.querySelector('[aria-label="Restore About window"]').click());
     const title = host.querySelector('#desktop-window-title-about');
     const initialLeft = host.querySelector('.desktop-window').style.left;
     await act(async () => host.querySelector('[aria-label="Move About window"]').click());
@@ -174,8 +172,8 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelector('.studio-project-detail-highlights')).toBeNull();
     expect(host.querySelector('#hris').textContent).toContain('98/100');
     expect(host.querySelector('#hris').textContent).toContain('342');
-    expect(host.querySelector('#pmpc-workforce').textContent).toContain('Deployed + local work');
-    expect(host.querySelector('#pmpc-workforce').textContent).toContain('workflows locally');
+    expect(host.querySelector('#pmpc-workforce').textContent).toContain('Deployed improvements');
+    expect(host.querySelector('#pmpc-workforce').textContent).toContain('HR account-setup');
     expect(host.querySelectorAll('.studio-project-detail-actions button')).toHaveLength(6);
     expect(host.querySelector('.portfolio-engineering-details summary').textContent).toBe('How this portfolio works');
   });

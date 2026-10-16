@@ -63,24 +63,24 @@ export const projectDetails = {
   },
   pmpcWorkforce: {
     decisionSummary: "Extend attendance and payroll workflows while preserving employee ownership, HR review, and saved financial history.",
-    resultSummary: "Deployed attendance, payslip, final DTR review, payroll input, 13th-month, and Excel export work; implemented schedule and HR setup workflows locally.",
+    resultSummary: "Deployed attendance, payslip, schedule, final DTR review, payroll input, 13th-month, Excel export, and HR account-setup improvements.",
     id: "pmpc-workforce",
     title: "PMPC WorkForce / DTR",
     ticketId: "PMPC · Inherited System",
     roleTag: "Maintenance & Improvements",
-    browserStatus: "DEPLOYED + LOCAL WORK",
+    browserStatus: "DEPLOYED IMPROVEMENTS",
     badge: "Inherited System · Contributor",
     cardSummary: "Improve attendance corrections, personal schedules, payroll review, management exports, and HR-verified account setup.",
-    desc: "Contributions: September 16–October 15, 2026. Deployed work and locally implemented additions are distinguished below.",
+    desc: "Contributions: September 16–October 15, 2026. All contribution groups below are deployed.",
     highlights: [
       "Attendance and self-service: improved employee/admin dashboards, mobile punch controls, four-punch timelines, attendance filters, correction requests, task-planner/profile/notification interfaces, and responsive navigation. Strengthened employee ownership and reviewer permissions and reduced unnecessary clock-driven page rendering.",
       "Confirmed live fixes: repaired individual and bulk payslip PDFs and applied an effective-dated employee shift correction while preserving recorded punches, hours, saved payroll figures, and draft status.",
-      "Local schedules and attendance: added personal workdays and shifts, full Sunday–Saturday attendance weeks with subtotals, upcoming-day labels, elapsed-workday absence detection, rest-day handling, holiday calendars, and an always-present workday setting.",
+      "Deployed schedules and attendance: added personal workdays and shifts, full Sunday–Saturday attendance weeks with subtotals, upcoming-day labels, elapsed-workday absence detection, rest-day handling, holiday calendars, and an always-present workday setting.",
       "Deployed final DTR review: added a configured reviewer's full-month correction workflow for recorded, missing, and absent days, with required reasons, before/after history, recalculated status/hours, and pending-request protection.",
       "Deployed payroll preparation: built an office-grouped Excel-style input table for paid days, absences, overtime, holiday pay, late minutes, and reviewed deductions, with one batch confirmation. Added verified office assignment, DTR mismatch flags, rate-change checks, peso-cent rounding, saved calculation snapshots, and server-side 13th-month draft recalculation.",
       "Deployed management exports: implemented monthly Excel workbooks with office/cutoff sections, deduction details, names-only signatories, accounting-review cross-checks, and layout/capacity safeguards; expanded the Main Office template to four employees and corrected workbook formatting and voucher balance.",
-      "Local HR and payslip controls: implemented employee identity confirmation, HR approval/return and office transfers, pre-setup payroll-office assignment, required private signature uploads, and finalized-only employee payslip access while retaining existing credentials, attendance links, and historical payroll.",
-      "Reliability and release scope: improved request validation, atomic payroll persistence, loading/navigation behavior, and keyboard/form accessibility. Final DTR review, payroll input, 13th-month recalculation, and Excel exports are deployed; deployment of the newer schedule and account-setup additions is unverified; an Unreleased changelog heading alone does not establish production status. Payroll compliance is not independently certified."
+      "Deployed HR and payslip controls: implemented employee identity confirmation, HR approval/return and office transfers, pre-setup payroll-office assignment, required private signature uploads, and finalized-only employee payslip access while retaining existing credentials, attendance links, and historical payroll.",
+      "Reliability and release scope: improved request validation, atomic payroll persistence, loading/navigation behavior, and keyboard/form accessibility. Schedules, final DTR review, payroll input, 13th-month recalculation, Excel exports, and HR account setup are deployed. Payroll compliance is not independently certified."
     ],
     stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS"],
     previewCallout: {
