@@ -87,7 +87,7 @@ function ImmersivePortfolio() {
   const presentation = view === 'workspace' ? 'workspace' : 'expanded';
 
   return (
-    <div className={'immersive-portfolio-shell theme-' + theme} data-view={view} onPointerDownCapture={() => retro.playSound('click')} onKeyDownCapture={event => {
+    <div className={'immersive-portfolio-shell theme-' + theme} data-view={view} onKeyDownCapture={event => {
       if (retro.bootOpen && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); event.stopPropagation(); return; }
       retro.pressKey(event);
     }}>

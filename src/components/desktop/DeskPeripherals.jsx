@@ -30,7 +30,7 @@ function StickyNote({ label, color, position, rotation, colors, onClick }) {
 
 export function RetroMonitor({ colors, onOpenDesktop, onOpenApp }) {
   const { monitorOn, togglePower } = useRetroOS();
-  return <MergeStatic deps={[colors, monitorOn]}><group userData={{ label: 'Open desktop' }} onClick={event => { event.stopPropagation(); onOpenDesktop(); }}>
+  return <MergeStatic deps={[colors, monitorOn]}><group onClick={event => { event.stopPropagation(); onOpenDesktop(); }}>
     <RoundedBox args={[1.58, 0.13, 1.08]} radius={0.05} smoothness={3} position={[0, 0.845, -1.5]}><meshStandardMaterial color={colors.retroShell} roughness={0.7} /></RoundedBox>
     <RoundedBox args={[0.52, 0.48, 0.42]} radius={0.07} smoothness={3} position={[0, 1.09, -1.5]}><meshStandardMaterial color={colors.retroEdge} roughness={0.75} /></RoundedBox>
     <RoundedBox args={[4.92, 3.18, 1.06]} radius={0.1} smoothness={3} position={[0, 2.48, -1.5]}><meshStandardMaterial color={colors.retroShell} roughness={0.66} /></RoundedBox>
