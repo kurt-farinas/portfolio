@@ -17,8 +17,8 @@ export function cameraFollowTarget(nx, ny, progress, focus) {
   const follow = 1 - progress;
   const cx = clamp(nx, -1, 1), cy = clamp(ny, -1, 1);
   return {
-    // Horizontal follow is mirrored (cursor right moves the view left); `+ 0` keeps -0 out of the strict-equality sleep check.
-    x: -cx * FOLLOW_RANGE.x * follow + focus[0] * progress + 0,
+    // The view moves toward the cursor; the orbit turn (azimuth) is negated to match the shift. `+ 0` keeps -0 out of the strict-equality sleep check.
+    x: cx * FOLLOW_RANGE.x * follow + focus[0] * progress + 0,
     y: cy * FOLLOW_RANGE.y * follow + focus[1] * progress + 0,
     azimuth: -cx * FOLLOW_RANGE.azimuth * follow + 0,
     polar: -cy * FOLLOW_RANGE.polar * follow + 0
