@@ -15,11 +15,14 @@ const caseStudySections = [
 // Release labels are stored in caps for the browser-bar badge; the card reads them as one sentence-case line.
 const sentenceCase = text => text.charAt(0) + text.slice(1).toLowerCase();
 
-function ProjectPreview({ project, eager = false }) {
+function ProjectPreview({ project, eager = false, onOpen }) {
   const preview = project.slides?.[0];
   if (!preview) return null;
+  // Distinct name from the "View project" button so each control stays uniquely addressable.
   return <figure className="studio-project-detail-preview">
-    <PortfolioImage src={preview.src} alt={preview.label} loading={eager ? 'eager' : 'lazy'} onError={event => { event.currentTarget.style.display = 'none'; }} />
+    <button type="button" className="studio-project-preview-open" aria-label={'Open case study: ' + project.title} onClick={onOpen}>
+      <PortfolioImage src={preview.src} alt={preview.label} loading={eager ? 'eager' : 'lazy'} onError={event => { event.currentTarget.style.display = 'none'; }} />
+    </button>
     {project.previewCallout && <figcaption><strong>{project.previewCallout.label}</strong><span>{project.previewCallout.note}</span></figcaption>}
   </figure>;
 }
@@ -40,7 +43,7 @@ export function ProjectsContent({ compact = false }) {
 
             return (
               <article className={"studio-project-detail" + (compact ? " is-compact" : "")} id={project.id} key={project.id}>
-                {compact && <ProjectPreview project={project} eager={index === 0} />}
+                {compact && <ProjectPreview project={project} eager={index === 0} onOpen={() => openProjectModal(projectKey)} />}
                 <header className="studio-project-detail-header">
                   <p className="studio-project-detail-kicker">{project.ticketId}</p>
                   <h2>{project.title}</h2>
@@ -51,7 +54,7 @@ export function ProjectsContent({ compact = false }) {
                   {!compact && <p className="studio-project-detail-summary">{project.cardSummary}</p>}
                 </header>
 
-                {!compact && <ProjectPreview project={project} eager={index === 0} />}
+                {!compact && <ProjectPreview project={project} eager={index === 0} onOpen={() => openProjectModal(projectKey)} />}
 
                 <div className="studio-project-detail-content">
                   {compact && <dl className="project-quick-read">

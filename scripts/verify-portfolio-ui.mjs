@@ -268,6 +268,16 @@ try {
       await page.keyboard.press('Escape');
       await expect(page.locator('#projectModal')).toHaveCount(0);
       await expect(opener).toBeFocused();
+      for (const title of ["PMPC People's Information System", 'CS Form No. 6 Digitalization System']) {
+        const imageOpener = page.locator('.desktop-window.is-active').getByRole('button', { name: 'Open case study: ' + title, exact: true });
+        await imageOpener.focus();
+        await page.keyboard.press('Enter');
+        await expect(page.locator('#projectModal')).toContainText(title);
+        await page.keyboard.press('Escape');
+        await expect(page.locator('#projectModal')).toHaveCount(0);
+        await expect(imageOpener).toBeFocused();
+      }
+      await expect(page.locator('.desktop-window.is-active .studio-project-preview-open')).toHaveCount(6);
       const buildNotes = page.locator('.portfolio-engineering-details');
       await buildNotes.locator('summary').focus();
       await page.keyboard.press('Enter');

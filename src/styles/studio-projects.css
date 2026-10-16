@@ -13,6 +13,9 @@
 .studio-project-detail-summary { margin-top: 16px; line-height: 1.6; }
 .studio-project-detail-preview { margin-top: var(--space-6); overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-frame); background: var(--surface); }
 .studio-project-detail-preview img { display: block; width: 100%; height: auto; max-height: 360px; object-fit: contain; object-position: top center; }
+.studio-project-preview-open { display: block; width: 100%; min-height: 44px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+/* Stop clipping while the image button is focused so its standard outline stays visible. */
+.studio-project-detail-preview:has(> .studio-project-preview-open:focus-visible) { overflow: visible; }
 .studio-project-detail-preview figcaption { display: flex; flex-wrap: wrap; gap: 8px 12px; padding: 12px 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: var(--type-small); }
 .studio-project-detail-preview figcaption strong { color: var(--ink); font-size: var(--type-label); letter-spacing: 0.04em; }
 .studio-project-detail-content { display: grid; gap: var(--section-space); margin-top: var(--space-6); }

@@ -110,7 +110,7 @@ Primary app headings use the 24px mobile typography token, body text remains 16p
 
 ## Section headers
 
-Kurt-OS windows omit the redundant Portfolio address row and reclaim its 36px for content without changing window rectangles. Project actions use View project with specific accessible names, and inherited ownership stays in the card attribution/modal badge rather than repeated prose. Contact starts with identity and the form; build notes retain their technical introduction and expandable details without a category eyebrow or architecture overview. Modal labels are Contributions and Technologies.
+Kurt-OS windows omit the redundant Portfolio address row and reclaim its 36px for content without changing window rectangles. Project actions use View project with specific accessible names, and inherited ownership stays in the card attribution/modal badge rather than repeated prose. Contact starts with identity and the form; build notes retain their technical introduction and expandable details without a category eyebrow or architecture overview. Modal labels are Contributions and Technologies. Each project screenshot (Kurt-OS and Classic) is also a button named "Open case study: <title>" that opens the same project dialog as View project; focus returns to it on close.
 
 Section headers keep their titles without generic category labels or explanatory taglines. Projects, After Hours, and Gear & Collections begin directly with their titles; After Hours centers its photo stack in a single column after removing the duplicate introduction. Résumé and Contact retain name/role and functional content without generic eyebrow text. The shared pages use this treatment in both Kurt-OS and Classic Portfolio.
 
