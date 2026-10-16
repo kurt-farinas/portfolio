@@ -585,3 +585,6 @@
   .desktop-app-scroll .studio-project-detail.is-compact .studio-project-detail-preview img { max-height: 180px; }
   .desktop-app-scroll .studio-project-detail.is-compact figcaption { padding: 8px; }
 }
+
+/* Title bars show Minimize, Maximize, and Close; Move/Resize appear only when reached with the keyboard. */
+.desktop-window-key-control:not(:focus-visible) { position: absolute; left: -9999px; }
