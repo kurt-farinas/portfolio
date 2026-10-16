@@ -16,7 +16,6 @@ export const projectDetails = {
     badge: "Inherited System · Contributor",
     cardSummary: "Improve cooperative operations with audited accounting workflows, document controls, reporting, and responsive portals.",
     websiteUrl: "https://peoplesmpcoop.com/",
-    browserLabel: "peoplesmpcoop.com",
     desc: "Contributions: September 16–October 15, 2026. My work improves financial operations, review safeguards, and public, member, and staff interfaces.",
     highlights: [
       "Petty Cash and daily reporting: introduced separately tracked fund, loan, and collection balances, opening entries, bank deposits and reconciliation, and branded A4 disbursement reports with role-based signatories; refined allocation routing and date-aware balance checks.",
@@ -45,7 +44,6 @@ export const projectDetails = {
     browserStatus: "DEPLOYED + LOCAL WORK",
     badge: "Inherited Website · Management",
     cardSummary: "Improve mobile retail workflows and implement local inventory valuation and monthly financial reporting.",
-    browserLabel: "genmdse.peoplesmpcoop.com",
     desc: "Contributions: September 16–October 15, 2026. Mobile interface improvements are deployed; inventory valuation and monthly financial reporting are implemented locally.",
     highlights: [
       "Deployed mobile interfaces: improved sidebar navigation, shell spacing, dashboards, product cards/forms, and profit/inventory report layouts, with larger touch targets, readable inputs, and preserved POS-specific cart behavior.",
@@ -73,7 +71,6 @@ export const projectDetails = {
     browserStatus: "DEPLOYED + LOCAL WORK",
     badge: "Inherited System · Contributor",
     cardSummary: "Improve attendance corrections, personal schedules, payroll review, management exports, and HR-verified account setup.",
-    browserLabel: "peoplescoopdtr.online",
     desc: "Contributions: September 16–October 15, 2026. Delivered fixes and locally implemented additions are distinguished below.",
     highlights: [
       "Attendance and self-service: improved employee/admin dashboards, mobile punch controls, four-punch timelines, attendance filters, correction requests, task-planner/profile/notification interfaces, and responsive navigation. Strengthened employee ownership and reviewer permissions and reduced unnecessary clock-driven page rendering.",
@@ -102,7 +99,6 @@ export const projectDetails = {
     roleTag: "Solo Full-Stack Developer",
     statusBadge: '<span class="status-dot-green"></span> Local-Only Personal Tool',
     badge: "Solo Full-Stack · Local-Only",
-    browserLabel: "job-hunt-ledger.local",
     browserStatus: "LOCAL ONLY",
     cardSummary: "Built a private dashboard that finds credible developer roles, explains each match, and keeps application tracking under my control.",
     desc: "Job Hunt Ledger is a local personal dashboard for junior frontend and full-stack roles in Metro Manila, the Philippines, and remote-friendly markets. It uses approved structured job sources, records readable match reasons, prevents duplicate listings, and preserves deliberate manual application tracking.",
@@ -121,7 +117,6 @@ export const projectDetails = {
       "Private Local Operations: Supports filters, saved views, CSV export, consistent SQLite backups, and optional Gmail read-only suggestions that require confirmation before any status change."
     ],
     stack: ["React", "TypeScript", "FastAPI", "Python", "SQLite", "Vite"],
-    telemetry: ["Local-Only", "Explainable Matching", "SHA-256 Dedupe", "Manual Tracking"],
     slides: [
       { src: "/job-hunt-ledger.png", label: "Job Hunt Ledger dashboard", tab: "Dashboard" }
     ]
@@ -152,12 +147,6 @@ export const projectDetails = {
       "Owned 100% of frontend development using React, Inertia.js, and Tailwind CSS."
     ],
     stack: ["React", "Inertia.js", "Tailwind CSS", "Laravel", "MySQL"],
-    telemetry: [
-      "Frontend Ownership",
-      "3-Tier RBAC",
-      "Print PDF Engine",
-      "98/100 Rating"
-    ],
     slides: [
       { src: 'hris-admin.png', label: 'Admin Dashboard', tab: 'Admin' },
       { src: 'hris-approver.png', label: 'Approver Interface', tab: 'Approver' },
@@ -193,12 +182,6 @@ export const projectDetails = {
       "POS Receipts & Streamed CSV Reports: POS receipt generation alongside streamed CSV financial reports with UTF-8 BOM for Excel/Sheets compatibility."
     ],
     stack: ["Laravel 12", "Inertia.js", "React", "Tailwind CSS", "MySQL", "Pest", "QR"],
-    telemetry: [
-      "Solo Full-Stack",
-      "Security Rebuild",
-      "119 Pest Tests",
-      "QR Attendance"
-    ],
     slides: [
       { src: '/boiyets-landing.png', label: "Boiyet's Gym Landing Page", tab: 'Landing' },
       { src: '/gym-admin.png', label: 'Admin Dashboard · Financials & User Access', tab: 'Admin' },
@@ -223,7 +206,6 @@ export const timelineData = [
     title: "BS Computer Science | STI College San Jose",
     desc: "Coursework included software engineering, database architecture, and object-oriented programming.",
     badge: "PRESIDENTIAL LIST (2022)",
-    badgeType: "status-open-to-work",
     isFeatured: true
   },
   {
@@ -295,7 +277,6 @@ export const gearCatalogData = [
     tags: ["Hall Effect", "0.005mm RT", "8K Polling", "0.1ms Latency"],
     url: "https://shopee.ph/MCHOSE-Ace60-Pro-Hall-Effect-Magnetic-Switch-Gaming-Keyboard-0.1ms-Latency-0.005mm-RT-Accuracy-8K-Polling-Rate-RGB-Hot-swappable-Gaming-Keyboard-i.1545423268.44003548801?extraParams=%7B%22display_model_id%22%3A290295496052%2C%22model_selection_logic%22%3A3%7D",
     featured: true,
-    aspectRatio: "wide",
     images: [
       {
         src: "/images/outside/mchose-ace60.jpg",
@@ -316,7 +297,6 @@ export const gearCatalogData = [
     tags: ["PAW3395", "49g", "Tri-Mode Wireless", "RGB Dock"],
     url: "https://shopee.ph/Attack-Shark-X6-Wireless-Ergonomic-Gaming-Mouse-Adjustable-DPI-Wired-2.4G-Bluetooth-High-Precision-Rechargeable-Mice-i.1672861652.40931474667?extraParams=%7B%22display_model_id%22%3A426019836346%2C%22model_selection_logic%22%3A3%7D",
     featured: false,
-    aspectRatio: "standard",
     images: [
       {
         src: "/images/outside/attack-shark-x6.jpg",
@@ -337,7 +317,6 @@ export const gearCatalogData = [
     tags: ["200Hz IPS", "1ms MPRT", "FHD 1080p", "FreeSync"],
     url: "https://shopee.ph/Koorui-G2411P-(24E3-V2-powered-by-HKC)-24-Monitor-G2711P-27-FHD-IPS-200Hz-GamingMonitor-COD-i.199257947.20253645196?extraParams=%7B%22display_model_id%22%3A247851053729%2C%22model_selection_logic%22%3A3%7D",
     featured: false,
-    aspectRatio: "standard",
     images: [
       {
         src: "/images/outside/koorui-24e3.jpg",
@@ -358,7 +337,6 @@ export const gearCatalogData = [
     tags: ["10mm Driver", "Detachable Cable", "Hi-Fi Tuning", "IEM"],
     url: "https://shopee.ph/7Hz-Salnotes-Zero-TYPE-C-3.5mm-10mm-Dynamic-Driver-In-Ear-Earphone-HIFI-Audio-Music-Earbuds-Headset-0.78mm-Detachable-Cable-i.418622941.23676487815?extraParams=%7B%22display_model_id%22%3A59687074016%2C%22model_selection_logic%22%3A3%7D",
     featured: false,
-    aspectRatio: "standard",
     images: [
       {
         src: "/images/outside/salnotes-zero.jpg",
@@ -375,7 +353,6 @@ export const gearCatalogData = [
     sectionTitle: "Desk Setup and Gear",
     icon: "audio",
     featured: false,
-    aspectRatio: "standard",
     images: [
       {
         src: "/images/outside/fifine-k678.png",
@@ -391,12 +368,11 @@ export const gearCatalogData = [
     section: "desk",
     sectionTitle: "Desk Setup and Gear",
     specs: "AMD Ryzen 7 · NVIDIA GeForce RTX 40-Series · 144Hz FHD · MUX Switch + Advanced Optimus",
-    desc: "My primary development and gaming battlestation engineered for high-performance compile cycles, containerized services, Docker containers, and high-intensity gaming.",
+    desc: "My primary development and gaming battlestation engineered for high-performance compile cycles and high-intensity gaming.",
     icon: "laptop",
     tags: ["Ryzen 7", "RTX 40-Series", "MUX Switch", "Dev Rig"],
     url: "https://www.asus.com/ph/laptops/for-gaming/tuf-gaming/asus-tuf-gaming-a15-2023/",
     featured: true,
-    aspectRatio: "wide",
     images: [
       {
         src: "/images/outside/asus-tuf-a15.jpg",
@@ -417,7 +393,6 @@ export const gearCatalogData = [
     tags: ["A13 Bionic", "Liquid Retina", "Mobile Testing", "iOS"],
     url: "https://support.apple.com/kb/SP804",
     featured: false,
-    aspectRatio: "standard",
     images: [
       {
         src: "/images/outside/mobile-device.jpg",
@@ -438,7 +413,6 @@ export const gearCatalogData = [
     tags: ["Push/Pull/Legs", "Progressive Overload", "Thesis Origin"],
     url: null,
     featured: true,
-    aspectRatio: "wide",
     images: [
       {
         src: "/images/outside/gym-training.jpg",
@@ -464,7 +438,6 @@ export const gearCatalogData = [
     tags: ["Tactical Play", "Sandbox Building", "Voice Comms", "Team Strategy"],
     url: null,
     featured: false,
-    aspectRatio: "standard",
     images: [
       {
         src: "/images/outside/gaming-setup.jpg",
@@ -485,7 +458,6 @@ export const gearCatalogData = [
     tags: ["Frozen Apple", "Italian Bergamot", "Ambergris", "Beast Mode"],
     url: "https://shopee.ph/Dubai-Shop-Hawas-Ice-Her-Tropical-Perfumes-i.325803687.24497320511?extraParams=%7B%22display_model_id%22%3A321003737550%2C%22model_selection_logic%22%3A3%7D",
     featured: true,
-    aspectRatio: "wide",
     images: [
       {
         src: "/images/outside/hawas-ice.jpg",
@@ -506,7 +478,6 @@ export const gearCatalogData = [
     tags: ["Pineapple", "Blackcurrant", "Smoky Birch", "Extrait de Parfum"],
     url: "https://shopee.ph/Afnan-Supremacy-Collectors-Edition-EDP-Perfume-100ML-i.325803687.44858179840?extraParams=%7B%22display_model_id%22%3A356401554492%2C%22model_selection_logic%22%3A3%7D",
     featured: false,
-    aspectRatio: "standard",
     images: [
       {
         src: "/images/outside/afnan-sce.jpg",
@@ -527,7 +498,6 @@ export const gearCatalogData = [
     tags: ["Bourbon Vanilla", "Cinnamon", "Althair DNA", "Warm Gourmand"],
     url: "https://shopee.ph/Liquid-Brun-100ML-l-Limited-Edition-150ML-by-French-Avenue-(PDM-Althair)-i.325803687.40556445433?extraParams=%7B%22display_model_id%22%3A345664012222%2C%22model_selection_logic%22%3A3%7D",
     featured: true,
-    aspectRatio: "wide",
     images: [
       {
         src: "/images/outside/liquid-brun.jpg",
@@ -548,7 +518,6 @@ export const gearCatalogData = [
     tags: ["Red Berries", "Warm Amber", "Cedarwood", "Daily Scent"],
     url: "https://shopee.ph/Jaguar-Classic-Red-Jaguar-for-men-i.220864586.26781305475?extraParams=%7B%22display_model_id%22%3A215932815162%2C%22model_selection_logic%22%3A3%7D",
     featured: false,
-    aspectRatio: "standard",
     images: [
       {
         src: "/images/outside/jaguar-red.jpg",

@@ -3,10 +3,6 @@
     "width": 1919,
     "height": 1079
   },
-  "/favicon.png": {
-    "width": 1024,
-    "height": 1024
-  },
   "/gym-admin.png": {
     "width": 1920,
     "height": 1080
@@ -14,10 +10,6 @@
   "/gym-client.png": {
     "width": 1919,
     "height": 1075
-  },
-  "/gym-mockup.png": {
-    "width": 1024,
-    "height": 1024
   },
   "/gym-trainer.png": {
     "width": 1919,
@@ -34,14 +26,6 @@
   "/hris-approver.png": {
     "width": 1919,
     "height": 1079
-  },
-  "/hris-mockup.png": {
-    "width": 1024,
-    "height": 1024
-  },
-  "/images/connected-systems.webp": {
-    "width": 1122,
-    "height": 1402
   },
   "/images/kurt-farinas-profile.png": {
     "width": 1254,
@@ -122,10 +106,6 @@
   "/images/outside/gym-training.jpg": {
     "width": 1200,
     "height": 896
-  },
-  "/images/outside/hawas ice.jpg": {
-    "width": 375,
-    "height": 500
   },
   "/images/outside/hawas-ice.jpg": {
     "width": 375,

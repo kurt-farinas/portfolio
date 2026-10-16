@@ -5,7 +5,6 @@
 .desktop-workspace[data-wallpaper='2'] { background: var(--retro-wallpaper-2); }
 .desktop-menubar, .desktop-taskbar, .desktop-window, .retro-start-menu { background: var(--retro-chrome); color: var(--retro-ink); border-radius: 0; border: 2px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
 .desktop-menubar, .desktop-taskbar { padding: 6px 8px; }
-.desktop-menubar-context { color: var(--retro-ink); }
 .desktop-brand, .desktop-brand-mark { color: var(--retro-ink); border-radius: 0; }
 .desktop-brand-mark { border: 1px solid var(--retro-edge); background: var(--retro-highlight); color: var(--retro-edge); font-family: var(--font-pixel); }
 .desktop-toolbar-button, .desktop-taskbar-item, .desktop-taskbar-home,
@@ -91,7 +90,7 @@
 :is(.desktop-app-scroll, .modal-card) :is(.studio-project-detail, .studio-project-case-item) { padding: 16px 20px 20px; border: 2px groove var(--retro-etch); }
 .desktop-app-scroll .studio-project-detail-list { gap: 20px; }
 :is(.desktop-app-scroll, .modal-card) :is(.studio-project-detail-preview, .studio-project-preview, .gear-media-box, .studio-portrait-frame, .case-study-item, .deck-photo-card) { border: 2px inset var(--retro-etch); }
-:is(.desktop-app-scroll, .modal-card) :is(.studio-proof, .tech-pill, .role-tag, .stamp, .modal-badge, .studio-stack-item, .studio-project-detail-stack li, .studio-project-preview-label) { border: 2px outset var(--retro-etch); background: var(--retro-chrome); color: var(--retro-ink); }
+:is(.desktop-app-scroll, .modal-card) :is(.studio-proof, .tech-pill, .stamp, .modal-badge, .studio-stack-item, .studio-project-detail-stack li, .studio-project-preview-label) { border: 2px outset var(--retro-etch); background: var(--retro-chrome); color: var(--retro-ink); }
 .retro-profile-facts { display: grid; gap: 16px; font-size: var(--type-body); }
 .retro-profile-facts dt { font-weight: 600; }
 .retro-profile-facts dd { margin: 0; color: var(--muted); }
@@ -206,7 +205,6 @@
     --mobile-safe-left: env(safe-area-inset-left, 0px);
     --mobile-safe-right: env(safe-area-inset-right, 0px);
   }
-  .desktop-apps-button { display: none; }
   .desktop-menubar {
     height: calc(52px + var(--mobile-safe-top));
     padding: calc(2px + var(--mobile-safe-top)) calc(6px + var(--mobile-safe-right)) 2px calc(6px + var(--mobile-safe-left));

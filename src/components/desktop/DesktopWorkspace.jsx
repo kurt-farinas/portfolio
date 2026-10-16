@@ -156,8 +156,6 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
       <div className="retro-desktop-content" inert={!retro.monitorOn ? true : undefined}>
         <header className="desktop-menubar">
           <button type="button" className="desktop-brand" onClick={() => chooseApp('about')} aria-label="Home: Open About app"><span className="desktop-brand-mark">KF</span><span>Kurt-OS</span></button>
-          <button type="button" className="desktop-toolbar-button desktop-apps-button" onClick={() => setAppsOpen(value => !value)} aria-expanded={appsOpen} aria-controls="retro-start-menu">Apps</button>
-          <div className="desktop-menubar-context">Portfolio desktop</div>
           <div className="desktop-menubar-actions">
             {['screen', 'expanded'].includes(presentation) && canUse3D && <button type="button" className="desktop-toolbar-button" onClick={onBackToDesk} aria-label="Back to desk">Back to desk</button>}
             {presentation === 'screen' && <button type="button" className="desktop-toolbar-button" onClick={expandDesktop}>Expand desktop</button>}

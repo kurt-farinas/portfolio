@@ -30,13 +30,13 @@
 /* Undo the Win98 content structure inside dialogs. */
 :root[data-mode='classic'] .modal-card :is(.studio-project-detail, .studio-project-case-item) { padding: 14px 0 0; border: 0; border-top: 1px solid var(--border); }
 :root[data-mode='classic'] .modal-card :is(.studio-project-detail-preview, .studio-project-preview, .gear-media-box, .studio-portrait-frame, .case-study-item) { border: 1px solid var(--border); }
-:root[data-mode='classic'] .modal-card :is(.studio-proof, .tech-pill, .role-tag, .stamp, .modal-badge, .studio-stack-item, .studio-project-detail-stack li) { border: 1px solid var(--border); background: transparent; color: inherit; }
+:root[data-mode='classic'] .modal-card :is(.studio-proof, .tech-pill, .stamp, .modal-badge, .studio-stack-item, .studio-project-detail-stack li) { border: 1px solid var(--border); background: transparent; color: inherit; }
 
 /* Corner radii the retro pass squared off. */
 :root[data-mode='classic'] .deck-photo-card { border-radius: 16px; }
 :root[data-mode='classic'] :is(.studio-hero-socials a, .studio-hero-socials button, .studio-footer-links a, .studio-footer-links button) { border-radius: 10px; }
 :root[data-mode='classic'] :is(.studio-project-image, .studio-project-detail-stack li, .studio-monogram) { border-radius: 8px; }
-:root[data-mode='classic'] :is(.studio-project-preview-label, .studio-proof, .role-tag, .stamp, .studio-stack-item) { border-radius: 6px; }
+:root[data-mode='classic'] :is(.studio-project-preview-label, .studio-proof, .stamp, .studio-stack-item) { border-radius: 6px; }
 :root[data-mode='classic'] .contact-email-cta { border-radius: 12px; }
 :root[data-mode='classic'] kbd { border-radius: 4px; }
 :root[data-mode='classic'] .studio-nav-links [aria-current]::before { border-radius: 3px; }

@@ -28,11 +28,11 @@ describe('read-only Stack rows', () => {
     expect(host.querySelectorAll('#skills button, #skills a, #skills input')).toHaveLength(0);
 
     const expectedByCategory = {
-      Frontend: ['React', 'TypeScript', 'JavaScript', 'Inertia.js', 'Tailwind CSS', 'HTML / CSS', 'Chart.js', 'Next.js'],
+      Frontend: ['React', 'TypeScript', 'JavaScript', 'Inertia.js', 'Tailwind CSS', 'HTML / CSS', 'Chart.js'],
       Backend: ['Laravel', 'PHP', 'FastAPI', 'Python'],
       Data: ['MySQL', 'SQLite'],
       Languages: ['Java'],
-      Tools: ['PHPUnit & Pest', 'Git / GitHub', 'Docker']
+      Tools: ['PHPUnit & Pest', 'Git / GitHub']
     };
     const renderedRows = [...host.querySelectorAll('.studio-skill-row')].map((row) => ({
       category: row.querySelector('.studio-skill-category').textContent,

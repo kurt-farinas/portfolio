@@ -15,11 +15,11 @@ export const portfolioProfile = {
 };
 
 export const technologyGroups = {
-  Frontend: ['React', 'TypeScript', 'JavaScript', 'Inertia.js', 'Tailwind CSS', 'HTML / CSS', 'Chart.js', 'Next.js'],
+  Frontend: ['React', 'TypeScript', 'JavaScript', 'Inertia.js', 'Tailwind CSS', 'HTML / CSS', 'Chart.js'],
   Backend: ['Laravel', 'PHP', 'FastAPI', 'Python'],
   Data: ['MySQL', 'SQLite'],
   Languages: ['Java'],
-  Tools: ['PHPUnit & Pest', 'Git / GitHub', 'Docker']
+  Tools: ['PHPUnit & Pest', 'Git / GitHub']
 };
 
 export const portfolioProjects = featuredProjectIds.map(id => projectDetails[id]);

@@ -28,7 +28,7 @@ const workspace = await fs.readFile(path.join(root, 'src/context/DesktopWorkspac
 if (!workspace.includes('window.innerWidth >= 1100') || !workspace.includes("'(pointer: fine)'")) failures.push('3D eligibility does not exclude small/coarse-pointer screens');
 for (const directory of ['src/components/sections', 'src/components/common']) {
   for (const name of await fs.readdir(path.join(root, directory))) {
-    if (!name.endsWith('.jsx') || ['DitherImage.jsx', 'HeroDither.jsx'].includes(name)) continue;
+    if (!name.endsWith('.jsx')) continue;
     const source = await fs.readFile(path.join(root, directory, name), 'utf8');
     if (/import .*DitherImage|import .*HeroDither/.test(source)) failures.push(name + ': dither still active');
   }
@@ -44,4 +44,4 @@ for (const [url, size] of Object.entries(manifest)) {
 }
 if (failures.length) throw new Error(failures.join('\n'));
 console.log('Portfolio palette, typography, original assets, focus, and motion safeguards passed.');
-console.log('Preserved legacy scripts and inactive Dither files are excluded from the active theme audit.');
+console.log('Preserved legacy scripts are excluded from the active theme audit.');

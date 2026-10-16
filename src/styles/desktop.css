@@ -204,21 +204,6 @@
   white-space: nowrap;
 }
 .desktop-brand-mark { flex-basis: 36px; width: 36px; height: 36px; border-radius: 0; }
-.desktop-menubar-context {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 auto;
-  color: var(--muted);
-  font-size: 13px;
-  white-space: nowrap;
-}
-.desktop-status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-}
 .desktop-menubar-actions { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .desktop-toolbar-button {
   display: inline-flex;
@@ -526,7 +511,6 @@
   .desktop-window-controls button[aria-label^='Maximize'],
   .desktop-window-controls button[aria-label^='Restore'],
   .desktop-window-resize-handle { display: none; }
-  .desktop-menubar-context { display: none; }
   .desktop-menubar { gap: 4px; padding-inline: 7px; }
   .desktop-menubar-actions { gap: 4px; }
   .desktop-toolbar-button { padding-inline: 9px; }
@@ -540,7 +524,6 @@
 @media (max-width: 560px) {
   .immersive-portfolio-shell { min-height: 520px; }
   .desktop-brand > span:last-child { display: none; }
-  .desktop-apps-button { padding-inline: 10px; }
   .desktop-command-button kbd { display: none; }
   .desktop-menubar-actions .desktop-toolbar-button { padding-inline: 8px; }
   .desktop-window-titlebar { padding-left: 8px; }

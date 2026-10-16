@@ -62,9 +62,9 @@ export default function ProjectModal() {
           {project.stamp && <span className="stamp modal-stamp-badge">{project.stamp}</span>}
         </div>
 
+        {/* The badge above already states ownership; the role tag would repeat it. */}
         <div className="modal-heading-row">
           <h3 className="modal-title" id="modalTitle">{project.title}</h3>
-          {project.roleTag && <span className="role-tag">{project.roleTag}</span>}
         </div>
 
         {project.statusBadge && (
