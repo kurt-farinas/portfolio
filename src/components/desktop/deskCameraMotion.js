@@ -10,13 +10,13 @@ export function createDeskCameraMotion(getControls, clock, setFrameloop) {
     controls.setFocalOffset(...offset, false);
   };
   return {
-    move(pose, animate, smoothTime = 0.20) {
+    move(pose, animate, smoothTime = 0.15) {
       const run = ++generation;
       const controls = getControls();
       if (!controls) return Promise.resolve();
       freeze(controls);
       if (!animate) {
-        controls.smoothTime = 0.20;
+        controls.smoothTime = 0.15;
         controls.setLookAt(...pose, false);
         setFrameloop('demand');
         return Promise.resolve();

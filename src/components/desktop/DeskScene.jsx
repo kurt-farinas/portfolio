@@ -263,12 +263,12 @@ function introPose([px, py, pz, tx, ty, tz]) {
   const azimuth = -0.6, polar = 1.12;
   return [tx + radius * Math.sin(polar) * Math.sin(azimuth), ty + radius * Math.cos(polar), tz + radius * Math.sin(polar) * Math.cos(azimuth), tx, ty, tz];
 }
-const SMOOTH_TIME = 0.20;
+const SMOOTH_TIME = 0.15;
 // Scrolling closer than LOCK locks onto the monitor; scrolling the monitor view out past UNLOCK returns to the desk.
 const LOCK_DISTANCE = 5.5;
 const UNLOCK_DISTANCE = 6;
 // Resting the cursor on the monitor glass (4.22x2.48, as built in RetroMonitor) this long zooms in; leaving the desktop zooms out.
-const HOVER_DWELL_MS = 100;
+const HOVER_DWELL_MS = 60;
 const GLASS_HALF_WIDTH = 2.11;
 const GLASS_HALF_HEIGHT = 1.24;
 
@@ -284,6 +284,7 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
   const SCREEN_POSE = useMemo(() => screenPose(aspect), [aspect]);
   const previous = useRef(null);
   const handoff = useRef(null);
+  const recheckHover = useRef(null);
   const introActive = useRef(false);
   const motion = useMemo(() => createDeskCameraMotion(() => controls.current, clock, setFrameloop), [clock, setFrameloop]);
   useEffect(() => () => motion.dispose(), [motion]);
@@ -383,7 +384,8 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
       }
       return x >= Math.min(...xs) && x <= Math.max(...xs) && y >= Math.min(...ys) && y <= Math.max(...ys);
     };
-    const move = event => {
+    let last = null;
+    const evaluate = event => {
       // Window drags/resizes and camera orbits (buttons held) never switch views, nor does a running transition.
       if (handoff.current || event.buttons) return clear();
       const inside = view === 'desk' ? overGlass(event) : Boolean(event.target.closest?.('.desk-projection-frame'));
@@ -399,10 +401,14 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
         if (next === 'screen') onOpenDesktop(); else onBackToDesk();
       }, HOVER_DWELL_MS);
     };
+    const move = event => { last = { clientX: event.clientX, clientY: event.clientY, buttons: event.buttons, target: event.target }; evaluate(last); };
+    // The camera keeps easing under a still cursor (cursor follow), so re-test the last pointer position each frame, not only on pointer moves.
+    recheckHover.current = view === 'desk' ? () => { if (last) evaluate(last); } : null;
     host.addEventListener('pointermove', move, { passive: true });
-    host.addEventListener('pointerleave', clear);
+    const leave = () => { last = null; clear(); };
+    host.addEventListener('pointerleave', leave);
     window.addEventListener('blur', clear);
-    return () => { clear(); host.removeEventListener('pointermove', move); host.removeEventListener('pointerleave', clear); window.removeEventListener('blur', clear); };
+    return () => { recheckHover.current = null; clear(); host.removeEventListener('pointermove', move); host.removeEventListener('pointerleave', leave); window.removeEventListener('blur', clear); };
   }, [canvas, camera, view, onOpenDesktop, onBackToDesk]);
   // The desk view turns and drifts with the cursor, eased per frame (a ~0.1 s response); it returns to centre when the cursor leaves.
   useEffect(() => {
@@ -425,6 +431,7 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
     return () => { host.removeEventListener('pointermove', move); host.removeEventListener('pointerleave', settle); window.removeEventListener('blur', settle); settle(); };
   }, [canvas, view, reducedMotion, DESK_POSE, spherical, invalidate]);
   useFrame((_, delta) => {
+    recheckHover.current?.();
     const c = controls.current, f = follow.current, t = followTarget.current;
     if (!c || (f.x === t.x && f.y === t.y && f.azimuth === t.azimuth && f.polar === t.polar)) return;
     const dt = Math.min(delta, 0.05);
