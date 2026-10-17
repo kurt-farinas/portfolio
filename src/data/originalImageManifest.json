@@ -47,11 +47,115 @@
     "width": 1600,
     "height": 1200
   },
+  "/images/outside/13.jpg": {
+    "width": 2048,
+    "height": 1536
+  },
+  "/images/outside/14.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/15.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/16.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/17.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/18.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/19.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
   "/images/outside/2.jpg": {
     "width": 1536,
     "height": 2048
   },
+  "/images/outside/20.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/21.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/22.jpg": {
+    "width": 2048,
+    "height": 1536
+  },
+  "/images/outside/23.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/24.jpg": {
+    "width": 1155,
+    "height": 2048
+  },
+  "/images/outside/25.jpg": {
+    "width": 2048,
+    "height": 1536
+  },
+  "/images/outside/26.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/27.jpg": {
+    "width": 1155,
+    "height": 2048
+  },
+  "/images/outside/28.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/29.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
   "/images/outside/3.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/30.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/31.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/32.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/33.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/34.jpg": {
+    "width": 828,
+    "height": 1472
+  },
+  "/images/outside/35.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/36.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/37.jpg": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/images/outside/38.jpg": {
     "width": 1536,
     "height": 2048
   },
@@ -183,9 +287,157 @@
     "width": 1440,
     "height": 1684
   },
+  "/og-preview-2026.jpg": {
+    "width": 1200,
+    "height": 630
+  },
   "/og-preview.jpg": {
     "width": 2400,
     "height": 1200
+  },
+  "/optimized/boiyets-landing.png.webp": {
+    "width": 1919,
+    "height": 1079
+  },
+  "/optimized/gym-admin.png.webp": {
+    "width": 1920,
+    "height": 1080
+  },
+  "/optimized/gym-client.png.webp": {
+    "width": 1919,
+    "height": 1075
+  },
+  "/optimized/gym-trainer.png.webp": {
+    "width": 1919,
+    "height": 1078
+  },
+  "/optimized/hris-admin.png.webp": {
+    "width": 1919,
+    "height": 1079
+  },
+  "/optimized/hris-applicant.png.webp": {
+    "width": 1909,
+    "height": 912
+  },
+  "/optimized/hris-approver.png.webp": {
+    "width": 1919,
+    "height": 1079
+  },
+  "/optimized/images/kurt-farinas-profile.png.webp": {
+    "width": 1254,
+    "height": 1254
+  },
+  "/optimized/images/outside/10.jpg.webp": {
+    "width": 1500,
+    "height": 2000
+  },
+  "/optimized/images/outside/11.jpg.webp": {
+    "width": 1600,
+    "height": 1200
+  },
+  "/optimized/images/outside/12.jpg.webp": {
+    "width": 1600,
+    "height": 1200
+  },
+  "/optimized/images/outside/7.jpg.webp": {
+    "width": 1536,
+    "height": 2048
+  },
+  "/optimized/images/outside/afnan-sce.jpg.webp": {
+    "width": 1440,
+    "height": 1440
+  },
+  "/optimized/images/outside/asus-tuf-a15.jpg.webp": {
+    "width": 600,
+    "height": 600
+  },
+  "/optimized/images/outside/attack-shark-x6.jpg.webp": {
+    "width": 700,
+    "height": 700
+  },
+  "/optimized/images/outside/fifine-k678.png.webp": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/optimized/images/outside/gaming-setup.jpg.webp": {
+    "width": 1200,
+    "height": 896
+  },
+  "/optimized/images/outside/gym-gear.jpg.webp": {
+    "width": 1200,
+    "height": 896
+  },
+  "/optimized/images/outside/gym-training.jpg.webp": {
+    "width": 1200,
+    "height": 896
+  },
+  "/optimized/images/outside/hawas-ice.jpg.webp": {
+    "width": 375,
+    "height": 500
+  },
+  "/optimized/images/outside/iphone-11.jpg.webp": {
+    "width": 500,
+    "height": 500
+  },
+  "/optimized/images/outside/jaguar-red.jpg.webp": {
+    "width": 375,
+    "height": 500
+  },
+  "/optimized/images/outside/koorui-24e3.jpg.webp": {
+    "width": 381,
+    "height": 492
+  },
+  "/optimized/images/outside/liquid-brun.jpg.webp": {
+    "width": 1669,
+    "height": 1364
+  },
+  "/optimized/images/outside/mchose-ace60.jpg.webp": {
+    "width": 1080,
+    "height": 1080
+  },
+  "/optimized/images/outside/mobile-device.jpg.webp": {
+    "width": 500,
+    "height": 500
+  },
+  "/optimized/images/outside/salnotes-zero.jpg.webp": {
+    "width": 1000,
+    "height": 1000
+  },
+  "/optimized/images/projects/pmpc-gen-mdse-prototype.jpg.webp": {
+    "width": 1424,
+    "height": 1359
+  },
+  "/optimized/images/projects/pmpc-gen-mdse.jpg.webp": {
+    "width": 1440,
+    "height": 900
+  },
+  "/optimized/images/projects/pmpc-pis.png.webp": {
+    "width": 1440,
+    "height": 1000
+  },
+  "/optimized/images/projects/pmpc-workforce-dashboard.png.webp": {
+    "width": 1440,
+    "height": 1000
+  },
+  "/optimized/images/projects/pmpc-workforce.png.webp": {
+    "width": 1917,
+    "height": 1020
+  },
+  "/optimized/job-hunt-ledger.png.webp": {
+    "width": 1440,
+    "height": 1684
+  },
+  "/optimized/og-preview.jpg.webp": {
+    "width": 1920,
+    "height": 960
+  },
+  "/optimized/profile.jpg.png.webp": {
+    "width": 500,
+    "height": 500
+  },
+  "/optimized/profile.jpg.webp": {
+    "width": 500,
+    "height": 500
   },
   "/profile.jpg": {
     "width": 500,

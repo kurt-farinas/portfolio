@@ -636,5 +636,239 @@ export const snapshotsDeckData = [
     src: "/images/outside/12.jpg",
     alt: "Kurt and three friends with headsets at gaming café computers",
     caption: "After Hours snapshot 12"
+  },
+  {
+    id: "deck-photo-13",
+    title: "After Hours Snapshot 13",
+    subtitle: "Small figures on a window ledge",
+    date: "Snapshot 13",
+    src: "/images/outside/13.jpg",
+    alt: "Two small ceramic figurines on a dark wooden ledge beside a window",
+    caption: "After Hours snapshot 13"
+  },
+  {
+    id: "deck-photo-14",
+    title: "After Hours Snapshot 14",
+    subtitle: "A seminar day with the laptop",
+    date: "Snapshot 14",
+    src: "/images/outside/14.jpg",
+    alt: "A laptop and mouse on a wooden desk in a seminar room with a presentation on screen",
+    caption: "After Hours snapshot 14"
+  },
+  {
+    id: "deck-photo-15",
+    title: "After Hours Snapshot 15",
+    subtitle: "Ramen worth the detour",
+    date: "Snapshot 15",
+    src: "/images/outside/15.jpg",
+    alt: "A bowl of black ramen with pork belly, a soft-boiled egg and green onions",
+    caption: "After Hours snapshot 15"
+  },
+  {
+    id: "deck-photo-16",
+    title: "After Hours Snapshot 16",
+    subtitle: "A neon street at dusk",
+    date: "Snapshot 16",
+    src: "/images/outside/16.jpg",
+    alt: "A busy street lined with neon signs under a pink and blue dusk sky",
+    caption: "After Hours snapshot 16"
+  },
+  {
+    id: "deck-photo-17",
+    title: "After Hours Snapshot 17",
+    subtitle: "A brick-built desk companion",
+    date: "Snapshot 17",
+    src: "/images/outside/17.jpg",
+    alt: "A black and white building-brick figure of a character with pink bow and long ears",
+    caption: "After Hours snapshot 17"
+  },
+  {
+    id: "deck-photo-18",
+    title: "After Hours Snapshot 18",
+    subtitle: "Sky after sunset",
+    date: "Snapshot 18",
+    src: "/images/outside/18.jpg",
+    alt: "A pink and purple sunset sky over a rooftop and trees",
+    caption: "After Hours snapshot 18"
+  },
+  {
+    id: "deck-photo-19",
+    title: "After Hours Snapshot 19",
+    subtitle: "A cake with a message",
+    date: "Snapshot 19",
+    src: "/images/outside/19.jpg",
+    alt: "A small round cake decorated with piped frosting and a handwritten message for Kurt",
+    caption: "After Hours snapshot 19"
+  },
+  {
+    id: "deck-photo-20",
+    title: "After Hours Snapshot 20",
+    subtitle: "A pickup in the riverbed",
+    date: "Snapshot 20",
+    src: "/images/outside/20.jpg",
+    alt: "A gray pickup truck parked in shallow river water on a rocky bank",
+    caption: "After Hours snapshot 20"
+  },
+  {
+    id: "deck-photo-21",
+    title: "After Hours Snapshot 21",
+    subtitle: "A covered shopping arcade",
+    date: "Snapshot 21",
+    src: "/images/outside/21.jpg",
+    alt: "A crowded covered shopping arcade with colorful signs and a glass roof",
+    caption: "After Hours snapshot 21"
+  },
+  {
+    id: "deck-photo-22",
+    title: "After Hours Snapshot 22",
+    subtitle: "A table with friends",
+    date: "Snapshot 22",
+    src: "/images/outside/22.jpg",
+    alt: "Kurt and friends seated at a table at an open-air restaurant",
+    caption: "After Hours snapshot 22"
+  },
+  {
+    id: "deck-photo-23",
+    title: "After Hours Snapshot 23",
+    subtitle: "Window seat view",
+    date: "Snapshot 23",
+    src: "/images/outside/23.jpg",
+    alt: "An airplane window showing another jet on the airport apron",
+    caption: "After Hours snapshot 23"
+  },
+  {
+    id: "deck-photo-24",
+    title: "After Hours Snapshot 24",
+    subtitle: "A foggy mountain road",
+    date: "Snapshot 24",
+    src: "/images/outside/24.jpg",
+    alt: "A vehicle on a wet road through tall pine trees in heavy fog",
+    caption: "After Hours snapshot 24"
+  },
+  {
+    id: "deck-photo-25",
+    title: "After Hours Snapshot 25",
+    subtitle: "Street-side with friends",
+    date: "Snapshot 25",
+    src: "/images/outside/25.jpg",
+    alt: "Kurt and friends sitting together on a sidewalk outside closed shutters",
+    caption: "After Hours snapshot 25"
+  },
+  {
+    id: "deck-photo-26",
+    title: "After Hours Snapshot 26",
+    subtitle: "Looking up at the pines",
+    date: "Snapshot 26",
+    src: "/images/outside/26.jpg",
+    alt: "Tall pine trees seen from below against a blue sky",
+    caption: "After Hours snapshot 26"
+  },
+  {
+    id: "deck-photo-27",
+    title: "After Hours Snapshot 27",
+    subtitle: "Pizza for the table",
+    date: "Snapshot 27",
+    src: "/images/outside/27.jpg",
+    alt: "Two thin-crust pizzas cut into slices on a wooden board",
+    caption: "After Hours snapshot 27"
+  },
+  {
+    id: "deck-photo-28",
+    title: "After Hours Snapshot 28",
+    subtitle: "Steak with mushrooms",
+    date: "Snapshot 28",
+    src: "/images/outside/28.jpg",
+    alt: "A steak topped with mushrooms in dark sauce, with a fork and knife",
+    caption: "After Hours snapshot 28"
+  },
+  {
+    id: "deck-photo-29",
+    title: "After Hours Snapshot 29",
+    subtitle: "The city after dark",
+    date: "Snapshot 29",
+    src: "/images/outside/29.jpg",
+    alt: "A crowded city intersection at night lit by large neon billboards",
+    caption: "After Hours snapshot 29"
+  },
+  {
+    id: "deck-photo-30",
+    title: "After Hours Snapshot 30",
+    subtitle: "Ramen in a booth",
+    date: "Snapshot 30",
+    src: "/images/outside/30.jpg",
+    alt: "A bowl of ramen on a wooden counter inside a private dining booth",
+    caption: "After Hours snapshot 30"
+  },
+  {
+    id: "deck-photo-31",
+    title: "After Hours Snapshot 31",
+    subtitle: "Convenience-store snacks",
+    date: "Snapshot 31",
+    src: "/images/outside/31.jpg",
+    alt: "Friends sharing snacks and drinks at a counter in a convenience store",
+    caption: "After Hours snapshot 31"
+  },
+  {
+    id: "deck-photo-32",
+    title: "After Hours Snapshot 32",
+    subtitle: "Reflections by the stairs",
+    date: "Snapshot 32",
+    src: "/images/outside/32.jpg",
+    alt: "A person reflected in a glass door beside a staircase and garden",
+    caption: "After Hours snapshot 32"
+  },
+  {
+    id: "deck-photo-33",
+    title: "After Hours Snapshot 33",
+    subtitle: "Clouds over the lake",
+    date: "Snapshot 33",
+    src: "/images/outside/33.jpg",
+    alt: "Wispy clouds over a wide lake and hills, seen from a railing",
+    caption: "After Hours snapshot 33"
+  },
+  {
+    id: "deck-photo-34",
+    title: "After Hours Snapshot 34",
+    subtitle: "A selfie with a friend",
+    date: "Snapshot 34",
+    src: "/images/outside/34.jpg",
+    alt: "Kurt and a friend taking a selfie in a room with gaming chairs",
+    caption: "After Hours snapshot 34"
+  },
+  {
+    id: "deck-photo-35",
+    title: "After Hours Snapshot 35",
+    subtitle: "A castle under blue sky",
+    date: "Snapshot 35",
+    src: "/images/outside/35.jpg",
+    alt: "A large stone castle with towers against a blue sky",
+    caption: "After Hours snapshot 35"
+  },
+  {
+    id: "deck-photo-36",
+    title: "After Hours Snapshot 36",
+    subtitle: "Grill night",
+    date: "Snapshot 36",
+    src: "/images/outside/36.jpg",
+    alt: "A tabletop grill with sliced meat and dipping sauces, with friends seated behind",
+    caption: "After Hours snapshot 36"
+  },
+  {
+    id: "deck-photo-37",
+    title: "After Hours Snapshot 37",
+    subtitle: "A quiet lake",
+    date: "Snapshot 37",
+    src: "/images/outside/37.jpg",
+    alt: "A calm lake framed by forested hills under a blue evening sky",
+    caption: "After Hours snapshot 37"
+  },
+  {
+    id: "deck-photo-38",
+    title: "After Hours Snapshot 38",
+    subtitle: "A slow visitor",
+    date: "Snapshot 38",
+    src: "/images/outside/38.jpg",
+    alt: "A snail crawling across a concrete path, photographed up close",
+    caption: "After Hours snapshot 38"
   }
 ];
