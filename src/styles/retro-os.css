@@ -26,8 +26,8 @@
 .desktop-launcher { width: 172px; grid-template-columns: repeat(2, 1fr); grid-auto-rows: minmax(74px, auto); gap: 8px 2px; }
 .desktop-launcher[hidden] { display: none; }
 /* The monitor screen is a fixed 1270x750, and Chrome won't wheel-scroll this column inside the 3D-projected page, so all icons must fit. */
-.desktop-workspace-screen .desktop-launcher { grid-auto-rows: minmax(68px, auto); gap: 4px 2px; }
-.desktop-workspace-screen .desktop-icon { min-height: 68px; gap: 3px; padding: 2px 4px; }
+:is(.desktop-workspace-screen, .desktop-workspace-preview) .desktop-launcher { grid-auto-rows: minmax(68px, auto); gap: 4px 2px; }
+:is(.desktop-workspace-screen, .desktop-workspace-preview) .desktop-icon { min-height: 68px; gap: 3px; padding: 2px 4px; }
 .desktop-icon { flex-direction: column; justify-content: center; text-align: center; gap: 5px; padding: 4px; border-radius: 0; min-height: 74px; }
 .desktop-icon:hover, .desktop-icon:focus-visible { background: var(--retro-title); border-color: var(--retro-title-ink); }
 .desktop-icon-glyph { width: 32px; height: 32px; flex-basis: 32px; border: 0; border-radius: 0; background: transparent; color: var(--retro-icon-ink); }

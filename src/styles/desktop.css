@@ -41,14 +41,14 @@
   background: var(--paper);
   color: var(--ink);
 }
-.desktop-workspace-screen {
+:is(.desktop-workspace-screen, .desktop-workspace-preview) {
   width: 1270px;
   height: 750px;
   min-height: 0;
   overflow: hidden;
   border-radius: 0;
 }
-.desk-projection-frame .desktop-workspace-screen :is(a, button, input, select, textarea, [role='button'], [role='option'], [tabindex]) {
+.desk-projection-frame :is(.desktop-workspace-screen, .desktop-workspace-preview) :is(a, button, input, select, textarea, [role='button'], [role='option'], [tabindex]) {
   min-width: 48px;
   min-height: 48px;
 }
