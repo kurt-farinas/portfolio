@@ -25,6 +25,7 @@
     "@react-three/fiber": "^9.8.1",
     "@vercel/analytics": "^2.0.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "modern-screenshot": "^4.7.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2",

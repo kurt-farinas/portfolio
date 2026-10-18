@@ -148,6 +148,8 @@ try {
         acceptDownloads: true
       });
       await context.addInitScript(theme => {
+        // Init scripts also run in the overview snapshot's same-origin sandbox iframe, which would reset the saved theme.
+        if (window.top !== window) return;
         localStorage.setItem('portfolio-theme', theme);
         sessionStorage.setItem('kurt-os-boot-seen', 'true');
         const original = window.requestAnimationFrame.bind(window);

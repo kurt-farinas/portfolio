@@ -1,6 +1,7 @@
 import React, { Suspense, startTransition, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, events, useFrame, useThree, useLoader } from '@react-three/fiber';
 import { CameraControls, Html, PerspectiveCamera, RoundedBox, useContextBridge, useCursor } from '@react-three/drei';
+import { domToCanvas } from 'modern-screenshot';
 import { Box3, CanvasTexture, Color, SRGBColorSpace, Spherical, Vector3, TextureLoader } from 'three';
 import DesktopWorkspace from './DesktopWorkspace';
 import { POST_LINES } from './BootScreen';
@@ -209,13 +210,71 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors, d
   );
 }
 
+// CSS-projected HTML has no mipmaps or edge antialiasing, so the shrunken, angled overview desktop looked blurry and jagged.
+// In the desk overview the (inert) desktop is shown as a mipmapped snapshot texture instead; the live page returns on focus.
+// Capturing blocks the main thread for ~250 ms, so an unchanged desktop (markup, root theme attributes, scroll) reuses the last snapshot.
+const SNAPSHOT_DELAY = 250;
+const snapshotKey = node => [...document.documentElement.attributes].map(({ name, value }) => `${name}=${value}`).join(' ') + node.innerHTML;
+function useScreenSnapshot(node, active) {
+  const gl = useThree(state => state.gl);
+  const invalidate = useThree(state => state.invalidate);
+  const [snapshot, setSnapshot] = useState(null);
+  const last = useRef({ texture: null, key: '' });
+  useEffect(() => {
+    if (!node) return undefined;
+    // Scrolling an app window changes the picture without changing the markup.
+    const stale = () => { last.current.key = ''; };
+    node.addEventListener('scroll', stale, true);
+    return () => node.removeEventListener('scroll', stale, true);
+  }, [node]);
+  useEffect(() => () => last.current.texture?.dispose(), []);
+  useEffect(() => {
+    if (!active || !node) return undefined;
+    let cancelled = false, running = false, again = false, timer = 0;
+    const capture = async () => {
+      if (running) { again = true; return; }
+      const key = snapshotKey(node);
+      if (key === last.current.key) { setSnapshot(last.current.texture); invalidate(); return; }
+      running = true;
+      try {
+        const canvas = await domToCanvas(node, { width: 1280, height: 760, scale: 1 });
+        if (!cancelled) {
+          const texture = new CanvasTexture(canvas);
+          texture.colorSpace = SRGBColorSpace;
+          texture.anisotropy = Math.min(8, gl.capabilities.getMaxAnisotropy());
+          last.current.texture?.dispose();
+          last.current = { texture, key };
+          setSnapshot(texture);
+          invalidate();
+        }
+      } catch {
+        // A failed capture keeps the live projected page visible.
+      }
+      running = false;
+      if (again && !cancelled) { again = false; schedule(); }
+    };
+    const schedule = () => { clearTimeout(timer); timer = setTimeout(capture, SNAPSHOT_DELAY); };
+    // shortcut: text-only changes (the taskbar clock) don't recapture, so the overview clock can lag until the next change; it's unreadable at that size.
+    const observer = new MutationObserver(schedule);
+    observer.observe(node, { subtree: true, childList: true, attributes: true });
+    const themeObserver = new MutationObserver(schedule);
+    themeObserver.observe(document.documentElement, { attributes: true });
+    if (snapshotKey(node) === last.current.key) capture(); else schedule();
+    return () => { cancelled = true; clearTimeout(timer); observer.disconnect(); themeObserver.disconnect(); setSnapshot(null); };
+  }, [node, active, gl, invalidate]);
+  return active ? snapshot : null;
+}
+
 function ScreenProjection({ view, theme, onOpenResume, toggleTheme, onBackToDesk, ContextBridge, portal }) {
   const { screenBooting } = useRetroOS();
   const invalidate = useThree(state => state.invalidate);
   const controls = useThree(state => state.controls);
   const inputCleanup = useRef(null);
   const scrollCleanup = useRef(null);
+  const [frameNode, setFrameNode] = useState(null);
+  const snapshot = useScreenSnapshot(frameNode, view === 'desk' && !screenBooting);
   const screenReady = useCallback(node => {
+    setFrameNode(node);
     inputCleanup.current?.();
     inputCleanup.current = node && view === 'screen' && controls ? bindDesktopCameraInput(node, controls) : null;
     scrollCleanup.current?.();
@@ -231,8 +290,11 @@ function ScreenProjection({ view, theme, onOpenResume, toggleTheme, onBackToDesk
   }, [view, controls, invalidate]);
   useEffect(() => () => { inputCleanup.current?.(); scrollCleanup.current?.(); }, []);
   // One fixed size and scale in both views: switching them made the page repaint at the new size before drei re-placed it (a zoom flash).
+  // 1280x760 CSS px at distanceFactor 1.2 (1.2/400 units per px) is 3.84x2.28 world units.
   return (
-    <Html portal={portal} transform scale={1} position={[0, MONITOR_CENTER_Y, MONITOR_SCREEN_Z]} distanceFactor={1.2} style={{ width: '1280px', height: '760px', overflow: 'hidden', pointerEvents: view === 'desk' ? 'none' : 'auto' }} wrapperClass="desk-projected-html" prepend>
+    <>
+    {snapshot && <mesh position={[0, MONITOR_CENTER_Y, MONITOR_SCREEN_Z]} raycast={() => null}><planeGeometry args={[3.84, 2.28]} /><meshBasicMaterial map={snapshot} toneMapped={false} /></mesh>}
+    <Html portal={portal} transform scale={1} position={[0, MONITOR_CENTER_Y, MONITOR_SCREEN_Z]} distanceFactor={1.2} style={{ width: '1280px', height: '760px', overflow: 'hidden', pointerEvents: view === 'desk' ? 'none' : 'auto' }} wrapperClass={'desk-projected-html' + (snapshot ? ' desk-projected-snapshot' : '')} prepend>
       <div ref={screenReady} className={'desk-projection-frame' + (view === 'desk' ? ' desk-projection-overview' : '')} inert={view === 'desk' ? true : undefined} aria-hidden={view === 'desk' || undefined}>
         <ContextBridge>
           <DesktopWorkspace presentation={view === 'desk' ? 'preview' : 'screen'} theme={theme} toggleTheme={toggleTheme} onBackToDesk={onBackToDesk} />
@@ -241,6 +303,7 @@ function ScreenProjection({ view, theme, onOpenResume, toggleTheme, onBackToDesk
         {screenBooting && <div className="desk-screen-boot" aria-hidden="true"><div className="desk-screen-boot-beam" /><pre className="desk-screen-boot-text">{POST_LINES.map((line, index) => <span key={line} style={{ '--line': index }}>{line + '\n'}</span>)}</pre></div>}
       </div>
     </Html>
+    </>
   );
 }
 

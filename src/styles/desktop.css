@@ -28,6 +28,8 @@
 .desk-canvas { display: block; z-index: 0; }
 /* One composited layer: camera moves transform it without repainting the 1280x760 desktop. */
 .desk-projected-html { pointer-events: auto !important; will-change: transform; }
+/* The overview shows a snapshot texture in its place; opacity (not visibility) keeps the page capturable. */
+.desk-projected-snapshot { opacity: 0; }
 .desk-projection-frame {
   position: relative;
   width: 1280px;
