@@ -53,9 +53,9 @@ function WorkInProgress({ colors }) {
   </group>;
 }
 
-// A single bed against the back wall to the right of the desk, so the room reads as a lived-in bedroom study.
+// A single bed on the right of the room, headboard to the right and foot toward the desk, so the room reads as a lived-in bedroom study.
 function Bed({ colors }) {
-  return <group position={[8.7, -1.5, -3.05]}>
+  return <group position={[9.4, -1.5, -1.6]} rotation={[0, -Math.PI / 2, 0]} scale={0.8}>
     <mesh position={[0, 0.3, 0]}><boxGeometry args={[2.3, 0.45, 3.6]} /><meshStandardMaterial color={colors.board} roughness={0.8} /></mesh>
     {[[-1.05, -1.7], [1.05, -1.7], [-1.05, 1.7], [1.05, 1.7]].map(([x, z]) => <mesh key={x + ':' + z} position={[x, 0.06, z]}><boxGeometry args={[0.14, 0.12, 0.14]} /><meshStandardMaterial color={colors.frame} /></mesh>)}
     <mesh position={[0, 1.05, -1.75]}><boxGeometry args={[2.4, 1.6, 0.14]} /><meshStandardMaterial color={colors.board} roughness={0.8} /></mesh>
