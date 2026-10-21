@@ -12,7 +12,7 @@ export default function RubberDuck({ colors }) {
   // The palette object changes with the theme, so re-read the duck tokens alongside it.
   const duck = useMemo(() => ({ body: readColor('--desk-duck', '#f2c230'), beak: readColor('--desk-duck-beak', '#e0782a') }), [colors]);
   return <MergeStatic deps={[colors, duck]}>
-    <group position={[-3.85, 0.78, 1.8]} rotation={[0, 0.45, 0]} userData={{ label: 'Ask anything' }} onClick={event => { event.stopPropagation(); openAsk(); }}>
+    <group position={[1.7, 4.07, -1.3]} rotation={[0, 0.35, 0]} userData={{ label: 'Ask anything' }} onClick={event => { event.stopPropagation(); openAsk(); }}>
       <mesh position={[0, 0.15, 0]} scale={[1, 0.72, 1.25]}><sphereGeometry args={[0.2, 24, 16]} /><meshStandardMaterial color={duck.body} roughness={0.35} /></mesh>
       <mesh position={[0, 0.25, -0.22]} rotation={[-0.9, 0, 0]}><coneGeometry args={[0.07, 0.14, 12]} /><meshStandardMaterial color={duck.body} roughness={0.35} /></mesh>
       <mesh position={[0, 0.36, 0.09]}><sphereGeometry args={[0.12, 24, 16]} /><meshStandardMaterial color={duck.body} roughness={0.35} /></mesh>

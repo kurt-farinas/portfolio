@@ -94,7 +94,7 @@ export function BugHunterApp() {
     const fit = () => {
       const style = getComputedStyle(section);
       const byWidth = section.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - 4;
-      const byHeight = scrollRoot ? (scrollRoot.clientHeight - 320) / 0.63 : byWidth;
+      const byHeight = scrollRoot ? (scrollRoot.clientHeight - 150) / 0.63 : byWidth;
       const width = Math.max(220, Math.floor(Math.min(byWidth, byHeight)));
       setSize(current => current.width === width ? current : { width, height: Math.round(width * 0.63) });
     };
