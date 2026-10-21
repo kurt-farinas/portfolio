@@ -361,8 +361,6 @@ const LOCK_DISTANCE = 5.5;
 const UNLOCK_DISTANCE = 6;
 // Resting the cursor on the monitor glass (4.22x2.48, as built in RetroMonitor) this long zooms in; leaving the desktop zooms out.
 const HOVER_DWELL_MS = 60;
-const GLASS_HALF_WIDTH = 2.11;
-const GLASS_HALF_HEIGHT = 1.24;
 
 function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, onSceneFailure }) {
   const { introKey, claimIntro, endScreenBoot } = useRetroOS();
@@ -455,33 +453,23 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
       followTarget.current = cameraFollowTarget(cursor.current[0], cursor.current[1], zoomProgress(distance, deskDistance, LOCK_DISTANCE), [0, MONITOR_CENTER_Y - DESK_CAMERA_TARGET[1]]);
       invalidate();
     }
-    if (view === 'desk' && distance < LOCK_DISTANCE) { handoff.current = { view: 'screen' }; onOpenDesktop(); }
-    else if (view === 'screen' && distance > UNLOCK_DISTANCE) { handoff.current = { view: 'desk' }; onBackToDesk(); }
+    // Scrolling in only explores the room; the monitor opens by clicking it. Scrolling out of the monitor still returns to the desk.
+    if (view === 'screen' && distance > UNLOCK_DISTANCE) { handoff.current = { view: 'desk' }; onBackToDesk(); }
   }, [view, reducedMotion, DESK_POSE, onOpenDesktop, onBackToDesk, spherical, invalidate]);
   // The camera follows the cursor: resting on the monitor glass zooms in, leaving the projected desktop zooms out.
   useEffect(() => {
     const host = canvas.parentElement;
     if (!host || (view !== 'desk' && view !== 'screen')) return undefined;
-    const corner = new Vector3();
     let timer = 0, pending = null;
     const clear = () => { clearTimeout(timer); timer = 0; pending = null; };
-    const overGlass = event => {
-      const rect = canvas.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      const y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
-      const xs = [], ys = [];
-      for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) {
-        corner.set(sx * GLASS_HALF_WIDTH, MONITOR_CENTER_Y + sy * GLASS_HALF_HEIGHT, MONITOR_SCREEN_Z).project(camera);
-        xs.push(corner.x); ys.push(corner.y);
-      }
-      return x >= Math.min(...xs) && x <= Math.max(...xs) && y >= Math.min(...ys) && y <= Math.max(...ys);
-    };
     let last = null;
     const evaluate = event => {
       // Window drags/resizes and camera orbits (buttons held) never switch views, nor does a running transition.
       if (handoff.current || event.buttons) return clear();
-      const inside = view === 'desk' ? overGlass(event) : Boolean(event.target.closest?.('.desk-projection-frame'));
-      const next = view === 'desk' ? (inside ? 'screen' : null) : (inside ? null : 'desk');
+      // Hovering the monitor no longer zooms in from the desk; leaving the projected desktop still zooms back out.
+      if (view === 'desk') return clear();
+      const inside = Boolean(event.target.closest?.('.desk-projection-frame'));
+      const next = inside ? null : 'desk';
       if (next === pending) return;
       clear();
       if (!next) return;
@@ -495,7 +483,7 @@ function DeskCamera({ view, ready, reducedMotion, onOpenDesktop, onBackToDesk, o
     };
     const move = event => { last = { clientX: event.clientX, clientY: event.clientY, buttons: event.buttons, target: event.target }; evaluate(last); };
     // The camera keeps easing under a still cursor (cursor follow), so re-test the last pointer position each frame, not only on pointer moves.
-    recheckHover.current = view === 'desk' ? () => { if (last) evaluate(last); } : null;
+    recheckHover.current = null;
     host.addEventListener('pointermove', move, { passive: true });
     const leave = () => { last = null; clear(); };
     host.addEventListener('pointerleave', leave);
