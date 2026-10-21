@@ -98,7 +98,19 @@ function DeskWindow({ phase, colors, animate, onCat }) {
   const frame = useRef(null);
   const cat = useRef(null);
   const { reducedMotion } = useContext(DesktopWorkspaceContext);
-  const leap = useCallback(() => { if (cat.current?.leap()) onCat(); }, [onCat]);
+  const controls = useThree(state => state.controls);
+  const zoomBack = useRef(0);
+  // The jumpscare pulls the camera in on the window, then returns to where the visitor was looking.
+  const leap = useCallback(() => {
+    if (!cat.current?.leap()) return;
+    onCat();
+    if (!controls || reducedMotion) return;
+    const position = controls.getPosition(new Vector3()), target = controls.getTarget(new Vector3());
+    void controls.setLookAt(4.75, 5.05, 0.2, 4.6, 5.0, -4.9, true);
+    window.clearTimeout(zoomBack.current);
+    zoomBack.current = window.setTimeout(() => { void controls.setLookAt(position.x, position.y, position.z, target.x, target.y, target.z, true); }, 2300);
+  }, [onCat, controls, reducedMotion]);
+  useEffect(() => () => window.clearTimeout(zoomBack.current), []);
   // Every minute or two, while the overview is visible and moving, a cat jumps up at the glass. Clicking the window calls it too.
   useEffect(() => {
     if (!animate) return undefined;
