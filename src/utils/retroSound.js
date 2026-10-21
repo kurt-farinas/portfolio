@@ -77,7 +77,19 @@ export function createSoundKit(context) {
     // Fighting-game demo on the small CRT: a quick chiptune hit.
     chip: at => { const base = [330, 392, 440, 523][Math.floor(Math.random() * 4)]; tone({ at, freq: base * 2, decay: 0.05, peak: 0.018 }); tone({ at: at + 0.05, freq: base, decay: 0.07, peak: 0.014, type: 'triangle' }); },
     // Arcade "zap" for BugHunter.
-    zap: at => tone({ at, freq: 1400, decay: 0.12, peak: 0.04, slideTo: 220 })
+    zap: at => tone({ at, freq: 1400, decay: 0.12, peak: 0.04, slideTo: 220 }),
+    // A wet low crunch when a bug is squashed.
+    squish: at => { burst({ at, freq: 420, q: 1.4, peak: 0.2, decay: 0.09, type: 'lowpass' }); tone({ at, freq: 180, decay: 0.12, peak: 0.04, type: 'triangle', slideTo: 70 }); },
+    // Taking a bite (or detonating a Bugsweeper bug): a falling buzz.
+    hurt: at => { tone({ at, freq: 240, decay: 0.2, peak: 0.05, type: 'sawtooth', slideTo: 90 }); burst({ at, freq: 300, q: 0.8, peak: 0.12, decay: 0.08, type: 'lowpass' }); },
+    // New wave: a rising three-note alarm.
+    wave: at => [523, 659, 784].forEach((freq, i) => tone({ at: at + i * 0.09, freq, decay: 0.08, peak: 0.035 })),
+    // The window cat: a hiss (high noise) under a bent "mrrow".
+    hiss: at => {
+      burst({ at, freq: 5200, q: 0.6, peak: 0.16, decay: 0.55, type: 'highpass' });
+      tone({ at: at + 0.02, freq: 520, decay: 0.38, peak: 0.035, type: 'triangle', slideTo: 760 });
+      tone({ at: at + 0.4, freq: 760, decay: 0.3, peak: 0.03, type: 'triangle', slideTo: 380 });
+    }
   };
 
   return {

@@ -1,10 +1,12 @@
 import { playstationCollection } from '../../data/playstationCollection';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { useRetroOS } from '../../context/RetroOSContext';
 import { useModal } from '../../context/ModalContext';
 import { portfolioCommand, portfolioProfile, portfolioProjects, awardsData } from '../../data/portfolioFacts';
-import { WORD_BANK, scoreGuess, INITIAL_BUG_GAME, moveBugPlayer, bugCanBeHit, nextBugTarget, rayDistance, newSweeper, revealCell, toggleFlag } from '../../utils/retroGames';
+import { WORD_BANK, scoreGuess, SWEEPER_LEVELS, newSweeper, revealCell, toggleFlag, chordCell } from '../../utils/retroGames';
+import { newHunterGame, stepHunter, fireHunter } from '../../utils/bugHunter';
+import { buildHunterPalette, drawHunter } from './bugHunterRender';
 import useAppSession from './useAppSession';
 
 export function useAppInteractionReady(appId) {
@@ -66,25 +68,33 @@ export function KurtOrdleApp() {
   </section>;
 }
 
+const HUNTER_KEYS = { w: 'forward', arrowup: 'forward', s: 'back', arrowdown: 'back', a: 'left', arrowleft: 'left', d: 'right', arrowright: 'right', q: 'strafeLeft', e: 'strafeRight' };
+const HUNTER_SOUNDS = { fire: 'zap', kill: 'squish', hurt: 'hurt', wave: 'wave' };
+const HUNTER_TOUCH = [['left', 'Turn left', '◀'], ['forward', 'Move forward', '▲'], ['back', 'Move back', '▼'], ['right', 'Turn right', '▶']];
+// Only these fields drive the HUD and the status line, so React re-renders on them and not on every animation frame.
+const hunterHud = state => [state.status, state.player.hp, state.score, state.squashed, state.wave, state.best, state.banner > 0].join('|');
+
 export function BugHunterApp() {
   const ready = useAppInteractionReady('bughunter');
   const { theme, playSound } = useRetroOS();
   const { reducedMotion } = useDesktopWorkspace();
-  const [game, setGame] = useAppSession('bughunter-game', INITIAL_BUG_GAME);
-  const [flash, setFlash] = useState(false);
+  const [game, setGame] = useAppSession('bughunter-v2', () => newHunterGame());
   const [size, setSize] = useState({ width: 490, height: 310 });
+  const [showMap, setShowMap] = useState(false);
   const canvasRef = useRef(null);
-  const flashTimer = useRef(null);
+  const gameRef = useRef(game);
+  const keys = useRef(new Set());
+  const palette = useRef(null);
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !ready) return undefined;
-    // Fill the (maximized) window: as wide as the arena allows, but short enough that the title and instructions stay in view.
+    // Fill the (maximized) window: as wide as the arena allows, but short enough that the title, HUD and instructions stay in view.
     const scrollRoot = canvas.closest('[data-app-scroll]');
     const section = canvas.closest('.retro-extra-app');
     const fit = () => {
       const style = getComputedStyle(section);
       const byWidth = section.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight) - 4;
-      const byHeight = scrollRoot ? (scrollRoot.clientHeight - 170) / 0.63 : byWidth;
+      const byHeight = scrollRoot ? (scrollRoot.clientHeight - 320) / 0.63 : byWidth;
       const width = Math.max(220, Math.floor(Math.min(byWidth, byHeight)));
       setSize(current => current.width === width ? current : { width, height: Math.round(width * 0.63) });
     };
@@ -94,64 +104,88 @@ export function BugHunterApp() {
     fit();
     return () => observer.disconnect();
   }, [ready]);
-  // Opening the app hands keyboard focus straight to the arena so WASD and Space work immediately.
   useEffect(() => {
     if (ready) canvasRef.current?.focus({ preventScroll: true });
+    else keys.current.clear();
   }, [ready]);
   useEffect(() => {
-    if (!ready) { clearTimeout(flashTimer.current); setFlash(false); }
-    return () => clearTimeout(flashTimer.current);
-  }, [ready]);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || !ready) return;
-    const context = canvas.getContext('2d');
-    if (!context) return;
     const css = getComputedStyle(document.documentElement);
-    const color = name => css.getPropertyValue('--game-' + name).trim();
-    const { width, height } = size;
-    const fov = Math.PI / 3;
-    context.fillStyle = color('ceiling'); context.fillRect(0, 0, width, height / 2);
-    context.fillStyle = color('floor'); context.fillRect(0, height / 2, width, height / 2);
-    const depths = [];
-    for (let column = 0; column < width; column += 3) {
-      const relative = (column / width - 0.5) * fov;
-      const distance = rayDistance(game.player, game.player.dir + relative);
-      depths[Math.floor(column / 3)] = distance;
-      const wallHeight = Math.min(height, height * 0.72 / Math.max(0.2, distance * Math.cos(relative)));
-      context.fillStyle = color('wall'); context.globalAlpha = Math.max(0.3, 1 - distance / 12);
-      context.fillRect(column, (height - wallHeight) / 2, 3, wallHeight);
-    }
-    context.globalAlpha = 1;
-    const angle = Math.atan2(game.target.y - game.player.y, game.target.x - game.player.x);
-    const relative = Math.atan2(Math.sin(angle - game.player.dir), Math.cos(angle - game.player.dir));
-    const distance = Math.hypot(game.target.x - game.player.x, game.target.y - game.player.y);
-    const x = (0.5 + relative / fov) * width;
-    if (Math.abs(relative) < fov / 2 && distance <= (depths[Math.floor(x / 3)] || 0) + 0.06) {
-      const radius = Math.max(10, Math.min(35, 38 / distance));
-      context.fillStyle = color('target'); context.beginPath(); context.arc(x, height / 2, radius, 0, Math.PI * 2); context.fill();
-      context.fillStyle = color('ink'); context.font = '700 13px monospace'; context.textAlign = 'center'; context.fillText('BUG', x, height / 2 + 4);
-    }
-    context.strokeStyle = color('crosshair'); context.lineWidth = 2; context.beginPath();
-    context.moveTo(width / 2 - 8, height / 2); context.lineTo(width / 2 + 8, height / 2);
-    context.moveTo(width / 2, height / 2 - 8); context.lineTo(width / 2, height / 2 + 8); context.stroke();
-    if (flash && !reducedMotion) { context.fillStyle = color('crosshair'); context.fillRect(width / 2 - 18, height - 25, 36, 25); }
-  }, [game, size, ready, flash, theme, reducedMotion]);
-  const input = key => {
+    palette.current = buildHunterPalette(name => css.getPropertyValue(name).trim());
+  }, [theme]);
+  const draw = useCallback(() => {
+    const canvas = canvasRef.current;
+    const context = canvas?.getContext('2d');
+    if (!context || !palette.current) return;
+    drawHunter(context, gameRef.current, { width: canvas.width, height: canvas.height, palette: palette.current, time: gameRef.current.time, still: reducedMotion, showMap });
+  }, [reducedMotion, showMap]);
+  const commit = useCallback((state, events = []) => {
+    const previous = gameRef.current;
+    gameRef.current = state;
+    events.forEach(event => HUNTER_SOUNDS[event] && playSound(HUNTER_SOUNDS[event]));
+    if (hunterHud(previous) !== hunterHud(state)) setGame(state);
+  }, [playSound, setGame]);
+  useEffect(() => { draw(); }, [draw, size, theme, game]);
+  // The game loop runs only while the window is focused and unobstructed, and only during play; it stops entirely otherwise.
+  useEffect(() => {
+    if (!ready || game.status !== 'playing' || typeof window.requestAnimationFrame !== 'function') return undefined;
+    let frame = 0, last = performance.now();
+    const tick = now => {
+      const input = {};
+      keys.current.forEach(action => { input[action] = true; });
+      const { state, events } = stepHunter(gameRef.current, input, (now - last) / 1000);
+      last = now;
+      commit(state, events);
+      draw();
+      if (state.status === 'playing') frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(frame); setGame(gameRef.current); };
+  }, [ready, game.status, commit, draw, setGame]);
+  const fire = () => {
     if (!ready) return;
-    if (key === 'fire') {
-      playSound('zap');
-      if (!reducedMotion) { clearTimeout(flashTimer.current); setFlash(true); flashTimer.current = setTimeout(() => setFlash(false), 100); }
-      setGame(current => bugCanBeHit(current.player, current.target) ? { ...current, score: current.score + 1, target: nextBugTarget(current.player) } : current);
-    } else setGame(current => ({ ...current, player: moveBugPlayer(current.player, key) }));
+    const { state, events } = fireHunter(gameRef.current);
+    if (state !== gameRef.current) { commit(state, events); draw(); }
   };
-  return <section className="retro-extra-app"><p className="desktop-eyebrow">PORTFOLIO MINI-GAME · FICTIONAL ARENA</p><h1>BugHunter 3D</h1>
-    <p className="retro-game-instructions"><strong>Move:</strong> <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> · <strong>Shoot:</strong> <kbd>Space</kbd></p>
-    <p role="status">Bugs squashed: {game.score}. {ready ? 'Ready.' : 'Paused.'}</p>
-    <div className="retro-bug-arena"><canvas ref={canvasRef} width={size.width} height={size.height} style={{ width: size.width }} tabIndex={0} role="img" aria-label="BugHunter game arena. W A S D to move; Space to shoot." data-game-active={ready} onPointerDown={event => { event.currentTarget.focus(); input('fire'); }} onKeyDown={event => {
-      if (!ready) return;
-      if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','w','a','s','d','W','A','S','D',' '].includes(event.key)) { event.preventDefault(); input(event.key === ' ' ? 'fire' : event.key.length === 1 ? event.key.toLowerCase() : event.key); }
-    }} /></div>
+  const restart = () => {
+    keys.current.clear();
+    const fresh = newHunterGame(gameRef.current.best);
+    gameRef.current = fresh; setGame(fresh);
+    canvasRef.current?.focus({ preventScroll: true });
+  };
+  const hold = (action, down) => { if (down && ready) keys.current.add(action); else keys.current.delete(action); };
+  const hp = game.player.hp;
+  return <section className="retro-extra-app retro-bughunter"><p className="desktop-eyebrow">PORTFOLIO MINI-GAME · FICTIONAL ARENA</p><h1>BugHunter 3D</h1>
+    <p className="retro-game-instructions"><strong>Move:</strong> <kbd>W</kbd> <kbd>S</kbd> · <strong>Turn:</strong> <kbd>A</kbd> <kbd>D</kbd> · <strong>Strafe:</strong> <kbd>Q</kbd> <kbd>E</kbd> · <strong>Shoot:</strong> <kbd>Space</kbd> or click · <strong>Map:</strong> <kbd>M</kbd></p>
+    <div className="retro-bug-hud" style={{ width: size.width }}>
+      <span className="retro-bug-hp" role="meter" aria-label="Health" aria-valuemin={0} aria-valuemax={100} aria-valuenow={hp}><span>HP</span><span className="retro-bug-hp-track"><span className={'retro-bug-hp-fill' + (hp <= 30 ? ' is-low' : '')} style={{ width: hp + '%' }} /></span></span>
+      <span>Wave {Math.max(1, game.wave)}</span><span>Score {game.score}</span><span>Best {game.best}</span>
+    </div>
+    <p role="status" className="retro-bug-status">Bugs squashed: {game.squashed}. {ready ? 'Ready.' : 'Paused.'}</p>
+    <div className="retro-bug-arena" style={{ width: size.width }}>
+      <canvas ref={canvasRef} width={size.width} height={size.height} style={{ width: size.width }} tabIndex={0} role="img"
+        aria-label="BugHunter game arena. W and S move, A and D turn, Q and E strafe, Space shoots, M toggles the map." data-game-active={ready} data-game-status={game.status}
+        onPointerDown={event => { event.currentTarget.focus(); fire(); }}
+        onBlur={() => keys.current.clear()}
+        onKeyUp={event => keys.current.delete(HUNTER_KEYS[event.key.toLowerCase()])}
+        onKeyDown={event => {
+          if (!ready) return;
+          const key = event.key.toLowerCase();
+          if (HUNTER_KEYS[key]) { event.preventDefault(); keys.current.add(HUNTER_KEYS[key]); }
+          else if (key === ' ') { event.preventDefault(); fire(); }
+          else if (key === 'm') { event.preventDefault(); setShowMap(value => !value); }
+          else if ((key === 'r' || key === 'enter') && game.status === 'over') { event.preventDefault(); restart(); }
+        }} />
+      {game.status === 'ready' && <p className="retro-bug-banner is-top">A bug is napping straight ahead. Squash it to wake the swarm.</p>}
+      {game.status === 'playing' && game.banner > 0 && <p className="retro-bug-banner">Wave {game.wave}</p>}
+      {game.status === 'playing' && !ready && <p className="retro-bug-banner">Paused</p>}
+      {game.status === 'over' && <div className="retro-bug-banner is-over"><p>Game over</p><p>Score {game.score} · Wave {game.wave}</p><button type="button" onClick={restart}>Play again</button></div>}
+    </div>
+    <div className="retro-bug-touch" role="group" aria-label="Touch controls">
+      {HUNTER_TOUCH.map(([action, label, glyph]) => <button key={action} type="button" aria-label={label}
+        onPointerDown={event => { event.preventDefault(); hold(action, true); }} onPointerUp={() => hold(action, false)} onPointerLeave={() => hold(action, false)} onPointerCancel={() => hold(action, false)}
+        onContextMenu={event => event.preventDefault()}>{glyph}</button>)}
+      <button type="button" className="retro-bug-fire" onPointerDown={event => { event.preventDefault(); fire(); }}>Fire</button>
+    </div>
   </section>;
 }
 
@@ -195,18 +229,60 @@ function sweeperCellName(cell, row, col) {
   return place + (cell.adjacent ? cell.adjacent + (cell.adjacent === 1 ? ' bug' : ' bugs') + ' nearby' : 'empty');
 }
 
+const SWEEPER_TILE = 44;
+const lcd = value => (value < 0 ? '-' + String(Math.min(99, -value)).padStart(2, '0') : String(Math.min(999, value)).padStart(3, '0'));
+
 export function BugsweeperApp() {
   const ready = useAppInteractionReady('bugsweeper');
-  const { unlock } = useRetroOS();
+  const { unlock, playSound } = useRetroOS();
   const [game, setGame] = useAppSession('bugsweeper-game', () => newSweeper());
+  const [bestTimes, setBestTimes] = useAppSession('bugsweeper-best', {});
   const [flagMode, setFlagMode] = useState(false);
   const [focusIndex, setFocusIndex] = useState(0);
+  const [pressing, setPressing] = useState(false);
+  const [room, setRoom] = useState(0);
+  const sectionRef = useRef(null);
   const cells = useRef([]);
   const flags = game.cells.filter(cell => cell.flag).length;
+  // Larger boards are offered only when their 44px tiles fit the window without sideways scrolling.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return undefined;
+    const fit = () => {
+      const style = getComputedStyle(section);
+      setRoom(section.clientWidth - (parseFloat(style.paddingLeft) || 0) - (parseFloat(style.paddingRight) || 0));
+    };
+    fit();
+    if (typeof ResizeObserver !== 'function') return undefined;
+    const observer = new ResizeObserver(fit);
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+  const fits = level => level === 'easy' || !(room > 0) || SWEEPER_LEVELS[level].cols * SWEEPER_TILE + 14 <= room;
+  // The clock only runs while the board is in play and the window can take input.
+  useEffect(() => {
+    if (!ready || !game.started || game.status !== 'playing') return undefined;
+    const timer = setInterval(() => setGame(current => current.started && current.status === 'playing' ? { ...current, elapsed: Math.min(999, current.elapsed + 1) } : current), 1000);
+    return () => clearInterval(timer);
+  }, [ready, game.started, game.status, setGame]);
+  useEffect(() => {
+    if (!pressing) return undefined;
+    const release = () => setPressing(false);
+    window.addEventListener('pointerup', release);
+    window.addEventListener('pointercancel', release);
+    return () => { window.removeEventListener('pointerup', release); window.removeEventListener('pointercancel', release); };
+  }, [pressing]);
+  const startBoard = (level = game.level) => { setGame(newSweeper(SWEEPER_LEVELS[level] ? level : 'easy')); setFocusIndex(0); };
   const act = (index, flag = flagMode) => {
     if (!ready) return;
-    const next = flag ? toggleFlag(game, index) : revealCell(game, index);
-    if (next.status === 'won' && game.status !== 'won') unlock('exterminator');
+    const cell = game.cells[index];
+    const next = flag && !cell.open ? toggleFlag(game, index) : cell.open ? chordCell(game, index) : revealCell(game, index);
+    if (next === game) return;
+    if (next.status === 'won' && game.status !== 'won') {
+      unlock('exterminator');
+      setBestTimes(best => best[game.level] === undefined || next.elapsed < best[game.level] ? { ...best, [game.level]: next.elapsed } : best);
+    }
+    if (next.status === 'lost') playSound('hurt');
     setGame(next);
   };
   // Opening the game puts keyboard focus on the current tile so arrows, Enter and F work immediately.
@@ -221,24 +297,40 @@ export function BugsweeperApp() {
       if (next >= 0 && next < game.cells.length && (!horizontal || Math.floor(next / game.cols) === Math.floor(index / game.cols))) { setFocusIndex(next); cells.current[next]?.focus(); }
     } else if (event.key.toLowerCase() === 'f') { event.preventDefault(); act(index, true); }
   };
-  const status = game.status === 'won' ? 'Board cleared. Every bug found.' : game.status === 'lost' ? 'A bug got loose. Start a new board.' : (game.bugs - flags) + ' bugs left';
-  return <section className="retro-extra-app retro-sweeper"><p className="desktop-eyebrow">BUGSWEEPER</p><h1>Bugsweeper</h1>
-    <p>Reveal every safe tile. Numbers count the bugs around a tile. Right-click, press F, or turn on Flag mode to mark a bug.</p>
-    <div className="retro-sweeper-bar">
-      <span className="retro-sweeper-counter" aria-live="polite">{status}</span>
-      <button type="button" onClick={() => { setGame(newSweeper()); setFocusIndex(0); }} aria-label="New Bugsweeper board">{game.status === 'lost' ? 'x_x' : game.status === 'won' ? 'B-)' : ':-)'}</button>
-      <button type="button" aria-pressed={flagMode} onClick={() => setFlagMode(value => !value)}>Flag mode: {flagMode ? 'On' : 'Off'}</button>
+  const bugsLeft = game.bugs - flags;
+  const status = game.status === 'won' ? 'Board cleared in ' + game.elapsed + 's. Every bug found.' : game.status === 'lost' ? 'A bug got loose. Start a new board.' : bugsLeft + ' bugs left';
+  const face = game.status === 'lost' ? 'x_x' : game.status === 'won' ? 'B-)' : pressing ? ':-O' : ':-)';
+  const best = bestTimes[game.level];
+  return <section ref={sectionRef} className="retro-extra-app retro-sweeper"><p className="desktop-eyebrow">BUGSWEEPER</p><h1>Bugsweeper</h1>
+    <p>Clear every safe tile; numbers count nearby bugs. Right-click, press F, or use Flag mode to flag. Click a fully flagged number to clear around it.</p>
+    <div className="retro-sweeper-levels" role="group" aria-label="Difficulty">
+      {Object.entries(SWEEPER_LEVELS).map(([key, level]) => <button key={key} type="button" aria-pressed={game.level === key} disabled={!fits(key)} onClick={() => startBoard(key)}
+        title={fits(key) ? undefined : 'Widen the window for this board'}>{level.label} <span className="retro-sweeper-size">{level.cols}×{level.rows}</span></button>)}
     </div>
-    <div className="retro-sweeper-board" role="grid" aria-label="Bugsweeper board" style={{ gridTemplateColumns: 'repeat(' + game.cols + ', 44px)' }}>
-      {game.cells.map((cell, index) => {
-        const row = Math.floor(index / game.cols), col = index % game.cols;
-        return <button key={index} ref={node => { cells.current[index] = node; }} type="button" role="gridcell" tabIndex={index === focusIndex ? 0 : -1}
-          className={'retro-sweeper-cell' + (cell.open ? ' is-open' : '') + (cell.open && cell.bug ? ' is-bug' : '')}
-          aria-label={sweeperCellName(cell, row, col)} onFocus={() => setFocusIndex(index)}
-          onClick={() => act(index)} onContextMenu={event => { event.preventDefault(); act(index, true); }} onKeyDown={event => move(event, index)}>
-          {cell.flag ? '⚑' : cell.open ? (cell.bug ? '✱' : cell.adjacent || '') : ''}
-        </button>;
-      })}
+    <div className="retro-sweeper-frame">
+      <div className="retro-sweeper-bar">
+        <span className="retro-sweeper-lcd" role="img" aria-label={bugsLeft + ' bugs left'}>{lcd(bugsLeft)}</span>
+        <button type="button" className="retro-sweeper-face" onClick={() => startBoard()} aria-label="New Bugsweeper board">{face}</button>
+        <span className="retro-sweeper-lcd" role="img" aria-label={'Time ' + game.elapsed + ' seconds'}>{lcd(game.elapsed)}</span>
+      </div>
+      <div className="retro-sweeper-board" role="grid" aria-label="Bugsweeper board" style={{ gridTemplateColumns: 'repeat(' + game.cols + ', ' + SWEEPER_TILE + 'px)' }}
+        onPointerDown={event => { if (event.button === 0 && game.status === 'playing') setPressing(true); }}>
+        {game.cells.map((cell, index) => {
+          const row = Math.floor(index / game.cols), col = index % game.cols;
+          const wrongFlag = game.status === 'lost' && cell.flag && !cell.bug;
+          const className = 'retro-sweeper-cell' + (cell.open ? ' is-open' : '') + (cell.open && cell.bug ? ' is-bug' : '') + (index === game.exploded ? ' is-exploded' : '') + (wrongFlag ? ' is-wrong' : '') + (cell.open && !cell.bug && cell.adjacent ? ' n' + cell.adjacent : '');
+          return <button key={index} ref={node => { cells.current[index] = node; }} type="button" role="gridcell" tabIndex={index === focusIndex ? 0 : -1} className={className}
+            aria-label={sweeperCellName(cell, row, col) + (wrongFlag ? ', no bug here' : '')} onFocus={() => setFocusIndex(index)}
+            onClick={() => act(index)} onContextMenu={event => { event.preventDefault(); act(index, true); }} onKeyDown={event => move(event, index)}>
+            {wrongFlag ? '✕' : cell.flag ? '⚑' : cell.open ? (cell.bug ? '✱' : cell.adjacent || '') : ''}
+          </button>;
+        })}
+      </div>
+    </div>
+    <div className="retro-sweeper-footer">
+      <span className="retro-sweeper-counter" aria-live="polite">{status}</span>
+      <button type="button" aria-pressed={flagMode} onClick={() => setFlagMode(value => !value)}>Flag mode: {flagMode ? 'On' : 'Off'}</button>
+      <span className="retro-sweeper-best">Best {SWEEPER_LEVELS[game.level]?.label || ''}: {best === undefined ? '—' : best + 's'}</span>
     </div>
   </section>;
 }

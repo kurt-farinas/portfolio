@@ -8,6 +8,7 @@ import { useModal } from '../../context/ModalContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useOptionalDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import useDialogFocus from './useDialogFocus';
+import { useAsk } from './AskOverlay';
 
 export default function CommandPalette() {
   const {
@@ -21,6 +22,7 @@ export default function CommandPalette() {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const desktopWorkspace = useOptionalDesktopWorkspace();
+  const { openAsk } = useAsk();
   const openApplication = appId => {
     if (desktopWorkspace) return desktopWorkspace.openApplication(appId);
     const fallbackPaths = { about: '/#about', projects: '/projects', experience: '/#timeline', stack: '/#skills', recognition: '/#awards', 'after-hours': '/after-hours', gear: '/gear', contact: '/#contact' };
@@ -144,6 +146,14 @@ export default function CommandPalette() {
       handler: () => copyEmail()
     },
     {
+      id: 'action-ask',
+      group: 'Actions & Utilities',
+      title: 'Open Ask anything',
+      subtitle: 'Ask a question (Alt K)',
+      icon: 'code',
+      handler: () => openAsk()
+    },
+    {
       id: 'action-theme',
       group: 'Actions & Utilities',
       title: `Switch Theme to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`,
@@ -152,7 +162,7 @@ export default function CommandPalette() {
       shortcut: 'T',
       handler: (e) => toggleTheme(e)
     },
-  ], [openApplication, openProjectModal, openResumeModal, copyEmail, theme, toggleTheme]);
+  ], [openApplication, openProjectModal, openResumeModal, copyEmail, theme, toggleTheme, openAsk]);
 
   const filteredCommands = useMemo(() => {
     if (!query.trim()) return commands;

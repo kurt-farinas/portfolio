@@ -1,4 +1,4 @@
-import React, { Suspense, startTransition, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { Suspense, startTransition, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, events, useFrame, useThree, useLoader } from '@react-three/fiber';
 import { CameraControls, Html, PerspectiveCamera, RoundedBox, useContextBridge, useCursor } from '@react-three/drei';
 import { domToCanvas } from 'modern-screenshot';
@@ -15,10 +15,12 @@ import useMinuteClock from './useMinuteClock';
 import DeskRoom, { CorkBoard } from './DeskRoom';
 import { WindowLandscape } from './RoomSurroundings';
 import FairyLights from './FairyLights';
+import WindowCat from './WindowCat';
 import MergeStatic from './MergeStatic';
 import fitTexture from './fitTexture';
 import optimized from '../../data/optimizedImageManifest.json';
 import FragranceTray from './FragranceTray';
+import RubberDuck from './RubberDuck';
 import { cameraFollowTarget, easeToward, FOLLOW_TAU, zoomProgress } from './deskCameraFollow';
 import { CoffeeMug, DeskClock, DeskLamp, DeskPrinter, DESK_CAMERA_POSITION, DESK_CAMERA_TARGET, RetroMonitor, MONITOR_CENTER_Y, MONITOR_SCREEN_Z, RetroKeyboard, RetroMouse } from './DeskPeripherals';
 
@@ -91,27 +93,42 @@ function useDeskHover(enabled, accent) {
   return { handlers, tooltip };
 }
 
-function DeskWindow({ phase, colors, animate }) {
+function DeskWindow({ phase, colors, animate, onCat }) {
   const stars = useRef(null);
+  const frame = useRef(null);
+  const cat = useRef(null);
+  const { reducedMotion } = useContext(DesktopWorkspaceContext);
+  const leap = useCallback(() => { if (cat.current?.leap()) onCat(); }, [onCat]);
+  // Every minute or two, while the overview is visible and moving, a cat jumps up at the glass. Clicking the window calls it too.
+  useEffect(() => {
+    if (!animate) return undefined;
+    let timer = 0;
+    const schedule = () => { timer = window.setTimeout(() => { leap(); schedule(); }, 60000 + Math.random() * 60000); };
+    schedule();
+    return () => window.clearTimeout(timer);
+  }, [animate, leap]);
+  const shake = useCallback(offset => { if (frame.current) frame.current.position.x = 5.2 + offset; }, []);
   useFrame(({ clock }) => {
     if (!animate || !stars.current) return;
     const t = clock.getElapsedTime();
     stars.current.children.forEach((star, index) => star.scale.setScalar(0.7 + 0.45 * Math.abs(Math.sin(t * 0.9 + index * 1.7))));
   });
   const sky = phase === 'day' ? colors.skyDay : phase === 'dusk' ? colors.skyDusk : colors.skyNight;
-  return <group position={[5.2, 4.8, -4.93]}>
+  return <group ref={frame} position={[5.2, 4.8, -4.93]} userData={{ label: 'Peek outside' }} onClick={event => { event.stopPropagation(); leap(); }}>
     <mesh><boxGeometry args={[3.2, 2.4, 0.12]} /><meshStandardMaterial color={colors.retroShell} roughness={0.8} /></mesh>
     <mesh position={[0, 0, 0.065]}><planeGeometry args={[2.9, 2.1]} /><meshBasicMaterial color={sky} toneMapped={false} /></mesh>
     <WindowLandscape colors={colors} phase={phase} />
     <mesh position={[0, 0, 0.09]}><boxGeometry args={[0.08, 2.1, 0.04]} /><meshStandardMaterial color={colors.retroShell} /></mesh>
     <mesh position={[0, 0, 0.09]}><boxGeometry args={[2.9, 0.08, 0.04]} /><meshStandardMaterial color={colors.retroShell} /></mesh>
     {phase === 'night' && <group ref={stars}>{[[-1, 0.6], [-0.5, 0.25], [0.4, 0.75], [0.95, 0.35], [-0.85, -0.45], [0.6, -0.6]].map(([x, y]) => <mesh key={x + ':' + y} position={[x, y, 0.07]}><planeGeometry args={[0.035, 0.035]} /><meshBasicMaterial color={colors.paper} toneMapped={false} /></mesh>)}</group>}
+    <WindowCat ref={cat} colors={colors} still={reducedMotion} onShake={shake} />
   </group>;
 }
 
 function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors, decor, onBaseMounted }) {
   useEffect(onBaseMounted, [onBaseMounted]);
-  const { noteDeskOpen, unlock, warmLamp } = useRetroOS();
+  const { noteDeskOpen, unlock, warmLamp, playSound } = useRetroOS();
+  const spooked = useCallback(() => { playSound('hiss'); unlock('curiosity'); }, [playSound, unlock]);
   const openFromDesk = appId => { noteDeskOpen(appId); onOpenApp(appId); };
   const { openLightbox } = useModal();
   const openPhoto = photo => { noteDeskOpen('after-hours'); openLightbox(photo.src, photo.caption); };
@@ -161,7 +178,7 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors, d
       <RetroMonitor colors={colors} onOpenDesktop={() => { noteDeskOpen('desktop'); onOpenDesktop(); }} onOpenApp={openFromDesk} />
       <RetroKeyboard colors={colors} onOpenProjects={() => openFromDesk('projects')} />
       <RetroMouse colors={colors} onOpenProjects={() => openFromDesk('projects')} />
-      <DeskLamp colors={colors} night={phase === 'night'} /><CoffeeMug colors={colors} /><DeskClock colors={colors} />
+      <DeskLamp colors={colors} night={phase === 'night'} /><CoffeeMug colors={colors} /><DeskClock colors={colors} /><RubberDuck colors={colors} />
       <DeskPrinter colors={colors} onPrinted={() => { unlock('paper-trail'); openFromDesk('resume'); }} />
       {decor && <FragranceTray colors={colors} onOpenCollection={() => openFromDesk('gear')} onOpenPhoto={openFragrance} />}
       <MergeStatic deps={[colors]}>
@@ -193,7 +210,7 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors, d
       <mesh position={[0, 6, -5]}><planeGeometry args={[80, 30]} /><meshStandardMaterial color={colors.wall} roughness={0.95} /></mesh>
       {/* Room decor mounts one frame after the desk so building the scene never blocks the page in one long task. */}
       {decor && <>
-        <DeskWindow phase={phase} colors={colors} animate={animate} />
+        <DeskWindow phase={phase} colors={colors} animate={animate} onCat={spooked} />
         <DeskRoom colors={colors} animate={animate} />
         <CorkBoard colors={colors} onOpen={() => openFromDesk('projects')} />
         <FairyLights colors={colors} animate={animate} lit={warmLamp || phase === 'night'} onOpenPhoto={openPhoto} />
@@ -646,7 +663,8 @@ function readPalette() {
     rug: readColor('--desk-rug'), rugEdge: readColor('--desk-rug-edge'), cork: readColor('--desk-cork'), pin: readColor('--desk-pin'),
     books: [readColor('--desk-book-a'), readColor('--desk-book-b'), readColor('--desk-book-c')], nightWarm: readColor('--desk-night-warm'),
     daylight: readColor('--desk-daylight'), keyLight: readColor('--desk-key-light'),
-    fairyBulb: readColor('--desk-fairy-bulb'), fairyWire: readColor('--desk-fairy-wire')
+    fairyBulb: readColor('--desk-fairy-bulb'), fairyWire: readColor('--desk-fairy-wire'),
+    catFur: readColor('--desk-cat-fur', '#141414'), catEye: readColor('--desk-cat-eye', '#f2d23c'), catPink: readColor('--desk-cat-pink', '#d98a96')
   };
 }
 

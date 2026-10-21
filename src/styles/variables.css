@@ -7,10 +7,13 @@
   --pix-k: #141414; --pix-w: #ffffff; --pix-g: #c3c3c3; --pix-d: #7d7d7d; --pix-b: #1d3fb8; --pix-c: #2bb3c6; --pix-l: #8fd0f2; --pix-y: #f2c94c; --pix-o: #b4702a; --pix-r: #c43a2f; --pix-n: #3fa553;
   --retro-terminal-bg: #101512; --retro-terminal-ink: #c1dfc8;
   --game-ceiling: #202633; --game-floor: #292a27; --game-wall: #57758b; --game-target: #b83443; --game-ink: #ffffff; --game-crosshair: #a8d7b4;
+  --game-beetle: #6d4f96; --game-fly: #4f8a3c; --game-splat: #9cc44a; --game-gun: #a3a196; --game-flash: #ffe28a; --game-hurt: #d0202f;
+  --sweep-lcd-bg: #0b0b0b; --sweep-lcd-ink: #ff3b30; --sweep-tile: #5a6068; --sweep-open: #2a2d31; --sweep-exploded: #c0392b;
+  --sweep-1: #7fa7ff; --sweep-2: #6fcf7f; --sweep-3: #ff7a6e; --sweep-4: #b48cff; --sweep-5: #ffb35c; --sweep-6: #5fd6d6; --sweep-7: #f1f0ea; --sweep-8: #a5a5ac;
   --word-correct: #325f44; --word-present: #6a5b2e; --word-absent: #41474c; --word-ink: #ffffff;
   --desk-retro-shell: #d6cbb4; --desk-retro-edge: #a99b80; --desk-retro-key: #ece1ca; --desk-retro-recess: #37372e;
   --desk-note-yellow: #ead978; --desk-note-green: #a8cda4; --desk-note-ink: #25271f; --desk-badge: #365f79; --desk-led: #68a94e; --desk-lamp: #334f43; --desk-mug: #712e32; --desk-sky-day: #a9cbe0; --desk-sky-dusk: #e09a5f; --desk-sky-night: #121c38; --desk-coffee: #3a2618;
-  --desk-curtain: #365b58; --desk-curtain-rod: #2a2622; --desk-plant: #4d7a46; --desk-pot: #a2593c; --desk-rug: #365b58; --desk-rug-edge: #c9b48a; --desk-cork: #a7804f; --desk-pin: #c0392b; --desk-book-a: #365b58; --desk-book-b: #7a3b2e; --desk-book-c: #b39763; --desk-night-warm: #ffd9b0; --desk-fairy-bulb: #ffcf8a; --desk-fairy-wire: #2b2620; --desk-daylight: #d2e2ed; --desk-key-light: #ffe4bd;
+  --desk-curtain: #365b58; --desk-curtain-rod: #2a2622; --desk-plant: #4d7a46; --desk-pot: #a2593c; --desk-rug: #365b58; --desk-rug-edge: #c9b48a; --desk-cork: #a7804f; --desk-pin: #c0392b; --desk-book-a: #365b58; --desk-book-b: #7a3b2e; --desk-book-c: #b39763; --desk-night-warm: #ffd9b0; --desk-fairy-bulb: #ffcf8a; --desk-fairy-wire: #2b2620; --desk-cat-fur: #141414; --desk-cat-eye: #f2d23c; --desk-cat-pink: #d98a96; --desk-daylight: #d2e2ed; --desk-key-light: #ffe4bd;
   --paper: #111113; --ink: #eeeef0; --surface: #19191c; --surface-soft: #212124;
   --muted: #a5a5ac; --border: #343439; --accent: #75c696; --backdrop: #000000bd;
   --desk-world: #283335; --desk-wall: #465650; --desk-board: #75513a; --desk-frame: #343b36;
@@ -21,6 +24,7 @@
   --desk-hardware-black: #151619; --desk-hardware-edge: #303237; --desk-hardware-detail: #72757d;
   --desk-display-glass: #11151b; --desk-purple-led: #8e47e6; --desk-key-legend: #aaa1ba;
   --desk-object-dark: #1a1b1a; --desk-screen: #151617; --desk-key: #202125; --desk-accent: #ad7852; --desk-paper: #f0e9df;
+  --ask-backdrop: #050608e0; --ask-loader: #80bf96; --desk-duck: #f2c230; --desk-duck-beak: #e0782a;
   --grain-opacity: 0.04; color-scheme: dark;
   --font-body: Tahoma, 'Segoe UI', Verdana, sans-serif; --font-display: var(--font-body);
   --font-pixel: 'VT323', Tahoma, 'Segoe UI', sans-serif;
@@ -54,6 +58,8 @@
   --retro-title: #000080; --retro-inactive-title: #707070;
   --retro-wallpaper-0: #008080; --retro-wallpaper-1: #255273; --retro-wallpaper-2: #574264;
   --retro-icon-ink: #fff0c3;
+  --sweep-tile: #c0c0c0; --sweep-open: #d4d4d4; --sweep-exploded: #ff0000;
+  --sweep-1: #0000ff; --sweep-2: #007b00; --sweep-3: #ff0000; --sweep-4: #00007b; --sweep-5: #7b0000; --sweep-6: #007b7b; --sweep-7: #000000; --sweep-8: #7b7b7b;
   --paper: #faf9f6; --ink: #242426; --surface: #ffffff; --surface-soft: #f1f0ed;
   --muted: #626267; --border: #deddda; --accent: #247348; --backdrop: #141416b8;
   --desk-world: #cfc8b8; --desk-wall: #e2d9c6; --desk-board: #906547; --desk-frame: #514737;

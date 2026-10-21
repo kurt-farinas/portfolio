@@ -12,6 +12,8 @@ export default function MobileWorkbench() {
       <circle cx="306" cy="22" r="4" fill="var(--desk-fairy-bulb)" />
       <path fill="var(--desk-land-far)" d="M270 43q12-17 25-7t21-4v28h-46z" />
       <path fill="var(--desk-land-near)" d="M270 51q14-12 26-4t20-2v15h-46z" />
+      <path fill="var(--desk-cat-fur)" d="M277 36q0-10 6-10t6 10zM278 29l1-6 3 4zm10 0l-1-6-3 4z" />
+      <path fill="var(--desk-cat-eye)" d="M280 30h2v2h-2zm4 0h2v2h-2z" />
       <path fill="var(--desk-wainscot)" d="M0 77h340v47H0z" />
       <path stroke="var(--desk-trim)" strokeWidth="2" d="M0 77h340" />
       <path fill="var(--desk-curtain)" d="M263 9h12v57h-12zm48 0h12v57h-12z" />
@@ -55,6 +57,9 @@ export default function MobileWorkbench() {
       <path fill="var(--desk-mug)" d="m83 101 23-1 1 8-23 1z" />
       <path fill="var(--desk-paper)" d="m85 101 20-1 1 6-20 1z" />
       <path stroke="var(--desk-note-yellow)" strokeWidth="2" d="m110 100 3 8" />
+      <path fill="var(--desk-duck)" d="M33 103q0-4 6-4h3q1-5 4-5t3 4q0 2-2 3 3 1 2 4-2 3-8 3t-8-5zm-1-3 3 2-3 1z" />
+      <path fill="var(--desk-duck-beak)" d="M49 97h3l-3 2z" />
+      <path fill="var(--desk-note-ink)" d="M46 96h1v1h-1z" />
       <path fill="var(--desk-lamp)" d="M49 94h26v5H49zm10-37h4v37h-4z" />
       <path fill="var(--desk-lamp)" d="m50 59 22-7 7 16H47z" />
       <path fill="var(--desk-mug)" d="M267 88h12v13h-12z" />

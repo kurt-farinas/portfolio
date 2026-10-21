@@ -119,8 +119,24 @@
 .retro-word-grid { cursor: text; }
 .retro-terminal-app input, .retro-mail-form input, .retro-mail-form textarea { display: block; width: 100%; min-height: 44px; padding: 10px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); border-radius: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.4 var(--font-body); }
 .retro-word-legend { font-size: 13px; }
-.retro-bug-arena { width: fit-content; max-width: 100%; border: 2px solid var(--retro-edge); margin-bottom: 16px; }
-.retro-bug-arena canvas { display: block; max-width: 100%; height: auto; aspect-ratio: 1.587; background: var(--game-ceiling); touch-action: manipulation; }
+.retro-bug-arena { position: relative; width: fit-content; max-width: 100%; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); margin-bottom: 12px; }
+.retro-bug-arena canvas { display: block; max-width: 100%; height: auto; aspect-ratio: 1.587; background: var(--game-ceiling); touch-action: manipulation; cursor: crosshair; }
+.retro-bug-hud { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; max-width: 100%; margin-bottom: 8px; padding: 6px 10px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--game-ceiling); color: var(--game-ink); font: 400 20px/1 var(--font-pixel); }
+.retro-bug-hp { display: inline-flex; align-items: center; gap: 8px; flex: 1 1 140px; }
+.retro-bug-hp-track { flex: 1; height: 12px; border: 2px solid var(--game-ink); }
+.retro-bug-hp-fill { display: block; height: 100%; background: var(--game-crosshair); }
+.retro-bug-hp-fill.is-low { background: var(--game-hurt); }
+.retro-extra-app .retro-bug-status { margin-bottom: 8px; }
+.retro-extra-app .retro-bug-banner { position: absolute; left: 50%; top: 42%; margin: 0; padding: 8px 14px; transform: translate(-50%, -50%); border: 2px solid var(--game-ink); background: var(--game-ceiling); color: var(--game-ink); font: 400 28px/1.1 var(--font-pixel); text-align: center; pointer-events: none; }
+.retro-extra-app .retro-bug-banner.is-top { top: 10px; width: max-content; max-width: calc(100% - 20px); transform: translateX(-50%); font-size: 18px; }
+.retro-extra-app .retro-bug-banner.is-over { display: grid; justify-items: center; gap: 6px; pointer-events: auto; }
+.retro-extra-app .retro-bug-banner.is-over p { margin: 0; }
+.retro-bug-touch { display: none; }
+@media (pointer: coarse) {
+  .retro-bug-touch { display: grid; grid-template-columns: repeat(4, 56px) 1fr; gap: 8px; max-width: 100%; margin-bottom: 16px; touch-action: none; user-select: none; -webkit-user-select: none; }
+  .retro-extra-app .retro-bug-touch button { min-height: 56px; font: 400 22px/1 var(--font-pixel); }
+}
+@media (prefers-reduced-motion: no-preference) { .retro-bug-hp-fill { transition: width 120ms linear; } }
 .retro-terminal-app { min-height: 100%; padding: 20px; background: var(--retro-terminal-bg); color: var(--retro-terminal-ink); font: 400 16px/1.6 monospace; overflow-wrap: anywhere; }
 .retro-terminal-app p { margin: 0 0 8px; }
 .retro-terminal-entry { margin: 20px 0; }
@@ -128,12 +144,32 @@
 .retro-terminal-app label { flex: 1; min-width: 140px; }
 .retro-terminal-app input { font-family: monospace; }
 .retro-credits ul { padding-left: 24px; }
-.retro-sweeper-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
-.retro-sweeper-counter { min-width: 120px; padding: 8px 10px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--paper); color: var(--ink); font: 700 14px/1.4 monospace; }
+.retro-sweeper-levels { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.retro-extra-app .retro-sweeper-levels button[aria-pressed='true'] { border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--retro-highlight); color: var(--retro-edge); }
+.retro-extra-app .retro-sweeper-levels button:disabled { opacity: 0.55; cursor: not-allowed; }
+.retro-sweeper-size { font-size: 13px; }
+.retro-sweeper-frame { width: max-content; max-width: 100%; padding: 6px; border: 3px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--retro-chrome); }
+.retro-sweeper-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; padding: 4px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
+.retro-sweeper-lcd { min-width: 64px; padding: 2px 6px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--sweep-lcd-bg); color: var(--sweep-lcd-ink); font: 400 34px/1 var(--font-pixel); letter-spacing: 2px; text-align: right; }
+.retro-extra-app .retro-sweeper-face { min-width: 52px; font: 400 22px/1 var(--font-pixel); }
 .retro-sweeper-board { display: grid; width: max-content; max-width: 100%; border: 3px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); }
-.retro-extra-app .retro-sweeper-cell { min-width: 44px; width: 44px; height: 44px; min-height: 44px; padding: 0; font: 700 18px/1 var(--font-body); }
-.retro-extra-app .retro-sweeper-cell.is-open { border: 1px solid var(--retro-etch); background: var(--paper); color: var(--ink); }
-.retro-extra-app .retro-sweeper-cell.is-bug { background: var(--word-present); color: var(--word-ink); }
+.retro-extra-app .retro-sweeper-cell { min-width: 44px; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 3px solid; border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); background: var(--sweep-tile); color: var(--sweep-3); font: 400 26px/1 var(--font-pixel); }
+.retro-extra-app .retro-sweeper-cell:hover { background: var(--sweep-tile); color: var(--sweep-3); border-color: var(--retro-highlight) var(--retro-edge) var(--retro-edge) var(--retro-highlight); }
+.retro-extra-app .retro-sweeper-cell.is-open, .retro-extra-app .retro-sweeper-cell.is-open:hover { border: 1px solid var(--retro-etch); background: var(--sweep-open); color: var(--ink); }
+.retro-extra-app .retro-sweeper-cell.is-bug { color: var(--sweep-7); }
+.retro-extra-app .retro-sweeper-cell.is-exploded, .retro-extra-app .retro-sweeper-cell.is-exploded:hover { background: var(--sweep-exploded); color: var(--sweep-lcd-bg); }
+.retro-extra-app .retro-sweeper-cell.is-wrong { color: var(--sweep-exploded); }
+.retro-extra-app .retro-sweeper-cell:is(.n1, .n1:hover) { color: var(--sweep-1); }
+.retro-extra-app .retro-sweeper-cell:is(.n2, .n2:hover) { color: var(--sweep-2); }
+.retro-extra-app .retro-sweeper-cell:is(.n3, .n3:hover) { color: var(--sweep-3); }
+.retro-extra-app .retro-sweeper-cell:is(.n4, .n4:hover) { color: var(--sweep-4); }
+.retro-extra-app .retro-sweeper-cell:is(.n5, .n5:hover) { color: var(--sweep-5); }
+.retro-extra-app .retro-sweeper-cell:is(.n6, .n6:hover) { color: var(--sweep-6); }
+.retro-extra-app .retro-sweeper-cell:is(.n7, .n7:hover) { color: var(--sweep-7); }
+.retro-extra-app .retro-sweeper-cell:is(.n8, .n8:hover) { color: var(--sweep-8); }
+.retro-sweeper-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 12px; }
+.retro-sweeper-counter { min-width: 120px; padding: 8px 10px; border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--paper); color: var(--ink); font: 700 14px/1.4 monospace; }
+.retro-sweeper-best { font-size: 14px; }
 .retro-achievements-title { margin: 24px 0 4px; font-size: 20px; }
 .retro-achievement-list { display: grid; gap: 8px; padding: 0; list-style: none; }
 .retro-achievement-list li { display: flex; gap: 10px; padding: 8px 10px; border: 2px groove var(--retro-etch); }

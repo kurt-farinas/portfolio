@@ -11,6 +11,7 @@ import ProjectModal from './components/common/ProjectModal';
 import ResumeModal from './components/common/ResumeModal';
 import ScreenshotLightbox from './components/common/ScreenshotLightbox';
 import CommandPalette from './components/common/CommandPalette';
+import AskOverlay, { AskProvider } from './components/common/AskOverlay';
 import ToastContainer from './components/common/ToastContainer';
 import DesktopWorkspace from './components/desktop/DesktopWorkspace';
 import ClassicPortfolio from './pages/ClassicPortfolio';
@@ -166,7 +167,7 @@ function PortfolioView() {
 function AppContent() {
   return (
     <DesktopWorkspaceProvider>
-      <RetroOSProvider><PortfolioView /></RetroOSProvider>
+      <RetroOSProvider><AskProvider><PortfolioView /><AskOverlay /></AskProvider></RetroOSProvider>
     </DesktopWorkspaceProvider>
   );
 }

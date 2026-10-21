@@ -13,7 +13,8 @@ export const ACHIEVEMENTS = [
   { id: 'reader', label: 'Case-study reader', hint: 'Open all six project case studies' },
   { id: 'wordsmith', label: 'Wordsmith', hint: 'Solve KurtOrdle' },
   { id: 'exterminator', label: 'Exterminator', hint: 'Clear a Bugsweeper board' },
-  { id: 'paper-trail', label: 'Paper trail', hint: 'Print the résumé from the desk printer' }
+  { id: 'paper-trail', label: 'Paper trail', hint: 'Print the résumé from the desk printer' },
+  { id: 'curiosity', label: 'Curiosity', hint: 'Meet the cat at the window' }
 ];
 const ACHIEVEMENT_KEY = 'kurt-os-achievements';
 const SOUND_KEY = 'kurt-os-sound';

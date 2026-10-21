@@ -6,6 +6,7 @@ import { useModal } from '../../context/ModalContext';
 import { ContourCluster } from '../common/TopographicAccents';
 import { scrollBehavior } from '../../utils/motion';
 import { DesktopWorkspaceContext } from '../../context/DesktopWorkspaceContext';
+import { useAsk } from '../common/AskOverlay';
 
 const CONTACT_EMAIL = 'kurtfarinas2022@gmail.com';
 
@@ -71,6 +72,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const { contactModalOpen, openContactModal, closeContactModal } = useModal();
+  const { openAsk } = useAsk();
   const nativeDialogRef = useRef(null);
   const drawerRef = useDialogFocus(mobileMenuOpen);
   const location = useLocation();
@@ -131,6 +133,7 @@ export default function Navbar() {
   const themeRow = <div className="studio-sidebar-theme"><span>{theme === 'dark' ? 'Dark' : 'Light'} appearance</span>{themeControl}</div>;
   const actions = <div className="studio-sidebar-actions">
     <button className="studio-action" type="button" onClick={() => { setMobileMenuOpen(false); openContactModal(); }}>Contact me</button>
+    <button className="studio-action studio-action-outline" type="button" onClick={() => { setMobileMenuOpen(false); openAsk(); }} title="Alt K">Ask anything</button>
   </div>;
 
   // In Classic mode the top of the sidebar is the way back to the OS; the name stays in the profile intro.

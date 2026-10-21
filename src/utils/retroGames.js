@@ -14,39 +14,13 @@ export function scoreGuess(guess, target) {
   return marks;
 }
 
-export const BUG_MAP = [
-  [1,1,1,1,1,1,1,1], [1,0,0,0,0,0,0,1], [1,0,1,0,0,1,0,1],
-  [1,0,0,0,0,0,0,1], [1,0,1,0,0,1,0,1], [1,0,0,0,0,0,0,1], [1,1,1,1,1,1,1,1]
-];
-export function isWalkable(x, y) { return BUG_MAP[Math.floor(y)]?.[Math.floor(x)] === 0; }
-export function rayDistance(player, angle, limit = 12) {
-  for (let distance = 0.05; distance < limit; distance += 0.05) {
-    if (!isWalkable(player.x + Math.cos(angle) * distance, player.y + Math.sin(angle) * distance)) return distance;
-  }
-  return limit;
-}
-export function moveBugPlayer(player, key) {
-  if (key === 'ArrowLeft' || key === 'a') return { ...player, dir: player.dir - 0.14 };
-  if (key === 'ArrowRight' || key === 'd') return { ...player, dir: player.dir + 0.14 };
-  const step = key === 'ArrowUp' || key === 'w' ? 0.22 : key === 'ArrowDown' || key === 's' ? -0.22 : 0;
-  const x = player.x + Math.cos(player.dir) * step;
-  const y = player.y + Math.sin(player.dir) * step;
-  return isWalkable(x, y) ? { ...player, x, y } : player;
-}
-export function bugCanBeHit(player, target) {
-  const angle = Math.atan2(target.y - player.y, target.x - player.x);
-  const relative = Math.atan2(Math.sin(angle - player.dir), Math.cos(angle - player.dir));
-  const distance = Math.hypot(target.x - player.x, target.y - player.y);
-  return Math.abs(relative) < 0.14 && distance < 6 && rayDistance(player, angle) + 0.06 >= distance;
-}
-export function nextBugTarget(player, random = Math.random) {
-  const cells = BUG_MAP.flatMap((row, y) => row.flatMap((wall, x) => !wall && Math.hypot(x + 0.5 - player.x, y + 0.5 - player.y) > 1.5 ? [{ x: x + 0.5, y: y + 0.5 }] : []));
-  return cells[Math.min(cells.length - 1, Math.floor(random() * cells.length))];
-}
-export const INITIAL_BUG_GAME = { player: { x: 3.5, y: 3.5, dir: 0 }, target: { x: 6.5, y: 3.5 }, score: 0 };
-
-// Bugsweeper: a 9x7 board with 10 bugs; the first reveal and its neighbours are always safe.
-export const SWEEPER = { rows: 9, cols: 7, bugs: 10 };
+// Bugsweeper: three board sizes (Easy is the original 9x7 board with 10 bugs); the first reveal and its neighbours are always safe.
+export const SWEEPER_LEVELS = {
+  easy: { label: 'Easy', rows: 9, cols: 7, bugs: 10 },
+  medium: { label: 'Medium', rows: 9, cols: 11, bugs: 18 },
+  hard: { label: 'Hard', rows: 10, cols: 14, bugs: 28 }
+};
+export const SWEEPER = SWEEPER_LEVELS.easy;
 
 export function sweeperNeighbours(index, rows, cols) {
   const row = Math.floor(index / cols), col = index % cols, result = [];
@@ -57,8 +31,10 @@ export function sweeperNeighbours(index, rows, cols) {
   return result;
 }
 
-export function newSweeper({ rows, cols, bugs } = SWEEPER) {
-  return { rows, cols, bugs, started: false, status: 'playing', cells: Array.from({ length: rows * cols }, () => ({ bug: false, adjacent: 0, open: false, flag: false })) };
+export function newSweeper(level = 'easy') {
+  const key = typeof level === 'string' ? level : 'custom';
+  const { rows, cols, bugs } = typeof level === 'string' ? SWEEPER_LEVELS[level] || SWEEPER : level;
+  return { level: key, rows, cols, bugs, started: false, status: 'playing', exploded: -1, elapsed: 0, cells: Array.from({ length: rows * cols }, () => ({ bug: false, adjacent: 0, open: false, flag: false })) };
 }
 
 export function createSweeperBoard(rows, cols, bugs, safeIndex, random = Math.random) {
@@ -81,7 +57,7 @@ export function revealCell(game, index, random = Math.random) {
   if (target.open || target.flag) return game;
   if (target.bug) {
     cells = cells.map(cell => (cell.bug ? { ...cell, open: true } : cell));
-    return { ...game, started: true, cells, status: 'lost' };
+    return { ...game, started: true, cells, status: 'lost', exploded: index };
   }
   const queue = [index];
   while (queue.length) {
@@ -98,4 +74,18 @@ export function revealCell(game, index, random = Math.random) {
 export function toggleFlag(game, index) {
   if (game.status !== 'playing' || game.cells[index].open) return game;
   return { ...game, cells: game.cells.map((cell, i) => (i === index ? { ...cell, flag: !cell.flag } : cell)) };
+}
+
+// Chording: on a revealed number whose flags already match it, reveal every other neighbour at once.
+export function chordCell(game, index) {
+  const cell = game.cells[index];
+  if (game.status !== 'playing' || !cell.open || !cell.adjacent) return game;
+  const around = sweeperNeighbours(index, game.rows, game.cols);
+  if (around.filter(n => game.cells[n].flag).length !== cell.adjacent) return game;
+  let next = game;
+  for (const n of around) {
+    if (next.status !== 'playing') break;
+    if (!next.cells[n].open && !next.cells[n].flag) next = revealCell(next, n);
+  }
+  return next;
 }

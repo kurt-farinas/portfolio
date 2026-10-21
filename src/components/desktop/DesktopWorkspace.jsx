@@ -3,6 +3,7 @@ import DesktopAppContent from './DesktopAppContent';
 import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { useModal } from '../../context/ModalContext';
 import { useRetroOS } from '../../context/RetroOSContext';
+import { useAsk } from '../common/AskOverlay';
 import RetroIcon from './RetroIcon';
 import useMinuteClock, { formatClock } from './useMinuteClock';
 
@@ -139,6 +140,7 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
   const patternId = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const { apps, windows, activeAppId, openApplication, setActiveAppId, restoreApplication, focusMonitor, backToMonitor, expandDesktop, canUse3D, sceneFailed } = useDesktopWorkspace();
   const { toggleCommandPalette } = useModal();
+  const { openAsk } = useAsk();
   const retro = useRetroOS();
   const areaRef = useRef(null);
   const menuRef = useRef(null);
@@ -180,6 +182,7 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
           <div className="retro-start-banner">KURT-OS</div><div className="retro-start-items">
             <p>Portfolio</p>{apps.slice(0,9).map(app => <DesktopIcon key={app.id} app={app} openApplication={chooseApp} />)}
             <p>Extras</p>{apps.slice(9).map(app => <DesktopIcon key={app.id} app={app} openApplication={chooseApp} />)}
+            <button type="button" onClick={() => { setAppsOpen(false); startRef.current?.focus(); openAsk(); }}>Ask anything… <kbd>Alt K</kbd></button>
             <p>Settings</p>
             <button type="button" onClick={retro.toggleSound} aria-pressed={retro.soundEnabled}>Sound: {retro.soundEnabled ? 'On' : 'Off'}</button>
             <button type="button" onClick={retro.toggleCrt} aria-pressed={retro.crtEffects}>CRT effects: {retro.crtEffects ? 'On' : 'Off'}</button>

@@ -10,7 +10,7 @@ import DesktopWorkspace from '../src/components/desktop/DesktopWorkspace';
 import BootScreen from '../src/components/desktop/BootScreen';
 import { createSweeperBoard } from '../src/utils/retroGames';
 import { portfolioCommand, portfolioProjects, portfolioProfile } from '../src/data/portfolioFacts';
-import { scoreGuess, isWalkable, moveBugPlayer, bugCanBeHit } from '../src/utils/retroGames';
+import { scoreGuess } from '../src/utils/retroGames';
 
 describe('retro portfolio rules', () => {
   it('counts duplicate letters only while matches remain', () => {
@@ -27,13 +27,6 @@ describe('retro portfolio rules', () => {
     expect(portfolioProfile.roleStarted).toBe('September 16, 2026');
     expect(portfolioCommand('resume').app).toBe('resume');
   });
-  it('bounds movement and blocks shots through walls', () => {
-    expect(isWalkable(-1,100)).toBe(false);
-    const player = { x: 1.1, y: 1.5, dir: Math.PI };
-    expect(moveBugPlayer(player,'w')).toBe(player);
-    expect(bugCanBeHit({ x: 1.5, y: 2.5, dir: 0 }, { x: 3.5, y: 2.5 })).toBe(false);
-    expect(bugCanBeHit({ x: 3.5, y: 3.5, dir: 0 }, { x: 6.5, y: 3.5 })).toBe(true);
-  });
 });
 
 function Harness() {
@@ -47,7 +40,7 @@ const makeAudioNode=()=>({gain:param(),frequency:param(),Q:param(),connect:vi.fn
 describe('retro portfolio apps', () => {
   let host, root, originalMedia, originalWidth, originalAudio, oldShow, oldClose;
   const typeGuess=async word=>{const input=host.querySelector('[aria-label="Five-letter guess"]');for(const key of [...word,'Enter']) await act(async()=>input.dispatchEvent(new KeyboardEvent('keydown',{key,bubbles:true})));};
-  const canvas = { fillRect:vi.fn(), beginPath:vi.fn(), arc:vi.fn(), fill:vi.fn(), fillText:vi.fn(), moveTo:vi.fn(), lineTo:vi.fn(), stroke:vi.fn() };
+  const canvas = new Proxy({}, { get:(target,key)=>(key in target ? target[key] : (target[key]=vi.fn())), set:(target,key,value)=>{target[key]=value;return true;} });
   const audioConstructor = vi.fn();
   beforeEach(() => {
     vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT',true);
