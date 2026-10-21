@@ -53,6 +53,20 @@ function WorkInProgress({ colors }) {
   </group>;
 }
 
+// A single bed against the back wall to the right of the desk, so the room reads as a lived-in bedroom study.
+function Bed({ colors }) {
+  return <group position={[8.7, -1.5, -3.05]}>
+    <mesh position={[0, 0.3, 0]}><boxGeometry args={[2.3, 0.45, 3.6]} /><meshStandardMaterial color={colors.board} roughness={0.8} /></mesh>
+    {[[-1.05, -1.7], [1.05, -1.7], [-1.05, 1.7], [1.05, 1.7]].map(([x, z]) => <mesh key={x + ':' + z} position={[x, 0.06, z]}><boxGeometry args={[0.14, 0.12, 0.14]} /><meshStandardMaterial color={colors.frame} /></mesh>)}
+    <mesh position={[0, 1.05, -1.75]}><boxGeometry args={[2.4, 1.6, 0.14]} /><meshStandardMaterial color={colors.board} roughness={0.8} /></mesh>
+    <mesh position={[0, 0.72, 0.05]}><boxGeometry args={[2.1, 0.4, 3.35]} /><meshStandardMaterial color={colors.paper} roughness={0.95} /></mesh>
+    <mesh position={[0, 0.95, 0.45]}><boxGeometry args={[2.2, 0.1, 2.5]} /><meshStandardMaterial color={colors.curtain} roughness={0.95} /></mesh>
+    <mesh position={[0, 0.98, -0.75]}><boxGeometry args={[2.2, 0.06, 0.35]} /><meshStandardMaterial color={colors.paper} roughness={0.95} /></mesh>
+    <mesh position={[0, 1.08, -1.3]} rotation={[0.25, 0, 0]}><boxGeometry args={[1.5, 0.22, 0.55]} /><meshStandardMaterial color={colors.paper} roughness={0.95} /></mesh>
+    <mesh position={[0, 0.7, 1.73]}><boxGeometry args={[2.25, 0.35, 0.1]} /><meshStandardMaterial color={colors.curtain} roughness={0.95} /></mesh>
+  </group>;
+}
+
 export default function RoomSurroundings({ colors }) {
   return <MergeStatic deps={[colors]}>
     {/* The low dado and baseboard give the wall a floor junction without filling the welcome area. */}
@@ -62,6 +76,7 @@ export default function RoomSurroundings({ colors }) {
     <mesh position={[5.2, 3.53, -4.67]}><boxGeometry args={[3.45, 0.12, 0.52]} /><meshStandardMaterial color={colors.retroShell} roughness={0.75} /></mesh>
     <SillPlant colors={colors} />
     <WorkInProgress colors={colors} />
+    <Bed colors={colors} />
     <mesh position={[3.55, 0.797, 1.65]}><cylinderGeometry args={[0.37, 0.37, 0.025, 24]} /><meshStandardMaterial color={colors.cork} roughness={1} /></mesh>
   </MergeStatic>;
 }
