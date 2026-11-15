@@ -607,23 +607,26 @@ function ShadowRefresh({ changeKey, frozen }) {
   return null;
 }
 
-// Slow machines step down once each: 1x pixel ratio, then a frozen shadow map, then no ambient motion. None of the
+// Slow machines step down once each: 1x pixel ratio, 0.75x, a frozen shadow map, then no ambient motion. None of the
 // steps recompiles shaders (switching shadows off did, freezing for seconds on exactly these machines).
-// Measured only on ambient frames, whose ~33 ms cadence is known; a median above 45 ms means the machine cannot keep up.
+// Measured only on ambient frames, whose ~33 ms cadence is known; a median above 45 ms over 20 frames means the machine
+// cannot keep up. Reaching the last step means it was still slow at every lighter level.
+const QUALITY_STEPS = 4;
 function AdaptiveQuality({ active, onLevel }) {
   const setDpr = useThree(state => state.setDpr);
   const invalidate = useThree(state => state.invalidate);
   const samples = useRef([]);
   const level = useRef(0);
   useFrame((_, delta) => {
-    if (!active || level.current >= 3) { samples.current.length = 0; return; }
+    if (!active || level.current >= QUALITY_STEPS) { samples.current.length = 0; return; }
     samples.current.push(delta);
-    if (samples.current.length < 45) return;
-    const median = samples.current.sort((a, b) => a - b)[22];
+    if (samples.current.length < 20) return;
+    const median = samples.current.sort((a, b) => a - b)[10];
     samples.current.length = 0;
     if (median <= 0.045) return;
     level.current += 1;
     if (level.current === 1) setDpr(1);
+    if (level.current === 2) setDpr(0.75);
     onLevel(level.current);
     invalidate();
   });
@@ -708,7 +711,7 @@ function readPalette() {
   };
 }
 
-export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, onOpenApp, onOpenResume, toggleTheme, onBackToDesk, onSceneFailure, onLoading, onReady }) {
+export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, onOpenApp, onOpenResume, toggleTheme, onBackToDesk, onSceneFailure, onLoading, onReady, onStruggling }) {
   const contextLostCleanup = useRef(null);
   const screenPortal = useRef(null);
   const [ready, setReady] = useState(false);
@@ -731,7 +734,8 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
   const light = ROOM_LIGHT[phase];
   const pageVisible = usePageVisible();
   const [qualityLevel, setQualityLevel] = useState(0);
-  const animate = ready && view === 'desk' && !motionReduced && pageVisible && qualityLevel < 3;
+  useEffect(() => { if (qualityLevel >= QUALITY_STEPS) onStruggling?.(); }, [qualityLevel, onStruggling]);
+  const animate = ready && view === 'desk' && !motionReduced && pageVisible && qualityLevel < QUALITY_STEPS;
   // The desk clock ticks softly while the whole room is in view.
   const { playSound, warmLamp } = useRetroOS();
   useEffect(() => {
@@ -747,7 +751,7 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
     <Canvas
       className="desk-canvas"
       data-room-phase={phase}
-      dpr={[1, 1.25]}
+      dpr={[0.75, 1.25]}
       frameloop="demand"
       events={desktopSceneEvents}
       shadows
@@ -765,7 +769,7 @@ export default function DeskScene({ view, theme, reducedMotion, onOpenDesktop, o
         <ambientLight intensity={light.ambient} color={phase === 'night' ? palette.nightWarm : palette.daylight} />
         <AmbientDriver active={animate} />
         <AdaptiveQuality active={animate} onLevel={setQualityLevel} />
-        <ShadowRefresh changeKey={[ready, phase, theme, view, animate, warmLamp].join('|')} frozen={qualityLevel >= 2} />
+        <ShadowRefresh changeKey={[ready, phase, theme, view, animate, warmLamp].join('|')} frozen={qualityLevel >= 3} />
         <directionalLight position={[-4, 7, 3]} intensity={light.key} color={palette.keyLight} castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} shadow-camera-left={-7} shadow-camera-right={7} shadow-camera-top={7} shadow-camera-bottom={-7} shadow-camera-near={1} shadow-camera-far={25} />
         <directionalLight position={[0, 3, 6]} intensity={light.fill} color={palette.daylight} />
         <directionalLight position={[6, 5, -4]} intensity={light.window} color={phase === 'dusk' ? palette.accent : palette.skyDay} />

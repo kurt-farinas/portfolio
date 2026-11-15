@@ -118,6 +118,8 @@ export function DesktopWorkspaceProvider({ children }) {
   const [canUse3D, setCanUse3D] = useState(() => canUseWebGL());
   // Large screens without usable WebGL (or after a 3D crash) show the room as a still picture with clickable objects.
   const [roomPicture, setRoomPicture] = useState(() => isLargeFine() && !canUseWebGL());
+  // A visitor whose room stays slow can switch to the picture for this visit.
+  const preferPicture = useRef(false);
   const [view, setView] = useState(() => (canUse3D || roomPicture) && location.pathname === '/' && !location.hash ? 'desk' : 'workspace');
   const [sceneFailed, setSceneFailed] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -225,7 +227,7 @@ export function DesktopWorkspaceProvider({ children }) {
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     let wasAvailable = canUse3D;
     const updateDisplay = () => {
-      const available = largeQuery.matches && canUseWebGL();
+      const available = largeQuery.matches && !preferPicture.current && canUseWebGL();
       const picture = isLargeFine() && !available;
       setCanUse3D(available);
       setRoomPicture(picture);
@@ -248,6 +250,12 @@ export function DesktopWorkspaceProvider({ children }) {
   const showDesk = useCallback(() => setView((canUse3D && !sceneFailed) || roomPicture ? 'desk' : 'workspace'), [canUse3D, sceneFailed, roomPicture]);
   const expandDesktop = useCallback(() => setView('expanded'), []);
   const backToMonitor = useCallback(() => setView(canUse3D ? 'screen' : roomPicture ? 'desk' : 'workspace'), [canUse3D, roomPicture]);
+  const switchToLighterRoom = useCallback(() => {
+    preferPicture.current = true;
+    setCanUse3D(false);
+    setRoomPicture(true);
+    setView('desk');
+  }, []);
   const failScene = useCallback(() => {
     setSceneFailed(true);
     setCanUse3D(false);
@@ -280,9 +288,9 @@ export function DesktopWorkspaceProvider({ children }) {
   const value = useMemo(() => ({
     apps: DESKTOP_APPS, windows, activeAppId, view, canUse3D, roomPicture, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic,
     openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication,
-    updateWindowRect, setActiveAppId, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene,
+    updateWindowRect, setActiveAppId, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene, switchToLighterRoom,
     saveScrollPosition, getScrollPosition, getAppState, setAppState
-  }), [windows, activeAppId, view, canUse3D, roomPicture, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic, openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication, updateWindowRect, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene, saveScrollPosition, getScrollPosition, getAppState, setAppState]);
+  }), [windows, activeAppId, view, canUse3D, roomPicture, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic, openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication, updateWindowRect, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene, switchToLighterRoom, saveScrollPosition, getScrollPosition, getAppState, setAppState]);
 
   return <DesktopWorkspaceContext.Provider value={value}>{children}</DesktopWorkspaceContext.Provider>;
 }

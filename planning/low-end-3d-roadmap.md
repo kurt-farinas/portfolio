@@ -96,3 +96,11 @@ Build Phase 1, task 1 (the capture script).
 - A 3D crash on a large screen now goes to the picture. The existing test was renamed and its expectation updated to match.
 - Tests: 116 pass, including the 3 new ones in `tests/roomPicture.test.jsx`.
 - Headless check with `--disable-gpu --disable-software-rasterizer`, both themes: no canvas, the picture loads (`room/*-night.png.webp`), 9 hotspots, the Projects hotspot opens Projects in the expanded desktop, and Back to desk returns to the picture. No page errors.
+
+## Phase 2 results (2026-11-16)
+
+- Adaptive quality now samples 20 frames instead of 45, and adds a 0.75x pixel-ratio step (canvas `dpr={[0.75, 1.25]}`). Shadows freeze at level 3 and motion stops at level 4.
+- Reaching level 4 shows "Room running slowly? Use the lighter view" in the welcome card. It calls `switchToLighterRoom()`, which shows the room picture for the rest of the visit and survives resizes.
+- Profiler at 6x CPU throttle, live (old) against local (new), alternating, 2 runs each: noisy, with no clear change. CPU throttling can't slow this RTX GPU, and the 0.75x step targets GPU-bound machines, so a real weak-GPU PC is still **unverified**.
+- At 20x throttle the lighter-view link appears, and clicking it shows the picture with no canvas.
+- Tests: 117 pass.

@@ -35,6 +35,19 @@ describe('room picture for PCs without WebGL', () => {
     expect(seen).toEqual({ canUse3D: false, roomPicture: false, view: 'workspace' });
   });
 
+  it('a slow room can switch to the lighter picture view', async () => {
+    HTMLCanvasElement.prototype.getContext.mockReturnValue({ getExtension: () => null });
+    let switchToLighterRoom;
+    const Grab = () => { switchToLighterRoom = useDesktopWorkspace().switchToLighterRoom; return null; };
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 1440 });
+    await act(async () => root.render(<MemoryRouter initialEntries={['/']}><DesktopWorkspaceProvider><Probe /><Grab /></DesktopWorkspaceProvider></MemoryRouter>));
+    expect(seen).toEqual({ canUse3D: true, roomPicture: false, view: 'desk' });
+    await act(async () => switchToLighterRoom());
+    expect(seen).toEqual({ canUse3D: false, roomPicture: true, view: 'desk' });
+    await act(async () => window.dispatchEvent(new Event('resize')));
+    expect(seen.roomPicture).toBe(true);
+  });
+
   it('room picture hotspots open apps and the desktop', async () => {
     const onOpenApp = vi.fn(), onOpenDesktop = vi.fn();
     await act(async () => root.render(<RoomPicture theme="dark" onOpenApp={onOpenApp} onOpenDesktop={onOpenDesktop} />));

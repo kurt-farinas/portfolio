@@ -77,10 +77,12 @@ function ImmersivePortfolio() {
   const retro = useRetroOS();
   const { theme, toggleTheme } = useTheme();
   const {
-    view, canUse3D, roomPicture, sceneFailed, reducedMotion, openApplication, focusMonitor, showDesk, expandDesktop, failScene
+    view, canUse3D, roomPicture, sceneFailed, reducedMotion, openApplication, focusMonitor, showDesk, expandDesktop, failScene, switchToLighterRoom
   } = useDesktopWorkspace();
   const { openResumeModal, toggleCommandPalette } = useModal();
   const [sceneRetryKey, setSceneRetryKey] = useState(0);
+  const [roomStruggling, setRoomStruggling] = useState(false);
+  const onStruggling = useCallback(() => setRoomStruggling(true), []);
   // Fetch Classic Portfolio in the background after first paint so its button opens instantly.
   useEffect(() => { const timer = setTimeout(() => loadClassic().catch(() => {}), 3000); return () => clearTimeout(timer); }, []);
   const onSceneFailure = useCallback(() => {
@@ -114,6 +116,7 @@ function ImmersivePortfolio() {
               toggleTheme={toggleTheme}
               onBackToDesk={showDesk}
               onSceneFailure={onSceneFailure}
+              onStruggling={onStruggling}
             />
           </div>}
 
@@ -128,6 +131,7 @@ function ImmersivePortfolio() {
                   <button type="button" className="studio-action" onClick={() => openApplication('classic')}>Classic Portfolio</button>
                   <button type="button" className="studio-action studio-action-outline" onClick={() => openApplication('projects')}>Projects</button>
                 </div>
+                {roomStruggling && renderScene && <button type="button" className="desk-text-action desk-welcome-lighter" onClick={switchToLighterRoom}>Room running slowly? Use the lighter view</button>}
                 <a className="desk-text-action desk-welcome-resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé PDF <span aria-hidden="true">↗</span></a>
               </div>
               <div className="desk-welcome-toolbar">
