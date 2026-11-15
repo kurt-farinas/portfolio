@@ -1,3 +1,12 @@
+## 2026-11-16 04:51 — 83f905a — Room picture for PCs without usable WebGL
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #66
+- Code: eb26308 → 83f905a
+- Migrations: none
+- Backup: none (static site; roll back by redeploying eb26308 in Vercel)
+- Data changes: none
+- Verified: Vercel build succeeded; on https://kurt-farinas-portfolio.vercel.app/ with Chromium --disable-gpu --disable-software-rasterizer (both themes) there is no canvas, room/*-night.png.webp loads with 9 hotspots, the Projects hotspot opens Projects in the expanded desktop, Back to desk returns to the picture, and there are no page errors; with the GPU on, the 3D room and projected desktop load as before.
+
 ## 2026-11-16 04:19 — 610797a — Cut the desk-load freeze from the monitor snapshot
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #65
