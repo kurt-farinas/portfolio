@@ -82,10 +82,13 @@ function pathForApp(appId, currentPath) {
   return paths[appId] || '/';
 }
 
-function canUseWebGL() {
+function isLargeFine() {
   if (typeof window === 'undefined' || !window.matchMedia) return false;
-  const largeFine = window.innerWidth >= 1100 && window.matchMedia('(pointer: fine)').matches;
-  if (!largeFine) return false;
+  return window.innerWidth >= 1100 && window.matchMedia('(pointer: fine)').matches;
+}
+
+function canUseWebGL() {
+  if (!isLargeFine()) return false;
   try {
     const canvas = document.createElement('canvas');
     const gl = canvas.getContext('webgl2', { failIfMajorPerformanceCaveat: true }) || canvas.getContext('webgl', { failIfMajorPerformanceCaveat: true });
@@ -112,8 +115,10 @@ export function DesktopWorkspaceProvider({ children }) {
   const navigate = useNavigate();
   const [windows, setWindows] = useState([initialWindow]);
   const [activeAppId, setActiveAppId] = useState('about');
-  const [view, setView] = useState(() => canUseWebGL() && location.pathname === '/' && !location.hash ? 'desk' : 'workspace');
   const [canUse3D, setCanUse3D] = useState(() => canUseWebGL());
+  // Large screens without usable WebGL (or after a 3D crash) show the room as a still picture with clickable objects.
+  const [roomPicture, setRoomPicture] = useState(() => isLargeFine() && !canUseWebGL());
+  const [view, setView] = useState(() => (canUse3D || roomPicture) && location.pathname === '/' && !location.hash ? 'desk' : 'workspace');
   const [sceneFailed, setSceneFailed] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const scrollPositions = useRef(new Map());
@@ -221,9 +226,11 @@ export function DesktopWorkspaceProvider({ children }) {
     let wasAvailable = canUse3D;
     const updateDisplay = () => {
       const available = largeQuery.matches && canUseWebGL();
+      const picture = isLargeFine() && !available;
       setCanUse3D(available);
-      if (!available) setView('workspace');
-      else if (!wasAvailable && window.location.pathname === '/' && !window.location.hash) setView('desk');
+      setRoomPicture(picture);
+      if (!available && !picture) setView('workspace');
+      else if (!wasAvailable && !picture && window.location.pathname === '/' && !window.location.hash) setView('desk');
       wasAvailable = available;
     };
     const updateMotion = () => setReducedMotion(motionQuery.matches);
@@ -237,14 +244,16 @@ export function DesktopWorkspaceProvider({ children }) {
     };
   }, []);
 
-  const focusMonitor = useCallback(() => setView(canUse3D ? 'screen' : 'workspace'), [canUse3D]);
-  const showDesk = useCallback(() => setView(canUse3D && !sceneFailed ? 'desk' : 'workspace'), [canUse3D, sceneFailed]);
+  const focusMonitor = useCallback(() => setView(canUse3D ? 'screen' : roomPicture ? 'expanded' : 'workspace'), [canUse3D, roomPicture]);
+  const showDesk = useCallback(() => setView((canUse3D && !sceneFailed) || roomPicture ? 'desk' : 'workspace'), [canUse3D, sceneFailed, roomPicture]);
   const expandDesktop = useCallback(() => setView('expanded'), []);
-  const backToMonitor = useCallback(() => setView(canUse3D ? 'screen' : 'workspace'), [canUse3D]);
+  const backToMonitor = useCallback(() => setView(canUse3D ? 'screen' : roomPicture ? 'desk' : 'workspace'), [canUse3D, roomPicture]);
   const failScene = useCallback(() => {
     setSceneFailed(true);
     setCanUse3D(false);
-    setView('workspace');
+    const picture = isLargeFine();
+    setRoomPicture(picture);
+    setView(picture ? 'desk' : 'workspace');
   }, []);
 
   const closeApplication = useCallback(appId => {
@@ -269,11 +278,11 @@ export function DesktopWorkspaceProvider({ children }) {
   const setAppState = useCallback((key, state) => appStates.current.set(key, state), []);
 
   const value = useMemo(() => ({
-    apps: DESKTOP_APPS, windows, activeAppId, view, canUse3D, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic,
+    apps: DESKTOP_APPS, windows, activeAppId, view, canUse3D, roomPicture, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic,
     openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication,
     updateWindowRect, setActiveAppId, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene,
     saveScrollPosition, getScrollPosition, getAppState, setAppState
-  }), [windows, activeAppId, view, canUse3D, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic, openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication, updateWindowRect, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene, saveScrollPosition, getScrollPosition, getAppState, setAppState]);
+  }), [windows, activeAppId, view, canUse3D, roomPicture, sceneFailed, reducedMotion, classicMode, enterClassic, exitClassic, openApplication, closeApplication, minimizeApplication, maximizeApplication, restoreApplication, updateWindowRect, focusMonitor, showDesk, expandDesktop, backToMonitor, failScene, saveScrollPosition, getScrollPosition, getAppState, setAppState]);
 
   return <DesktopWorkspaceContext.Provider value={value}>{children}</DesktopWorkspaceContext.Provider>;
 }

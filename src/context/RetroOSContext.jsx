@@ -30,7 +30,7 @@ const defaults = { theme: 'dark', bootOpen: false, introKey: 0, claimIntro: () =
 export function RetroOSProvider({ children }) {
   const location = useLocation();
   const { theme } = useTheme();
-  const { canUse3D, focusMonitor, expandDesktop, showDesk, reducedMotion } = useDesktopWorkspace();
+  const { canUse3D, roomPicture, focusMonitor, expandDesktop, showDesk, reducedMotion } = useDesktopWorkspace();
   const [bootOpen, setBootOpen] = useState(() => {
     try { return location.pathname === '/' && !location.hash && sessionStorage.getItem('kurt-os-boot-seen') !== 'true'; }
     catch { return location.pathname === '/' && !location.hash; }
@@ -144,8 +144,9 @@ export function RetroOSProvider({ children }) {
     } else playSound('boot');
     if (mode === '2d') expandDesktop();
     else if (canUse3D) { showDesk(); setIntroKey(key => key + 1); }
+    else if (roomPicture) showDesk();
     else focusMonitor();
-  }, [canUse3D, reducedMotion, expandDesktop, showDesk, focusMonitor, playSound]);
+  }, [canUse3D, roomPicture, reducedMotion, expandDesktop, showDesk, focusMonitor, playSound]);
   const endScreenBoot = useCallback(() => { bootTimers.current.forEach(clearTimeout); bootTimers.current = []; setScreenBooting(false); }, []);
 
   const sendContact = useCallback(async form => {

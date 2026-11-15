@@ -138,7 +138,7 @@ function DesktopWindow({ appId, app, item, active, areaRef }) {
 export default function DesktopWorkspace({ presentation = 'expanded', toggleTheme, theme, onBackToDesk }) {
   // Stable per instance: an id that changed with `presentation` replaced the patterns and repainted the whole desktop on every view switch.
   const patternId = useId().replace(/[^a-zA-Z0-9_-]/g, '');
-  const { apps, windows, activeAppId, openApplication, setActiveAppId, restoreApplication, focusMonitor, backToMonitor, expandDesktop, canUse3D, sceneFailed } = useDesktopWorkspace();
+  const { apps, windows, activeAppId, openApplication, setActiveAppId, restoreApplication, focusMonitor, backToMonitor, expandDesktop, canUse3D, roomPicture, sceneFailed } = useDesktopWorkspace();
   const { toggleCommandPalette } = useModal();
   const { openAsk } = useAsk();
   const retro = useRetroOS();
@@ -161,10 +161,10 @@ export default function DesktopWorkspace({ presentation = 'expanded', toggleThem
         <header className="desktop-menubar">
           <button type="button" className="desktop-brand" onClick={() => chooseApp('about')} aria-label="Home: Open About app"><span className="desktop-brand-mark">KF</span><span>Kurt-OS</span></button>
           <div className="desktop-menubar-actions">
-            {['screen', 'expanded'].includes(presentation) && canUse3D && <button type="button" className="desktop-toolbar-button" onClick={onBackToDesk} aria-label="Back to desk">Back to desk</button>}
+            {['screen', 'expanded'].includes(presentation) && (canUse3D || roomPicture) && <button type="button" className="desktop-toolbar-button" onClick={onBackToDesk} aria-label="Back to desk">Back to desk</button>}
             {presentation === 'screen' && <button type="button" className="desktop-toolbar-button" onClick={expandDesktop}>Expand desktop</button>}
             {presentation === 'expanded' && canUse3D && <button type="button" className="desktop-toolbar-button" onClick={backToMonitor}>Back to monitor</button>}
-            {presentation === 'workspace' && canUse3D && <button type="button" className="desktop-toolbar-button" onClick={focusMonitor}>Open desk</button>}
+            {presentation === 'workspace' && (canUse3D || roomPicture) && <button type="button" className="desktop-toolbar-button" onClick={focusMonitor}>Open desk</button>}
             {toggleTheme && <button type="button" className="desktop-toolbar-button" onClick={toggleTheme} aria-label={'Switch to ' + (theme === 'dark' ? 'light' : 'dark') + ' theme'}>{theme === 'dark' ? 'Light' : 'Dark'}</button>}
             <button type="button" className="desktop-toolbar-button desktop-command-button" onClick={toggleCommandPalette} aria-label="Open app search">Search <kbd>Ctrl K</kbd></button>
           </div>

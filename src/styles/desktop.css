@@ -596,3 +596,10 @@
 
 /* Title bars show Minimize, Maximize, and Close; Move/Resize appear only when reached with the keyboard. */
 .desktop-window-key-control:not(:focus-visible) { position: absolute; left: -9999px; }
+
+/* Still room for PCs without usable WebGL: the picture covers the viewport and hotspots scale with it. */
+.room-picture { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: var(--paper); }
+.room-picture-frame { position: absolute; left: 50%; top: 50%; width: max(100vw, 160dvh); aspect-ratio: 16 / 10; transform: translate(-50%, -50%); }
+.room-picture-frame img { display: block; width: 100%; height: 100%; }
+.room-picture-spot { position: absolute; min-width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.room-picture-spot:is(:hover, :focus-visible) { outline: 3px solid var(--accent); outline-offset: 2px; }

@@ -11,8 +11,9 @@ const PROGRESS_BLOCKS = 14;
 
 export default function BootScreen() {
   const { bootOpen, finishBoot, soundError } = useRetroOS();
-  const { canUse3D } = useDesktopWorkspace();
-  const skip = () => finishBoot(canUse3D ? '3d' : '2d');
+  const { canUse3D, roomPicture } = useDesktopWorkspace();
+  const hasDesk = canUse3D || roomPicture;
+  const skip = () => finishBoot(hasDesk ? '3d' : '2d');
   const dialogRef = useDialogFocus(bootOpen);
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -22,9 +23,9 @@ export default function BootScreen() {
   // The splash continues on its own; any button or Escape finishes it sooner and clears this timer.
   useEffect(() => {
     if (!bootOpen) return undefined;
-    const timer = setTimeout(() => finishBoot(canUse3D ? '3d' : '2d'), BOOT_MS);
+    const timer = setTimeout(() => finishBoot(hasDesk ? '3d' : '2d'), BOOT_MS);
     return () => clearTimeout(timer);
-  }, [bootOpen, canUse3D, finishBoot]);
+  }, [bootOpen, hasDesk, finishBoot]);
   return <dialog ref={dialogRef} className="retro-boot" aria-labelledby="retro-boot-title" style={{ '--boot-ms': BOOT_MS + 'ms' }} onCancel={event => { event.preventDefault(); finishBoot('2d'); }}
     onClick={skip} onKeyDown={event => { if (event.key !== 'Escape' && !event.ctrlKey && !event.metaKey) skip(); }}>
     <pre className="retro-boot-post" aria-hidden="true">{POST_LINES.map((line, index) => <span key={line} style={{ '--line': index }}>{line}{'\n'}</span>)}</pre>

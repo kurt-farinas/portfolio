@@ -198,7 +198,7 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelector('[data-app-id="about"]').classList.contains('is-active')).toBe(true);
   });
 
-  it('switches to 2D at mobile width and recovers to 2D after a 3D failure', async () => {
+  it('switches to 2D at mobile width and shows the room picture after a 3D failure', async () => {
     await renderWorkspace('/', 1440);
     expect(host.querySelector('[data-testid="view"]').textContent).toBe('desk');
     expect(host.querySelector('[data-testid="fallback"]').textContent).toBe('false');
@@ -217,7 +217,7 @@ describe('portfolio desktop workspace', () => {
     expect(host.querySelector('[data-testid="view"]').textContent).toBe('desk');
     expect(host.querySelector('[data-testid="fallback"]').textContent).toBe('false');
     await act(async () => host.querySelectorAll('button')[4].click());
-    expect(host.querySelector('[data-testid="view"]').textContent).toBe('workspace');
+    expect(host.querySelector('[data-testid="view"]').textContent).toBe('desk');
     expect(host.querySelector('[data-testid="fallback"]').textContent).toBe('true');
     expect(host.querySelector('[data-testid="failure"]').textContent).toBe('true');
   });

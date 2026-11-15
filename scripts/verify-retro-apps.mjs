@@ -80,6 +80,9 @@ try {
   await failed.addInitScript(()=>sessionStorage.setItem('kurt-os-boot-seen','true'));
   const page=await failed.newPage();await page.route('**/DeskScene-*.js',route=>route.abort());
   await page.goto(base+'/');
+  // A failed 3D chunk shows the room picture; its monitor opens the desktop with the fallback note.
+  await expect(page.locator('.room-picture')).toBeVisible();
+  await page.getByRole('button',{name:'Open desktop',exact:true}).first().click();
   await expect(page.locator('.desktop-fallback-note')).toBeVisible();
   await expect(page.locator('.desktop-window.is-active')).toHaveAttribute('data-app-id','about');
   await failed.close();
@@ -89,7 +92,8 @@ try {
   await lostPage.locator('.desk-canvas canvas').waitFor();
   await lostPage.locator('.desk-projection-frame').waitFor({timeout:20000});
   await lostPage.locator('.desk-canvas canvas').evaluate(canvas=>canvas.dispatchEvent(new Event('webglcontextlost',{cancelable:true})));
-  await expect(lostPage.locator('.desktop-fallback-note')).toBeVisible();
+  await expect(lostPage.locator('.room-picture')).toBeVisible();
+  await expect(lostPage.locator('.desk-canvas canvas')).toHaveCount(0);
   await lost.close();
-  console.log('Retro extras verified in both phone themes: boot, terminal escaping, games/restoration/modal pause, mocked contact feedback, power, replay, and 3D chunk failure recovery.');
+  console.log('Retro extras verified in both phone themes: boot, terminal escaping, games/restoration/modal pause, mocked contact feedback, power, replay, and 3D failure recovery to the room picture.');
 } finally {await browser.close();}

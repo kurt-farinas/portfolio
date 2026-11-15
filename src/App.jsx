@@ -14,6 +14,7 @@ import CommandPalette from './components/common/CommandPalette';
 import AskOverlay, { AskProvider } from './components/common/AskOverlay';
 import ToastContainer from './components/common/ToastContainer';
 import DesktopWorkspace from './components/desktop/DesktopWorkspace';
+import RoomPicture from './components/desktop/RoomPicture';
 import { Analytics } from '@vercel/analytics/react';
 
 const LazyDeskScene = lazy(() => import('./components/desktop/DeskScene'));
@@ -76,7 +77,7 @@ function ImmersivePortfolio() {
   const retro = useRetroOS();
   const { theme, toggleTheme } = useTheme();
   const {
-    view, canUse3D, sceneFailed, reducedMotion, openApplication, focusMonitor, showDesk, expandDesktop, failScene
+    view, canUse3D, roomPicture, sceneFailed, reducedMotion, openApplication, focusMonitor, showDesk, expandDesktop, failScene
   } = useDesktopWorkspace();
   const { openResumeModal, toggleCommandPalette } = useModal();
   const [sceneRetryKey, setSceneRetryKey] = useState(0);
@@ -88,6 +89,7 @@ function ImmersivePortfolio() {
   }, [failScene]);
 
   const renderScene = canUse3D && !sceneFailed && (view === 'desk' || view === 'screen');
+  const renderPicture = !renderScene && roomPicture && view === 'desk';
   const presentation = view === 'workspace' ? 'workspace' : 'expanded';
 
   return (
@@ -96,9 +98,10 @@ function ImmersivePortfolio() {
       retro.pressKey(event);
     }}>
       <CustomCursor />
-      {renderScene && (
+      {renderPicture && <RoomPicture theme={theme} onOpenApp={appId => openApplication(appId)} onOpenDesktop={expandDesktop} />}
+      {(renderScene || renderPicture) && (
         <>
-          <div className="desk-scene-stage" aria-label={view === 'desk' ? 'Interactive 3D desk. Click the monitor to open the desktop.' : 'Focused view of the portfolio desktop on the monitor.'}>
+          {renderScene && <div className="desk-scene-stage" aria-label={view === 'desk' ? 'Interactive 3D desk. Click the monitor to open the desktop.' : 'Focused view of the portfolio desktop on the monitor.'}>
             <RoomScene
               key={sceneRetryKey}
               onUse2D={expandDesktop}
@@ -112,7 +115,7 @@ function ImmersivePortfolio() {
               onBackToDesk={showDesk}
               onSceneFailure={onSceneFailure}
             />
-          </div>
+          </div>}
 
           {view === 'desk' && (
             <main className="desk-welcome">
@@ -121,7 +124,7 @@ function ImmersivePortfolio() {
                 <h1>A closer look at how I work.</h1>
                 <div className="desk-welcome-actions">
                   {/* Keyboard route to the monitor; visible only on focus. */}
-                  <button type="button" className="studio-action desk-skip-link" onClick={focusMonitor}>Open desktop</button>
+                  <button type="button" className="studio-action desk-skip-link" onClick={renderPicture ? expandDesktop : focusMonitor}>Open desktop</button>
                   <button type="button" className="studio-action" onClick={() => openApplication('classic')}>Classic Portfolio</button>
                   <button type="button" className="studio-action studio-action-outline" onClick={() => openApplication('projects')}>Projects</button>
                 </div>
@@ -137,14 +140,14 @@ function ImmersivePortfolio() {
                     : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>}
                 </button>
               </div>
-              <p className="desk-scene-hint">Drag to look around · Click an object to open its app</p>
+              <p className="desk-scene-hint">{renderPicture ? 'Click an object to open its app' : 'Drag to look around · Click an object to open its app'}</p>
             </main>
           )}
 
         </>
       )}
 
-      {!renderScene && (
+      {!renderScene && !renderPicture && (
         <DesktopWorkspace
           presentation={presentation}
           theme={theme}
