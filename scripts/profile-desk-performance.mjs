@@ -47,6 +47,8 @@ await phase('hover sweep', async () => {
   for (let i = 0; i <= 60; i += 1) { await page.mouse.move(300 + i * 14, 420 + Math.sin(i / 4) * 120); await page.waitForTimeout(40); }
 });
 await phase('to monitor', async () => {
+  // The hover sweep can lock onto the monitor; move off it so the desk (and its button) returns.
+  await page.mouse.move(5, 890); await page.waitForTimeout(1500);
   await page.getByRole('button', { name: 'Open desktop', exact: true }).press('Enter');
   await page.waitForTimeout(2500);
 });

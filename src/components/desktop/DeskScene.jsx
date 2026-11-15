@@ -243,6 +243,30 @@ function DeskObjects({ view, phase, animate, onOpenDesktop, onOpenApp, colors, d
 // In the desk overview the (inert) desktop is shown as a mipmapped snapshot texture instead; the live page returns on focus.
 // Capturing blocks the main thread for ~250 ms, so an unchanged desktop (markup, root theme attributes, scroll) reuses the last snapshot.
 const SNAPSHOT_DELAY = 250;
+// Copying styles is the slow part, so skip app content below the visible part of its window (about a third of the desktop DOM).
+// Only content below is skipped: removing content above would shift the picture.
+const scrolledOutOfView = node => {
+  const hidden = new Set();
+  for (const scroller of node.querySelectorAll('.desktop-app-scroll')) {
+    const view = scroller.getBoundingClientRect();
+    for (const el of scroller.children) {
+      const box = el.getBoundingClientRect();
+      if (box.top > view.bottom) hidden.add(el);
+      else for (const child of el.querySelectorAll(':scope > *')) { const r = child.getBoundingClientRect(); if (r.top > view.bottom) hidden.add(child); }
+    }
+  }
+  return hidden;
+};
+// Copying all ~400 computed properties per element made each capture about 1 s; these are the ones the desktop's look uses.
+const SNAPSHOT_STYLES = ['display', 'position', 'top', 'right', 'bottom', 'left', 'z-index', 'box-sizing', 'width', 'height', 'min-width', 'min-height', 'max-width', 'max-height',
+  'margin-top', 'margin-right', 'margin-bottom', 'margin-left', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+  'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width', 'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style',
+  'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color', 'border-top-left-radius', 'border-top-right-radius', 'border-bottom-left-radius', 'border-bottom-right-radius',
+  'background-color', 'background-image', 'background-size', 'background-position', 'background-repeat', 'box-shadow', 'opacity', 'visibility', 'overflow-x', 'overflow-y', 'transform', 'transform-origin', 'clip-path',
+  'color', 'font-family', 'font-size', 'font-weight', 'font-style', 'line-height', 'letter-spacing', 'text-align', 'text-transform', 'text-decoration-line', 'text-overflow', 'white-space', 'vertical-align', 'list-style-type',
+  'flex-direction', 'flex-wrap', 'flex-grow', 'flex-shrink', 'flex-basis', 'align-items', 'align-self', 'justify-content', 'column-gap', 'row-gap', 'order',
+  'grid-template-columns', 'grid-template-rows', 'grid-column-start', 'grid-column-end', 'grid-row-start', 'grid-row-end', 'object-fit', 'object-position', 'image-rendering',
+  'fill', 'stroke', 'stroke-width', 'shape-rendering'];
 const snapshotKey = node => [...document.documentElement.attributes].map(({ name, value }) => `${name}=${value}`).join(' ') + node.innerHTML;
 function useScreenSnapshot(node, active) {
   const gl = useThree(state => state.gl);
@@ -261,12 +285,14 @@ function useScreenSnapshot(node, active) {
     if (!active || !node) return undefined;
     let cancelled = false, running = false, again = false, timer = 0;
     const capture = async () => {
+      if (cancelled) return;
       if (running) { again = true; return; }
       const key = snapshotKey(node);
       if (key === last.current.key) { setSnapshot(last.current.texture); invalidate(); return; }
       running = true;
       try {
-        const canvas = await domToCanvas(node, { width: 1280, height: 760, scale: 1 });
+        const hidden = scrolledOutOfView(node);
+        const canvas = await domToCanvas(node, { width: 1280, height: 760, scale: 1, filter: el => !hidden.has(el), includeStyleProperties: SNAPSHOT_STYLES });
         if (!cancelled) {
           const texture = new CanvasTexture(canvas);
           texture.colorSpace = SRGBColorSpace;
@@ -282,7 +308,9 @@ function useScreenSnapshot(node, active) {
       running = false;
       if (again && !cancelled) { again = false; schedule(); }
     };
-    const schedule = () => { clearTimeout(timer); timer = setTimeout(capture, SNAPSHOT_DELAY); };
+    // Wait for an idle moment too, so a capture never lands on top of scene loading or the intro.
+    const whenIdle = window.requestIdleCallback ? () => window.requestIdleCallback(capture, { timeout: 2000 }) : capture;
+    const schedule = () => { clearTimeout(timer); timer = setTimeout(whenIdle, SNAPSHOT_DELAY); };
     // shortcut: text-only changes (the taskbar clock) don't recapture, so the overview clock can lag until the next change; it's unreadable at that size.
     const observer = new MutationObserver(schedule);
     observer.observe(node, { subtree: true, childList: true, attributes: true });
