@@ -1,3 +1,12 @@
+## 2026-11-16 05:12 — 3923adf — Weak GPUs step down sooner; lighter room view
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #66
+- Code: ed7b73e → 3923adf
+- Migrations: none
+- Backup: none (static site; roll back by redeploying ed7b73e in Vercel)
+- Data changes: none
+- Verified: Vercel build succeeded; on https://kurt-farinas-portfolio.vercel.app/ at 20x CPU throttle the "Use the lighter view" link appears and switches to the room picture with no canvas; with the GPU disabled the room picture (dusk capture) still loads in both themes with 9 hotspots. The smoothness gain on a real weak-GPU PC is not verified.
+
 ## 2026-11-16 04:51 — 83f905a — Room picture for PCs without usable WebGL
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #66
