@@ -16,9 +16,9 @@ try {
     const scenes = []; page.on('request',r=>{if(/DeskScene/.test(r.url())) scenes.push(r.url());});
     await page.goto(base+'/');
     await expect(page.locator('.retro-boot')).toBeVisible();
-    await expect(page.getByRole('button',{name:'Sound: Off'})).toBeVisible();
+    await expect(page.locator('.retro-boot').getByRole('button')).toHaveCount(0);
     await page.screenshot({path:output+'/375-'+theme+'-boot.png'});
-    await page.getByRole('button',{name:'Enter desktop',exact:true}).click();
+    await page.locator('.retro-boot').click();
     await expect(page.locator('.retro-boot')).not.toBeVisible();
     await page.goto(base+'/#terminal');
     const input=page.getByRole('textbox',{name:'Portfolio command'});
@@ -70,7 +70,7 @@ try {
     await page.getByRole('button',{name:'Power on monitor'}).click();
     await page.getByRole('button',{name:'Open application list'}).click();
     await page.getByRole('button',{name:'Replay boot',exact:true}).click();
-    await page.getByRole('button',{name:'Enter desktop',exact:true}).click();
+    await page.locator('.retro-boot').click();
     await expect(page.locator('.desktop-window.is-active')).toHaveAttribute('data-app-id','contact');
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
     expect(scenes).toEqual([]);

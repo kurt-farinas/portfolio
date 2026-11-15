@@ -39,7 +39,7 @@ export function RetroMonitor({ colors, onOpenDesktop, onOpenApp }) {
     {[0,1,2].map(index => <mesh key={index} position={[-1.96 + index * 0.055, 1.095, -0.958]}><boxGeometry args={[0.034,0.08,0.024]} /><meshStandardMaterial color={colors.badge} roughness={0.6} /></mesh>)}
     <RoundedBox args={[0.26,0.13,0.035]} radius={0.012} smoothness={2} position={[1.99,1.095,-0.956]} userData={{ label: 'Monitor power' }} onClick={event => { event.stopPropagation(); togglePower(); }}><meshStandardMaterial color={colors.retroEdge} roughness={0.7} /></RoundedBox>
     <mesh position={[1.73,1.095,-0.936]} rotation={[Math.PI/2,0,0]}><cylinderGeometry args={[0.018,0.018,0.018,16]} /><meshStandardMaterial color={monitorOn ? colors.led : colors.retroRecess} emissive={monitorOn ? colors.led : colors.retroRecess} emissiveIntensity={monitorOn ? 0.3 : 0} /></mesh>
-    <StickyNote label="Projects" color={colors.noteYellow} position={[2.65,2.94,-0.85]} rotation={[0,0,-0.09]} colors={colors} onClick={() => onOpenApp('projects')} />
+    <StickyNote label="Projects" color={colors.noteYellow} position={[2.74,2.94,-0.85]} rotation={[0,0,-0.09]} colors={colors} onClick={() => onOpenApp('projects')} />
     <StickyNote label="Contact" color={colors.noteGreen} position={[-2.64,1.64,-0.85]} rotation={[0,0,0.1]} colors={colors} onClick={() => onOpenApp('contact')} />
   </group></MergeStatic>;
 }

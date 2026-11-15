@@ -65,7 +65,7 @@ try {
         await page.screenshot({ path: `${output}/${width}-${theme}-resized.png` });
 
         await page.goto(base + '/');
-        await page.getByRole('main').getByRole('button', { name: 'Open desktop', exact: true }).click();
+        await page.getByRole('main').getByRole('button', { name: 'Open desktop', exact: true }).press('Enter');
         await expect(page.locator('.desktop-workspace-screen')).toBeVisible({ timeout: 30000 });
         await page.getByRole('button', { name: 'Home: Open About app', exact: true }).click();
         await expect.poll(() => scroll.evaluate(el => el.scrollTop)).toBe(0);

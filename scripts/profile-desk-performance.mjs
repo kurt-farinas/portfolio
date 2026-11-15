@@ -47,7 +47,7 @@ await phase('hover sweep', async () => {
   for (let i = 0; i <= 60; i += 1) { await page.mouse.move(300 + i * 14, 420 + Math.sin(i / 4) * 120); await page.waitForTimeout(40); }
 });
 await phase('to monitor', async () => {
-  await page.getByRole('button', { name: 'Open desktop', exact: true }).click();
+  await page.getByRole('button', { name: 'Open desktop', exact: true }).press('Enter');
   await page.waitForTimeout(2500);
 });
 await phase('to desk', async () => {

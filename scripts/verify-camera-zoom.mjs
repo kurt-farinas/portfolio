@@ -56,7 +56,7 @@ try {
     await page.goto(base); await expect(page.locator('.desk-loading')).toHaveCount(0, { timeout: 30000 });
     await settled(page);
     const shell = page.locator('.immersive-portfolio-shell');
-    const entry = await sample(page, () => page.getByRole('button', { name: 'Open desktop', exact: true }).click());
+    const entry = await sample(page, () => page.getByRole('button', { name: 'Open desktop', exact: true }).press('Enter'));
     await settled(page);
     const frames = await page.evaluate(() => window.__cameraTestFrames);
     await page.waitForTimeout(500);

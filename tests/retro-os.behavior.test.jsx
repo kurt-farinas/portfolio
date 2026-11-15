@@ -64,24 +64,35 @@ describe('retro portfolio apps', () => {
     HTMLDialogElement.prototype.showModal=oldShow;HTMLDialogElement.prototype.close=oldClose;
     vi.restoreAllMocks();vi.unstubAllGlobals();sessionStorage.clear();localStorage.clear();
   });
-  const mount=async(path='/#terminal')=>act(async()=>root.render(<MemoryRouter initialEntries={[path]}><ThemeProvider><ModalProvider><DesktopWorkspaceProvider><RetroOSProvider><Harness /></RetroOSProvider></DesktopWorkspaceProvider></ModalProvider></ThemeProvider></MemoryRouter>));
+  // Games load lazily; wait for their chunk so the first render shows them.
+  const settle=async()=>act(async()=>{await import('../src/components/desktop/RetroExtraApps');await new Promise(resolve=>setTimeout(resolve,0));});
+  const mount=async(path='/#terminal')=>{await act(async()=>root.render(<MemoryRouter initialEntries={[path]}><ThemeProvider><ModalProvider><DesktopWorkspaceProvider><RetroOSProvider><Harness /></RetroOSProvider></DesktopWorkspaceProvider></ModalProvider></ThemeProvider></MemoryRouter>));await settle();};
+  const skipBoot=async()=>act(async()=>host.querySelector('.retro-boot').click());
   const click=async text=>act(async()=>{const button=[...host.querySelectorAll('button')].find(element=>element.textContent===text);expect(button,'button '+text).toBeTruthy();button.click();});
 
   it('bypasses boot on direct routes and starts audio only when the visitor interacts',async()=>{
     await mount('/projects');expect(host.querySelector('.retro-boot').open).toBe(false);expect(audioConstructor).not.toHaveBeenCalled();
     await click('Replay test boot');expect(host.querySelector('.retro-boot').open).toBe(true);
     expect(audioConstructor).not.toHaveBeenCalled();
-    await click('Enter desktop');expect(audioConstructor).toHaveBeenCalledTimes(1);expect(host.querySelector('.retro-boot').open).toBe(false);expect(sessionStorage.getItem('kurt-os-boot-seen')).toBe('true');
+    await skipBoot();expect(audioConstructor).toHaveBeenCalledTimes(1);expect(host.querySelector('.retro-boot').open).toBe(false);expect(sessionStorage.getItem('kurt-os-boot-seen')).toBe('true');
     expect(host.querySelector('.desktop-window.is-active').dataset.appId).toBe('projects');
+  });
+  it('shows no buttons on the boot screen and skips on a click or any key',async()=>{
+    await mount('/');const boot=host.querySelector('.retro-boot');expect(boot.open).toBe(true);
+    expect(boot.querySelectorAll('button, a')).toHaveLength(0);
+    expect(boot.textContent).toContain('Click or press any key to skip.');
+    await act(async()=>boot.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));expect(boot.open).toBe(false);
+    await click('Replay test boot');expect(boot.open).toBe(true);
+    await skipBoot();expect(boot.open).toBe(false);
   });
   it('plays the POST beep when the boot finishes with sound on',async()=>{
     await mount('/');const oscillators=vi.spyOn(window.AudioContext.prototype,'createOscillator');
-    await click('Enter desktop');expect(oscillators).toHaveBeenCalled();
+    await skipBoot();expect(oscillators).toHaveBeenCalled();
   });
-  it('remembers a mute chosen on the boot screen and stays silent',async()=>{
+  it('stays silent when the visitor muted sound earlier',async()=>{
+    localStorage.setItem('kurt-os-sound','off');
     await mount('/');expect(host.querySelector('.retro-boot').open).toBe(true);
-    await click('Sound: On');expect(localStorage.getItem('kurt-os-sound')).toBe('off');
-    await click('Enter desktop');expect(host.querySelector('.retro-boot').open).toBe(false);expect(audioConstructor).not.toHaveBeenCalled();
+    await skipBoot();expect(host.querySelector('.retro-boot').open).toBe(false);expect(audioConstructor).not.toHaveBeenCalled();
   });
   it('unlocks the Wordsmith achievement once, for this session only',async()=>{
     await mount('/#kurtordle');

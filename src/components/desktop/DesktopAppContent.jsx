@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { lazy, Suspense, useLayoutEffect, useRef } from 'react';
 import PortfolioImage from '../common/PortfolioImage';
 import Hero from '../sections/Hero';
 import AboutSection from '../sections/AboutSection';
@@ -12,7 +12,10 @@ import { useDesktopWorkspace } from '../../context/DesktopWorkspaceContext';
 import { useModal } from '../../context/ModalContext';
 import { portfolioProfile } from '../../data/portfolioFacts';
 import PortfolioContactForm from './PortfolioContactForm';
-import { BugHunterApp, BugsweeperApp, CreditsApp, KurtOrdleApp, TerminalApp } from './RetroExtraApps';
+// Games, Terminal and Credits load on first open so they stay out of the initial bundle.
+const loadExtras = () => import('./RetroExtraApps');
+const extra = name => lazy(() => loadExtras().then(module => ({ default: module[name] })));
+const BugHunterApp = extra('BugHunterApp'), BugsweeperApp = extra('BugsweeperApp'), CreditsApp = extra('CreditsApp'), KurtOrdleApp = extra('KurtOrdleApp'), TerminalApp = extra('TerminalApp');
 import { ACHIEVEMENTS, useRetroOS } from '../../context/RetroOSContext';
 import RetroIcon from './RetroIcon';
 import MobileWorkbench from './MobileWorkbench';
@@ -93,11 +96,11 @@ function AppBody({ appId }) {
     case 'gear': return <GearContent />;
     case 'resume': return <ResumeApp />;
     case 'contact': return <ContactApp />;
-    case 'kurtordle': return <KurtOrdleApp />;
-    case 'bugsweeper': return <BugsweeperApp />;
-    case 'bughunter': return <BugHunterApp />;
-    case 'terminal': return <TerminalApp />;
-    case 'credits': return <CreditsApp />;
+    case 'kurtordle': return <Suspense fallback={null}><KurtOrdleApp /></Suspense>;
+    case 'bugsweeper': return <Suspense fallback={null}><BugsweeperApp /></Suspense>;
+    case 'bughunter': return <Suspense fallback={null}><BugHunterApp /></Suspense>;
+    case 'terminal': return <Suspense fallback={null}><TerminalApp /></Suspense>;
+    case 'credits': return <Suspense fallback={null}><CreditsApp /></Suspense>;
     case 'my-computer': return <MyComputerApp />;
     default: return <AboutApp />;
   }

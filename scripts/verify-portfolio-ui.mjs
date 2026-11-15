@@ -169,7 +169,7 @@ try {
         await page.waitForTimeout(1800);
         await page.screenshot({ path: path.join(output, width + '-' + scheme + '-desk.png'), fullPage: true });
         if (await page.getByRole('button', { name: 'Open desktop', exact: true }).count()) {
-          await page.getByRole('button', { name: 'Open desktop', exact: true }).click();
+          await page.getByRole('button', { name: 'Open desktop', exact: true }).press('Enter');
           await page.locator('[data-testid="desktop-workspace"]').waitFor({ timeout: 20000 });
         }
         await expect(page.locator('.desktop-window.is-active')).toHaveAttribute('data-app-id', 'about');
@@ -364,7 +364,7 @@ try {
 
       if (width >= 1100 && sceneRequests.some(item => item.width === width)) {
         await page.goto(base + '/', { waitUntil: 'networkidle' });
-        await page.getByRole('button', { name: 'Open desktop', exact: true }).click();
+        await page.getByRole('button', { name: 'Open desktop', exact: true }).press('Enter');
         await page.locator('[data-testid="desktop-workspace"]').waitFor({ timeout: 20000 });
         await page.waitForTimeout(1800);
         // Camera damping finishes naturally; wait for actual idle rather than

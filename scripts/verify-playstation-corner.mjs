@@ -69,7 +69,7 @@ try {
   await page.route('**/images/playstation/*.webp', route => route.abort());
   await page.goto(base); await expect(page.locator('.desk-loading')).toHaveCount(0, { timeout: 30000 });
   await expect(page.locator('.desk-canvas canvas')).toBeVisible();
-  await page.getByRole('button', { name: 'Open desktop', exact: true }).click();
+  await page.getByRole('button', { name: 'Open desktop', exact: true }).press('Enter');
   await expect(page.locator('#desktop-launcher .desktop-icon')).toHaveCount(16);
   await expect(page.getByRole('button', { name: 'Open PlayStation Collection', exact: true })).toHaveCount(0);
   expect(errors).toEqual([]); await context.close();

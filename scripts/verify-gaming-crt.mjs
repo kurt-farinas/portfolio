@@ -85,7 +85,7 @@ try {
   await page.screenshot({ path: `${output}/${theme}-fighting-room.png` });
   await expect.poll(async () => (await state(page)).draws, { timeout: 40000, intervals: [40] }).toBeGreaterThanOrEqual(140);
   await page.screenshot({ path: `${output}/${theme}-reset-room.png` });
-  await page.getByRole('button', { name: 'Open desktop', exact: true }).click();
+  await page.getByRole('button', { name: 'Open desktop', exact: true }).press('Enter');
   const paused = await frozen(page);
   await page.getByRole('button', { name: 'Expand desktop', exact: true }).click();
   await expect.poll(async () => (await state(page)).disposed).toBeGreaterThanOrEqual(1);

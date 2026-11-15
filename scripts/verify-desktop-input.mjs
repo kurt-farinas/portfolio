@@ -10,7 +10,7 @@ try {
     const page=await context.newPage();const errors=[];page.on('pageerror',error=>errors.push(error.message));
     page.on('console',message=>{if(message.type()==='error' && !message.location().url.includes('/_vercel/')) errors.push(message.text());});
     const pose=()=>page.locator('.desk-projected-html > div').evaluate(element=>element.style.transform);
-    await page.goto(base+'/');await page.locator('.desk-projection-frame').waitFor();await page.getByRole('main').getByRole('button',{name:'Open desktop',exact:true}).click();
+    await page.goto(base+'/');await page.locator('.desk-projection-frame').waitFor();await page.getByRole('main').getByRole('button',{name:'Open desktop',exact:true}).press('Enter');
     await expect(page.locator('.desktop-workspace-screen')).toBeVisible();await page.waitForTimeout(1800);
     // Anchor scrolls (e.g. #about) must not scroll the 3D wrapper and throw the screen out of view.
     const icons=page.locator('.desktop-workspace-screen .desktop-icon');
@@ -71,7 +71,7 @@ try {
     await expect(page.locator('[data-app-scroll="bughunter"]')).toContainText('Bugs squashed: 1');expect(await pose()).toBe(restored);
     await page.screenshot({path:output+'/'+theme+'-monitor.png'});
     await page.getByRole('button',{name:'Back to desk',exact:true}).click();await page.waitForTimeout(1800);
-    await expect(page.getByRole('button',{name:'Open desktop',exact:true})).toBeVisible();expect(await pose()).not.toBe(restored);
+    await expect(page.getByRole('button',{name:'Open desktop',exact:true})).toBeAttached();expect(await pose()).not.toBe(restored);
     expect(errors).toEqual([]);await context.close();
   }
   console.log('Desktop input verified in both themes: scrolling, escaped dragging, resizing, outside camera control, transitions, terminal, games, and modal access.');

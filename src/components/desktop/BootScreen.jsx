@@ -10,8 +10,9 @@ export const POST_LINES = ['KURT-BIOS 4.20  Retro Portfolio Systems', 'CPU: Reac
 const PROGRESS_BLOCKS = 14;
 
 export default function BootScreen() {
-  const { bootOpen, finishBoot, toggleSound, soundEnabled, soundError } = useRetroOS();
-  const { canUse3D, openApplication } = useDesktopWorkspace();
+  const { bootOpen, finishBoot, soundError } = useRetroOS();
+  const { canUse3D } = useDesktopWorkspace();
+  const skip = () => finishBoot(canUse3D ? '3d' : '2d');
   const dialogRef = useDialogFocus(bootOpen);
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -24,7 +25,8 @@ export default function BootScreen() {
     const timer = setTimeout(() => finishBoot(canUse3D ? '3d' : '2d'), BOOT_MS);
     return () => clearTimeout(timer);
   }, [bootOpen, canUse3D, finishBoot]);
-  return <dialog ref={dialogRef} className="retro-boot" aria-labelledby="retro-boot-title" style={{ '--boot-ms': BOOT_MS + 'ms' }} onCancel={event => { event.preventDefault(); finishBoot('2d'); }}>
+  return <dialog ref={dialogRef} className="retro-boot" aria-labelledby="retro-boot-title" style={{ '--boot-ms': BOOT_MS + 'ms' }} onCancel={event => { event.preventDefault(); finishBoot('2d'); }}
+    onClick={skip} onKeyDown={event => { if (event.key !== 'Escape' && !event.ctrlKey && !event.metaKey) skip(); }}>
     <pre className="retro-boot-post" aria-hidden="true">{POST_LINES.map((line, index) => <span key={line} style={{ '--line': index }}>{line}{'\n'}</span>)}</pre>
     <div className="retro-boot-splash">
       <span className="retro-boot-mark" aria-hidden="true">KF</span>
@@ -33,14 +35,7 @@ export default function BootScreen() {
       <div className="retro-boot-progress" role="progressbar" aria-label="Starting Kurt-OS">{Array.from({ length: PROGRESS_BLOCKS }, (_, index) => <i key={index} style={{ '--block': index }} />)}</div>
       <p className="retro-boot-note">A playful portfolio interface, not a real operating system.</p>
     </div>
-    <div className="retro-boot-actions">
-      <button type="button" onClick={() => finishBoot(canUse3D ? '3d' : '2d')}>{canUse3D ? 'Enter 3D workstation' : 'Enter desktop'}</button>
-      {canUse3D && <button type="button" onClick={() => finishBoot('2d')}>Enter 2D desktop</button>}
-      <button type="button" onClick={() => { finishBoot('2d'); openApplication('projects'); }}>Go straight to Projects</button>
-      <a href={portfolioProfile.resume} target="_blank" rel="noopener noreferrer">Open résumé PDF</a>
-      <button className="retro-boot-sound" type="button" onClick={toggleSound} aria-pressed={soundEnabled}>Sound: {soundEnabled ? 'On' : 'Off'}</button>
-    </div>
     {soundError && <p role="status">{soundError}</p>}
-    <p className="retro-boot-footer">Starting Kurt-OS… Press Escape to skip.</p>
+    <p className="retro-boot-footer">Starting Kurt-OS… Click or press any key to skip.</p>
   </dialog>;
 }

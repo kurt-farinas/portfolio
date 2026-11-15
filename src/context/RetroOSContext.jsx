@@ -46,7 +46,7 @@ export function RetroOSProvider({ children }) {
   const [soundEnabled, setSoundEnabled] = useState(() => { try { return localStorage.getItem(SOUND_KEY) !== 'off'; } catch { return true; } });
   const [audioReady, setAudioReady] = useState(false);
   const [soundError, setSoundError] = useState('');
-  const [crtEffects, setCrtEffects] = useState(() => { try { return localStorage.getItem(CRT_KEY) !== 'off'; } catch { return true; } });
+  const [crtEffects, setCrtEffects] = useState(() => { try { return localStorage.getItem(CRT_KEY) === 'on'; } catch { return false; } });
   const [warmLamp, setWarmLamp] = useState(false);
   const [wallpaper, setWallpaper] = useState(0);
   const [monitorOn, setMonitorOn] = useState(true);

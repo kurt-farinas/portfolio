@@ -29,7 +29,7 @@ try {
     const image = page.locator('#pmpc-pis img');
     await expect.poll(() => image.evaluate(el => el.complete && el.naturalWidth > 0)).toBe(true);
     expect((await image.boundingBox()).height).toBeLessThanOrEqual(160);
-    expect(await image.evaluate(el => getComputedStyle(el).objectFit)).toBe('contain');
+    expect(await image.evaluate(el => getComputedStyle(el).objectFit)).toBe('cover');
     const start = page.getByRole('button', { name: 'Open application list', exact: true });
     await start.click();
     await expect(page.getByRole('navigation', { name: 'Start menu' })).toBeVisible();

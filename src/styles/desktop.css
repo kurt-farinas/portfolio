@@ -94,6 +94,8 @@
   gap: 8px;
 }
 .desk-welcome-actions { margin-top: 12px; }
+/* Keyboard-only route to the monitor: hidden until it receives focus. */
+.desk-skip-link:not(:focus-visible) { position: absolute; width: 1px; height: 1px; min-width: 0; min-height: 0; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .desk-welcome-resume { margin: 4px 0 -8px -10px; }
 .desk-icon-button { width: 44px; padding: 0; }
 .desk-welcome-toolbar {
@@ -102,6 +104,8 @@
   right: 20px;
   pointer-events: auto;
 }
+/* Nothing to drag or click until the room has loaded. */
+.desk-scene-stage:has(.desk-loading) ~ .desk-welcome .desk-scene-hint { display: none; }
 .desk-scene-hint {
   position: absolute;
   right: 24px;
@@ -475,7 +479,7 @@
 .desktop-copy-email { justify-self: start; }
 .desktop-social-links { margin-top: 4px; }
 .desktop-app-scroll .studio-container { width: min(100% - 40px, var(--content-width)); }
-.desktop-app-scroll .studio-project-detail-preview img { max-height: 360px; object-fit: contain; }
+.desktop-app-scroll .studio-project-detail-preview img { max-height: 360px; object-fit: cover; object-position: top center; }
 .desktop-app-scroll .studio-project-detail { scroll-margin-top: 12px; }
 .desktop-app-scroll :is(.studio-project-page, .studio-after-hours, .studio-hero) { padding-top: 24px; }
 .desktop-app-scroll .studio-archive-section { padding-top: 18px; }

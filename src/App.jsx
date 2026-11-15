@@ -14,10 +14,10 @@ import CommandPalette from './components/common/CommandPalette';
 import AskOverlay, { AskProvider } from './components/common/AskOverlay';
 import ToastContainer from './components/common/ToastContainer';
 import DesktopWorkspace from './components/desktop/DesktopWorkspace';
-import ClassicPortfolio from './pages/ClassicPortfolio';
 import { Analytics } from '@vercel/analytics/react';
 
 const LazyDeskScene = lazy(() => import('./components/desktop/DeskScene'));
+const ClassicPortfolio = lazy(() => import('./pages/ClassicPortfolio'));
 
 class SceneErrorBoundary extends React.Component {
   constructor(props) {
@@ -95,7 +95,7 @@ function ImmersivePortfolio() {
       <CustomCursor />
       {renderScene && (
         <>
-          <div className="desk-scene-stage" aria-label={view === 'desk' ? 'Interactive 3D desk. Click the monitor or use Open desktop.' : 'Focused view of the portfolio desktop on the monitor.'}>
+          <div className="desk-scene-stage" aria-label={view === 'desk' ? 'Interactive 3D desk. Click the monitor to open the desktop.' : 'Focused view of the portfolio desktop on the monitor.'}>
             <RoomScene
               key={sceneRetryKey}
               onUse2D={expandDesktop}
@@ -117,7 +117,9 @@ function ImmersivePortfolio() {
                 <p className="desktop-eyebrow">KURT FARIÑAS<br />JUNIOR FULL-STACK DEVELOPER</p>
                 <h1>A closer look at how I work.</h1>
                 <div className="desk-welcome-actions">
-                  <button type="button" className="studio-action" onClick={focusMonitor}>Open desktop</button>
+                  {/* Keyboard route to the monitor; visible only on focus. */}
+                  <button type="button" className="studio-action desk-skip-link" onClick={focusMonitor}>Open desktop</button>
+                  <button type="button" className="studio-action" onClick={() => openApplication('classic')}>Classic Portfolio</button>
                   <button type="button" className="studio-action studio-action-outline" onClick={() => openApplication('projects')}>Projects</button>
                 </div>
                 <a className="desk-text-action desk-welcome-resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé PDF <span aria-hidden="true">↗</span></a>
@@ -161,7 +163,7 @@ function ImmersivePortfolio() {
 }
 
 function PortfolioView() {
-  return useDesktopWorkspace().classicMode ? <ClassicPortfolio /> : <ImmersivePortfolio />;
+  return useDesktopWorkspace().classicMode ? <Suspense fallback={null}><ClassicPortfolio /></Suspense> : <ImmersivePortfolio />;
 }
 
 function AppContent() {
