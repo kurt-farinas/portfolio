@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useCallback, useState } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { ModalProvider, useModal } from './context/ModalContext';
@@ -17,7 +17,8 @@ import DesktopWorkspace from './components/desktop/DesktopWorkspace';
 import { Analytics } from '@vercel/analytics/react';
 
 const LazyDeskScene = lazy(() => import('./components/desktop/DeskScene'));
-const ClassicPortfolio = lazy(() => import('./pages/ClassicPortfolio'));
+const loadClassic = () => import('./pages/ClassicPortfolio');
+const ClassicPortfolio = lazy(loadClassic);
 
 class SceneErrorBoundary extends React.Component {
   constructor(props) {
@@ -79,6 +80,8 @@ function ImmersivePortfolio() {
   } = useDesktopWorkspace();
   const { openResumeModal, toggleCommandPalette } = useModal();
   const [sceneRetryKey, setSceneRetryKey] = useState(0);
+  // Fetch Classic Portfolio in the background after first paint so its button opens instantly.
+  useEffect(() => { const timer = setTimeout(() => loadClassic().catch(() => {}), 3000); return () => clearTimeout(timer); }, []);
   const onSceneFailure = useCallback(() => {
     failScene();
     setSceneRetryKey(value => value + 1);
