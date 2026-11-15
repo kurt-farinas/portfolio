@@ -1,3 +1,12 @@
+## 2026-11-16 04:19 — 610797a — Cut the desk-load freeze from the monitor snapshot
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #65
+- Code: 4ba3281 → 610797a
+- Migrations: none
+- Backup: none (static site; roll back by redeploying 4ba3281 in Vercel)
+- Data changes: none
+- Verified: Vercel build succeeded; live DeskScene-DwSdysc4.js contains the new style list; profile-desk-performance.mjs against https://kurt-farinas-portfolio.vercel.app at 4x CPU throttle shows the worst load frame at 1,267 ms (was about 3,900 ms) and a steady 16.7 ms idle; the monitor overview snapshot renders correctly in dark and light themes.
+
 ## 2026-11-16 03:46 — e3bd706 — Preload Classic Portfolio chunk
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #55
