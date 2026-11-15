@@ -1,3 +1,12 @@
+## 2026-11-16 03:46 — e3bd706 — Preload Classic Portfolio chunk
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #55
+- Code: da120ed → e3bd706
+- Migrations: none
+- Backup: none (static site; roll back by redeploying da120ed in Vercel)
+- Data changes: none
+- Verified: Vercel build succeeded; on https://kurt-farinas-portfolio.vercel.app/ at 1440px the ClassicPortfolio-CYlQjNZ1.js chunk downloads without a click, and clicking Classic Portfolio shows the classic page immediately with no blank screen.
+
 ## 2026-11-16 02:05 — e6b6a0d — Boot screen, preview polish and lazy-loaded apps
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #55
