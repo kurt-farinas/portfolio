@@ -122,7 +122,8 @@ export const projectDetails = {
     ],
     stack: ["React", "TypeScript", "FastAPI", "Python", "SQLite", "Vite"],
     slides: [
-      { src: "/job-hunt-ledger.png", label: "Job Hunt Ledger dashboard", tab: "Dashboard" }
+      { src: "/job-hunt-ledger.png", label: "Job Hunt Ledger dashboard with survey controls and lead register (synthetic data)", tab: "Dashboard" },
+      { src: "/job-hunt-ledger-full.png", label: "Job Hunt Ledger full lead register with match evidence, source record, and tracking columns (synthetic data)", tab: "Full register" }
     ]
   },
   hris: {

@@ -315,9 +315,13 @@
     "width": 1440,
     "height": 900
   },
-  "/job-hunt-ledger.png": {
+  "/job-hunt-ledger-full.png": {
     "width": 1440,
     "height": 1684
+  },
+  "/job-hunt-ledger.png": {
+    "width": 1440,
+    "height": 900
   },
   "/og-preview-2026.jpg": {
     "width": 1200,
@@ -438,6 +442,10 @@
   "/optimized/images/outside/salnotes-zero.jpg.webp": {
     "width": 1000,
     "height": 1000
+  },
+  "/optimized/images/projects/better-san-jose.png.webp": {
+    "width": 1440,
+    "height": 900
   },
   "/optimized/images/projects/kanban-board.png.webp": {
     "width": 1920,

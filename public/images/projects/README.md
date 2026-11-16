@@ -17,3 +17,5 @@ Card previews use a 16:10 frame with `contain`; dialogs and lightboxes retain ea
 - `kanban-board.png`: `C:/xampp/htdocs/kanban/docs/screenshot.png` (the repository README screenshot, sample cards and projects only), cropped to 2880×690 to remove empty space. Not a capture of the real board, which holds real project cards. Local-only tool; source is https://github.com/kurt-farinas/kanban.
 
 - `better-san-jose.png`: Public https://sanjose.betternuevaecija.org/ home page captured November 16, 2026 at 1440×900 with headless Chrome. No sign-in or private data. Independent civic site, not the official city website; co-built with Denver Ballesteros (repo https://github.com/denver6000/bettersanjosecity-ne).
+
+- `public/job-hunt-ledger.png` is now the top 1440×900 of the dashboard so it fits the 16:10 project preview; the original full-page capture (1440×1684, synthetic data) is `public/job-hunt-ledger-full.png`, shown as the second slide.
