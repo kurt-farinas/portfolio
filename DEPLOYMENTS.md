@@ -1,3 +1,12 @@
+## 2026-11-16 15:12 — 32cbe6c — Résumé rewritten with XYZ bullets and ATS formatting
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #91
+- Code: 161816b → 32cbe6c
+- Migrations: none
+- Backup: none (static site; roll back by redeploying 4fce173 in Vercel)
+- Data changes: none
+- Verified: git push to main; https://kurt-farinas-portfolio.vercel.app/resume.pdf is 75,319 bytes, the same as the local file. The PDF is one page with selectable text (read back before upload). Not checked: how it renders in a browser PDF viewer on the live site.
+
 ## 2026-11-16 14:56 — 161816b — Certificates gallery; résumé lists new certificates
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #90
