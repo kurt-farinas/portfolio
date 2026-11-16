@@ -1,3 +1,12 @@
+## 2026-11-16 14:43 — 62dad13 — Fit Job Hunt Ledger screenshot; résumé names Better San Jose
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #88
+- Code: da5fbf3 → 62dad13
+- Migrations: none
+- Backup: none (static site; roll back by redeploying d7a09c6 in Vercel)
+- Data changes: none
+- Verified: git push to main; on https://kurt-farinas-portfolio.vercel.app/ the cropped and full Job Hunt Ledger images and resume.pdf (74,888 bytes, now naming Better San Jose in the summary and Projects) match the local files. Not checked: how the cropped image and second slide look on the live Projects page.
+
 ## 2026-11-16 14:39 — da5fbf3 — Add Kanban Board and BetterLGU San Jose City projects
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #86, #87
