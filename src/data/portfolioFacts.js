@@ -19,7 +19,7 @@ export const technologyGroups = {
   Backend: ['Laravel', 'PHP', 'FastAPI', 'Python'],
   Data: ['MySQL', 'SQLite'],
   Languages: ['Java'],
-  Tools: ['PHPUnit & Pest', 'Git / GitHub']
+  Tools: ['Git / GitHub']
 };
 
 export const portfolioProjects = featuredProjectIds.map(id => projectDetails[id]);

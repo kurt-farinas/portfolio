@@ -84,7 +84,7 @@ export const projectDetails = {
       "Deployed payroll preparation: replaced the input table with a four-step payroll wizard that pays hours from the DTR, one batch per month and cutoff, with office assignment, DTR mismatch flags, rate-change checks, peso-cent rounding, saved calculation snapshots, type-over on any number, DOLE holiday-work pay, and server-side 13th-month draft recalculation. Pre-hire payroll days and Export all DTRs were added.",
       "Deployed management exports: implemented monthly Excel workbooks in the October layout with office/cutoff sections, deduction details, typed totals and adjustment columns, sign-offs, a Prepared by signature, and layout/capacity safeguards; corrected workbook formatting and voucher balance.",
       "Deployed HR and payslip controls: implemented employee identity confirmation, HR approval/return and office transfers, pre-setup payroll-office assignment, required private signature uploads, and finalized-only employee payslip access while retaining existing credentials, attendance links, and historical payroll.",
-      "Reliability and release scope: improved request validation, atomic payroll persistence, loading/navigation behavior, and keyboard/form accessibility. Schedules, task board, final DTR review, the payroll wizard, 13th-month recalculation, Excel exports, and HR account setup are deployed; the latest release passed 480 of 480 PHP tests. The Dues page, Payroll day button, and Step 3 screen are logged without an on-screen live check. Payroll compliance is not independently certified."
+      "Reliability and release scope: improved request validation, atomic payroll persistence, loading/navigation behavior, and keyboard/form accessibility. Schedules, task board, final DTR review, the payroll wizard, 13th-month recalculation, Excel exports, and HR account setup are deployed. The Dues page, Payroll day button, and Step 3 screen are logged without an on-screen live check. Payroll compliance is not independently certified."
     ],
     stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS"],
     previewCallout: {
@@ -159,33 +159,32 @@ export const projectDetails = {
   },
   gym: {
     decisionSummary: "Rebuild the tightly coupled PHP platform on Laravel rather than patching its security issues individually.",
-    resultSummary: "Solo-built and defended the gym platform; the Laravel rebuild includes 119 passing Pest tests.",
+    resultSummary: "Solo-built and defended the gym platform; the Laravel rebuild adds role-based access, QR attendance, POS, and analytics.",
     id: "gym",
     title: "Boiyet's Fitness Gym Management System",
     ticketId: "Thesis Project & Client Platform",
-    stamp: "119 Passing Tests · Laravel 12 Rebuild",
+    stamp: "Laravel 12 Rebuild",
     roleTag: "Solo Full-Stack Developer",
-    statusBadge: '<span class="status-dot-green"></span> Production-Tested Rebuild',
-    badge: "Solo Full-Stack · 119 Passing Tests",
-    cardSummary: "Solo rebuilt a gym management thesis platform with role-based access and 119 passing Pest tests.",
-    desc: "Solo-built and later rebuilt member management and revenue platform after a self-conducted security audit surfaced real vulnerabilities in the original PHP build (public file storage, missing upload validation). Rearchitected on Laravel 12 with Inertia.js and React, covering 28 domain tables and 86 protected routes (92 total) with role-based access, backed by 119 passing Pest tests.\n\nBeyond core gym operations, the platform includes a relational workout plan builder (exercises, sets, reps, difficulty tiers), structured nutrition and meal planning with macro tracking, and client-facing progress logging for body metrics and completed workouts, giving trainers and clients a full coaching loop, not just administrative tooling.",
+    statusBadge: '<span class="status-dot-green"></span> Live Demo Rebuild',
+    badge: "Solo Full-Stack · Laravel 12 Rebuild",
+    cardSummary: "Solo rebuilt a gym management thesis platform on Laravel 12 with role-based access, QR attendance, POS, and analytics.",
+    desc: "Solo-built and later rebuilt member management and revenue platform after a self-conducted security audit surfaced real vulnerabilities in the original PHP build (public file storage, missing upload validation). Rearchitected on Laravel 12 with Inertia.js and React, covering 28 domain tables and 86 protected routes (92 total) with role-based access.\n\nBeyond core gym operations, the platform includes a relational workout plan builder (exercises, sets, reps, difficulty tiers), structured nutrition and meal planning with macro tracking, and client-facing progress logging for body metrics and completed workouts, giving trainers and clients a full coaching loop, not just administrative tooling.",
     caseStudy: {
       problem: "The original PHP thesis build had critical security issues I discovered post-defense: publicly accessible file storage, missing upload validation, no CSRF protection, and raw SQL queries vulnerable to injection.",
       decision: "Full rebuild on Laravel 12 with Inertia.js and React rather than patching. The original architecture made incremental fixes impractical because routing, auth, and data access were tightly coupled with no separation of concerns.",
       implementation: "Designed 28 normalized domain tables from scratch. Implemented 86 protected routes across 92 total with RBAC gates (Admin, Trainer, Client). Built contactless QR attendance with a 5-minute (300-second) server-side attendance state machine (checks in, returns 'already checked in' on repeat scans within 5 minutes, checks out and calculates duration after 5 minutes), POS with receipt generation, Chart.js analytics dashboards, and streamed CSV report exports with UTF-8 BOM for Excel/Sheets compatibility.",
-      tradeoffs: "Full rebuild cost ~3 months vs. patching in weeks. Justified because the original had no tests, no middleware, and adding security retroactively would have required rewriting most controllers anyway. Also gained 119 Pest tests covering auth, gates, registration, and attendance flows.",
-      result: "All original thesis features preserved with proper security (CSRF, validated uploads, private storage, parameterized queries). 119 passing Pest tests. Public repository available for code inspection."
+      tradeoffs: "Full rebuild cost ~3 months vs. patching in weeks. Justified because the original had no middleware, and adding security retroactively would have required rewriting most controllers anyway.",
+      result: "All original thesis features preserved with proper security (CSRF, validated uploads, private storage, parameterized queries). Public repository available for code inspection."
     },
     demoUrl: "https://gym-management-systemv2.vercel.app/",
     codeUrl: "https://github.com/kurt-farinas/gym-management-systemv2",
     highlights: [
       "Security-Driven Full-Stack Rebuild: Rearchitected on Laravel 12 with Inertia.js and React, covering 28 domain tables and 86 protected routes (92 total) with strict role-based access.",
-      "119 Passing Pest Tests: Built comprehensive test coverage across authentication, authorization gates, member registration, and attendance tracking.",
       "Server-Side QR Attendance State Machine: 5-minute (300-second) server-side state machine that checks in, returns 'already checked in' on repeat scans within 5 minutes, and checks out with duration calculation after 5 minutes.",
       "Chart.js Analytics & Financials: Interactive revenue trend curves, expense breakdowns, net profit tracking, and member BMI/strength progress dashboards.",
       "POS Receipts & Streamed CSV Reports: POS receipt generation alongside streamed CSV financial reports with UTF-8 BOM for Excel/Sheets compatibility."
     ],
-    stack: ["Laravel 12", "Inertia.js", "React", "Tailwind CSS", "MySQL", "Pest", "QR"],
+    stack: ["Laravel 12", "Inertia.js", "React", "Tailwind CSS", "MySQL", "QR"],
     slides: [
       { src: '/boiyets-landing.png', label: "Boiyet's Gym Landing Page", tab: 'Landing' },
       { src: '/gym-admin.png', label: 'Admin Dashboard · Financials & User Access', tab: 'Admin' },
@@ -216,7 +215,7 @@ export const timelineData = [
     id: 2,
     date: "FEB - MAR 2026 (342 HOURS)",
     title: "Software Developer Intern (OJT) | DepEd San Jose",
-    desc: "Led the React, Inertia.js, and Tailwind CSS frontend for three approval roles, e-signatures, and print-ready forms. Denver Ballesteros developed the Laravel backend. Wrote 19 PHPUnit tests and earned a 98/100 OJT rating.",
+    desc: "Led the React, Inertia.js, and Tailwind CSS frontend for three approval roles, e-signatures, and print-ready forms. Denver Ballesteros developed the Laravel backend. Earned a 98/100 OJT rating.",
     badge: "98/100 OJT RATING",
     isFeatured: true
   },

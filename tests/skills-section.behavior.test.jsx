@@ -32,7 +32,7 @@ describe('read-only Stack rows', () => {
       Backend: ['Laravel', 'PHP', 'FastAPI', 'Python'],
       Data: ['MySQL', 'SQLite'],
       Languages: ['Java'],
-      Tools: ['PHPUnit & Pest', 'Git / GitHub']
+      Tools: ['Git / GitHub']
     };
     const renderedRows = [...host.querySelectorAll('.studio-skill-row')].map((row) => ({
       category: row.querySelector('.studio-skill-category').textContent,

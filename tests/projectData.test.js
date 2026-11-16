@@ -39,15 +39,14 @@ describe('React Project Data Integrity', () => {
     expect(hris.slides).toHaveLength(3);
   });
 
-  it('verifies Boiyet Gym project Laravel 12 & Pest Rebuild details', () => {
+  it('verifies Boiyet Gym project Laravel 12 Rebuild details', () => {
     const gym = projectDetails.gym;
     expect(gym.title).toContain("Boiyet's");
     expect(gym.roleTag).toBe('Solo Full-Stack Developer');
     expect(gym.stack).toContain('Laravel 12');
     expect(gym.stack).toContain('Inertia.js');
     expect(gym.stack).toContain('React');
-    expect(gym.stack).toContain('Pest');
-    expect(gym.badge).toContain('119 Passing Tests');
+    expect(gym.badge).toContain('Laravel 12 Rebuild');
     expect(gym.slides).toHaveLength(4);
     expect(gym.slides[0].src).toBe('/boiyets-landing.png');
     expect(gym.slides[1].src).toBe('/gym-admin.png');

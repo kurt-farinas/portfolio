@@ -104,7 +104,7 @@ export default function CommandPalette() {
       id: 'open-gym',
       group: 'Project Deep Dive',
       title: "Open Boiyet's Gym Management System",
-      subtitle: 'Solo Rebuild · Laravel 12 & Inertia.js · 119 Pest Tests',
+      subtitle: 'Solo Rebuild · Laravel 12 & Inertia.js',
       icon: 'layers',
       shortcut: '2',
       handler: () => openProjectModal('gym')

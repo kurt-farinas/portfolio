@@ -1,7 +1,7 @@
 {
   "/boiyets-landing.png": {
-    "width": 1919,
-    "height": 1079
+    "width": 1440,
+    "height": 900
   },
   "/gym-admin.png": {
     "width": 1920,
@@ -269,7 +269,7 @@
   },
   "/images/projects/pmpc-pis-landing.webp": {
     "width": 1425,
-    "height": 990
+    "height": 958
   },
   "/images/projects/pmpc-pis.png": {
     "width": 1440,
@@ -280,8 +280,8 @@
     "height": 1000
   },
   "/images/projects/pmpc-workforce.png": {
-    "width": 1917,
-    "height": 1020
+    "width": 1440,
+    "height": 900
   },
   "/images/room/dark-day.png": {
     "width": 1440,
@@ -450,6 +450,30 @@
   "/optimized/images/projects/pmpc-workforce.png.webp": {
     "width": 1917,
     "height": 1020
+  },
+  "/optimized/images/room/dark-day.png.webp": {
+    "width": 1440,
+    "height": 900
+  },
+  "/optimized/images/room/dark-dusk.png.webp": {
+    "width": 1440,
+    "height": 900
+  },
+  "/optimized/images/room/dark-night.png.webp": {
+    "width": 1440,
+    "height": 900
+  },
+  "/optimized/images/room/light-day.png.webp": {
+    "width": 1440,
+    "height": 900
+  },
+  "/optimized/images/room/light-dusk.png.webp": {
+    "width": 1440,
+    "height": 900
+  },
+  "/optimized/images/room/light-night.png.webp": {
+    "width": 1440,
+    "height": 900
   },
   "/optimized/job-hunt-ledger.png.webp": {
     "width": 1440,
