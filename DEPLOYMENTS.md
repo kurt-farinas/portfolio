@@ -1,3 +1,12 @@
+## 2026-11-16 14:23 — 14b6adb — Refresh PMPC case studies and résumé through Nov 16
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #84
+- Code: b907bd5 → 14b6adb
+- Migrations: none
+- Backup: none (static site; roll back by redeploying 3923adf in Vercel)
+- Data changes: none
+- Verified: git push to main; https://kurt-farinas-portfolio.vercel.app/resume.pdf returns 200 at 72,232 bytes (the new file) and the live JS bundle contains the new PIS copy (KaagapayAI). Not checked on the live site: the case-study dialogs in each theme, or the PDF opened in a viewer.
+
 ## 2026-11-16 05:12 — 3923adf — Weak GPUs step down sooner; lighter room view
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #66
