@@ -3,10 +3,13 @@
    ======================================== */
 
 import React from 'react';
-import { awardsData } from '../../data/projectData';
+import { awardsData, certificatesData } from '../../data/projectData';
+import { useModal } from '../../context/ModalContext';
+import PortfolioImage from '../common/PortfolioImage';
 import SectionHeading from '../common/SectionHeading';
 
 export default function AwardsSection() {
+  const { openLightbox } = useModal();
   return (
     <section className="studio-section studio-recognition" id="awards">
       <div className="studio-container">
@@ -47,6 +50,28 @@ export default function AwardsSection() {
             </div>
           ))}
         </div>
+
+        <h3 className="studio-cert-heading" id="certificates-heading">Certificates and badges</h3>
+        <ul className="studio-cert-grid" aria-labelledby="certificates-heading">
+          {certificatesData.map((cert) => (
+            <li key={cert.id} className="studio-cert">
+              <button
+                type="button"
+                className="studio-cert-open"
+                aria-label={'Open certificate: ' + cert.title + ', ' + cert.date}
+                onClick={() => openLightbox(cert.image, cert.title + ' | ' + cert.issuer + ' | ' + cert.date, cert.verifyUrl || null, cert.verifyUrl ? 'VERIFY CERTIFICATE' : null)}
+              >
+                <PortfolioImage src={cert.image} alt={cert.alt} />
+              </button>
+              <div className="studio-cert-meta">
+                <h4>{cert.title}</h4>
+                <p>{cert.issuer}</p>
+                <p className="studio-cert-date">{cert.date}</p>
+                {cert.verifyUrl && <a className="studio-cert-verify" href={cert.verifyUrl} target="_blank" rel="noopener noreferrer">Verify online</a>}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

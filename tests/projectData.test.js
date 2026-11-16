@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { projectDetails, timelineData, awardsData, gearCatalogData, snapshotsDeckData } from '../src/data/projectData.js';
+import { projectDetails, timelineData, awardsData, certificatesData, gearCatalogData, snapshotsDeckData } from '../src/data/projectData.js';
 
 describe('React Project Data Integrity', () => {
   it('contains valid definitions for HRIS and Gym Rebuild projects', () => {
@@ -79,6 +79,16 @@ describe('React Project Data Integrity', () => {
     expect(titles).toContain('DepEd SIPP OJT Certificate of Completion');
     expect(titles).toContain('Introduction to Cybersecurity');
     expect(titles).toContain('Java Fundamentals | Terms 1 & 2');
+  });
+
+  it('lists seven certificates with images and https verify links only where issued', () => {
+    expect(certificatesData).toHaveLength(7);
+    certificatesData.forEach(c => {
+      expect(c.image.startsWith('/images/certificates/')).toBe(true);
+      expect(c.alt.length).toBeGreaterThan(20);
+      if (c.verifyUrl) expect(c.verifyUrl.startsWith('https://')).toBe(true);
+    });
+    expect(certificatesData.filter(c => c.verifyUrl)).toHaveLength(5);
   });
 
   it('verifies gearCatalogData definitions and section mapping', () => {

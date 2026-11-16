@@ -334,6 +334,70 @@ export const awardsData = [
   }
 ];
 
+export const certificatesData = [
+  {
+    id: "claude-ai-capabilities",
+    title: "AI capabilities and limitations",
+    issuer: "Claude Academy · Course completion badge",
+    date: "Nov 16, 2026",
+    image: "/images/certificates/claude-academy-ai-capabilities-limitations.png",
+    alt: "Claude Academy course completion badge: AI capabilities and limitations, presented to Kurt Vincent F. Fariñas",
+    verifyUrl: "https://academy.claude.com/verify/e3a993e086f09c8806d42329e77232e5"
+  },
+  {
+    id: "claude-ai-fluency",
+    title: "AI Fluency: Framework and foundations",
+    issuer: "Claude Academy · Course completion badge",
+    date: "Nov 16, 2026",
+    image: "/images/certificates/claude-academy-ai-fluency.png",
+    alt: "Claude Academy course completion badge: AI Fluency, Framework and foundations, presented to Kurt Vincent F. Fariñas",
+    verifyUrl: "https://academy.claude.com/verify/a70af94a367bb252c3d9ee389f8287c3"
+  },
+  {
+    id: "claude-human-agent-teams",
+    title: "Building effective human-agent teams (beta)",
+    issuer: "Claude Academy · Course completion badge",
+    date: "Nov 16, 2026",
+    image: "/images/certificates/claude-academy-human-agent-teams.png",
+    alt: "Claude Academy course completion badge: Building effective human-agent teams (beta), presented to Kurt Vincent F. Fariñas",
+    verifyUrl: "https://academy.claude.com/verify/d34ab0ed4d3054ee948791585895a549"
+  },
+  {
+    id: "tesda-ai",
+    title: "Fundamentals of Artificial Intelligence",
+    issuer: "TESDA Online Program · Certificate of Completion",
+    date: "Nov 9, 2026",
+    image: "/images/certificates/tesda-fundamentals-of-ai.png",
+    alt: "TESDA Online Program certificate of completion for Fundamentals of Artificial Intelligence, issued to Kurt Vincent Fernando Fariñas, certificate code SH5x4rOcYA"
+  },
+  {
+    id: "aidev-all-four",
+    title: "Fundamentals of AI-Driven Development",
+    issuer: "AI Dev PH (Discord community) · All four courses",
+    date: "Oct 19, 2026",
+    image: "/images/certificates/ai-dev-ph-all-four.png",
+    alt: "AI Dev PH certificate of completion for completing all four AI Dev PH courses, issued to the kosaki account",
+    verifyUrl: "https://course.marwieang.com/verify/MWA-UJ6C-W2SH"
+  },
+  {
+    id: "aidev-fundamentals",
+    title: "Fundamentals of AI-Driven Development",
+    issuer: "AI Dev PH (Discord community) · Building and shipping software with AI",
+    date: "Oct 16, 2026",
+    image: "/images/certificates/ai-dev-ph-fundamentals.png",
+    alt: "AI Dev PH certificate of completion for the course on building and shipping software with AI, issued to the kosaki account",
+    verifyUrl: "https://course.marwieang.com/verify/MWA-LXG3-JCY9"
+  },
+  {
+    id: "deped-sipp-ojt",
+    title: "DepEd SIPP OJT Certificate of Completion",
+    issuer: "DepEd Schools Division of San Jose City · Feb 2 – Mar 31, 2026",
+    date: "Apr 23, 2026",
+    image: "/images/certificates/deped-sipp-ojt.jpg",
+    alt: "Department of Education Schools Division of San Jose City certificate of completion for the On-The-Job Training Program under the Student Internship Program, given to Kurt Vincent F. Fariñas on April 23, 2026"
+  }
+];
+
 export const gearCatalogData = [
   {
     id: "mchose-ace60",

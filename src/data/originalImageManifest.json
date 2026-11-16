@@ -27,6 +27,34 @@
     "width": 1919,
     "height": 1079
   },
+  "/images/certificates/ai-dev-ph-all-four.png": {
+    "width": 1458,
+    "height": 1016
+  },
+  "/images/certificates/ai-dev-ph-fundamentals.png": {
+    "width": 1458,
+    "height": 1016
+  },
+  "/images/certificates/claude-academy-ai-capabilities-limitations.png": {
+    "width": 1584,
+    "height": 1160
+  },
+  "/images/certificates/claude-academy-ai-fluency.png": {
+    "width": 1584,
+    "height": 1160
+  },
+  "/images/certificates/claude-academy-human-agent-teams.png": {
+    "width": 1584,
+    "height": 1160
+  },
+  "/images/certificates/deped-sipp-ojt.jpg": {
+    "width": 2000,
+    "height": 1333
+  },
+  "/images/certificates/tesda-fundamentals-of-ai.png": {
+    "width": 1683,
+    "height": 1190
+  },
   "/images/kurt-farinas-profile.png": {
     "width": 1254,
     "height": 1254
@@ -495,9 +523,13 @@
     "width": 1440,
     "height": 900
   },
-  "/optimized/job-hunt-ledger.png.webp": {
+  "/optimized/job-hunt-ledger-full.png.webp": {
     "width": 1440,
     "height": 1684
+  },
+  "/optimized/job-hunt-ledger.png.webp": {
+    "width": 1440,
+    "height": 900
   },
   "/optimized/og-preview-2026.jpg.webp": {
     "width": 1200,

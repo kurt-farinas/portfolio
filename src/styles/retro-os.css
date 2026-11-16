@@ -397,3 +397,8 @@
   .desktop-app-scroll .desktop-document-app { max-width: 980px; }
   .desktop-app-scroll .desktop-resume-preview { border: 2px inset var(--retro-etch); }
 }
+
+/* Recognition: certificates as framed prints in groove group boxes. */
+.desktop-app-scroll .studio-cert { padding: 12px; border: 2px groove var(--retro-etch); }
+.desktop-app-scroll .studio-cert-open { border: 2px solid; border-color: var(--retro-edge) var(--retro-highlight) var(--retro-highlight) var(--retro-edge); background: var(--paper); }
+.desktop-app-scroll .studio-cert-grid { gap: 14px; }
