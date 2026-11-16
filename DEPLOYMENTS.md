@@ -1,3 +1,12 @@
+## 2026-11-16 14:47 — 12b3689 — Better San Jose worded as Kurt's own frontend design
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #89
+- Code: 62dad13 → 12b3689
+- Migrations: none
+- Backup: none (static site; roll back by redeploying 9c2758b in Vercel)
+- Data changes: none
+- Verified: git push to main; on https://kurt-farinas-portfolio.vercel.app/ resume.pdf is 74,881 bytes, the same as the local file, and the live JS bundle contains "designed and built the frontend". Not checked: the dialog text on the live Projects page.
+
 ## 2026-11-16 14:43 — 62dad13 — Fit Job Hunt Ledger screenshot; résumé names Better San Jose
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #88
