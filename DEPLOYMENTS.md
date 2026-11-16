@@ -1,3 +1,12 @@
+## 2026-11-16 14:29 — 09c24f5 — Live-site screenshots; test-count claims removed
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #85
+- Code: 14b6adb → 09c24f5
+- Migrations: none
+- Backup: none (static site; roll back by redeploying 5d0f7ea in Vercel)
+- Data changes: none
+- Verified: git push to main; on https://kurt-farinas-portfolio.vercel.app/ resume.pdf, pmpc-workforce.png, boiyets-landing.png, pmpc-pis-landing.webp and pmpc-gen-mdse.jpg are byte-for-byte the same size as the local files, and the live JS bundle no longer contains "119 Passing". Not checked: how the new images look on the live Projects page in each theme.
+
 ## 2026-11-16 14:23 — 14b6adb — Refresh PMPC case studies and résumé through Nov 16
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #84
