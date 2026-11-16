@@ -1,3 +1,12 @@
+## 2026-11-16 14:56 — 161816b — Certificates gallery; résumé lists new certificates
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #90
+- Code: 12b3689 → 161816b
+- Migrations: none
+- Backup: none (static site; roll back by redeploying 25ebc0f in Vercel)
+- Data changes: none
+- Verified: git push to main; on https://kurt-farinas-portfolio.vercel.app/ resume.pdf (76,413 bytes) and three sampled certificate images match the local files, and the live JS bundle contains the "Certificates and badges" gallery. Not checked: the gallery on the live site at 375px or in the light theme.
+
 ## 2026-11-16 14:47 — 12b3689 — Better San Jose worded as Kurt's own frontend design
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #89
