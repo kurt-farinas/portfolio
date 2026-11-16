@@ -116,7 +116,7 @@ Section headers keep their titles without generic category labels or explanatory
 
 ## PMPC contribution coverage
 
-The PIS, WorkForce/DTR, and General Merchandise cards remain compact Decision/Result summaries. Their existing case-study dialogs group the September 16–October 15, 2026 contribution period without introducing a changelog interface. PIS includes September accounting work and subsequently deployed request, notification, and portal improvements. WorkForce and General Merchandise distinguish confirmed releases from local additions; no blanket unreleased label or proposed-only wording obscures completed implementation. Keep inherited ownership, original project order, screenshots, links, and classic layout. See docs/pmpc-contribution-audit.md for evidence and limits.
+The PIS, WorkForce/DTR, and General Merchandise cards remain compact Decision/Result summaries. Their existing case-study dialogs group the September 16–November 16, 2026 contribution period without introducing a changelog interface. PIS includes September accounting work and subsequently deployed request, notification, and portal improvements. WorkForce and General Merchandise distinguish confirmed releases from local additions; no blanket unreleased label or proposed-only wording obscures completed implementation. Keep inherited ownership, original project order, screenshots, links, and classic layout. See docs/pmpc-contribution-audit.md for evidence and limits.
 
 ## Quiet gaming CRT
 

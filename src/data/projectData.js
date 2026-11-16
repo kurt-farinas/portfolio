@@ -7,7 +7,7 @@ export const featuredProjectIds = ['pmpcPis', 'pmpcWorkforce', 'pmpcGenMdse', 'h
 export const projectDetails = {
   pmpcPis: {
     decisionSummary: "Extend financial workflows with traceable corrections, review controls, and clearer staff interfaces.",
-    resultSummary: "Deployed accounting safeguards, request queues, notifications, and public/member/staff interface improvements.",
+    resultSummary: "Deployed accounting safeguards, batch review, opening balances, simpler member import, a staff assistant, and public/member/staff interface improvements.",
     id: "pmpc-pis",
     title: "PMPC People's Information System",
     ticketId: "PMPC · Inherited System",
@@ -16,16 +16,18 @@ export const projectDetails = {
     badge: "Inherited System · Contributor",
     cardSummary: "Improve cooperative operations with audited accounting workflows, document controls, reporting, and responsive portals.",
     websiteUrl: "https://peoplesmpcoop.com/",
-    desc: "Contributions: September 16–October 15, 2026. My work improves financial operations, review safeguards, and public, member, and staff interfaces.",
+    desc: "Contributions: September 16–November 16, 2026. My work improves financial operations, review safeguards, member import, and public, member, and staff interfaces.",
     highlights: [
-      "Petty Cash and daily reporting: introduced separately tracked fund, loan, and collection balances, opening entries, bank deposits and reconciliation, and branded A4 disbursement reports with role-based signatories; refined allocation routing and date-aware balance checks.",
+      "Petty Cash and daily reporting: introduced separately tracked fund, loan, and collection balances, opening entries, bank deposits and reconciliation, and branded A4 disbursement reports with role-based signatories; refined allocation routing and date-aware balance checks. Later fixes added one-approval account fixes, cancelling stuck requests, and automatic completion of accounting steps.",
       "Accounting corrections: implemented pending Debit/Credit edits, posted-amount review, account-title change requests, and reversal/rebooking safeguards. Original/proposed values, reasons, reviewer decisions, and atomic audit history protect journal and General Ledger consistency.",
-      "Review and traceability: added member-accounting tracking and manual matching, audited moves for eligible unjournaled Petty Cash entries, approval-based archive/restore, selected-batch journal approval, and scope-aware General Ledger totals.",
+      "Review and traceability: added member-accounting tracking and manual matching, audited moves for eligible unjournaled Petty Cash entries, approval-based archive/restore, selected-batch journal approval, batch edit/move/archive and approve/decline actions, and search and paging on the Archive, Petty Cash, and Journal queues.",
+      "Statements and opening balances: imported the December 31, 2025 opening balances from the financial-statement workbook, flagging ambiguous, duplicate, and broken lines; added statement review and print improvements, provisional labels for incomplete periods, and a General Ledger rewrite with balances by account type and a year-to-date default.",
       "Request and document workflows: delivered the Petty Cash requests table, submission-day filters, pagination, and review dialogs; added same-category supporting-document reuse, private previews, Remove/Undo controls, and immutable evidence for saved financial changes.",
       "Monthly and access controls: added financial month locks with a five-working-day grace period and audited locked-period corrections. Refined role and office authorization while preserving existing approval and administration boundaries.",
-      "Member operations and security: added reviewed member-import staging, provenance, conflict handling, and approval before commit; improved savings-withdrawal tracking, unassigned-member saves and balance checks, private profile/signature delivery, and password-reset handling.",
-      "Portals and notifications: improved Finance/Operations navigation, forms, filters, dashboards, and shared feedback; refreshed the public site, original photographs, account-access screens, and member/staff portals; added personal notification history, current-status links, and opt-in staff sound controls.",
-      "Reliability and release scope: repaired Journal Review navigation, source-link errors, and member-detail routes. These contribution groups have deployment records; historical ledger reconciliation, OCR, and unstarted report work are not claimed as completed. Notification controls were verified live; audible playback across devices remains unverified."
+      "Member operations and security: replaced the import with a simple three-step, staff-confirmed flow with profile suggestions; added member archive/restore, email sign-in, audited temporary passwords, private profile/signature delivery, and removal of a leftover profile page that let a member delete their own record.",
+      "Staff assistant: added KaagapayAI, an assistant for staff lookups, actions, and Petty Cash entry from Excel, running on the Anthropic API since November 11. Trial runs of other models were not adopted.",
+      "Portals and notifications: redesigned the public landing, login, and portal screens, added a news page with a Home page editor, a visitor counter, personal notification history, and Finance/Operations interface refreshes; a code audit removed 12 unused packages and 12 dead endpoints.",
+      "Reliability and release scope: these groups have deployment records, but several late releases (batch actions, email sign-in, Excel Petty Cash entry) are logged without a signed-in live check. Historical ledger reconciliation and the scan-reading import are not claimed; the scan-reading path was removed."
     ],
     stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS", "MySQL"],
     previewCallout: {
@@ -35,21 +37,22 @@ export const projectDetails = {
     slides: [{ src: "/images/projects/pmpc-pis-landing.webp", label: "People's MPC public landing page with membership, loan calculator, and member login navigation", tab: "Landing page" }]
   },
   pmpcGenMdse: {
-    decisionSummary: "Improve mobile retail workflows and build inventory reporting with explicit data-completeness checks.",
-    resultSummary: "Deployed mobile improvements; implemented inventory valuation and monthly financial reports locally.",
+    decisionSummary: "Improve mobile retail workflows and build shared stock counting and monthly inventory reports with explicit data-completeness checks.",
+    resultSummary: "Deployed mobile improvements, shared stock counting, and monthly inventory reports; audit safeguards remain local.",
     id: "pmpc-gen-mdse",
     title: "PMPC General Merchandise",
     ticketId: "PMPC · Inherited Website",
     roleTag: "Maintenance & Development",
     browserStatus: "DEPLOYED + LOCAL WORK",
     badge: "Inherited Website · Management",
-    cardSummary: "Improve mobile retail workflows and implement local inventory valuation and monthly financial reporting.",
-    desc: "Contributions: September 16–October 15, 2026. Mobile interface improvements are deployed; inventory valuation and monthly financial reporting are implemented locally.",
+    cardSummary: "Improve mobile retail workflows and build shared stock counting and monthly inventory reports; audit safeguards stay local.",
+    desc: "Contributions: September 16–November 16, 2026. Mobile improvements, shared stock counting, and monthly inventory reports are deployed; payment and offline-sale audit safeguards are implemented locally.",
     highlights: [
       "Deployed mobile interfaces: improved sidebar navigation, shell spacing, dashboards, product cards/forms, and profit/inventory report layouts, with larger touch targets, readable inputs, and preserved POS-specific cart behavior.",
-      "Local inventory counts: implemented saved cost × quantity valuation, explicit zero-versus-uncounted entries, role/branch controls, stale-stock recount checks, protected count history, and safeguards against repeated stock adjustments.",
-      "Local monthly reports: added one selected complete closing count per branch/month, inventory valuation, sales, verified purchases, recorded sale costs, expenses, and profit figures with printable output. Missing counts and unknown purchase sources remain visibly incomplete; inventory reconciliation is a separate cross-check.",
-      "Release scope: the mobile release was verified at 320, 390, 768, and 1024 pixels without live transactions. Inventory/reporting work was tested locally with synthetic data, including concurrency and print checks; it has not been deployed."
+      "Deployed shared stock counting: cashiers claim products so counts do not overlap, with count checks, stock revisions, and quarantine fields, plus a restricted, repeat-safe attendance link to WorkForce. No live punch has been exercised through it.",
+      "Deployed monthly inventory reports: a per-branch ending-inventory report with saved-cost estimates (count quantity × saved cost), sales and variance totals, an inventory movement journal, a month-end balance report, a September 30 count as opening balance, count roll-back, and draft counts cashiers can record. Missing counts remain visibly incomplete.",
+      "Local audit safeguards: payment, refund, stock-batch, cashier and branch attribution, Manila-date handling, and offline-sale checks are implemented locally and not deployed.",
+      "Release scope: the mobile release was verified at 320, 390, 768, and 1024 pixels without live transactions. Later releases carry backup and asset-checksum records; the live cashier attendance check, scanner, and printer are untested."
     ],
     stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS", "Vite"],
     previewCallout: {
@@ -58,12 +61,12 @@ export const projectDetails = {
     },
     slides: [
       { src: "/images/projects/pmpc-gen-mdse.jpg", label: "Public landing page for PMPC General Merchandise internal point-of-sale and inventory system", tab: "Landing page" },
-      { src: "/images/projects/pmpc-gen-mdse-prototype.jpg", label: "Local General Merchandise inventory prototype with synthetic data; not deployed", tab: "Local prototype" }
+      { src: "/images/projects/pmpc-gen-mdse-prototype.jpg", label: "Early local General Merchandise inventory prototype with synthetic data; this screen is not deployed as shown", tab: "Local prototype" }
     ]
   },
   pmpcWorkforce: {
     decisionSummary: "Extend attendance and payroll workflows while preserving employee ownership, HR review, and saved financial history.",
-    resultSummary: "Deployed attendance, payslip, schedule, final DTR review, payroll input, 13th-month, Excel export, and HR account-setup improvements.",
+    resultSummary: "Deployed attendance, schedule, task board, four-step payroll wizard, 13th-month, Excel export, and HR account-setup improvements.",
     id: "pmpc-workforce",
     title: "PMPC WorkForce / DTR",
     ticketId: "PMPC · Inherited System",
@@ -71,16 +74,17 @@ export const projectDetails = {
     browserStatus: "DEPLOYED IMPROVEMENTS",
     badge: "Inherited System · Contributor",
     cardSummary: "Improve attendance corrections, personal schedules, payroll review, management exports, and HR-verified account setup.",
-    desc: "Contributions: September 16–October 15, 2026. All contribution groups below are deployed.",
+    desc: "Contributions: September 16–November 16, 2026. All contribution groups below are deployed.",
     highlights: [
-      "Attendance and self-service: improved employee/admin dashboards, mobile punch controls, four-punch timelines, attendance filters, correction requests, task-planner/profile/notification interfaces, and responsive navigation. Strengthened employee ownership and reviewer permissions and reduced unnecessary clock-driven page rendering.",
+      "Attendance and self-service: improved employee/admin dashboards, mobile punch controls, four-punch timelines, attendance filters, correction requests, profile/notification interfaces, and responsive navigation. Added two-punch shifts for 12-hour staff, afternoon half days, a double-tap guard, and correcting a day from Attendance records. Strengthened employee ownership and reviewer permissions and reduced unnecessary clock-driven page rendering.",
+      "Task board: built employee and admin task boards with private and office-wide tasks, multi-assign, assignment notifications, repeating tasks run by a daily generator, date spans, Today and Doing views, and a Dues page for recurring bills.",
       "Confirmed live fixes: repaired individual and bulk payslip PDFs and applied an effective-dated employee shift correction while preserving recorded punches, hours, saved payroll figures, and draft status.",
-      "Deployed schedules and attendance: added personal workdays and shifts, full Sunday–Saturday attendance weeks with subtotals, upcoming-day labels, elapsed-workday absence detection, rest-day handling, holiday calendars, and an always-present workday setting.",
+      "Deployed schedules and attendance: added personal workdays and shifts with effective-dated schedule history (migrated and checked against a copy of the live data), full Sunday–Saturday attendance weeks with subtotals, upcoming-day labels, elapsed-workday absence detection, rest-day handling, holiday calendars including marking a holiday from the dashboard, and an always-present workday setting with auto-fill.",
       "Deployed final DTR review: added a configured reviewer's full-month correction workflow for recorded, missing, and absent days, with required reasons, before/after history, recalculated status/hours, and pending-request protection.",
-      "Deployed payroll preparation: built an office-grouped Excel-style input table for paid days, absences, overtime, holiday pay, late minutes, and reviewed deductions, with one batch confirmation. Added verified office assignment, DTR mismatch flags, rate-change checks, peso-cent rounding, saved calculation snapshots, and server-side 13th-month draft recalculation.",
-      "Deployed management exports: implemented monthly Excel workbooks with office/cutoff sections, deduction details, names-only signatories, accounting-review cross-checks, and layout/capacity safeguards; expanded the Main Office template to four employees and corrected workbook formatting and voucher balance.",
+      "Deployed payroll preparation: replaced the input table with a four-step payroll wizard that pays hours from the DTR, one batch per month and cutoff, with office assignment, DTR mismatch flags, rate-change checks, peso-cent rounding, saved calculation snapshots, type-over on any number, DOLE holiday-work pay, and server-side 13th-month draft recalculation. Pre-hire payroll days and Export all DTRs were added.",
+      "Deployed management exports: implemented monthly Excel workbooks in the October layout with office/cutoff sections, deduction details, typed totals and adjustment columns, sign-offs, a Prepared by signature, and layout/capacity safeguards; corrected workbook formatting and voucher balance.",
       "Deployed HR and payslip controls: implemented employee identity confirmation, HR approval/return and office transfers, pre-setup payroll-office assignment, required private signature uploads, and finalized-only employee payslip access while retaining existing credentials, attendance links, and historical payroll.",
-      "Reliability and release scope: improved request validation, atomic payroll persistence, loading/navigation behavior, and keyboard/form accessibility. Schedules, final DTR review, payroll input, 13th-month recalculation, Excel exports, and HR account setup are deployed. Payroll compliance is not independently certified."
+      "Reliability and release scope: improved request validation, atomic payroll persistence, loading/navigation behavior, and keyboard/form accessibility. Schedules, task board, final DTR review, the payroll wizard, 13th-month recalculation, Excel exports, and HR account setup are deployed; the latest release passed 480 of 480 PHP tests. The Dues page, Payroll day button, and Step 3 screen are logged without an on-screen live check. Payroll compliance is not independently certified."
     ],
     stack: ["Laravel", "React", "Inertia.js", "Tailwind CSS"],
     previewCallout: {

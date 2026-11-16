@@ -31,7 +31,7 @@ export function portfolioCommand(input) {
   if (!command) return { lines: [] };
   const responses = {
     help: ['Simulated portfolio terminal. Commands do not access your computer.', 'help · whoami · education · experience · projects · skills · contact · resume · clear / cls'],
-    whoami: [p.name, `${p.role} at ${p.employer} since ${p.roleStarted}.`, p.statement],
+    whoami: [p.name, `${p.role} at ${p.employer} since ${p.roleStarted}.`, p.statement, 'Open to remote part-time and freelance work.'],
     education: [p.education, p.educationDates, 'Presidential List (2022).'],
     experience: timelineData.flatMap(item => [item.date + ' | ' + item.title, item.desc]),
     projects: portfolioProjects.flatMap((project, index) => [
