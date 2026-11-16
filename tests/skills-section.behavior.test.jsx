@@ -28,7 +28,7 @@ describe('read-only Stack rows', () => {
     expect(host.querySelectorAll('#skills button, #skills a, #skills input')).toHaveLength(0);
 
     const expectedByCategory = {
-      Frontend: ['React', 'TypeScript', 'JavaScript', 'Inertia.js', 'Tailwind CSS', 'HTML / CSS', 'Chart.js'],
+      Frontend: ['React', 'TypeScript', 'JavaScript', 'Inertia.js', 'Next.js', 'Tailwind CSS', 'HTML / CSS', 'Chart.js'],
       Backend: ['Laravel', 'PHP', 'FastAPI', 'Python'],
       Data: ['MySQL', 'SQLite'],
       Languages: ['Java'],

@@ -18,7 +18,7 @@ describe('retro portfolio rules', () => {
     expect(scoreGuess('REACT', 'REACT')).toEqual(Array(5).fill('correct'));
   });
   it('uses canonical projects, ownership, education, and links', () => {
-    expect(portfolioProjects.map(project => project.id)).toEqual(['pmpc-pis','pmpc-workforce','pmpc-gen-mdse','hris','gym','job-hunt-ledger']);
+    expect(portfolioProjects.map(project => project.id)).toEqual(['pmpc-pis','pmpc-workforce','pmpc-gen-mdse','hris','gym','job-hunt-ledger','kanban','better-san-jose']);
     expect(portfolioCommand('education').lines.join(' ')).toContain('STI College San Jose');
     expect(portfolioCommand('experience').lines.join(' ')).toContain('Denver Ballesteros');
     const all = ['education','experience','projects','whoami','skills'].flatMap(command => portfolioCommand(command).lines).join(' ');

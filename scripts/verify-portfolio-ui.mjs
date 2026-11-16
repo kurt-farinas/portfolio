@@ -234,7 +234,7 @@ try {
       const projectRows = page.locator('.desktop-window.is-active .studio-project-detail');
       await expect(projectRows).toHaveCount(6);
       expect(await projectRows.evaluateAll(rows => rows.map(row => row.id))).toEqual([
-        'pmpc-pis', 'pmpc-workforce', 'pmpc-gen-mdse', 'hris', 'gym', 'job-hunt-ledger'
+        'pmpc-pis', 'pmpc-workforce', 'pmpc-gen-mdse', 'hris', 'gym', 'job-hunt-ledger', 'kanban', 'better-san-jose'
       ]);
       await expect(page.locator('#pmpc-pis')).toContainText('PUBLIC SITE');
       await expect(page.locator('#pmpc-workforce')).toContainText('SIGN-IN');

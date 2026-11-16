@@ -259,6 +259,14 @@
     "width": 512,
     "height": 499
   },
+  "/images/projects/better-san-jose.png": {
+    "width": 1440,
+    "height": 900
+  },
+  "/images/projects/kanban-board.png": {
+    "width": 2880,
+    "height": 690
+  },
   "/images/projects/pmpc-gen-mdse-prototype.jpg": {
     "width": 1424,
     "height": 1359
@@ -320,8 +328,8 @@
     "height": 1200
   },
   "/optimized/boiyets-landing.png.webp": {
-    "width": 1919,
-    "height": 1079
+    "width": 1440,
+    "height": 900
   },
   "/optimized/gym-admin.png.webp": {
     "width": 1920,
@@ -431,6 +439,10 @@
     "width": 1000,
     "height": 1000
   },
+  "/optimized/images/projects/kanban-board.png.webp": {
+    "width": 1920,
+    "height": 460
+  },
   "/optimized/images/projects/pmpc-gen-mdse-prototype.jpg.webp": {
     "width": 1424,
     "height": 1359
@@ -448,8 +460,8 @@
     "height": 1000
   },
   "/optimized/images/projects/pmpc-workforce.png.webp": {
-    "width": 1917,
-    "height": 1020
+    "width": 1440,
+    "height": 900
   },
   "/optimized/images/room/dark-day.png.webp": {
     "width": 1440,

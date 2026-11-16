@@ -54,7 +54,7 @@ function appFromLocation(pathname, hash) {
   if (anchor === 'contact') return 'contact';
   if (anchor === 'after-hours') return 'after-hours';
   if (anchor === 'gear') return 'gear';
-  if (anchor === 'projects' || anchor.startsWith('pmpc-') || anchor === 'hris' || anchor === 'gym' || anchor === 'job-hunt-ledger') return 'projects';
+  if (anchor === 'projects' || anchor.startsWith('pmpc-') || anchor === 'hris' || anchor === 'gym' || anchor === 'job-hunt-ledger' || anchor === 'kanban' || anchor === 'better-san-jose') return 'projects';
   // Only a bare "/" or #about means About; any other in-page anchor leaves the active window alone.
   return anchor === '' || anchor === 'about' ? 'about' : null;
 }

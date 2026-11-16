@@ -15,7 +15,7 @@ export const portfolioProfile = {
 };
 
 export const technologyGroups = {
-  Frontend: ['React', 'TypeScript', 'JavaScript', 'Inertia.js', 'Tailwind CSS', 'HTML / CSS', 'Chart.js'],
+  Frontend: ['React', 'TypeScript', 'JavaScript', 'Inertia.js', 'Next.js', 'Tailwind CSS', 'HTML / CSS', 'Chart.js'],
   Backend: ['Laravel', 'PHP', 'FastAPI', 'Python'],
   Data: ['MySQL', 'SQLite'],
   Languages: ['Java'],

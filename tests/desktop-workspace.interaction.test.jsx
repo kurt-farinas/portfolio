@@ -166,15 +166,15 @@ describe('portfolio desktop workspace', () => {
     await act(async () => shortcut.click());
     expect(host.querySelector('[data-testid="active"]').textContent).toBe('projects');
     const entries = host.querySelectorAll('.studio-project-detail');
-    expect(entries).toHaveLength(6);
+    expect(entries).toHaveLength(8);
     expect(entries[0].firstElementChild.tagName).toBe('FIGURE');
-    expect(host.querySelectorAll('.project-quick-read')).toHaveLength(6);
+    expect(host.querySelectorAll('.project-quick-read')).toHaveLength(8);
     expect(host.querySelector('.studio-project-detail-highlights')).toBeNull();
     expect(host.querySelector('#hris').textContent).toContain('98/100');
     expect(host.querySelector('#hris').textContent).toContain('342');
     expect(host.querySelector('#pmpc-workforce').textContent).toContain('Deployed improvements');
     expect(host.querySelector('#pmpc-workforce').textContent).toContain('HR account-setup');
-    expect(host.querySelectorAll('.studio-project-detail-actions button')).toHaveLength(6);
+    expect(host.querySelectorAll('.studio-project-detail-actions button')).toHaveLength(8);
     expect(host.querySelector('.portfolio-engineering-details summary').textContent).toBe('How this portfolio works');
   });
 

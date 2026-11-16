@@ -2,7 +2,7 @@
    PROJECT DATA & SITE CONTENT  |  Single Source of Truth
    ======================================== */
 
-export const featuredProjectIds = ['pmpcPis', 'pmpcWorkforce', 'pmpcGenMdse', 'hris', 'gym', 'jobHuntLedger'];
+export const featuredProjectIds = ['pmpcPis', 'pmpcWorkforce', 'pmpcGenMdse', 'hris', 'gym', 'jobHuntLedger', 'kanban', 'betterSanJose'];
 
 export const projectDetails = {
   pmpcPis: {
@@ -190,6 +190,72 @@ export const projectDetails = {
       { src: '/gym-admin.png', label: 'Admin Dashboard · Financials & User Access', tab: 'Admin' },
       { src: '/gym-trainer.png', label: 'Trainer Portal · Schedules & Client Tracking', tab: 'Trainer' },
       { src: '/gym-client.png', label: 'Client Portal · QR Attendance & Profile', tab: 'Client' }
+    ]
+  },
+  kanban: {
+    decisionSummary: "Keep every project's task state in one local board that Claude Code updates as it works.",
+    resultSummary: "A working local board with a command-line tool, working-dot hooks, and deploy-log sync. No hosted demo.",
+    id: "kanban",
+    title: "Kanban Board for Claude Code",
+    ticketId: "Personal Developer Tool",
+    stamp: "Local-Only · Claude Code Workflow",
+    roleTag: "Solo Full-Stack Developer",
+    statusBadge: '<span class="status-dot-green"></span> Local-Only Personal Tool',
+    badge: "Solo Full-Stack · Local-Only",
+    browserStatus: "LOCAL ONLY",
+    cardSummary: "Built a local kanban board that Claude Code keeps current as it works across all my projects. Screenshot uses sample data.",
+    desc: "Kanban is a local board for working with Claude Code. One board covers all my projects across To do, Planning, Building, Review, You test, and Live; Claude moves the cards through a command-line tool as it works, and I can drag them too. It is plain PHP, MySQL, and vanilla JavaScript with no framework or dependencies, built for XAMPP on Windows.",
+    caseStudy: {
+      problem: "Working on several projects with an AI coding assistant makes it hard to see what is planned, underway, waiting on a question, or already deployed.",
+      decision: "Built one local board for every project, with a command-line tool Claude runs as work moves on, instead of a hosted tracker.",
+      implementation: "Plain PHP, MySQL, and vanilla JavaScript. A board.php command line adds, moves, blocks, notes, and reports on cards; Claude Code hooks show a pulsing working dot while a session works on a card; dragging a card into a work column opens a new Claude desktop session in that project's folder with the message typed in; and verified deploy-log entries move their cards to Live.",
+      tradeoffs: "It is intentionally local and tied to XAMPP and Windows, with no hosted version or user accounts. That keeps it simple and private in exchange for portability.",
+      result: "A working board I use across my projects, with project sections, a JSON report of finished and underway cards per section, and a public repository. The screenshot shows sample data, not real project cards."
+    },
+    codeUrl: "https://github.com/kurt-farinas/kanban",
+    highlights: [
+      "Command-Line Control: board.php adds, titles, moves, blocks, unblocks, notes, plans, and reports on cards so Claude can keep the board current from a session.",
+      "Working Dot Hooks: Claude Code hooks link a session to its card and show a pulsing dot and status while it works, clearing when the session stops.",
+      "Drag to Start: dragging a card into a work column opens a new Claude desktop session in that project's folder with the right message typed in.",
+      "Deploy Sync and Reports: verified deploy-log entries move their cards to Live, and a report command returns finished and underway cards per project section."
+    ],
+    stack: ["PHP", "MySQL", "JavaScript"],
+    slides: [
+      { src: "/images/projects/kanban-board.png", label: "Kanban board with sample cards across To do, Planning, Building, Review, You test, and Live", tab: "Board" }
+    ]
+  },
+  betterSanJose: {
+    decisionSummary: "Rebuild the frontend of a civic portal so residents can find services, scholarships, and business tax information in English and Filipino.",
+    resultSummary: "Live site for San Jose City, Nueva Ecija, co-built with Denver Ballesteros. I led the frontend redesign.",
+    id: "better-san-jose",
+    title: "BetterLGU San Jose City",
+    ticketId: "Civic Portal · Co-built",
+    stamp: "Live · Independent Civic Site",
+    roleTag: "Frontend Co-Developer",
+    statusBadge: '<span class="status-dot-green"></span> Live Civic Portal',
+    badge: "Co-built · Frontend Lead",
+    browserStatus: "LIVE SITE",
+    cardSummary: "Co-built a live bilingual civic portal for San Jose City, Nueva Ecija. I led the frontend redesign; Denver Ballesteros built the weather, business-tax, and scholarship features.",
+    desc: "BetterLGU San Jose City is an independent civic portal for San Jose City, Nueva Ecija, with English and Filipino pages for city services, business taxes, scholarships, officials, and live weather. It is not the official city website, and says so on every page. I co-built it with Denver Ballesteros: he built the live weather-station proxy, the business tax pages and estimator, and the scholarship lookup; I led the frontend redesign from October 29 to November 13, 2026.",
+    websiteUrl: "https://sanjose.betternuevaecija.org/",
+    codeUrl: "https://github.com/denver6000/bettersanjosecity-ne",
+    caseStudy: {
+      problem: "Residents of San Jose City had services, tax schedules, and city contacts spread across separate pages, with no English and Filipino version in one place, and the first version of this portal still carried inherited styling.",
+      decision: "Redesign the frontend around what residents come to do, with an \"I need to\" finder and site-wide search, and replace the inherited stylesheets with a design system of its own.",
+      implementation: "Built with Next.js, React, and TypeScript and exported as a static site. I redesigned the home page and hero, wrote the design tokens, header, footer, and component styles, replaced the inherited CSS, added English and Filipino translations across the pages, built an accent-insensitive bilingual search, added real city officials, offices, and hotlines from the city's website, and worked on accessibility and performance.",
+      tradeoffs: "The site is static and deliberately not an official city site. Live weather comes from a small PHP proxy that Denver built, and it falls back to a forecast when the station is offline.",
+      result: "A live site at sanjose.betternuevaecija.org with a public repository. The deploy log records the releases, and the footer credits Denver Ballesteros and me."
+    },
+    highlights: [
+      "Frontend Redesign: new home page, illustrated hero, an \"I need to\" service finder, and a shared header and footer, with own design tokens and stylesheets replacing inherited CSS.",
+      "Bilingual Site: English and Filipino translations across the home, inner, business tax, scholarship, and error pages, plus an accent-insensitive search that works in both languages.",
+      "Real City Information: officials, offices, and hotlines taken from the city's website and shown on contact and office pages.",
+      "Accessibility and Performance: visible focus, 44px phone targets, heading order and accessible names, self-hosted fonts, a trimmed icon set, and a responsive hero image.",
+      "Co-built Scope: Denver Ballesteros built the weather-station proxy, the business tax pages and estimator, the scholarship lookup, and the Hostinger deploy; this is not the official city website."
+    ],
+    stack: ["Next.js", "React", "TypeScript", "PHP", "Hostinger"],
+    slides: [
+      { src: "/images/projects/better-san-jose.png", label: "BetterLGU San Jose City home page with hero, search, and an I need to service finder", tab: "Home page" }
     ]
   }
 };

@@ -13,3 +13,7 @@ Updated October 13, 2026. Each entry records its public, synthetic, or local scr
 Card previews use a 16:10 frame with `contain`; dialogs and lightboxes retain each original image's dimensions and full image.
 
 - Refreshed November 16, 2026 from the live public pages with headless Chrome: `pmpc-pis-landing.webp` (https://peoplesmpcoop.com/, 1425×958, top clock bar cropped), `pmpc-gen-mdse.jpg` (https://genmdse.peoplesmpcoop.com/, 1440×900), `pmpc-workforce.png` (https://peoplescoopdtr.online/ sign-in, 1440×900, empty fields), and `public/boiyets-landing.png` (https://gym-management-systemv2.vercel.app/ landing, 1440×900; shows the demo's published test accounts). No sign-in or private records were used. The gym Admin/Trainer/Client screenshots were not retaken because they need a sign-in.
+
+- `kanban-board.png`: `C:/xampp/htdocs/kanban/docs/screenshot.png` (the repository README screenshot, sample cards and projects only), cropped to 2880×690 to remove empty space. Not a capture of the real board, which holds real project cards. Local-only tool; source is https://github.com/kurt-farinas/kanban.
+
+- `better-san-jose.png`: Public https://sanjose.betternuevaecija.org/ home page captured November 16, 2026 at 1440×900 with headless Chrome. No sign-in or private data. Independent civic site, not the official city website; co-built with Denver Ballesteros (repo https://github.com/denver6000/bettersanjosecity-ne).
