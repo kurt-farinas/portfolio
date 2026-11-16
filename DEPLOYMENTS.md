@@ -1,3 +1,12 @@
+## 2026-11-16 14:39 — da5fbf3 — Add Kanban Board and BetterLGU San Jose City projects
+- By: Claude Code, requested by Kurt Fariñas
+- Card: #86, #87
+- Code: 09c24f5 → da5fbf3
+- Migrations: none
+- Backup: none (static site; roll back by redeploying 1f553c0 in Vercel)
+- Data changes: none
+- Verified: git push to main; on https://kurt-farinas-portfolio.vercel.app/ resume.pdf (74,721 bytes) and both new optimized images match the local files, and the live JS bundle contains the BetterLGU copy. Not checked: how the two new project cards and dialogs look on the live Projects page in each theme.
+
 ## 2026-11-16 14:29 — 09c24f5 — Live-site screenshots; test-count claims removed
 - By: Claude Code, requested by Kurt Fariñas
 - Card: #85
